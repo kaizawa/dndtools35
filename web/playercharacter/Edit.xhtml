@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPlayercharacterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditPlayercharacterLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{playercharacterController.selected.id}" title="#{bundle.EditPlayercharacterTitle_id}" required="true" requiredMessage="#{bundle.EditPlayercharacterRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditPlayercharacterLabel_comments}" for="comments" />
+                    <h:inputText id="comments" value="#{playercharacterController.selected.comments}" title="#{bundle.EditPlayercharacterTitle_comments}" />
+                    <h:outputLabel value="#{bundle.EditPlayercharacterLabel_hitpoint}" for="hitpoint" />
+                    <h:inputText id="hitpoint" value="#{playercharacterController.selected.hitpoint}" title="#{bundle.EditPlayercharacterTitle_hitpoint}" />
+                    <h:outputLabel value="#{bundle.EditPlayercharacterLabel_initiative}" for="initiative" />
+                    <h:inputText id="initiative" value="#{playercharacterController.selected.initiative}" title="#{bundle.EditPlayercharacterTitle_initiative}" />
+                    <h:outputLabel value="#{bundle.EditPlayercharacterLabel_klass}" for="klass" />
+                    <h:inputText id="klass" value="#{playercharacterController.selected.klass}" title="#{bundle.EditPlayercharacterTitle_klass}" />
+                    <h:outputLabel value="#{bundle.EditPlayercharacterLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{playercharacterController.selected.name}" title="#{bundle.EditPlayercharacterTitle_name}" />
+                </h:panelGrid>
+                <h:commandLink action="#{playercharacterController.update}" value="#{bundle.EditPlayercharacterSaveLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="View" value="#{bundle.EditPlayercharacterViewLink}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{playercharacterController.prepareList}" value="#{bundle.EditPlayercharacterShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.EditPlayercharacterIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
