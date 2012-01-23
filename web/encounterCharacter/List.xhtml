@@ -20,52 +20,54 @@
                 <h:commandLink action="#{encounterCharacterController.previous}" value="#{bundle.Previous} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasPreviousPage}"/>&nbsp;
                 <h:commandLink action="#{encounterCharacterController.next}" value="#{bundle.Next} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasNextPage}"/>&nbsp;
                 <h:dataTable value="#{encounterCharacterController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListEncounterCharacterTitle_id}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.id}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListEncounterCharacterTitle_comments}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.comments}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListEncounterCharacterTitle_hitpoint}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.hitpoint}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListEncounterCharacterTitle_initiative}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.initiative}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListEncounterCharacterTitle_klass}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.klass}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListEncounterCharacterTitle_name}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.name}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="&nbsp;"/>
-                        </f:facet>
-                        <h:commandLink action="#{encounterCharacterController.prepareView}" value="#{bundle.ListEncounterCharacterViewLink}"/>
-                        <h:outputText value=" "/>
-                        <h:commandLink action="#{encounterCharacterController.prepareEdit}" value="#{bundle.ListEncounterCharacterEditLink}"/>
-                        <h:outputText value=" "/>
-                        <h:commandLink action="#{encounterCharacterController.destroy}" value="#{bundle.ListEncounterCharacterDestroyLink}"/>
-                    </h:column>
+                                           <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>  
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>                          
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_klass}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.klass}"/>
+                        </h:column>
+                      
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_comments}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.comments}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_hitpoint}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hitpoint}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_initiative}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.initiative}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{encounterCharacterController.prepareView}" value="#{bundle.ListEncounterCharacterViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{encounterCharacterController.prepareEdit}" value="#{bundle.ListEncounterCharacterEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{encounterCharacterController.destroy}" value="#{bundle.ListEncounterCharacterDestroyLink}"/>
+                        </h:column>
                 </h:dataTable>
             </h:panelGroup>
             <br />

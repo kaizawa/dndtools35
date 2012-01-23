@@ -15,16 +15,17 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{encounterCharacterController.selected.name}" title="#{bundle.EditEncounterCharacterTitle_name}" />
+                    <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_klass}" for="klass" />
+                    <h:inputText id="klass" value="#{encounterCharacterController.selected.klass}" title="#{bundle.EditEncounterCharacterTitle_klass}" />
+
                     <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_comments}" for="comments" />
                     <h:inputText id="comments" value="#{encounterCharacterController.selected.comments}" title="#{bundle.EditEncounterCharacterTitle_comments}" />
                     <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_hitpoint}" for="hitpoint" />
                     <h:inputText id="hitpoint" value="#{encounterCharacterController.selected.hitpoint}" title="#{bundle.EditEncounterCharacterTitle_hitpoint}" />
                     <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_initiative}" for="initiative" />
                     <h:inputText id="initiative" value="#{encounterCharacterController.selected.initiative}" title="#{bundle.EditEncounterCharacterTitle_initiative}" />
-                    <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_klass}" for="klass" />
-                    <h:inputText id="klass" value="#{encounterCharacterController.selected.klass}" title="#{bundle.EditEncounterCharacterTitle_klass}" />
-                    <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_name}" for="name" />
-                    <h:inputText id="name" value="#{encounterCharacterController.selected.name}" title="#{bundle.EditEncounterCharacterTitle_name}" />
                 </h:panelGrid>
                 <h:commandLink action="#{encounterCharacterController.update}" value="#{bundle.EditEncounterCharacterSaveLink}"/>
                 <br />

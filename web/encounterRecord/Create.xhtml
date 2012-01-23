@@ -15,6 +15,9 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateEncounterRecordLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{encounterRecordController.selected.name}" title="#{bundle.CreateEncounterRecordTitle_name}" />
+                                        
                     <h:outputLabel value="#{bundle.CreateEncounterRecordLabel_comments}" for="comments" />
                     <h:inputText id="comments" value="#{encounterRecordController.selected.comments}" title="#{bundle.CreateEncounterRecordTitle_comments}" />
                     <h:outputLabel value="#{bundle.CreateEncounterRecordLabel_round}" for="round" />

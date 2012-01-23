@@ -28,6 +28,12 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterRecordTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>                        
+                        <h:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEncounterRecordTitle_comments}"/>
                             </f:facet>
                             <h:outputText value="#{item.comments}"/>

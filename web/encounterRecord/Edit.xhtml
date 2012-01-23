@@ -15,6 +15,8 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditEncounterRecordLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{encounterRecordController.selected.name}" title="#{bundle.EditEncounterRecordTitle_name}" />
                     <h:outputLabel value="#{bundle.EditEncounterRecordLabel_comments}" for="comments" />
                     <h:inputText id="comments" value="#{encounterRecordController.selected.comments}" title="#{bundle.EditEncounterRecordTitle_comments}" />
                     <h:outputLabel value="#{bundle.EditEncounterRecordLabel_round}" for="round" />
@@ -38,7 +40,20 @@
                                 <h:outputText value="#{bundle.ListEncounterCharacterTitle_id}"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
+                        </h:column>  
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>                          
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_klass}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.klass}"/>
                         </h:column>
+                      
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEncounterCharacterTitle_comments}"/>
@@ -57,18 +72,7 @@
                             </f:facet>
                             <h:outputText value="#{item.initiative}"/>
                         </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_klass}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.klass}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_name}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.name}"/>
-                        </h:column>
+
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>

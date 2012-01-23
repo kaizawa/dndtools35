@@ -32,10 +32,21 @@ public class EncounterRecord implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Size(max = 255)
-    @Column(name = "COMMENTS", length = 255)
+    @Column(name = "NAME", length = 255)
+    private String name;    
+    @Size(max = 4000)
+    @Column(name = "COMMENTS", length = 4000)
     private String comments;
     @Column(name = "ROUND")
     private Integer round;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     @Column(name = "TURN")
     private Integer turn;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encounterRecord")
