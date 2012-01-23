@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewEncounterRecordTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_id}"/>
+                    <h:outputText value="#{encounterRecordController.selected.id}" title="#{bundle.ViewEncounterRecordTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_comments}"/>
+                    <h:outputText value="#{encounterRecordController.selected.comments}" title="#{bundle.ViewEncounterRecordTitle_comments}"/>
+                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_round}"/>
+                    <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}"/>
+                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_turn}"/>
+                    <h:outputText value="#{encounterRecordController.selected.turn}" title="#{bundle.ViewEncounterRecordTitle_turn}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{encounterRecordController.destroyAndView}" value="#{bundle.ViewEncounterRecordDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewEncounterRecordEditLink}"/>
+                <br />
+                <h:commandLink action="#{encounterRecordController.prepareCreate}" value="#{bundle.ViewEncounterRecordCreateLink}" />
+                <br />
+                <h:commandLink action="#{encounterRecordController.prepareList}" value="#{bundle.ViewEncounterRecordShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewEncounterRecordIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

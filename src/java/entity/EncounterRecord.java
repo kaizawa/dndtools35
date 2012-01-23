@@ -16,20 +16,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author kaizawa
  */
 @Entity
-@Table(name = "ENCOUNTER")
+@Table(name = "ENCOUNTER_RECORD")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Encounter.findAll", query = "SELECT e FROM Encounter e"),
-    @NamedQuery(name = "Encounter.findById", query = "SELECT e FROM Encounter e WHERE e.id = :id"),
-    @NamedQuery(name = "Encounter.findByComments", query = "SELECT e FROM Encounter e WHERE e.comments = :comments"),
-    @NamedQuery(name = "Encounter.findByRound", query = "SELECT e FROM Encounter e WHERE e.round = :round"),
-    @NamedQuery(name = "Encounter.findByTurn", query = "SELECT e FROM Encounter e WHERE e.turn = :turn")})
-public class Encounter implements Serializable {
+    @NamedQuery(name = "EncounterRecord.findAll", query = "SELECT e FROM EncounterRecord e"),
+    @NamedQuery(name = "EncounterRecord.findById", query = "SELECT e FROM EncounterRecord e WHERE e.id = :id"),
+    @NamedQuery(name = "EncounterRecord.findByComments", query = "SELECT e FROM EncounterRecord e WHERE e.comments = :comments"),
+    @NamedQuery(name = "EncounterRecord.findByRound", query = "SELECT e FROM EncounterRecord e WHERE e.round = :round"),
+    @NamedQuery(name = "EncounterRecord.findByTurn", query = "SELECT e FROM EncounterRecord e WHERE e.turn = :turn")})
+public class EncounterRecord implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID", nullable = false)
     private Long id;
     @Size(max = 255)
@@ -39,21 +38,23 @@ public class Encounter implements Serializable {
     private Integer round;
     @Column(name = "TURN")
     private Integer turn;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encounter")
-    private List<EncounterCharacter> encounterCharacterList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "encounterRecord")
+    private List<EncounterBattleMember> encounterBattleMemberList;
 
-    public List<EncounterCharacter> getEncounterCharacterList() {
-        return encounterCharacterList;
+    public List<EncounterBattleMember> getEncounterBattleMemberList() {
+        return encounterBattleMemberList;
     }
 
-    public void setEncounterCharacterList(List<EncounterCharacter> encounterCharacterList) {
-        this.encounterCharacterList = encounterCharacterList;
+    public void setEncounterBattleMemberList(List<EncounterBattleMember> encounterBattleMemberList) {
+        this.encounterBattleMemberList = encounterBattleMemberList;
     }
 
-    public Encounter() {
+ 
+
+    public EncounterRecord() {
     }
 
-    public Encounter(Long id) {
+    public EncounterRecord(Long id) {
         this.id = id;
     }
 
@@ -99,10 +100,10 @@ public class Encounter implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Encounter)) {
+        if (!(object instanceof EncounterRecord)) {
             return false;
         }
-        Encounter other = (Encounter) object;
+        EncounterRecord other = (EncounterRecord) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

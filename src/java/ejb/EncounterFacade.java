@@ -4,7 +4,7 @@
  */
 package ejb;
 
-import entity.Encounter;
+import entity.EncounterRecord;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author kaizawa
  */
 @Stateless
-public class EncounterFacade extends AbstractFacade<Encounter> {
+public class EncounterFacade extends AbstractFacade<EncounterRecord> {
     @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
@@ -24,7 +24,7 @@ public class EncounterFacade extends AbstractFacade<Encounter> {
     }
 
     public EncounterFacade() {
-        super(Encounter.class);
+        super(EncounterRecord.class);
     }
     
 }

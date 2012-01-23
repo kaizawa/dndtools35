@@ -5,8 +5,8 @@
 package mbean;
 
 import ejb.PlayercharacterFacade;
-import entity.Encounter;
-import entity.Playercharacter;
+import entity.EncounterRecord;
+import entity.EncounterCharacter;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -28,24 +28,24 @@ public class SessionBean {
     @EJB
     private PlayercharacterFacade  playercharacterFacade;
     
-    List<Playercharacter> playerCharacterList;    
+    List<EncounterCharacter> playerCharacterList;    
     
-    private Encounter encounter;
+    private EncounterRecord encounter;
 
-    public Encounter getEncounter() {
+    public EncounterRecord getEncounter() {
         return encounter;
     }
 
-    public void setEncounter(Encounter encounter) {
+    public void setEncounter(EncounterRecord encounter) {
         this.encounter = encounter;
     }
     
 
-    public List<Playercharacter> getPlayerCharacterList() {
+    public List<EncounterCharacter> getPlayerCharacterList() {
         return playerCharacterList;
     }
 
-    public void setPlayerCharacterList(List<Playercharacter> playerCharacterList) {
+    public void setPlayerCharacterList(List<EncounterCharacter> playerCharacterList) {
         this.playerCharacterList = playerCharacterList;
     }
 }

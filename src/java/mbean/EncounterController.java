@@ -1,13 +1,13 @@
 package mbean;
 
 import ejb.EncounterCharacterFacade;
-import entity.Encounter;
+import entity.EncounterRecord;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.EncounterFacade;
 import ejb.PlayercharacterFacade;
+import entity.EncounterBattleMember;
 import entity.EncounterCharacter;
-import entity.Playercharacter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,7 +32,7 @@ import javax.faces.model.SelectItem;
 @SessionScoped
 public class EncounterController extends BaseBean implements Serializable {
     
-    private Encounter current;
+    private EncounterRecord current;
     private DataModel items = null;
     @EJB
     private EncounterFacade encounterFacade;
@@ -44,13 +44,13 @@ public class EncounterController extends BaseBean implements Serializable {
     @EJB
     private PlayercharacterFacade  playercharacterFacade;    
     
-    private List<EncounterCharacter> encounterCharacterList;
+    private List<EncounterBattleMember> encounterCharacterList;
 
-    public List<EncounterCharacter> getEncounterCharacterList() {
+    public List<EncounterBattleMember> getEncounterCharacterList() {
         return encounterCharacterList;
     }
 
-    public void setEncounterCharacterList(List<EncounterCharacter> encounterCharacterList) {
+    public void setEncounterCharacterList(List<EncounterBattleMember> encounterCharacterList) {
         this.encounterCharacterList = encounterCharacterList;
     }
     
@@ -77,9 +77,9 @@ public class EncounterController extends BaseBean implements Serializable {
     public EncounterController() {
     }
 
-    public Encounter getSelected() {
+    public EncounterRecord getSelected() {
         if (current == null) {
-            current = new Encounter();
+            current = new EncounterRecord();
             selectedItemIndex = -1;
         }
         return current;
@@ -113,13 +113,13 @@ public class EncounterController extends BaseBean implements Serializable {
     }
 
     public String prepareView() {
-        current = (Encounter) getItems().getRowData();
+        current = (EncounterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Encounter();
+        current = new EncounterRecord();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -136,7 +136,7 @@ public class EncounterController extends BaseBean implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Encounter) getItems().getRowData();
+        current = (EncounterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -153,7 +153,7 @@ public class EncounterController extends BaseBean implements Serializable {
     }
 
     public String destroy() {
-        current = (Encounter) getItems().getRowData();
+        current = (EncounterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -233,7 +233,7 @@ public class EncounterController extends BaseBean implements Serializable {
         return JsfUtil.getSelectItems(encounterFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = Encounter.class)
+    @FacesConverter(forClass = EncounterRecord.class)
     public static class EncounterControllerConverter implements Converter {
 
         @Override
@@ -262,8 +262,8 @@ public class EncounterController extends BaseBean implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Encounter) {
-                Encounter o = (Encounter) object;
+            if (object instanceof EncounterRecord) {
+                EncounterRecord o = (EncounterRecord) object;
                 return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EncounterController.class.getName());
@@ -279,9 +279,9 @@ public class EncounterController extends BaseBean implements Serializable {
 
         int index = playherCharacterTable.getRowIndex();
         
-        Playercharacter playerCharacter =  getPlayerCharacterList().get(index);            
+        EncounterCharacter playerCharacter =  getPlayerCharacterList().get(index);            
         
-        for(EncounterCharacter encChar : getEncounterCharacterList()){
+        for(EncounterBattleMember encChar : getEncounterCharacterList()){
             if(encChar.getPlayerCharacter().equals(playerCharacter)){
                 return true;
             }
@@ -295,23 +295,23 @@ public class EncounterController extends BaseBean implements Serializable {
     public void setCharaSelected(boolean charaSelected) {
         int index = playherCharacterTable.getRowIndex();
         
-        Playercharacter playerCharacer =  getPlayerCharacterList().get(index);       
+        EncounterCharacter playerCharacer =  getPlayerCharacterList().get(index);       
         if (playerCharacer != null) {
             if (charaSelected) {
-                EncounterCharacter encChara = new EncounterCharacter();
+                EncounterBattleMember encChara = new EncounterBattleMember();
                 encChara.setEncounter(current);
                 encChara.setPlayerCharacter(playerCharacer);
                 encounterCharacterFacade.edit(encChara);
             } else {
-                List<EncounterCharacter> encCharaList = encounterCharacterFacade.findByPlayerCharacter(playerCharacer);
-                for(EncounterCharacter encChara : encCharaList){
+                List<EncounterBattleMember> encCharaList = encounterCharacterFacade.findByPlayerCharacter(playerCharacer);
+                for(EncounterBattleMember encChara : encCharaList){
                     encounterCharacterFacade.remove(encChara);
                 }
             }
         }
     }         
     
-    List<Playercharacter> playerCharacterList;    
+    List<EncounterCharacter> playerCharacterList;    
 
     @PostConstruct
     public void init (){
@@ -319,11 +319,11 @@ public class EncounterController extends BaseBean implements Serializable {
         setEncounterCharacterList(encounterCharacterFacade.findAll());
     }    
 
-    public List<Playercharacter> getPlayerCharacterList() {
+    public List<EncounterCharacter> getPlayerCharacterList() {
         return playerCharacterList;
     }
 
-    public void setPlayerCharacterList(List<Playercharacter> playerCharacterList) {
+    public void setPlayerCharacterList(List<EncounterCharacter> playerCharacterList) {
         this.playerCharacterList = playerCharacterList;
     }    
 }

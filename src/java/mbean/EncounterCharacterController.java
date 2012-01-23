@@ -3,7 +3,7 @@ package mbean;
 import entity.EncounterCharacter;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
-import ejb.PlayercharacterFacade;
+import ejb.EncounterCharacterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,18 +18,18 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "playercharacterController")
+@ManagedBean(name = "encounterCharacterController")
 @SessionScoped
-public class PlayercharacterController implements Serializable {
+public class EncounterCharacterController implements Serializable {
 
     private EncounterCharacter current;
     private DataModel items = null;
     @EJB
-    private ejb.PlayercharacterFacade ejbFacade;
+    private ejb.EncounterCharacterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public PlayercharacterController() {
+    public EncounterCharacterController() {
     }
 
     public EncounterCharacter getSelected() {
@@ -40,7 +40,7 @@ public class PlayercharacterController implements Serializable {
         return current;
     }
 
-    private PlayercharacterFacade getFacade() {
+    private EncounterCharacterFacade getFacade() {
         return ejbFacade;
     }
 
@@ -82,7 +82,7 @@ public class PlayercharacterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PlayercharacterCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterCharacterCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -99,7 +99,7 @@ public class PlayercharacterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PlayercharacterUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterCharacterUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -132,7 +132,7 @@ public class PlayercharacterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PlayercharacterDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterCharacterDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -189,14 +189,14 @@ public class PlayercharacterController implements Serializable {
     }
 
     @FacesConverter(forClass = EncounterCharacter.class)
-    public static class PlayercharacterControllerConverter implements Converter {
+    public static class EncounterCharacterControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            PlayercharacterController controller = (PlayercharacterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "playercharacterController");
+            EncounterCharacterController controller = (EncounterCharacterController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "encounterCharacterController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -220,7 +220,7 @@ public class PlayercharacterController implements Serializable {
                 EncounterCharacter o = (EncounterCharacter) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + PlayercharacterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EncounterCharacterController.class.getName());
             }
         }
     }

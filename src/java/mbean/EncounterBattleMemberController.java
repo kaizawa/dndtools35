@@ -1,9 +1,9 @@
 package mbean;
 
-import entity.EncounterCharacter;
+import entity.EncounterBattleMember;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
-import ejb.PlayercharacterFacade;
+import ejb.EncounterBattleMemberFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "playercharacterController")
+@ManagedBean(name = "encounterBattleMemberController")
 @SessionScoped
-public class PlayercharacterController implements Serializable {
+public class EncounterBattleMemberController implements Serializable {
 
-    private EncounterCharacter current;
+    private EncounterBattleMember current;
     private DataModel items = null;
     @EJB
-    private ejb.PlayercharacterFacade ejbFacade;
+    private ejb.EncounterBattleMemberFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public PlayercharacterController() {
+    public EncounterBattleMemberController() {
     }
 
-    public EncounterCharacter getSelected() {
+    public EncounterBattleMember getSelected() {
         if (current == null) {
-            current = new EncounterCharacter();
+            current = new EncounterBattleMember();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private PlayercharacterFacade getFacade() {
+    private EncounterBattleMemberFacade getFacade() {
         return ejbFacade;
     }
 
@@ -68,13 +68,13 @@ public class PlayercharacterController implements Serializable {
     }
 
     public String prepareView() {
-        current = (EncounterCharacter) getItems().getRowData();
+        current = (EncounterBattleMember) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new EncounterCharacter();
+        current = new EncounterBattleMember();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class PlayercharacterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PlayercharacterCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterBattleMemberCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class PlayercharacterController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (EncounterCharacter) getItems().getRowData();
+        current = (EncounterBattleMember) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class PlayercharacterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PlayercharacterUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterBattleMemberUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class PlayercharacterController implements Serializable {
     }
 
     public String destroy() {
-        current = (EncounterCharacter) getItems().getRowData();
+        current = (EncounterBattleMember) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class PlayercharacterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PlayercharacterDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterBattleMemberDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,27 +188,31 @@ public class PlayercharacterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = EncounterCharacter.class)
-    public static class PlayercharacterControllerConverter implements Converter {
+    @FacesConverter(forClass = EncounterBattleMember.class)
+    public static class EncounterBattleMemberControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            PlayercharacterController controller = (PlayercharacterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "playercharacterController");
+            EncounterBattleMemberController controller = (EncounterBattleMemberController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "encounterBattleMemberController");
             return controller.ejbFacade.find(getKey(value));
         }
 
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
+        UNDEFINED_PK_TYPE getKey(String value) {
+            UNDEFINED_PK_TYPE key;
+            // TODO: no getter methods were found for primary key in your entity class
+            //    entity.EncounterBattleMember 
+            // and therefore Converter.getKey() method could not be pre-generated.
             return key;
         }
 
-        String getStringKey(java.lang.Long value) {
+        String getStringKey(UNDEFINED_PK_TYPE value) {
             StringBuffer sb = new StringBuffer();
-            sb.append(value);
+            // TODO: no getter methods were found for primary key in your entity class
+            //    entity.EncounterBattleMember 
+            // and therefore Converter.getKey() method could not be pre-generated.
             return sb.toString();
         }
 
@@ -216,11 +220,11 @@ public class PlayercharacterController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof EncounterCharacter) {
-                EncounterCharacter o = (EncounterCharacter) object;
-                return getStringKey(o.getId());
+            if (object instanceof EncounterBattleMember) {
+                EncounterBattleMember o = (EncounterBattleMember) object;
+                return getStringKey(o.UNDEFINED_PK_GETTER());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + PlayercharacterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EncounterBattleMemberController.class.getName());
             }
         }
     }
