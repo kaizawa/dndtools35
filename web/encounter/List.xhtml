@@ -21,7 +21,7 @@
                     <h:commandLink action="#{encounterController.next}" value="#{bundle.Next} #{encounterController.pagination.pageSize}" rendered="#{encounterController.pagination.hasNextPage}"/>&nbsp;
                     <h:dataTable value="#{encounterController.items}" var="item" border="0" cellpadding="2" 
                                  cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
-                                 rules="all" style="border:solid 1px" binding="#{encounterController.dataTable}">
+                                 rules="all" style="border:solid 1px" binding="#{encounterController.encounterTable}">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEncounterTitle_id}"/>

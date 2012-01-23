@@ -21,13 +21,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EncounterCharacter.findAll", query = "SELECT e FROM EncounterCharacter e"),
     @NamedQuery(name = "EncounterCharacter.findById", query = "SELECT e FROM EncounterCharacter e WHERE e.id = :id"),
     @NamedQuery(name = "EncounterCharacter.findByplayerCharacter", query = "SELECT e FROM EncounterCharacter e WHERE e.playerCharacter = :playerCharacter"),
-    @NamedQuery(name = "EncounterCharacter.findByEncounter", query = "SELECT e FROM EncounterCharacter e WHERE e.encounter = :encounter"),})
+    @NamedQuery(name = "EncounterCharacter.findByEncounter", query = "SELECT e FROM EncounterCharacter e WHERE e.encounter = :encounter")})
 public class EncounterCharacter implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID", nullable = false)
     private Long id;
     

@@ -40,10 +40,6 @@ public class SessionBean {
         this.encounter = encounter;
     }
     
-    @PostConstruct
-    public void init (){
-        playerCharacterList = playercharacterFacade.findAll();
-    }
 
     public List<Playercharacter> getPlayerCharacterList() {
         return playerCharacterList;

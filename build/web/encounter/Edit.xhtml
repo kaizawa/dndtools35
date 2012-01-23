@@ -24,7 +24,68 @@
                     <h:outputLabel value="#{bundle.EditEncounterLabel_turn}" for="turn" />
                     <h:inputText id="turn" value="#{encounterController.selected.turn}" title="#{bundle.EditEncounterTitle_turn}" />
                 </h:panelGrid>
-                <h:commandLink action="#{encounterController.update}" value="#{bundle.EditEncounterSaveLink}"/>
+                
+              <h:panelGroup rendered="#{playercharacterController.items.rowCount > 0}">
+                    <h:outputText value="#{playercharacterController.pagination.pageFirstItem + 1}..#{playercharacterController.pagination.pageLastItem + 1}/#{playercharacterController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{playercharacterController.previous}" value="#{bundle.Previous} #{playercharacterController.pagination.pageSize}" rendered="#{playercharacterController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{playercharacterController.next}" value="#{bundle.Next} #{playercharacterController.pagination.pageSize}" rendered="#{playercharacterController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{encounterController.playerCharacterList}" var="currVar" border="0" cellpadding="2" 
+                                 cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" 
+                                 binding="#{encounterController.playherCharacterTable}" style="border:solid 1px">
+                        <h:column>
+                            <h:selectBooleanCheckbox id="checkbox1" value="#{encounterController.charaSelected}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlayercharacterTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{currVar.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlayercharacterTitle_klass}"/>
+                            </f:facet>
+                            <h:outputText value="#{currVar.klass}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlayercharacterTitle_comments}"/>
+                            </f:facet>
+                            <h:outputText value="#{currVar.comments}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlayercharacterTitle_hitpoint}"/>
+                            </f:facet>
+                            <h:outputText value="#{currVar.hitpoint}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlayercharacterTitle_initiative}"/>
+                            </f:facet>
+                            <h:outputText value="#{currVar.initiative}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlayercharacterTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{currVar.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{playercharacterController.prepareView}" value="#{bundle.ListPlayercharacterViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{playercharacterController.prepareEdit}" value="#{bundle.ListPlayercharacterEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{playercharacterController.destroy}" value="#{bundle.ListPlayercharacterDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>                
+                
+                <h:commandButton action="#{encounterController.update}" value="#{bundle.EditEncounterSaveLink}"/>
                 <br />
                 <br />
                 <h:commandLink action="View" value="#{bundle.EditEncounterViewLink}" immediate="true"/>

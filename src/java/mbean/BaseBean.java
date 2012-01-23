@@ -21,6 +21,17 @@ public class BaseBean {
     @ManagedProperty(value="#{applicationBean}")    
     private ApplicationBean applicationBean;  
     
+    @ManagedProperty(value="#{playercharacterController}")
+    private PlayercharacterController playercharacterController;
+
+    public PlayercharacterController getPlayercharacterController() {
+        return playercharacterController;
+    }
+
+    public void setPlayercharacterController(PlayercharacterController playercharacterController) {
+        this.playercharacterController = playercharacterController;
+    }
+    
     FacesContext context = FacesContext.getCurrentInstance();
 
     public ApplicationBean getApplicationBean() {
