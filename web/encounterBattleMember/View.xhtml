@@ -15,6 +15,12 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewEncounterBattleMemberLabel_id}"/>
+                    <h:outputText value="#{encounterBattleMemberController.selected.id}" title="#{bundle.ViewEncounterBattleMemberTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewEncounterBattleMemberLabel_encounterCharacter}"/>
+                    <h:outputText value="#{encounterBattleMemberController.selected.encounterCharacter}" title="#{bundle.ViewEncounterBattleMemberTitle_encounterCharacter}"/>
+                    <h:outputText value="#{bundle.ViewEncounterBattleMemberLabel_encounterRecord}"/>
+                    <h:outputText value="#{encounterBattleMemberController.selected.encounterRecord}" title="#{bundle.ViewEncounterBattleMemberTitle_encounterRecord}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{encounterBattleMemberController.destroyAndView}" value="#{bundle.ViewEncounterBattleMemberDestroyLink}"/>

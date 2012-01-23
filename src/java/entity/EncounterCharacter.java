@@ -29,8 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class EncounterCharacter implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)        
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private Long id;
     @Size(max = 255)
     @Column(name = "COMMENTS", length = 255)

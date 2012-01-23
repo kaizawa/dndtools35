@@ -200,19 +200,15 @@ public class EncounterBattleMemberController implements Serializable {
             return controller.ejbFacade.find(getKey(value));
         }
 
-        UNDEFINED_PK_TYPE getKey(String value) {
-            UNDEFINED_PK_TYPE key;
-            // TODO: no getter methods were found for primary key in your entity class
-            //    entity.EncounterBattleMember 
-            // and therefore Converter.getKey() method could not be pre-generated.
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
             return key;
         }
 
-        String getStringKey(UNDEFINED_PK_TYPE value) {
+        String getStringKey(java.lang.Long value) {
             StringBuffer sb = new StringBuffer();
-            // TODO: no getter methods were found for primary key in your entity class
-            //    entity.EncounterBattleMember 
-            // and therefore Converter.getKey() method could not be pre-generated.
+            sb.append(value);
             return sb.toString();
         }
 
@@ -222,7 +218,7 @@ public class EncounterBattleMemberController implements Serializable {
             }
             if (object instanceof EncounterBattleMember) {
                 EncounterBattleMember o = (EncounterBattleMember) object;
-                return getStringKey(o.UNDEFINED_PK_GETTER());
+                return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EncounterBattleMemberController.class.getName());
             }

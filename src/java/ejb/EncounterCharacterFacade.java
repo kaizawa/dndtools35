@@ -26,4 +26,5 @@ public class EncounterCharacterFacade extends AbstractFacade<EncounterCharacter>
     public EncounterCharacterFacade() {
         super(EncounterCharacter.class);
     }
+    
 }

@@ -15,8 +15,6 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditEncounterRecordLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{encounterRecordController.selected.id}" title="#{bundle.EditEncounterRecordTitle_id}" required="true" requiredMessage="#{bundle.EditEncounterRecordRequiredMessage_id}"/>
                     <h:outputLabel value="#{bundle.EditEncounterRecordLabel_comments}" for="comments" />
                     <h:inputText id="comments" value="#{encounterRecordController.selected.comments}" title="#{bundle.EditEncounterRecordTitle_comments}" />
                     <h:outputLabel value="#{bundle.EditEncounterRecordLabel_round}" for="round" />
@@ -29,7 +27,9 @@
                     <h:outputText value="#{encounterCharacterController.pagination.pageFirstItem + 1}..#{encounterCharacterController.pagination.pageLastItem + 1}/#{encounterCharacterController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{encounterCharacterController.previous}" value="#{bundle.Previous} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{encounterCharacterController.next}" value="#{bundle.Next} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{encounterCharacterController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:dataTable value="#{encounterCharacterController.items}" var="item" border="0" 
+                                 cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
+                                 rules="all" style="border:solid 1px" binding="#{encounterRecordController.encounterCharacterTable}">
                         <h:column>
                             <h:selectBooleanCheckbox id="checkbox1" value="#{encounterRecordController.charaSelected}" />
                         </h:column> 

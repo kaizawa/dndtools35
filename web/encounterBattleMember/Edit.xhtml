@@ -15,6 +15,14 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditEncounterBattleMemberLabel_encounterCharacter}" for="encounterCharacter" />
+                    <h:selectOneMenu id="encounterCharacter" value="#{encounterBattleMemberController.selected.encounterCharacter}" title="#{bundle.EditEncounterBattleMemberTitle_encounterCharacter}" >
+                        <f:selectItems value="#{encounterCharacterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditEncounterBattleMemberLabel_encounterRecord}" for="encounterRecord" />
+                    <h:selectOneMenu id="encounterRecord" value="#{encounterBattleMemberController.selected.encounterRecord}" title="#{bundle.EditEncounterBattleMemberTitle_encounterRecord}" >
+                        <f:selectItems value="#{encounterRecordController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandLink action="#{encounterBattleMemberController.update}" value="#{bundle.EditEncounterBattleMemberSaveLink}"/>
                 <br />

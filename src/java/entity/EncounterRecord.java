@@ -29,7 +29,7 @@ public class EncounterRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private Long id;
     @Size(max = 255)
     @Column(name = "COMMENTS", length = 255)

@@ -27,7 +27,7 @@ public class EncounterBattleMember implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private Long id;
     
     @JoinColumn(name = "ENCOUNTER_CHARACTER", referencedColumnName = "ID")
@@ -37,6 +37,14 @@ public class EncounterBattleMember implements Serializable {
     @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID")
     @ManyToOne
     private EncounterRecord encounterRecord;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public EncounterCharacter getEncounterCharacter() {
         return encounterCharacter;

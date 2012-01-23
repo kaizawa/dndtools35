@@ -50,6 +50,14 @@ public class EncounterRecordController implements Serializable {
         return current;
     }
 
+    public HtmlDataTable getEncounterCharacterTable() {
+        return encounterCharacterTable;
+    }
+
+    public void setEncounterCharacterTable(HtmlDataTable encounterCharacterTable) {
+        this.encounterCharacterTable = encounterCharacterTable;
+    }
+
     private EncounterRecordFacade getFacade() {
         return ejbFacade;
     }
@@ -240,23 +248,23 @@ public class EncounterRecordController implements Serializable {
     public boolean isCharaSelected() {
 
         int index = encounterCharacterTable.getRowIndex();
-        
-        EncounterCharacter encounterCharacter =  encounterCharacterFacade.findAll().get(index);            
-        
-        for(EncounterBattleMember member : encounterBattleMemberFacade.findAll()){
-            if(member.getEncounterCharacter().equals(encounterCharacter)){
+
+        EncounterCharacter encounterCharacter = encounterCharacterFacade.findAll().get(index);
+
+        for (EncounterBattleMember member : encounterBattleMemberFacade.findAll()) {
+            if (member.getEncounterCharacter().equals(encounterCharacter)) {
                 return true;
             }
         }
         return false;
-    }    
+    }
     
     private HtmlDataTable encounterCharacterTable = new HtmlDataTable();
 
     public void setCharaSelected(boolean charaSelected) {
         int index = encounterCharacterTable.getRowIndex();
-        
-        EncounterCharacter encounterCharacter =  encounterCharacterFacade.findAll().get(index);        
+
+        EncounterCharacter encounterCharacter = encounterCharacterFacade.findAll().get(index);
         if (encounterCharacter != null) {
             if (charaSelected) {
                 EncounterBattleMember member = new EncounterBattleMember();
@@ -265,11 +273,10 @@ public class EncounterRecordController implements Serializable {
                 encounterBattleMemberFacade.edit(member);
             } else {
                 List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterCharacter(encounterCharacter);
-                for(EncounterBattleMember member : memberList){
+                for (EncounterBattleMember member : memberList) {
                     encounterBattleMemberFacade.remove(member);
                 }
             }
         }
-    }         
-        
+    }
 }

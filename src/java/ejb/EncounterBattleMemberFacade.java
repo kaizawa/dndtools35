@@ -18,6 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class EncounterBattleMemberFacade extends AbstractFacade<EncounterBattleMember> {
+
     @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
@@ -29,11 +30,10 @@ public class EncounterBattleMemberFacade extends AbstractFacade<EncounterBattleM
     public EncounterBattleMemberFacade() {
         super(EncounterBattleMember.class);
     }
-    
-    public List<EncounterBattleMember> findByEncounterCharacter(EncounterCharacter encounterCharacter){
+
+    public List<EncounterBattleMember> findByEncounterCharacter(EncounterCharacter encounterCharacter) {
         Query query = em.createNamedQuery("EncounterBattleMember.findByEncounterCharacter");
         query.setParameter("encounterCharacter", encounterCharacter);
         return query.getResultList();
     }
-    
 }

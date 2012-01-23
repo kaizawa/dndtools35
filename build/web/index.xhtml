@@ -4,26 +4,20 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
         <title>Facelet Title</title>
-<h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
         Hello from Facelets
-                    <h:form>
-                    <h:commandLink action="/encounter/List" value="Show All Encounter Items"/>
-                </h:form>
-                <h:form>
-                    <h:commandLink action="/playercharacter/List" value="Show All Playercharacter Items"/>
-                </h:form>
-                <h:form>
-                    <h:commandLink action="/encounterBattleMember/List" value="Show All EncounterBattleMember Items"/>
-                </h:form>
-                <h:form>
-                    <h:commandLink action="/encounterCharacter/List" value="Show All EncounterCharacter Items"/>
-                </h:form>
-                <h:form>
-                    <h:commandLink action="/encounterRecord/List" value="Show All EncounterRecord Items"/>
-                </h:form>
-</h:body>
+        <h:form>
+            <h:commandLink action="/encounterBattleMember/List" value="Show All EncounterBattleMember Items"/>
+        </h:form>
+        <h:form>
+            <h:commandLink action="/encounterCharacter/List" value="Show All EncounterCharacter Items"/>
+        </h:form>
+        <h:form>
+            <h:commandLink action="/encounterRecord/List" value="Show All EncounterRecord Items"/>
+        </h:form>
+    </h:body>
 
 
 
