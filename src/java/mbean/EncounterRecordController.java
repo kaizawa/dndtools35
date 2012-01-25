@@ -1,5 +1,6 @@
 package mbean;
 
+import com.google.common.collect.Collections2;
 import ejb.EncounterBattleMemberFacade;
 import ejb.EncounterCharacterFacade;
 import entity.EncounterRecord;
@@ -10,8 +11,7 @@ import entity.EncounterBattleMember;
 import entity.EncounterCharacter;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,11 +27,13 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "encounterRecordController")
 @SessionScoped
 public class EncounterRecordController implements Serializable {
+
+    @EJB
+    private EncounterBattleMemberFacade encounterBattleMemberFacade1;
     @EJB
     private EncounterBattleMemberFacade encounterBattleMemberFacade;
     @EJB
     private EncounterCharacterFacade encounterCharacterFacade;
-
     private EncounterRecord current;
     private DataModel items = null;
     @EJB
@@ -242,7 +244,6 @@ public class EncounterRecordController implements Serializable {
             }
         }
     }
-    
     private boolean charaSelected;
 
     public boolean isCharaSelected() {
@@ -258,25 +259,73 @@ public class EncounterRecordController implements Serializable {
         }
         return false;
     }
-    
     private HtmlDataTable encounterCharacterTable = new HtmlDataTable();
 
     public void setCharaSelected(boolean charaSelected) {
         int index = encounterCharacterTable.getRowIndex();
 
         EncounterCharacter encounterCharacter = encounterCharacterFacade.findAll().get(index);
-        if (encounterCharacter != null) {
-            if (charaSelected) {
-                EncounterBattleMember member = new EncounterBattleMember();
-                member.setEncounterRecord(current);
-                member.setEncounterCharacter(encounterCharacter);
-                encounterBattleMemberFacade.edit(member);
-            } else {
-                List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterCharacter(encounterCharacter);
-                for (EncounterBattleMember member : memberList) {
-                    encounterBattleMemberFacade.remove(member);
+
+        try {
+            if (encounterCharacter != null) {
+                if (charaSelected) {
+                    if (encounterBattleMemberFacade.findByEncounterCharacter(encounterCharacter).isEmpty()) {
+                        EncounterBattleMember member = new EncounterBattleMember();
+                        member.setEncounterRecord(current);
+                        member.setEncounterCharacter(encounterCharacter);
+                        encounterBattleMemberFacade.edit(member);
+                        JsfUtil.addSuccessMessage("Character successfully added as Battle Member");
+                    }
+                } else {
+                    List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterCharacter(encounterCharacter);
+                    for (EncounterBattleMember member : memberList) {
+                        encounterBattleMemberFacade.remove(member);
+                        JsfUtil.addSuccessMessage("Character successfully removed from Battle Members");
+                    }
                 }
             }
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e + "Persistence Error Occured");
         }
+    }
+    List<EncounterBattleMember> battleMemberList;
+
+    public List<EncounterBattleMember> getBattleMemberList() {
+        battleMemberList = encounterBattleMemberFacade.findByEncounterRecord(current);
+        Collections.sort(battleMemberList, new Comparator<EncounterBattleMember>() {
+
+            @Override
+            public int compare(EncounterBattleMember mem1, EncounterBattleMember mem2) {
+
+                return mem2.getInitiative().compareTo(mem1.getInitiative());
+            }
+        });
+        return battleMemberList;
+    }
+
+    public String saveBattleMembers() {
+        try {
+            for (EncounterBattleMember member : battleMemberList) {
+                encounterBattleMemberFacade.edit(member);
+            }
+            JsfUtil.addSuccessMessage("Member's Poropety Updated");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
+        }
+        return null;
+    }
+
+    public void setSelectedMember(EncounterBattleMember selectedMember) {
+        EncounterBattleMember member = (EncounterBattleMember) battleMemberTable.getRowData();
+
+    }
+    private HtmlDataTable battleMemberTable = new HtmlDataTable();
+
+    public HtmlDataTable getBattleMemberTable() {
+        return battleMemberTable;
+    }
+
+    public void setBattleMemberTable(HtmlDataTable battleMemberTable) {
+        this.battleMemberTable = battleMemberTable;
     }
 }

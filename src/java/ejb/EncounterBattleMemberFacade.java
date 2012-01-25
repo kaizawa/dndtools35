@@ -6,6 +6,7 @@ package ejb;
 
 import entity.EncounterBattleMember;
 import entity.EncounterCharacter;
+import entity.EncounterRecord;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,9 +32,15 @@ public class EncounterBattleMemberFacade extends AbstractFacade<EncounterBattleM
         super(EncounterBattleMember.class);
     }
 
-    public List<EncounterBattleMember> findByEncounterCharacter(EncounterCharacter encounterCharacter) {
+    public List<EncounterBattleMember> findByEncounterCharacter(EncounterCharacter chara) {
         Query query = em.createNamedQuery("EncounterBattleMember.findByEncounterCharacter");
-        query.setParameter("encounterCharacter", encounterCharacter);
+        query.setParameter("encounterCharacter", chara);
         return query.getResultList();
     }
+    
+    public List<EncounterBattleMember> findByEncounterRecord(EncounterRecord record) {
+        Query query = em.createNamedQuery("EncounterBattleMember.findByEncounterRecord");
+        query.setParameter("encounterRecord", record);
+        return query.getResultList();
+    }    
 }

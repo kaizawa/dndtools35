@@ -37,6 +37,27 @@ public class EncounterBattleMember implements Serializable {
     @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID")
     @ManyToOne
     private EncounterRecord encounterRecord;
+    
+    @Column(name = "HITPOINT")
+    private Integer hitPoint;
+    @Column(name = "INITIATIVE")
+    private Integer initiative;
+
+    public Integer getHitPoint() {
+        return hitPoint;
+    }
+
+    public void setHitPoint(Integer hitPoint) {
+        this.hitPoint = hitPoint;
+    }
+
+    public Integer getInitiative() {
+        return initiative;
+    }
+
+    public void setInitiative(Integer initiative) {
+        this.initiative = initiative;
+    }
 
     public Long getId() {
         return id;
@@ -86,5 +107,5 @@ public class EncounterBattleMember implements Serializable {
     public String toString() {
         return "entity.EncounterBattleMember[ id=" + id + " ]";
     }
-    
+        
 }

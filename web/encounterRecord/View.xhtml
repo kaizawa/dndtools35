@@ -7,26 +7,69 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.ViewEncounterRecordTitle}"></h:outputText>
+            <h:outputText value="#{encounterRecordController.selected.name}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
+            <h:form>   
                 <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_id}"/>
-                    <h:outputText value="#{encounterRecordController.selected.id}" title="#{bundle.ViewEncounterRecordTitle_id}"/>
-                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_name}"/>
-                    <h:outputText value="#{encounterRecordController.selected.name}" title="#{bundle.ViewEncounterRecordTitle_name}"/>
-                                        
-                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_comments}"/>
-                    <h:outputText value="#{encounterRecordController.selected.comments}" title="#{bundle.ViewEncounterRecordTitle_comments}"/>
                     <h:outputText value="#{bundle.ViewEncounterRecordLabel_round}"/>
                     <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}"/>
-                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_turn}"/>
-                    <h:outputText value="#{encounterRecordController.selected.turn}" title="#{bundle.ViewEncounterRecordTitle_turn}"/>
+                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_comments}"/>
+                    <h:outputText value="#{encounterRecordController.selected.comments}" title="#{bundle.ViewEncounterRecordTitle_comments}"/>
                 </h:panelGrid>
+                <br />
+
+                <h1><h:outputText value="List"/></h1>
+                <h:dataTable value="#{encounterRecordController.battleMemberList}" var="member" border="0" 
+                             cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
+                             rules="all" style="border:solid 1px" binding="#{encounterRecordController.battleMemberTable}">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Trun"/>
+                        </f:facet>
+                        <h:outputText value="●" rendered=""/>
+                    </h:column>                        
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name"/>
+                        </f:facet>
+                        <h:outputText value="#{member.encounterCharacter.name}"/>
+                    </h:column>         
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Class"/>
+                        </f:facet>
+                        <h:outputText value="#{member.encounterCharacter.klass}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Hitpoint"/>
+                        </f:facet>
+                        <h:inputText value="#{member.hitPoint}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Initiative"/>
+                        </f:facet>
+                        <h:inputText value="#{member.initiative}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Comments"/>
+                        </f:facet>
+                        <h:outputText value="#{member.encounterCharacter.comments}"/>
+                    </h:column>
+                </h:dataTable>
+                <br/>
+                <h:commandButton action="#{encounterRecordController.saveBattleMembers}" value="Save and Sort"/>                        
+                <br/>
+
+
                 <br />
                 <h:commandLink action="#{encounterRecordController.destroyAndView}" value="#{bundle.ViewEncounterRecordDestroyLink}"/>
                 <br />
