@@ -38,8 +38,19 @@ public class EncounterRecord implements Serializable {
     @Column(name = "COMMENTS", length = 4000)
     private String comments;
     @Column(name = "ROUND")
-    private Integer round;
+    private Integer round = 0;
+    @JoinColumn(name = "TURN_CHARACTER", referencedColumnName = "ID")
+    @ManyToOne
+    private EncounterBattleMember turnCharacter;
+    
+    public EncounterBattleMember getTurnCharacter() {
+        return turnCharacter;
+    }
 
+    public void setTurnCharacter(EncounterBattleMember turnCharacter) {
+        this.turnCharacter = turnCharacter;
+    }
+    
     public String getName() {
         return name;
     }

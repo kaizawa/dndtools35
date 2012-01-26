@@ -39,9 +39,20 @@ public class EncounterBattleMember implements Serializable {
     private EncounterRecord encounterRecord;
     
     @Column(name = "HITPOINT")
-    private Integer hitPoint;
+    private Integer hitPoint= 0;
     @Column(name = "INITIATIVE")
-    private Integer initiative;
+    private Integer initiative = 0;
+
+    public Boolean getMyTurn() {
+        return myTurn;
+    }
+
+    public void setMyTurn(Boolean myTurn) {
+        this.myTurn = myTurn;
+    }
+    
+    @Column(name = "MY_TURN")
+    private Boolean myTurn;
 
     public Integer getHitPoint() {
         return hitPoint;

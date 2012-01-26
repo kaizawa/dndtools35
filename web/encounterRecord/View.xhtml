@@ -23,6 +23,7 @@
                 <br />
 
                 <h1><h:outputText value="List"/></h1>
+                <h:commandButton action="#{encounterRecordController.nextTrun()}" value="Next turn"/>
                 <h:dataTable value="#{encounterRecordController.battleMemberList}" var="member" border="0" 
                              cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
                              rules="all" style="border:solid 1px" binding="#{encounterRecordController.battleMemberTable}">
@@ -30,7 +31,7 @@
                         <f:facet name="header">
                             <h:outputText value="Trun"/>
                         </f:facet>
-                        <h:outputText value="●" rendered=""/>
+                        <h:outputText value="●" style="font-size: 40px;" rendered="#{member.myTurn}"/>
                     </h:column>                        
                     <h:column>
                         <f:facet name="header">

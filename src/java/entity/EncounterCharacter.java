@@ -37,9 +37,9 @@ public class EncounterCharacter implements Serializable {
     @Column(name = "COMMENTS", length = 255)
     private String comments;
     @Column(name = "HITPOINT")
-    private Integer hitpoint;
+    private Integer hitpoint = 0;
     @Column(name = "INITIATIVE")
-    private Integer initiative;
+    private Integer initiative = 0;
     @Size(max = 255)
     @Column(name = "KLASS", length = 255)
     private String klass;

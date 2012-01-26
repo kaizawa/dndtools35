@@ -22,8 +22,6 @@
                     <h:inputText id="comments" value="#{encounterRecordController.selected.comments}" title="#{bundle.CreateEncounterRecordTitle_comments}" />
                     <h:outputLabel value="#{bundle.CreateEncounterRecordLabel_round}" for="round" />
                     <h:inputText id="round" value="#{encounterRecordController.selected.round}" title="#{bundle.CreateEncounterRecordTitle_round}" />
-                    <h:outputLabel value="#{bundle.CreateEncounterRecordLabel_turn}" for="turn" />
-                    <h:inputText id="turn" value="#{encounterRecordController.selected.turn}" title="#{bundle.CreateEncounterRecordTitle_turn}" />
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{encounterRecordController.create}" value="#{bundle.CreateEncounterRecordSaveLink}" />

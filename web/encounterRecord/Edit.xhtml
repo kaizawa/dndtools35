@@ -21,8 +21,6 @@
                     <h:inputText id="comments" value="#{encounterRecordController.selected.comments}" title="#{bundle.EditEncounterRecordTitle_comments}" />
                     <h:outputLabel value="#{bundle.EditEncounterRecordLabel_round}" for="round" />
                     <h:inputText id="round" value="#{encounterRecordController.selected.round}" title="#{bundle.EditEncounterRecordTitle_round}" />
-                    <h:outputLabel value="#{bundle.EditEncounterRecordLabel_turn}" for="turn" />
-                    <h:inputText id="turn" value="#{encounterRecordController.selected.turn}" title="#{bundle.EditEncounterRecordTitle_turn}" />
                 </h:panelGrid>
 
                 <h:panelGroup rendered="#{encounterCharacterController.items.rowCount > 0}">

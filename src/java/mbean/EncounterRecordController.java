@@ -29,15 +29,13 @@ import javax.faces.model.SelectItem;
 public class EncounterRecordController implements Serializable {
 
     @EJB
-    private EncounterBattleMemberFacade encounterBattleMemberFacade1;
-    @EJB
     private EncounterBattleMemberFacade encounterBattleMemberFacade;
     @EJB
     private EncounterCharacterFacade encounterCharacterFacade;
     private EncounterRecord current;
     private DataModel items = null;
     @EJB
-    private ejb.EncounterRecordFacade ejbFacade;
+    private EncounterRecordFacade encounterRecordFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -60,8 +58,19 @@ public class EncounterRecordController implements Serializable {
         this.encounterCharacterTable = encounterCharacterTable;
     }
 
+    public void sortBattleMember() {
+        Collections.sort(battleMemberList, new Comparator<EncounterBattleMember>() {
+
+            @Override
+            public int compare(EncounterBattleMember mem1, EncounterBattleMember mem2) {
+
+                return mem2.getInitiative().compareTo(mem1.getInitiative());
+            }
+        });
+    }
+
     private EncounterRecordFacade getFacade() {
-        return ejbFacade;
+        return encounterRecordFacade;
     }
 
     public PaginationHelper getPagination() {
@@ -201,11 +210,11 @@ public class EncounterRecordController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return JsfUtil.getSelectItems(encounterRecordFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return JsfUtil.getSelectItems(encounterRecordFacade.findAll(), true);
     }
 
     @FacesConverter(forClass = EncounterRecord.class)
@@ -217,7 +226,7 @@ public class EncounterRecordController implements Serializable {
             }
             EncounterRecordController controller = (EncounterRecordController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "encounterRecordController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.encounterRecordFacade.find(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -292,15 +301,40 @@ public class EncounterRecordController implements Serializable {
 
     public List<EncounterBattleMember> getBattleMemberList() {
         battleMemberList = encounterBattleMemberFacade.findByEncounterRecord(current);
-        Collections.sort(battleMemberList, new Comparator<EncounterBattleMember>() {
-
-            @Override
-            public int compare(EncounterBattleMember mem1, EncounterBattleMember mem2) {
-
-                return mem2.getInitiative().compareTo(mem1.getInitiative());
-            }
-        });
+        sortBattleMember();
+        setTurn();
         return battleMemberList;
+    }
+
+    public void setTurn() {
+        if (current.getTurnCharacter() == null) {
+            if (battleMemberList.size() > 0) {
+                EncounterBattleMember first = battleMemberList.get(0);
+                first.setMyTurn(true);
+                current.setTurnCharacter(first);
+                try {
+                    encounterRecordFacade.edit(current);
+                    encounterBattleMemberFacade.edit(first);
+                } catch (Exception e) {
+                    JsfUtil.addErrorMessage("Persistance Error Happened");
+                }
+                JsfUtil.addSuccessMessage("TrunCharacter was null");
+            }
+        } else {
+            for (EncounterBattleMember member : battleMemberList) {
+                if (member.equals(current.getTurnCharacter())) {
+                    member.setMyTurn(true);
+                }else { 
+                    member.setMyTurn(false);
+                }
+                try {
+                    encounterBattleMemberFacade.edit(member);
+                } catch (Exception e){
+                    JsfUtil.addErrorMessage("Persistance Error Happened");                    
+                }
+            }
+            //JsfUtil.addSuccessMessage("TrunCharacter is " + current.getTurnCharacter().getEncounterCharacter().getName());
+        }
     }
 
     public String saveBattleMembers() {
@@ -327,5 +361,29 @@ public class EncounterRecordController implements Serializable {
 
     public void setBattleMemberTable(HtmlDataTable battleMemberTable) {
         this.battleMemberTable = battleMemberTable;
+    }
+
+    public String nextTrun() {
+        int current_index;
+        current_index = battleMemberList.indexOf(current.getTurnCharacter());
+        EncounterBattleMember nextChara;
+        if (battleMemberList.size() <= current_index + 1) {
+            nextChara = battleMemberList.get(0);                    
+            // got next round
+            nextChara.setMyTurn(true);
+            current.setTurnCharacter(nextChara);
+            current.setRound(current.getRound() + 1);
+        } else {
+            nextChara = battleMemberList.get(current_index + 1);                                
+            current.setTurnCharacter(nextChara);
+            nextChara.setMyTurn(true);
+        }
+        try {
+            encounterRecordFacade.edit(current);
+            encounterBattleMemberFacade.edit(nextChara);                
+        } catch (Exception e){
+            JsfUtil.addErrorMessage("Persistence Error Occured");            
+        }
+        return null;
     }
 }
