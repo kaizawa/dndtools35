@@ -10,7 +10,7 @@
             <h:outputText value="#{bundle.ListEncounterRecordTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:form styleClass="jsfcrud_list_form">
+            <h:form styleClass="エンカウンター一覧">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
@@ -48,11 +48,11 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{encounterRecordController.prepareView}" value="#{bundle.ListEncounterRecordViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{encounterRecordController.prepareEdit}" value="#{bundle.ListEncounterRecordEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{encounterRecordController.destroy}" value="#{bundle.ListEncounterRecordDestroyLink}"/>
+                            <h:commandLink action="#{encounterRecordController.prepareView}" value="開始"/>
+                            <h:outputText value="  "/>
+                            <h:commandLink action="#{encounterRecordController.prepareEdit}" value="変更"/> 
+                            <h:outputText value="  "/>
+                            <h:commandLink action="#{encounterRecordController.destroy}" value="削除"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

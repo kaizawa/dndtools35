@@ -75,7 +75,7 @@ public class EncounterRecordController implements Serializable {
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(10) {
+            pagination = new PaginationHelper(100) {
 
                 @Override
                 public int getItemsCount() {
@@ -256,13 +256,11 @@ public class EncounterRecordController implements Serializable {
     private boolean charaSelected;
 
     public boolean isCharaSelected() {
-
-        int index = encounterCharacterTable.getRowIndex();
-
-        EncounterCharacter encounterCharacter = encounterCharacterFacade.findAll().get(index);
+        EncounterCharacter encounterCharacter = (EncounterCharacter)encounterCharacterTable.getRowData();
 
         for (EncounterBattleMember member : encounterBattleMemberFacade.findAll()) {
-            if (member.getEncounterCharacter().equals(encounterCharacter)) {
+            if (member.getEncounterCharacter().equals(encounterCharacter)
+                    && member.getEncounterRecord().equals(current)) {
                 return true;
             }
         }
@@ -278,7 +276,7 @@ public class EncounterRecordController implements Serializable {
         try {
             if (encounterCharacter != null) {
                 if (charaSelected) {
-                    if (encounterBattleMemberFacade.findByEncounterCharacter(encounterCharacter).isEmpty()) {
+                    if (encounterBattleMemberFacade.findByEncounterCharacterAndEncounterRecord(encounterCharacter,current).isEmpty()) {
                         EncounterBattleMember member = new EncounterBattleMember();
                         member.setEncounterRecord(current);
                         member.setEncounterCharacter(encounterCharacter);
@@ -286,7 +284,7 @@ public class EncounterRecordController implements Serializable {
                         JsfUtil.addSuccessMessage("Character successfully added as Battle Member");
                     }
                 } else {
-                    List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterCharacter(encounterCharacter);
+                    List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterCharacterAndEncounterRecord(encounterCharacter,current);
                     for (EncounterBattleMember member : memberList) {
                         encounterBattleMemberFacade.remove(member);
                         JsfUtil.addSuccessMessage("Character successfully removed from Battle Members");
@@ -318,7 +316,6 @@ public class EncounterRecordController implements Serializable {
                 } catch (Exception e) {
                     JsfUtil.addErrorMessage("Persistance Error Happened");
                 }
-                JsfUtil.addSuccessMessage("TrunCharacter was null");
             }
         } else {
             for (EncounterBattleMember member : battleMemberList) {
@@ -383,6 +380,53 @@ public class EncounterRecordController implements Serializable {
             encounterBattleMemberFacade.edit(nextChara);                
         } catch (Exception e){
             JsfUtil.addErrorMessage("Persistence Error Occured");            
+        }
+        return null;
+    }
+
+    public HtmlDataTable getEncounterCharacterTable2() {
+        return encounterCharacterTable2;
+    }
+
+    public void setEncounterCharacterTable2(HtmlDataTable encounterCharacterTable2) {
+        this.encounterCharacterTable2 = encounterCharacterTable2;
+    }
+    
+    private HtmlDataTable encounterCharacterTable2 = new HtmlDataTable();
+    
+    public String resetBattle(){
+        current.setRound(0);
+        current.setTurnCharacter(null);
+        try {
+            encounterRecordFacade.edit(current);
+        } catch (Exception e){
+            JsfUtil.addErrorMessage("Persistence Error Occured");                        
+        }
+        return null;
+    }
+    
+    public String resetRound(){
+        current.setTurnCharacter(null);
+        try {
+            encounterRecordFacade.edit(current);
+        } catch (Exception e){
+            JsfUtil.addErrorMessage("Persistence Error Occured");                        
+        }
+        return null;
+    }    
+    
+    public String setInitiativeByRandom(){
+        Random rand =  new Random();
+         try {
+            for (EncounterBattleMember member : battleMemberList) {
+                int initiativeBonus = member.getEncounterCharacter().getInitiative();
+
+                member.setInitiative(rand.nextInt(19) + 1 + initiativeBonus);
+                encounterBattleMemberFacade.edit(member);
+            }
+            JsfUtil.addSuccessMessage("Member's Poropety Updated");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
         }
         return null;
     }

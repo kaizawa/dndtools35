@@ -43,4 +43,11 @@ public class EncounterBattleMemberFacade extends AbstractFacade<EncounterBattleM
         query.setParameter("encounterRecord", record);
         return query.getResultList();
     }    
+    
+    public List<EncounterBattleMember> findByEncounterCharacterAndEncounterRecord(EncounterCharacter chara, EncounterRecord record) {
+        Query query = em.createNamedQuery("EncounterBattleMember.findByEncounterCharacterAndEncounterRecord");
+        query.setParameter("encounterRecord", record);
+        query.setParameter("encounterCharacter", chara);
+        return query.getResultList();
+    }      
 }

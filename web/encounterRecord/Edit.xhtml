@@ -70,22 +70,10 @@
                             </f:facet>
                             <h:outputText value="#{item.initiative}"/>
                         </h:column>
-
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{encounterCharacterController.prepareView}" value="#{bundle.ListEncounterCharacterViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{encounterCharacterController.prepareEdit}" value="#{bundle.ListEncounterCharacterEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{encounterCharacterController.destroy}" value="#{bundle.ListEncounterCharacterDestroyLink}"/>
-                        </h:column>
                     </h:dataTable>
                 </h:panelGroup>                
 
-                <h:commandLink action="#{encounterRecordController.update}" value="#{bundle.EditEncounterRecordSaveLink}"/>
-                <br />
+                <h:commandButton action="#{encounterRecordController.update}" value="#{bundle.EditEncounterRecordSaveLink}"/>
                 <br />
                 <h:commandLink action="View" value="#{bundle.EditEncounterRecordViewLink}" immediate="true"/>
                 <br />

@@ -21,9 +21,9 @@
                     <h:outputText value="#{encounterRecordController.selected.comments}" title="#{bundle.ViewEncounterRecordTitle_comments}"/>
                 </h:panelGrid>
                 <br />
-
-                <h1><h:outputText value="List"/></h1>
-                <h:commandButton action="#{encounterRecordController.nextTrun()}" value="Next turn"/>
+                <h:commandButton action="#{encounterRecordController.nextTrun()}" value="次のターン"/>
+                <h:outputLabel value=" "/>
+                <h:commandButton action="#{encounterRecordController.saveBattleMembers}" value="Save and Sort"/>                        
                 <h:dataTable value="#{encounterRecordController.battleMemberList}" var="member" border="0" 
                              cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
                              rules="all" style="border:solid 1px" binding="#{encounterRecordController.battleMemberTable}">
@@ -31,7 +31,7 @@
                         <f:facet name="header">
                             <h:outputText value="Trun"/>
                         </f:facet>
-                        <h:outputText value="●" style="font-size: 40px;" rendered="#{member.myTurn}"/>
+                        <h:outputText value="●" style="font-size: 20px;" rendered="#{member.myTurn}"/>
                     </h:column>                        
                     <h:column>
                         <f:facet name="header">
@@ -66,20 +66,20 @@
                         <h:outputText value="#{member.encounterCharacter.comments}"/>
                     </h:column>
                 </h:dataTable>
-                <br/>
-                <h:commandButton action="#{encounterRecordController.saveBattleMembers}" value="Save and Sort"/>                        
-                <br/>
-
-
+                
+                <h:panelGrid columns="3">
+                    <h:commandButton value="ラウンドの最初へ" action="#{encounterRecordController.resetRound}"/>
+                    <h:commandButton value="戦闘の最初に戻る" action="#{encounterRecordController.resetBattle}"/>                    
+                    <h:commandButton value="イニシアチブランダム入力" action="#{encounterRecordController.setInitiativeByRandom}"/>                                        
+                </h:panelGrid>
+                
                 <br />
-                <h:commandLink action="#{encounterRecordController.destroyAndView}" value="#{bundle.ViewEncounterRecordDestroyLink}"/>
                 <br />
+                <h:commandLink action="Edit" value="戦闘メンバを変更"/>
                 <br />
-                <h:commandLink action="Edit" value="#{bundle.ViewEncounterRecordEditLink}"/>
+                <h:commandLink action="#{encounterRecordController.prepareCreate}" value="新しいエンカウンターを作成" />
                 <br />
-                <h:commandLink action="#{encounterRecordController.prepareCreate}" value="#{bundle.ViewEncounterRecordCreateLink}" />
-                <br />
-                <h:commandLink action="#{encounterRecordController.prepareList}" value="#{bundle.ViewEncounterRecordShowAllLink}"/>
+                <h:commandLink action="#{encounterRecordController.prepareList}" value="エンカウンター一覧に戻る"/>
                 <br />
                 <br />
                 <h:commandLink value="#{bundle.ViewEncounterRecordIndexLink}" action="/index" immediate="true" />

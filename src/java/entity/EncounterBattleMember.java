@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "EncounterBattleMember.findAll", query = "SELECT e FROM EncounterBattleMember e"),
     @NamedQuery(name = "EncounterBattleMember.findById", query = "SELECT e FROM EncounterBattleMember e WHERE e.id = :id"),
+    @NamedQuery(name = "EncounterBattleMember.findByEncounterCharacterAndEncounterRecord", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterCharacter = :encounterCharacter AND e.encounterRecord = :encounterRecord"),    
     @NamedQuery(name = "EncounterBattleMember.findByEncounterCharacter", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterCharacter = :encounterCharacter"),
     @NamedQuery(name = "EncounterBattleMember.findByEncounterRecord", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterRecord = :encounterRecord")})
 public class EncounterBattleMember implements Serializable {
@@ -42,6 +43,18 @@ public class EncounterBattleMember implements Serializable {
     private Integer hitPoint= 0;
     @Column(name = "INITIATIVE")
     private Integer initiative = 0;
+    
+    @Size(max = 255)
+    @Column(name = "COMMENTS", length = 255)
+    private String comments;
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 
     public Boolean getMyTurn() {
         return myTurn;
