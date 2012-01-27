@@ -20,19 +20,22 @@
                     <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_klass}" for="klass" />
                     <h:inputText id="klass" value="#{encounterCharacterController.selected.klass}" title="#{bundle.EditEncounterCharacterTitle_klass}" />
 
-                    <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_comments}" for="comments" />
-                    <h:inputText id="comments" value="#{encounterCharacterController.selected.comments}" title="#{bundle.EditEncounterCharacterTitle_comments}" />
                     <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_hitpoint}" for="hitpoint" />
                     <h:inputText id="hitpoint" value="#{encounterCharacterController.selected.hitpoint}" title="#{bundle.EditEncounterCharacterTitle_hitpoint}" />
                     <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_initiative}" for="initiative" />
                     <h:inputText id="initiative" value="#{encounterCharacterController.selected.initiative}" title="#{bundle.EditEncounterCharacterTitle_initiative}" />
+                    <h:outputLabel value="#{bundle.EditEncounterCharacterLabel_comments}" for="comments" />
+                    <h:inputTextarea style="font-size: 12px; width: 500px;height: 170px" id="comments" value="#{encounterCharacterController.selected.comments}" title="#{bundle.EditEncounterCharacterTitle_comments}" />                                        
                 </h:panelGrid>
-                <h:commandLink action="#{encounterCharacterController.update}" value="#{bundle.EditEncounterCharacterSaveLink}"/>
-                <br />
+                <h:commandButton action="#{encounterCharacterController.update}" value="#{bundle.EditEncounterCharacterSaveLink}"/>
+                <br /><br/>
+                <h:commandLink action="#{encounterCharacterController.copy()}" value="このキャラクターをコピー"/>                
                 <br />
                 <h:commandLink action="View" value="#{bundle.EditEncounterCharacterViewLink}" immediate="true"/>
+                <br/>
+                <h:commandLink action="#{encounterCharacterController.prepareCreate()}" value="新しいキャラクターを作成" />                
                 <br />
-                <h:commandLink action="#{encounterCharacterController.prepareList}" value="#{bundle.EditEncounterCharacterShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{encounterCharacterController.prepareList}" value="キャラクター一覧に戻る" immediate="true"/>
                 <br />
                 <br />
                 <h:commandLink value="#{bundle.EditEncounterCharacterIndexLink}" action="/index" immediate="true" />

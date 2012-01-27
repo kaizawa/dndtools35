@@ -14,26 +14,26 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateEncounterCharacterLabel_comments}" for="comments" />                    
-                    <h:inputText id="comments" value="#{encounterCharacterController.selected.comments}" title="#{bundle.CreateEncounterCharacterTitle_comments}" />
+                <h:panelGrid columns="2">               
+                    <h:outputLabel value="#{bundle.CreateEncounterCharacterLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{encounterCharacterController.selected.name}" title="#{bundle.CreateEncounterCharacterTitle_name}" />
+                    <h:outputLabel value="#{bundle.CreateEncounterCharacterLabel_klass}" for="klass" />
+                    <h:inputText id="klass" value="#{encounterCharacterController.selected.klass}" title="#{bundle.CreateEncounterCharacterTitle_klass}" />                    
                     <h:outputLabel value="#{bundle.CreateEncounterCharacterLabel_hitpoint}" for="hitpoint" />
                     <h:inputText id="hitpoint" value="#{encounterCharacterController.selected.hitpoint}" title="#{bundle.CreateEncounterCharacterTitle_hitpoint}" />
                     <h:outputLabel value="#{bundle.CreateEncounterCharacterLabel_initiative}" for="initiative" />
                     <h:inputText id="initiative" value="#{encounterCharacterController.selected.initiative}" title="#{bundle.CreateEncounterCharacterTitle_initiative}" />
-                    <h:outputLabel value="#{bundle.CreateEncounterCharacterLabel_klass}" for="klass" />
-                    <h:inputText id="klass" value="#{encounterCharacterController.selected.klass}" title="#{bundle.CreateEncounterCharacterTitle_klass}" />
-                    <h:outputLabel value="#{bundle.CreateEncounterCharacterLabel_name}" for="name" />
-                    <h:inputText id="name" value="#{encounterCharacterController.selected.name}" title="#{bundle.CreateEncounterCharacterTitle_name}" />
-                </h:panelGrid>
+                    <h:outputLabel value="#{bundle.CreateEncounterCharacterLabel_comments}" for="comments" />                                        
+                    <h:inputTextarea style="font-size: 12px; width: 500px;height: 170px" id="comments" value="#{encounterCharacterController.selected.comments}" title="#{bundle.CreateEncounterCharacterTitle_comments}" />
+                </h:panelGrid>                
                 <br />
-                <h:commandLink action="#{encounterCharacterController.create}" value="#{bundle.CreateEncounterCharacterSaveLink}" />
+                <h:commandButton action="#{encounterCharacterController.create}" value="#{bundle.CreateEncounterCharacterSaveLink}" />
+                <br /><br/>
                 <br />
-                <br />
-                <h:commandLink action="#{encounterCharacterController.prepareList}" value="#{bundle.CreateEncounterCharacterShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{encounterCharacterController.prepareList}" value="キャラクター一覧に戻る" immediate="true"/>
                 <br />
                 <br />
-                <h:commandLink value="#{bundle.CreateEncounterCharacterIndexLink}" action="/index" immediate="true" />
+                <h:commandLink value="#{bundle.CreateEncounterCharacterIndexLink}" action="/index" immediate="true" />                
             </h:form>
         </ui:define>
     </ui:composition>

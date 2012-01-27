@@ -11,6 +11,7 @@ import entity.EncounterBattleMember;
 import entity.EncounterCharacter;
 
 import java.io.Serializable;
+import java.text.StringCharacterIterator;
 import java.util.*;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -112,7 +113,7 @@ public class EncounterRecordController implements Serializable {
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterRecordCreated"));
-            return prepareCreate();
+            return "Edit";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -430,4 +431,39 @@ public class EncounterRecordController implements Serializable {
         }
         return null;
     }
+    
+    public EncounterRecord getCurrent(){
+        return current;
+    }
+    
+    public String getTurnCharaComments(){
+        String comments = current.getTurnCharacter().getEncounterCharacter().getComments();
+        return comments;
+    }   
+    
+    public String setInitialHitPoint(){
+         try {
+            for (EncounterBattleMember member : battleMemberList) {
+                member.setHitPoint(member.getEncounterCharacter().getHitpoint());
+                encounterBattleMemberFacade.edit(member);
+            }
+            JsfUtil.addSuccessMessage("Member's Poropety Updated");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
+        }
+        return null;
+    }    
+    /*
+    private Integer hpModifier;
+
+    public Integer getHpModifier() {
+        return 0;
+    }
+
+    public void setHpModifier(Integer mod) {
+        EncounterCharacter chara = (EncounterCharacter) encounterCharacterTable.getRowData();
+        chara.setHitpoint(chara.getHitpoint() + mod);
+    }
+    */
+    
 }

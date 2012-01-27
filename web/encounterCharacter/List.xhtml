@@ -10,17 +10,19 @@
             <h:outputText value="#{bundle.ListEncounterCharacterTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-        <h:form styleClass="jsfcrud_list_form">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:outputText escape="false" value="#{bundle.ListEncounterCharacterEmpty}" rendered="#{encounterCharacterController.items.rowCount == 0}"/>
-            <h:panelGroup rendered="#{encounterCharacterController.items.rowCount > 0}">
-                <h:outputText value="#{encounterCharacterController.pagination.pageFirstItem + 1}..#{encounterCharacterController.pagination.pageLastItem + 1}/#{encounterCharacterController.pagination.itemsCount}"/>&nbsp;
-                <h:commandLink action="#{encounterCharacterController.previous}" value="#{bundle.Previous} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasPreviousPage}"/>&nbsp;
-                <h:commandLink action="#{encounterCharacterController.next}" value="#{bundle.Next} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasNextPage}"/>&nbsp;
-                <h:dataTable value="#{encounterCharacterController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                                           <h:column>
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{encounterCharacterController.reread()}" value="再読み込み"/>                
+                <h:outputText escape="false" value="#{bundle.ListEncounterCharacterEmpty}" rendered="#{encounterCharacterController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{encounterCharacterController.items.rowCount > 0}">
+                    <h:outputText value="#{encounterCharacterController.pagination.pageFirstItem + 1}..#{encounterCharacterController.pagination.pageLastItem + 1}/#{encounterCharacterController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{encounterCharacterController.previous}" value="#{bundle.Previous} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{encounterCharacterController.next}" value="#{bundle.Next} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{encounterCharacterController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEncounterCharacterTitle_id}"/>
                             </f:facet>
@@ -38,12 +40,12 @@
                             </f:facet>
                             <h:outputText value="#{item.klass}"/>
                         </h:column>
-                      
-                        <h:column>
+
+                        <h:column style="width: 300px;height: 12">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEncounterCharacterTitle_comments}"/>
                             </f:facet>
-                            <h:outputText value="#{item.comments}"/>
+                            <h:outputText value="#{item.comments}" rendered="false"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
@@ -68,14 +70,15 @@
                             <h:outputText value=" "/>
                             <h:commandLink action="#{encounterCharacterController.destroy}" value="#{bundle.ListEncounterCharacterDestroyLink}"/>
                         </h:column>
-                </h:dataTable>
-            </h:panelGroup>
-            <br />
-            <h:commandLink action="#{encounterCharacterController.prepareCreate}" value="#{bundle.ListEncounterCharacterCreateLink}"/>
-            <br />
-            <br />
-            <h:commandLink value="#{bundle.ListEncounterCharacterIndexLink}" action="/index" immediate="true" />
-        </h:form>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{encounterCharacterController.prepareCreate}" value="新しいキャラクターを作成"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ListEncounterCharacterIndexLink}" action="/index" immediate="true" />
+          
+            </h:form>
         </ui:define>
     </ui:composition>
 

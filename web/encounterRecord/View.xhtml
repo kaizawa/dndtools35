@@ -52,6 +52,14 @@
                         </f:facet>
                         <h:inputText value="#{member.hitPoint}"/>
                     </h:column>
+                    <!--
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="HP調整"/>
+                        </f:facet>
+                        <h:inputText value="#{encounterRecordController.hpModifier}"/>
+                    </h:column>                    
+                    -->
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Initiative"/>
@@ -63,17 +71,22 @@
                         <f:facet name="header">
                             <h:outputText value="Comments"/>
                         </f:facet>
-                        <h:outputText value="#{member.encounterCharacter.comments}"/>
+                        <h:outputText value="#{member.comments}"/>
                     </h:column>
                 </h:dataTable>
-                
-                <h:panelGrid columns="3">
+
+                <h:panelGrid columns="4">
                     <h:commandButton value="ラウンドの最初へ" action="#{encounterRecordController.resetRound}"/>
                     <h:commandButton value="戦闘の最初に戻る" action="#{encounterRecordController.resetBattle}"/>                    
                     <h:commandButton value="イニシアチブランダム入力" action="#{encounterRecordController.setInitiativeByRandom}"/>                                        
+                    <h:commandButton value="HPをリセット" action="#{encounterRecordController.setInitialHitPoint()}"/>                                                            
                 </h:panelGrid>
-                
-                <br />
+
+                <br/>
+                <h:outputText value="#{encounterRecordController.current.turnCharacter.encounterCharacter.name}"/>                                    
+                <h:panelGrid border="1" cellpadding="2" cellspacing="0">
+                    <h:inputTextarea style="font-size: 12px; width: 500px;height: 170px" value="#{encounterRecordController.getTurnCharaComments()}" readonly="true"/>
+                </h:panelGrid>
                 <br />
                 <h:commandLink action="Edit" value="戦闘メンバを変更"/>
                 <br />

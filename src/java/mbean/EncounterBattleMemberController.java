@@ -224,4 +224,9 @@ public class EncounterBattleMemberController implements Serializable {
             }
         }
     }
+    
+    public String reread(){
+        items = null;
+        return null;
+    }      
 }

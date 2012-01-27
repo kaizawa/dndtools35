@@ -6,6 +6,7 @@ import mbean.util.PaginationHelper;
 import ejb.EncounterCharacterFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -21,6 +22,8 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "encounterCharacterController")
 @SessionScoped
 public class EncounterCharacterController implements Serializable {
+    @EJB
+    private EncounterCharacterFacade encounterCharacterFacade;
 
     private EncounterCharacter current;
     private DataModel items = null;
@@ -46,7 +49,7 @@ public class EncounterCharacterController implements Serializable {
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(10) {
+            pagination = new PaginationHelper(100) {
 
                 @Override
                 public int getItemsCount() {
@@ -83,7 +86,7 @@ public class EncounterCharacterController implements Serializable {
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterCharacterCreated"));
-            return prepareCreate();
+            return "Edit";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -100,7 +103,7 @@ public class EncounterCharacterController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterCharacterUpdated"));
-            return "View";
+            return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -154,7 +157,9 @@ public class EncounterCharacterController implements Serializable {
     }
 
     public DataModel getItems() {
-        items = getPagination().createPageDataModel();
+        if(items == null){
+            items = getPagination().createPageDataModel();
+        }
         return items;
     }
 
@@ -222,4 +227,33 @@ public class EncounterCharacterController implements Serializable {
             }
         }
     }
+    
+    public String reread(){
+        items = null;
+        return null;
+    }    
+    
+    public String copy() {
+        EncounterCharacter newchara = new EncounterCharacter();
+        newchara.setComments(current.getComments());
+        newchara.setEncounterBattleMemberList(current.getEncounterBattleMemberList());
+        newchara.setHitpoint(current.getHitpoint());
+        newchara.setInitiative(current.getInitiative());
+        newchara.setKlass(current.getKlass());
+        for(int i = 2; i < 255 ; i++){
+            List<EncounterCharacter> charaList =  encounterCharacterFacade.findByName(current.getName() + i);
+            if(charaList.isEmpty()){
+                newchara.setName(current.getName() + i);
+                break;
+            }
+        }
+        try {
+            getFacade().create(newchara);
+            JsfUtil.addSuccessMessage("New Copy of EncounterCharacter Created");
+            return null;
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }    
 }

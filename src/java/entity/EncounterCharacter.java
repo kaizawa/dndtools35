@@ -33,8 +33,8 @@ public class EncounterCharacter implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Size(max = 255)
-    @Column(name = "COMMENTS", length = 255)
+    @Size(max = 4000)
+    @Column(name = "COMMENTS", length = 4000)
     private String comments;
     @Column(name = "HITPOINT")
     private Integer hitpoint = 0;
@@ -135,6 +135,5 @@ public class EncounterCharacter implements Serializable {
     @Override
     public String toString() {
         return "entity.EncounterCharacter[ id=" + id + " ]";
-    }
-    
+    }    
 }
