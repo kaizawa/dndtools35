@@ -360,25 +360,37 @@ public class EncounterRecordController implements Serializable {
     public void setBattleMemberTable(HtmlDataTable battleMemberTable) {
         this.battleMemberTable = battleMemberTable;
     }
+    
+    private EncounterBattleMember getNextMember(Integer current_index){
+        EncounterBattleMember nextMember;
+
+        if (battleMemberList.size() <= current_index + 1) {
+            nextMember = battleMemberList.get(0);                    
+            // got next round
+            current.setRound(current.getRound() + 1);            
+        } else {
+            nextMember = battleMemberList.get(current_index + 1);                                
+        }        
+        return nextMember;
+    }
 
     public String nextTrun() {
         int current_index;
         current_index = battleMemberList.indexOf(current.getTurnCharacter());
-        EncounterBattleMember nextChara;
-        if (battleMemberList.size() <= current_index + 1) {
-            nextChara = battleMemberList.get(0);                    
-            // got next round
-            nextChara.setMyTurn(true);
-            current.setTurnCharacter(nextChara);
-            current.setRound(current.getRound() + 1);
-        } else {
-            nextChara = battleMemberList.get(current_index + 1);                                
-            current.setTurnCharacter(nextChara);
-            nextChara.setMyTurn(true);
-        }
+        EncounterBattleMember nextMember;
+        
+        do{
+            nextMember = getNextMember(current_index);
+            current_index++;
+        } while(nextMember.getHitPoint() < 0);
+
+        current.getTurnCharacter().setMyTurn(false);
+        current.setTurnCharacter(nextMember);        
+        nextMember.setMyTurn(true);        
+        
         try {
             encounterRecordFacade.edit(current);
-            encounterBattleMemberFacade.edit(nextChara);                
+            encounterBattleMemberFacade.edit(nextMember);                
         } catch (Exception e){
             JsfUtil.addErrorMessage("Persistence Error Occured");            
         }
@@ -396,7 +408,7 @@ public class EncounterRecordController implements Serializable {
     private HtmlDataTable encounterCharacterTable2 = new HtmlDataTable();
     
     public String resetBattle(){
-        current.setRound(0);
+        current.setRound(1);
         current.setTurnCharacter(null);
         try {
             encounterRecordFacade.edit(current);
@@ -453,7 +465,7 @@ public class EncounterRecordController implements Serializable {
         }
         return null;
     }    
-    /*
+
     private Integer hpModifier;
 
     public Integer getHpModifier() {
@@ -461,9 +473,19 @@ public class EncounterRecordController implements Serializable {
     }
 
     public void setHpModifier(Integer mod) {
-        EncounterCharacter chara = (EncounterCharacter) encounterCharacterTable.getRowData();
-        chara.setHitpoint(chara.getHitpoint() + mod);
+        int index = battleMemberTable.getRowIndex();
+        EncounterBattleMember member = battleMemberList.get(index);
+        member.setHitPoint(member.getHitPoint() - mod);
+
     }
-    */
+    
+    public String getHpColor(){
+        EncounterBattleMember member = (EncounterBattleMember)battleMemberTable.getRowData();
+        if(member.getHitPoint() > 0){
+            return "black;";
+        } else {
+            return "red;";
+        }
+    }
     
 }

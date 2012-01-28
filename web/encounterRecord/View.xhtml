@@ -7,20 +7,19 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{encounterRecordController.selected.name}"></h:outputText>
+            <h:outputText value="#{encounterRecordController.selected.name} - Round: #{encounterRecordController.selected.round}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>   
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_round}"/>
-                    <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}"/>
-                    <h:outputText value="#{bundle.ViewEncounterRecordLabel_comments}"/>
-                    <h:outputText value="#{encounterRecordController.selected.comments}" title="#{bundle.ViewEncounterRecordTitle_comments}"/>
-                </h:panelGrid>
-                <br />
+                <!--
+                <h:outputText value="#{bundle.ViewEncounterRecordLabel_round}" style="font-size: 20px"/>
+                <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}" style="font-size: 20px"/>
+                -->
+                <h:outputText value="#{encounterRecordController.selected.comments}" title="#{bundle.ViewEncounterRecordTitle_comments}"/>
+                <br/><br/>
                 <h:commandButton action="#{encounterRecordController.nextTrun()}" value="次のターン"/>
                 <h:outputLabel value=" "/>
                 <h:commandButton action="#{encounterRecordController.saveBattleMembers}" value="Save and Sort"/>                        
@@ -31,13 +30,13 @@
                         <f:facet name="header">
                             <h:outputText value="Trun"/>
                         </f:facet>
-                        <h:outputText value="●" style="font-size: 20px;" rendered="#{member.myTurn}"/>
+                        <h:outputText value="●" style="font-size: 17px; color: red" rendered="#{member.myTurn}"/>
                     </h:column>                        
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Name"/>
+                            <h:outputText value="Name" />
                         </f:facet>
-                        <h:outputText value="#{member.encounterCharacter.name}"/>
+                        <h:outputText value="#{member.encounterCharacter.name}" style="color: #{encounterRecordController.hpColor}"/>
                     </h:column>         
                     <h:column>
                         <f:facet name="header">
@@ -48,30 +47,37 @@
 
                     <h:column>
                         <f:facet name="header">
+                            <h:outputText value="MAX HP"/>
+                        </f:facet>
+                        <h:outputText value="#{member.encounterCharacter.hitpoint}"/>
+                    </h:column>  
+
+                    <h:column>
+                        <f:facet name="header" >
                             <h:outputText value="Hitpoint"/>
                         </f:facet>
-                        <h:inputText value="#{member.hitPoint}"/>
+                        <h:inputText value="#{member.hitPoint}" style="width: 30px; color: #{encounterRecordController.hpColor}"/>
                     </h:column>
-                    <!--
+
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="HP調整"/>
+                            <h:outputText value="ダメージ"/>
                         </f:facet>
-                        <h:inputText value="#{encounterRecordController.hpModifier}"/>
+                        <h:inputText value="#{encounterRecordController.hpModifier}" style="width: 30px"/>
                     </h:column>                    
-                    -->
+
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Initiative"/>
                         </f:facet>
-                        <h:inputText value="#{member.initiative}"/>
+                        <h:inputText value="#{member.initiative}" style="width: 30px"/>
                     </h:column>
 
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Comments"/>
                         </f:facet>
-                        <h:outputText value="#{member.comments}"/>
+                        <h:inputText value="#{member.comments}"/>
                     </h:column>
                 </h:dataTable>
 
@@ -85,7 +91,7 @@
                 <br/>
                 <h:outputText value="#{encounterRecordController.current.turnCharacter.encounterCharacter.name}"/>                                    
                 <h:panelGrid border="1" cellpadding="2" cellspacing="0">
-                    <h:inputTextarea style="font-size: 12px; width: 500px;height: 170px" value="#{encounterRecordController.getTurnCharaComments()}" readonly="true"/>
+                    <h:inputTextarea style="font-size: 12px; width: 500px;height: 200px" value="#{encounterRecordController.getTurnCharaComments()}" readonly="true"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="Edit" value="戦闘メンバを変更"/>
