@@ -14,7 +14,8 @@
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:commandLink action="#{encounterCharacterController.reread()}" value="再読み込み"/>                                
+                <h:commandLink action="#{encounterRecordController.reread()}" value="再読み込み"/>                                
+                <br/>
                 <h:outputText escape="false" value="#{bundle.ListEncounterRecordEmpty}" rendered="#{encounterRecordController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
                     <h:outputText value="#{encounterRecordController.pagination.pageFirstItem + 1}..#{encounterRecordController.pagination.pageLastItem + 1}/#{encounterRecordController.pagination.itemsCount}"/>&nbsp;

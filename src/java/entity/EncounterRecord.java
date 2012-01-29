@@ -39,17 +39,6 @@ public class EncounterRecord implements Serializable {
     private String comments;
     @Column(name = "ROUND")
     private Integer round = 1;
-    @JoinColumn(name = "TURN_CHARACTER", referencedColumnName = "ID")
-    @ManyToOne
-    private EncounterBattleMember turnCharacter;
-    
-    public EncounterBattleMember getTurnCharacter() {
-        return turnCharacter;
-    }
-
-    public void setTurnCharacter(EncounterBattleMember turnCharacter) {
-        this.turnCharacter = turnCharacter;
-    }
     
     public String getName() {
         return name;

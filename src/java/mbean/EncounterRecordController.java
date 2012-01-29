@@ -269,6 +269,9 @@ public class EncounterRecordController implements Serializable {
     }
     private HtmlDataTable encounterCharacterTable = new HtmlDataTable();
 
+    /*
+     * EncounterRecord のメンバーとして選択/解除する
+     */
     public void setCharaSelected(boolean charaSelected) {
         int index = encounterCharacterTable.getRowIndex();
 
@@ -282,13 +285,11 @@ public class EncounterRecordController implements Serializable {
                         member.setEncounterRecord(current);
                         member.setEncounterCharacter(encounterCharacter);
                         encounterBattleMemberFacade.edit(member);
-                        JsfUtil.addSuccessMessage("Character successfully added as Battle Member");
                     }
                 } else {
                     List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterCharacterAndEncounterRecord(encounterCharacter,current);
                     for (EncounterBattleMember member : memberList) {
                         encounterBattleMemberFacade.remove(member);
-                        JsfUtil.addSuccessMessage("Character successfully removed from Battle Members");
                     }
                 }
             }
@@ -306,11 +307,10 @@ public class EncounterRecordController implements Serializable {
     }
 
     public void setTurn() {
-        if (current.getTurnCharacter() == null) {
+        if (getTurnMember() == null) {
             if (battleMemberList.size() > 0) {
                 EncounterBattleMember first = battleMemberList.get(0);
                 first.setMyTurn(true);
-                current.setTurnCharacter(first);
                 try {
                     encounterRecordFacade.edit(current);
                     encounterBattleMemberFacade.edit(first);
@@ -320,7 +320,7 @@ public class EncounterRecordController implements Serializable {
             }
         } else {
             for (EncounterBattleMember member : battleMemberList) {
-                if (member.equals(current.getTurnCharacter())) {
+                if (member.equals(getTurnMember())) {
                     member.setMyTurn(true);
                 }else { 
                     member.setMyTurn(false);
@@ -331,7 +331,7 @@ public class EncounterRecordController implements Serializable {
                     JsfUtil.addErrorMessage("Persistance Error Happened");                    
                 }
             }
-            //JsfUtil.addSuccessMessage("TrunCharacter is " + current.getTurnCharacter().getEncounterCharacter().getName());
+            //JsfUtil.addSuccessMessage("TrunCharacter is " + getTrunMember().getEncounterCharacter().getName());
         }
     }
 
@@ -376,7 +376,7 @@ public class EncounterRecordController implements Serializable {
 
     public String nextTrun() {
         int current_index;
-        current_index = battleMemberList.indexOf(current.getTurnCharacter());
+        current_index = battleMemberList.indexOf(getTurnMember());
         EncounterBattleMember nextMember;
         
         do{
@@ -384,8 +384,7 @@ public class EncounterRecordController implements Serializable {
             current_index++;
         } while(nextMember.getHitPoint() < 0);
 
-        current.getTurnCharacter().setMyTurn(false);
-        current.setTurnCharacter(nextMember);        
+        getTurnMember().setMyTurn(false);
         nextMember.setMyTurn(true);        
         
         try {
@@ -409,7 +408,6 @@ public class EncounterRecordController implements Serializable {
     
     public String resetBattle(){
         current.setRound(1);
-        current.setTurnCharacter(null);
         try {
             encounterRecordFacade.edit(current);
         } catch (Exception e){
@@ -419,7 +417,6 @@ public class EncounterRecordController implements Serializable {
     }
     
     public String resetRound(){
-        current.setTurnCharacter(null);
         try {
             encounterRecordFacade.edit(current);
         } catch (Exception e){
@@ -449,7 +446,7 @@ public class EncounterRecordController implements Serializable {
     }
     
     public String getTurnCharaComments(){
-        String comments = current.getTurnCharacter().getEncounterCharacter().getComments();
+        String comments = getTurnMember().getEncounterCharacter().getComments();
         return comments;
     }   
     
@@ -488,4 +485,18 @@ public class EncounterRecordController implements Serializable {
         }
     }
     
+    public String reread(){
+        items = null;
+        return null;
+    }       
+    
+    public EncounterBattleMember getTurnMember(){
+        List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterRecord(current);
+        
+        for(EncounterBattleMember member : memberList){
+            if(member.getMyTurn())
+                return member;
+        }
+        return memberList.get(0);
+    }
 }

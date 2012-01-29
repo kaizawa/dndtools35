@@ -34,8 +34,8 @@ public class EncounterBattleMember implements Serializable {
     @JoinColumn(name = "ENCOUNTER_CHARACTER", referencedColumnName = "ID")
     @ManyToOne
     private EncounterCharacter encounterCharacter;
-   
-    @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID")
+    
+    @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID" )
     @ManyToOne
     private EncounterRecord encounterRecord;
     
