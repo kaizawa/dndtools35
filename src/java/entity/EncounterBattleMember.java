@@ -20,30 +20,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "EncounterBattleMember.findAll", query = "SELECT e FROM EncounterBattleMember e"),
     @NamedQuery(name = "EncounterBattleMember.findById", query = "SELECT e FROM EncounterBattleMember e WHERE e.id = :id"),
-    @NamedQuery(name = "EncounterBattleMember.findByEncounterCharacterAndEncounterRecord", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterCharacter = :encounterCharacter AND e.encounterRecord = :encounterRecord"),    
+    @NamedQuery(name = "EncounterBattleMember.findByEncounterCharacterAndEncounterRecord", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterCharacter = :encounterCharacter AND e.encounterRecord = :encounterRecord"),
     @NamedQuery(name = "EncounterBattleMember.findByEncounterCharacter", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterCharacter = :encounterCharacter"),
     @NamedQuery(name = "EncounterBattleMember.findByEncounterRecord", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterRecord = :encounterRecord")})
 public class EncounterBattleMember implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    
     @JoinColumn(name = "ENCOUNTER_CHARACTER", referencedColumnName = "ID")
     @ManyToOne
     private EncounterCharacter encounterCharacter;
-    
-    @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID" )
+    @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID")
     @ManyToOne
     private EncounterRecord encounterRecord;
-    
     @Column(name = "HITPOINT")
-    private Integer hitPoint= 0;
+    private Integer hitPoint = 0;
     @Column(name = "INITIATIVE")
     private Integer initiative = 0;
-    
     @Size(max = 255)
     @Column(name = "COMMENTS", length = 255)
     private String comments;
@@ -63,7 +60,6 @@ public class EncounterBattleMember implements Serializable {
     public void setMyTurn(Boolean myTurn) {
         this.myTurn = myTurn;
     }
-    
     @Column(name = "MY_TURN")
     private Boolean myTurn;
 

@@ -125,5 +125,5 @@ public class EncounterRecord implements Serializable {
     public String toString() {
         return "entity.Encounter[ id=" + id + " ]";
     }
-    
+
 }
