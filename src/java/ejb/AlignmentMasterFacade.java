@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class AlignmentMasterFacade extends AbstractFacade<AlignmentMaster> {
-    @PersistenceContext(unitName = "dndPU")
+    @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
     @Override

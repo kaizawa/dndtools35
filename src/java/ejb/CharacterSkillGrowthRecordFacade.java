@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CharacterSkillGrowthRecordFacade extends AbstractFacade<CharacterSkillGrowthRecord> {
-    @PersistenceContext(unitName = "dndPU")
+    @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
     @Override

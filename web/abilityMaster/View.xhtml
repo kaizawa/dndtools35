@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewAbilityMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewAbilityMasterLabel_id}"/>
+                    <h:outputText value="#{abilityMasterController.selected.id}" title="#{bundle.ViewAbilityMasterTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewAbilityMasterLabel_abilityName}"/>
+                    <h:outputText value="#{abilityMasterController.selected.abilityName}" title="#{bundle.ViewAbilityMasterTitle_abilityName}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{abilityMasterController.destroyAndView}" value="#{bundle.ViewAbilityMasterDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewAbilityMasterEditLink}"/>
+                <br />
+                <h:commandLink action="#{abilityMasterController.prepareCreate}" value="#{bundle.ViewAbilityMasterCreateLink}" />
+                <br />
+                <h:commandLink action="#{abilityMasterController.prepareList}" value="#{bundle.ViewAbilityMasterShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewAbilityMasterIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

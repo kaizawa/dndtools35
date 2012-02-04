@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewMonsterAbilityRecordTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewMonsterAbilityRecordLabel_base}"/>
+                    <h:outputText value="#{monsterAbilityRecordController.selected.base}" title="#{bundle.ViewMonsterAbilityRecordTitle_base}"/>
+                    <h:outputText value="#{bundle.ViewMonsterAbilityRecordLabel_featModifier}"/>
+                    <h:outputText value="#{monsterAbilityRecordController.selected.featModifier}" title="#{bundle.ViewMonsterAbilityRecordTitle_featModifier}"/>
+                    <h:outputText value="#{bundle.ViewMonsterAbilityRecordLabel_miscModifier}"/>
+                    <h:outputText value="#{monsterAbilityRecordController.selected.miscModifier}" title="#{bundle.ViewMonsterAbilityRecordTitle_miscModifier}"/>
+                    <h:outputText value="#{bundle.ViewMonsterAbilityRecordLabel_description}"/>
+                    <h:outputText value="#{monsterAbilityRecordController.selected.description}" title="#{bundle.ViewMonsterAbilityRecordTitle_description}"/>
+                    <h:outputText value="#{bundle.ViewMonsterAbilityRecordLabel_monsterMaster}"/>
+                    <h:outputText value="#{monsterAbilityRecordController.selected.monsterMaster}" title="#{bundle.ViewMonsterAbilityRecordTitle_monsterMaster}"/>
+                    <h:outputText value="#{bundle.ViewMonsterAbilityRecordLabel_abilityMaster}"/>
+                    <h:outputText value="#{monsterAbilityRecordController.selected.abilityMaster}" title="#{bundle.ViewMonsterAbilityRecordTitle_abilityMaster}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{monsterAbilityRecordController.destroyAndView}" value="#{bundle.ViewMonsterAbilityRecordDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewMonsterAbilityRecordEditLink}"/>
+                <br />
+                <h:commandLink action="#{monsterAbilityRecordController.prepareCreate}" value="#{bundle.ViewMonsterAbilityRecordCreateLink}" />
+                <br />
+                <h:commandLink action="#{monsterAbilityRecordController.prepareList}" value="#{bundle.ViewMonsterAbilityRecordShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewMonsterAbilityRecordIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

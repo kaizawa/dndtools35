@@ -19,6 +19,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({@NamedQuery(name = "DiceMaster.findById", query = "SELECT d FROM DiceMaster d WHERE d.id = :id"), @NamedQuery(name = "DiceMaster.findByName", query = "SELECT d FROM DiceMaster d WHERE d.name = :name"), @NamedQuery(name = "DiceMaster.findByType", query = "SELECT d FROM DiceMaster d WHERE d.type = :type")})
 public class DiceMaster implements Serializable {
     @OneToMany(mappedBy = "hitDiceType")
+    private List<MonsterMaster> monsterMasterList;
+    @OneToMany(mappedBy = "hitDiceType")
     private List<ClassMaster> classMasterList;
     private static final long serialVersionUID = 1L;
     @Id
@@ -92,6 +94,15 @@ public class DiceMaster implements Serializable {
 
     public void setClassMasterList(List<ClassMaster> classMasterList) {
         this.classMasterList = classMasterList;
+    }
+
+    @XmlTransient
+    public List<MonsterMaster> getMonsterMasterList() {
+        return monsterMasterList;
+    }
+
+    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
+        this.monsterMasterList = monsterMasterList;
     }
 
 }

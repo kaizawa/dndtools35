@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class SkillSynergyMasterFacade extends AbstractFacade<SkillSynergyMaster> {
-    @PersistenceContext(unitName = "dndPU")
+    @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
     @Override

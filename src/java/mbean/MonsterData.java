@@ -3,10 +3,13 @@ package mbean;
 
 /**
  *
+ * データベース上のマスターデータから算出できるデータを含む、モンスターのあらゆる
+ * を報告できるクラス。MOSTTER_MASTER 表を表す MonsterMaster クラスの
+ * インスタンスを保持する。
+ * 
  * @author kaizawa
  */
 public class MonsterData implements CharacterSummary {
-    
 
     @Override
     public String getAbilities() {
@@ -14,12 +17,12 @@ public class MonsterData implements CharacterSummary {
     }
 
     @Override
-    public Integer getArmorClass() {
+    public String getArmorClass() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String getAttackDescription() {
+    public String getNormalAttackDescription() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -117,6 +120,7 @@ public class MonsterData implements CharacterSummary {
     public String getType() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
- 
+    
+
 
 }

@@ -7,7 +7,9 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -17,6 +19,10 @@ import javax.persistence.*;
 @Table(name = "ABILITY_MASTER")
 @NamedQueries({@NamedQuery(name = "AbilityMaster.findById", query = "SELECT a FROM AbilityMaster a WHERE a.id = :id"), @NamedQuery(name = "AbilityMaster.findByAbilityName", query = "SELECT a FROM AbilityMaster a WHERE a.abilityName = :abilityName")})
 public class AbilityMaster implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abilityMaster")
+    private List<MonsterSkillRecord> monsterSkillRecordList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "abilityMaster")
+    private List<MonsterAbilityRecord> monsterAbilityRecordList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -121,6 +127,24 @@ public class AbilityMaster implements Serializable {
     @Override
     public String toString() {
         return "entity.AbilityMaster[id=" + id + "]";
+    }
+
+    @XmlTransient
+    public List<MonsterSkillRecord> getMonsterSkillRecordList() {
+        return monsterSkillRecordList;
+    }
+
+    public void setMonsterSkillRecordList(List<MonsterSkillRecord> monsterSkillRecordList) {
+        this.monsterSkillRecordList = monsterSkillRecordList;
+    }
+
+    @XmlTransient
+    public List<MonsterAbilityRecord> getMonsterAbilityRecordList() {
+        return monsterAbilityRecordList;
+    }
+
+    public void setMonsterAbilityRecordList(List<MonsterAbilityRecord> monsterAbilityRecordList) {
+        this.monsterAbilityRecordList = monsterAbilityRecordList;
     }
 
 }

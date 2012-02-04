@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class SaveMasterFacade extends AbstractFacade<SaveMaster> {
-    @PersistenceContext(unitName = "dndPU")
+    @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
     @Override

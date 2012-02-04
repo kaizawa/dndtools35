@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +27,8 @@ import javax.persistence.Table;
 @Table(name = "SIZE_MASTER")
 @NamedQueries({@NamedQuery(name = "SizeMaster.findById", query = "SELECT s FROM SizeMaster s WHERE s.id = :id"), @NamedQuery(name = "SizeMaster.findBySizeName", query = "SELECT s FROM SizeMaster s WHERE s.sizeName = :sizeName"), @NamedQuery(name = "SizeMaster.findByAcModifier", query = "SELECT s FROM SizeMaster s WHERE s.acModifier = :acModifier")})
 public class SizeMaster implements Serializable {
+    @OneToMany(mappedBy = "sizeId")
+    private List<MonsterMaster> monsterMasterList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -99,6 +103,15 @@ public class SizeMaster implements Serializable {
     @Override
     public String toString() {
         return "entity.SizeMaster[id=" + id + "]";
+    }
+
+    @XmlTransient
+    public List<MonsterMaster> getMonsterMasterList() {
+        return monsterMasterList;
+    }
+
+    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
+        this.monsterMasterList = monsterMasterList;
     }
 
 }

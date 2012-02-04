@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSizeMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSizeMasterLabel_id}"/>
+                    <h:outputText value="#{sizeMasterController.selected.id}" title="#{bundle.ViewSizeMasterTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewSizeMasterLabel_sizeName}"/>
+                    <h:outputText value="#{sizeMasterController.selected.sizeName}" title="#{bundle.ViewSizeMasterTitle_sizeName}"/>
+                    <h:outputText value="#{bundle.ViewSizeMasterLabel_acModifier}"/>
+                    <h:outputText value="#{sizeMasterController.selected.acModifier}" title="#{bundle.ViewSizeMasterTitle_acModifier}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{sizeMasterController.destroyAndView}" value="#{bundle.ViewSizeMasterDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewSizeMasterEditLink}"/>
+                <br />
+                <h:commandLink action="#{sizeMasterController.prepareCreate}" value="#{bundle.ViewSizeMasterCreateLink}" />
+                <br />
+                <h:commandLink action="#{sizeMasterController.prepareList}" value="#{bundle.ViewSizeMasterShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewSizeMasterIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

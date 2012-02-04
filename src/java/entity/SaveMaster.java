@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,6 +30,8 @@ import javax.persistence.Table;
 @Table(name = "SAVE_MASTER")
 @NamedQueries({@NamedQuery(name = "SaveMaster.findById", query = "SELECT s FROM SaveMaster s WHERE s.id = :id"), @NamedQuery(name = "SaveMaster.findBySaveName", query = "SELECT s FROM SaveMaster s WHERE s.saveName = :saveName")})
 public class SaveMaster implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "saveMaster")
+    private List<MonsterSaveRecord> monsterSaveRecordList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -123,6 +127,15 @@ public class SaveMaster implements Serializable {
     @Override
     public String toString() {
         return "entity.SaveMaster[id=" + id + "]";
+    }
+
+    @XmlTransient
+    public List<MonsterSaveRecord> getMonsterSaveRecordList() {
+        return monsterSaveRecordList;
+    }
+
+    public void setMonsterSaveRecordList(List<MonsterSaveRecord> monsterSaveRecordList) {
+        this.monsterSaveRecordList = monsterSaveRecordList;
     }
 
 }

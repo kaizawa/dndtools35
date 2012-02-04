@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewMonsterMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_id}"/>
+                    <h:outputText value="#{monsterMasterController.selected.id}" title="#{bundle.ViewMonsterMasterTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_type}"/>
+                    <h:outputText value="#{monsterMasterController.selected.type}" title="#{bundle.ViewMonsterMasterTitle_type}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_hitDiceNum}"/>
+                    <h:outputText value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.ViewMonsterMasterTitle_hitDiceNum}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_initiative}"/>
+                    <h:outputText value="#{monsterMasterController.selected.initiative}" title="#{bundle.ViewMonsterMasterTitle_initiative}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_speed}"/>
+                    <h:outputText value="#{monsterMasterController.selected.speed}" title="#{bundle.ViewMonsterMasterTitle_speed}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_ac}"/>
+                    <h:outputText value="#{monsterMasterController.selected.ac}" title="#{bundle.ViewMonsterMasterTitle_ac}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_acTouch}"/>
+                    <h:outputText value="#{monsterMasterController.selected.acTouch}" title="#{bundle.ViewMonsterMasterTitle_acTouch}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_acFlatFooted}"/>
+                    <h:outputText value="#{monsterMasterController.selected.acFlatFooted}" title="#{bundle.ViewMonsterMasterTitle_acFlatFooted}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_baseAttack}"/>
+                    <h:outputText value="#{monsterMasterController.selected.baseAttack}" title="#{bundle.ViewMonsterMasterTitle_baseAttack}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_grapple}"/>
+                    <h:outputText value="#{monsterMasterController.selected.grapple}" title="#{bundle.ViewMonsterMasterTitle_grapple}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_attack}"/>
+                    <h:outputText value="#{monsterMasterController.selected.attack}" title="#{bundle.ViewMonsterMasterTitle_attack}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_spaceReach}"/>
+                    <h:outputText value="#{monsterMasterController.selected.spaceReach}" title="#{bundle.ViewMonsterMasterTitle_spaceReach}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_specialAttacks}"/>
+                    <h:outputText value="#{monsterMasterController.selected.specialAttacks}" title="#{bundle.ViewMonsterMasterTitle_specialAttacks}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_specialQualities}"/>
+                    <h:outputText value="#{monsterMasterController.selected.specialQualities}" title="#{bundle.ViewMonsterMasterTitle_specialQualities}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_environment}"/>
+                    <h:outputText value="#{monsterMasterController.selected.environment}" title="#{bundle.ViewMonsterMasterTitle_environment}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_organization}"/>
+                    <h:outputText value="#{monsterMasterController.selected.organization}" title="#{bundle.ViewMonsterMasterTitle_organization}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_challengeRating}"/>
+                    <h:outputText value="#{monsterMasterController.selected.challengeRating}" title="#{bundle.ViewMonsterMasterTitle_challengeRating}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_treasure}"/>
+                    <h:outputText value="#{monsterMasterController.selected.treasure}" title="#{bundle.ViewMonsterMasterTitle_treasure}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_alignment}"/>
+                    <h:outputText value="#{monsterMasterController.selected.alignment}" title="#{bundle.ViewMonsterMasterTitle_alignment}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_advancement}"/>
+                    <h:outputText value="#{monsterMasterController.selected.advancement}" title="#{bundle.ViewMonsterMasterTitle_advancement}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_levelAdjustment}"/>
+                    <h:outputText value="#{monsterMasterController.selected.levelAdjustment}" title="#{bundle.ViewMonsterMasterTitle_levelAdjustment}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_sizeId}"/>
+                    <h:outputText value="#{monsterMasterController.selected.sizeId}" title="#{bundle.ViewMonsterMasterTitle_sizeId}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_hitDiceType}"/>
+                    <h:outputText value="#{monsterMasterController.selected.hitDiceType}" title="#{bundle.ViewMonsterMasterTitle_hitDiceType}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_name}"/>
+                    <h:outputText value="#{monsterMasterController.selected.name}" title="#{bundle.ViewMonsterMasterTitle_name}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{monsterMasterController.destroyAndView}" value="#{bundle.ViewMonsterMasterDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewMonsterMasterEditLink}"/>
+                <br />
+                <h:commandLink action="#{monsterMasterController.prepareCreate}" value="#{bundle.ViewMonsterMasterCreateLink}" />
+                <br />
+                <h:commandLink action="#{monsterMasterController.prepareList}" value="#{bundle.ViewMonsterMasterShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewMonsterMasterIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
