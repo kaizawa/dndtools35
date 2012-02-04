@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +27,8 @@ import javax.persistence.Table;
 @Table(name = "ALIGNMENT_MASTER")
 @NamedQueries({@NamedQuery(name = "AlignmentMaster.findById", query = "SELECT a FROM AlignmentMaster a WHERE a.id = :id"), @NamedQuery(name = "AlignmentMaster.findByAlignmentName", query = "SELECT a FROM AlignmentMaster a WHERE a.alignmentName = :alignmentName"), @NamedQuery(name = "AlignmentMaster.findByAlignmentShortName", query = "SELECT a FROM AlignmentMaster a WHERE a.alignmentShortName = :alignmentShortName")})
 public class AlignmentMaster implements Serializable {
+    @OneToMany(mappedBy = "alignment")
+    private List<MonsterMaster> monsterMasterList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -109,6 +113,15 @@ public class AlignmentMaster implements Serializable {
     @Override
     public String toString() {
         return "entity.AlignmentMaster[id=" + id + "]";
+    }
+
+    @XmlTransient
+    public List<MonsterMaster> getMonsterMasterList() {
+        return monsterMasterList;
+    }
+
+    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
+        this.monsterMasterList = monsterMasterList;
     }
 
 }

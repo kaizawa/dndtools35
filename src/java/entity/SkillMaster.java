@@ -8,18 +8,8 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,6 +19,15 @@ import javax.persistence.Table;
 @Table(name = "SKILL_MASTER")
 @NamedQueries({@NamedQuery(name = "SkillMaster.findById", query = "SELECT s FROM SkillMaster s WHERE s.id = :id"), @NamedQuery(name = "SkillMaster.findBySkillName", query = "SELECT s FROM SkillMaster s WHERE s.skillName = :skillName"), @NamedQuery(name = "SkillMaster.findByAcceptNoRank", query = "SELECT s FROM SkillMaster s WHERE s.acceptNoRank = :acceptNoRank")})
 public class SkillMaster implements Serializable {
+    @JoinTable(name = "SKILL_SYNERGY_MASTER", joinColumns = {
+        @JoinColumn(name = "SKILL_ID", referencedColumnName = "ID", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "SKILL_ID", referencedColumnName = "ID", nullable = false)})
+    @ManyToMany
+    private List<SkillMaster> skillMasterList;
+    @ManyToMany(mappedBy = "skillMasterList")
+    private List<SkillMaster> skillMasterList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "skillMaster")
+    private List<MonsterSkillRecord> monsterSkillRecordList;
     @Column(name = "ARMOR_CHECK")
     private Integer armorCheck;
     private static final long serialVersionUID = 1L;
@@ -148,6 +147,33 @@ public class SkillMaster implements Serializable {
 
     public void setArmorCheck(Integer armorCheck) {
         this.armorCheck = armorCheck;
+    }
+
+    @XmlTransient
+    public List<SkillMaster> getSkillMasterList() {
+        return skillMasterList;
+    }
+
+    public void setSkillMasterList(List<SkillMaster> skillMasterList) {
+        this.skillMasterList = skillMasterList;
+    }
+
+    @XmlTransient
+    public List<SkillMaster> getSkillMasterList1() {
+        return skillMasterList1;
+    }
+
+    public void setSkillMasterList1(List<SkillMaster> skillMasterList1) {
+        this.skillMasterList1 = skillMasterList1;
+    }
+
+    @XmlTransient
+    public List<MonsterSkillRecord> getMonsterSkillRecordList() {
+        return monsterSkillRecordList;
+    }
+
+    public void setMonsterSkillRecordList(List<MonsterSkillRecord> monsterSkillRecordList) {
+        this.monsterSkillRecordList = monsterSkillRecordList;
     }
 
 }

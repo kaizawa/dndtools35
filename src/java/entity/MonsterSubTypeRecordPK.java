@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * @author kaizawa
  */
 @Embeddable
-public class MonsterSubTypePK implements Serializable {
+public class MonsterSubTypeRecordPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "SUB_TYPE", nullable = false)
@@ -25,10 +25,10 @@ public class MonsterSubTypePK implements Serializable {
     @Column(name = "MONSTER", nullable = false)
     private int monster;
 
-    public MonsterSubTypePK() {
+    public MonsterSubTypeRecordPK() {
     }
 
-    public MonsterSubTypePK(int subType, int monster) {
+    public MonsterSubTypeRecordPK(int subType, int monster) {
         this.subType = subType;
         this.monster = monster;
     }
@@ -60,10 +60,10 @@ public class MonsterSubTypePK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MonsterSubTypePK)) {
+        if (!(object instanceof MonsterSubTypeRecordPK)) {
             return false;
         }
-        MonsterSubTypePK other = (MonsterSubTypePK) object;
+        MonsterSubTypeRecordPK other = (MonsterSubTypeRecordPK) object;
         if (this.subType != other.subType) {
             return false;
         }
@@ -75,7 +75,7 @@ public class MonsterSubTypePK implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.MonsterSubTypePK[ subType=" + subType + ", monster=" + monster + " ]";
+        return "entity.MonsterSubTypeRecordPK[ subType=" + subType + ", monster=" + monster + " ]";
     }
     
 }

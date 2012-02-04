@@ -4,7 +4,7 @@
  */
 package ejb;
 
-import entity.MonsterSubType;
+import entity.FeatMaster;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author kaizawa
  */
 @Stateless
-public class MonsterSubTypeFacade extends AbstractFacade<MonsterSubType> {
+public class FeatMasterFacade extends AbstractFacade<FeatMaster> {
     @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class MonsterSubTypeFacade extends AbstractFacade<MonsterSubType> {
         return em;
     }
 
-    public MonsterSubTypeFacade() {
-        super(MonsterSubType.class);
+    public FeatMasterFacade() {
+        super(FeatMaster.class);
     }
     
 }

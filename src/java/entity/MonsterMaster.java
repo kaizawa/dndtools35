@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "MonsterMaster.findAll", query = "SELECT m FROM MonsterMaster m"),
     @NamedQuery(name = "MonsterMaster.findById", query = "SELECT m FROM MonsterMaster m WHERE m.id = :id"),
-    @NamedQuery(name = "MonsterMaster.findByType", query = "SELECT m FROM MonsterMaster m WHERE m.type = :type"),
+    @NamedQuery(name = "MonsterMaster.findByName", query = "SELECT m FROM MonsterMaster m WHERE m.name = :name"),
     @NamedQuery(name = "MonsterMaster.findByHitDiceNum", query = "SELECT m FROM MonsterMaster m WHERE m.hitDiceNum = :hitDiceNum"),
     @NamedQuery(name = "MonsterMaster.findByInitiative", query = "SELECT m FROM MonsterMaster m WHERE m.initiative = :initiative"),
     @NamedQuery(name = "MonsterMaster.findBySpeed", query = "SELECT m FROM MonsterMaster m WHERE m.speed = :speed"),
@@ -39,20 +39,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonsterMaster.findByOrganization", query = "SELECT m FROM MonsterMaster m WHERE m.organization = :organization"),
     @NamedQuery(name = "MonsterMaster.findByChallengeRating", query = "SELECT m FROM MonsterMaster m WHERE m.challengeRating = :challengeRating"),
     @NamedQuery(name = "MonsterMaster.findByTreasure", query = "SELECT m FROM MonsterMaster m WHERE m.treasure = :treasure"),
-    @NamedQuery(name = "MonsterMaster.findByAlignment", query = "SELECT m FROM MonsterMaster m WHERE m.alignment = :alignment"),
     @NamedQuery(name = "MonsterMaster.findByAdvancement", query = "SELECT m FROM MonsterMaster m WHERE m.advancement = :advancement"),
     @NamedQuery(name = "MonsterMaster.findByLevelAdjustment", query = "SELECT m FROM MonsterMaster m WHERE m.levelAdjustment = :levelAdjustment")})
 public class MonsterMaster implements Serializable {
-    @Size(max = 400)
-    @Column(name = "NAME", length = 400)
-    private String name;
-    @JoinTable(name = "MONSTER_SUB_TYPE", joinColumns = {
-        @JoinColumn(name = "MONSTER", referencedColumnName = "ID", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "MONSTER", referencedColumnName = "ID", nullable = false)})
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
+    private List<MonsterSubTypeRecord> monsterSubTypeRecordList;
     @ManyToMany
-    private List<MonsterMaster> monsterMasterList;
-    @ManyToMany(mappedBy = "monsterMasterList")
-    private List<MonsterMaster> monsterMasterList1;
+    private List<SubTypeMaster> subTypeMasterList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,8 +53,9 @@ public class MonsterMaster implements Serializable {
     @NotNull
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Column(name = "TYPE")
-    private Integer type;
+    @Size(max = 400)
+    @Column(name = "NAME", length = 400)
+    private String name;
     @Column(name = "HIT_DICE_NUM")
     private Integer hitDiceNum;
     @Column(name = "INITIATIVE")
@@ -100,27 +94,23 @@ public class MonsterMaster implements Serializable {
     @Size(max = 2000)
     @Column(name = "TREASURE", length = 2000)
     private String treasure;
-    @Column(name = "ALIGNMENT")
-    private Integer alignment;
     @Size(max = 2000)
     @Column(name = "ADVANCEMENT", length = 2000)
     private String advancement;
     @Column(name = "LEVEL_ADJUSTMENT")
     private Integer levelAdjustment;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
-    private List<MonsterSkillRecord> monsterSkillRecordList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
-    private List<MonsterSaveRecord> monsterSaveRecordList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
-    private List<MonsterSubType> monsterSubTypeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
-    private List<MonsterAbilityRecord> monsterAbilityRecordList;
+    @JoinColumn(name = "TYPE", referencedColumnName = "ID")
+    @ManyToOne
+    private TypeMaster type;
     @JoinColumn(name = "SIZE_ID", referencedColumnName = "ID")
     @ManyToOne
     private SizeMaster sizeId;
     @JoinColumn(name = "HIT_DICE_TYPE", referencedColumnName = "ID")
     @ManyToOne
     private DiceMaster hitDiceType;
+    @JoinColumn(name = "ALIGNMENT", referencedColumnName = "ID")
+    @ManyToOne
+    private AlignmentMaster alignment;
 
     public MonsterMaster() {
     }
@@ -137,12 +127,12 @@ public class MonsterMaster implements Serializable {
         this.id = id;
     }
 
-    public Integer getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getHitDiceNum() {
@@ -273,14 +263,6 @@ public class MonsterMaster implements Serializable {
         this.treasure = treasure;
     }
 
-    public Integer getAlignment() {
-        return alignment;
-    }
-
-    public void setAlignment(Integer alignment) {
-        this.alignment = alignment;
-    }
-
     public String getAdvancement() {
         return advancement;
     }
@@ -297,40 +279,12 @@ public class MonsterMaster implements Serializable {
         this.levelAdjustment = levelAdjustment;
     }
 
-    @XmlTransient
-    public List<MonsterSkillRecord> getMonsterSkillRecordList() {
-        return monsterSkillRecordList;
+    public TypeMaster getType() {
+        return type;
     }
 
-    public void setMonsterSkillRecordList(List<MonsterSkillRecord> monsterSkillRecordList) {
-        this.monsterSkillRecordList = monsterSkillRecordList;
-    }
-
-    @XmlTransient
-    public List<MonsterSaveRecord> getMonsterSaveRecordList() {
-        return monsterSaveRecordList;
-    }
-
-    public void setMonsterSaveRecordList(List<MonsterSaveRecord> monsterSaveRecordList) {
-        this.monsterSaveRecordList = monsterSaveRecordList;
-    }
-
-    @XmlTransient
-    public List<MonsterSubType> getMonsterSubTypeList() {
-        return monsterSubTypeList;
-    }
-
-    public void setMonsterSubTypeList(List<MonsterSubType> monsterSubTypeList) {
-        this.monsterSubTypeList = monsterSubTypeList;
-    }
-
-    @XmlTransient
-    public List<MonsterAbilityRecord> getMonsterAbilityRecordList() {
-        return monsterAbilityRecordList;
-    }
-
-    public void setMonsterAbilityRecordList(List<MonsterAbilityRecord> monsterAbilityRecordList) {
-        this.monsterAbilityRecordList = monsterAbilityRecordList;
+    public void setType(TypeMaster type) {
+        this.type = type;
     }
 
     public SizeMaster getSizeId() {
@@ -347,6 +301,14 @@ public class MonsterMaster implements Serializable {
 
     public void setHitDiceType(DiceMaster hitDiceType) {
         this.hitDiceType = hitDiceType;
+    }
+
+    public AlignmentMaster getAlignment() {
+        return alignment;
+    }
+
+    public void setAlignment(AlignmentMaster alignment) {
+        this.alignment = alignment;
     }
 
     @Override
@@ -374,30 +336,22 @@ public class MonsterMaster implements Serializable {
         return "entity.MonsterMaster[ id=" + id + " ]";
     }
 
-    public String getName() {
-        return name;
+    @XmlTransient
+    public List<SubTypeMaster> getSubTypeMasterList() {
+        return subTypeMasterList;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSubTypeMasterList(List<SubTypeMaster> subTypeMasterList) {
+        this.subTypeMasterList = subTypeMasterList;
     }
 
     @XmlTransient
-    public List<MonsterMaster> getMonsterMasterList() {
-        return monsterMasterList;
+    public List<MonsterSubTypeRecord> getMonsterSubTypeRecordList() {
+        return monsterSubTypeRecordList;
     }
 
-    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
-        this.monsterMasterList = monsterMasterList;
-    }
-
-    @XmlTransient
-    public List<MonsterMaster> getMonsterMasterList1() {
-        return monsterMasterList1;
-    }
-
-    public void setMonsterMasterList1(List<MonsterMaster> monsterMasterList1) {
-        this.monsterMasterList1 = monsterMasterList1;
+    public void setMonsterSubTypeRecordList(List<MonsterSubTypeRecord> monsterSubTypeRecordList) {
+        this.monsterSubTypeRecordList = monsterSubTypeRecordList;
     }
     
 }

@@ -25,6 +25,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MonsterSkillRecord.findByMiscModifier", query = "SELECT m FROM MonsterSkillRecord m WHERE m.miscModifier = :miscModifier"),
     @NamedQuery(name = "MonsterSkillRecord.findByDescription", query = "SELECT m FROM MonsterSkillRecord m WHERE m.description = :description")})
 public class MonsterSkillRecord implements Serializable {
+    @Column(name = "SKILL_MODIFIER")
+    private Integer skillModifier;
+    @JoinColumn(name = "SKILL", referencedColumnName = "ID", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SkillMaster skillMaster;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected MonsterSkillRecordPK monsterSkillRecordPK;
@@ -134,6 +139,22 @@ public class MonsterSkillRecord implements Serializable {
     @Override
     public String toString() {
         return "entity.MonsterSkillRecord[ monsterSkillRecordPK=" + monsterSkillRecordPK + " ]";
+    }
+
+    public Integer getSkillModifier() {
+        return skillModifier;
+    }
+
+    public void setSkillModifier(Integer skillModifier) {
+        this.skillModifier = skillModifier;
+    }
+
+    public SkillMaster getSkillMaster() {
+        return skillMaster;
+    }
+
+    public void setSkillMaster(SkillMaster skillMaster) {
+        this.skillMaster = skillMaster;
     }
     
 }
