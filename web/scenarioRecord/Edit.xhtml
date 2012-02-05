@@ -19,7 +19,7 @@
                     <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
                         <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditScenarioRecordLabel_name}" for="name" />
+                    <h:outputLabel value="シナリオ名" for="name" />
                     <h:inputText id="name" value="#{scenarioRecordController.selected.name}" title="#{bundle.EditScenarioRecordTitle_name}" />
                     <h:outputLabel value="備考" for="description" />
                     <h:inputText id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" title="#{bundle.EditScenarioRecordTitle_description}" />
@@ -28,13 +28,12 @@
                 <h:commandButton action="#{scenarioRecordController.update}" value="更新"/>
                 <br />
                 <br />
-                <h:commandLink value="シナリオ一覧に戻る" action="/index" immediate="true" />
+                <h:commandLink value="シナリオ一覧に戻る" action="#{scenarioRecordController.prepareList}" immediate="true" />
             </h:form>
 
             <hr/>
 
             <h:form styleClass="jsfcrud_list_form">
-                <br/>
                 <h:outputText escape="false" value="エンカウンターはありません。" rendered="#{encounterRecordController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
                     <h:outputText value="#{encounterRecordController.pagination.pageFirstItem + 1}..#{encounterRecordController.pagination.pageLastItem + 1}/#{encounterRecordController.pagination.itemsCount}"/>&nbsp;
@@ -73,22 +72,19 @@
                     </h:dataTable>
                 </h:panelGroup>
             </h:form>
-
+            <br/>
             <hr/>
             <h:form>
                 <p>
                     <h:outputLabel styleClass="middleBold">新しいエンカウンターの作成</h:outputLabel>
                 </p>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="名前" for="name" />
-                    <h:inputText id="name" value="#{encounterRecordController.selected.name}" title="#{bundle.CreateEncounterRecordTitle_name}" />
+                    <h:outputLabel value="エンカウンター名" for="name" />
+                    <h:inputText id="name" style="width: 300px;" value="#{encounterRecordController.selected.name}" title="#{bundle.CreateEncounterRecordTitle_name}" />
                 </h:panelGrid>
-                <br />
                 <h:commandButton action="#{encounterRecordController.create}" value="作成" />
                 <br />
                 <br />
-
-                
                 <h:commandLink value="インデックスへ" action="/index" immediate="true" />
             </h:form>
 

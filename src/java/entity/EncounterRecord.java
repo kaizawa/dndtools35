@@ -24,7 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EncounterRecord.findById", query = "SELECT e FROM EncounterRecord e WHERE e.id = :id"),
     @NamedQuery(name = "EncounterRecord.findByComments", query = "SELECT e FROM EncounterRecord e WHERE e.comments = :comments"),
     @NamedQuery(name = "EncounterRecord.findByRound", query = "SELECT e FROM EncounterRecord e WHERE e.round = :round"),
-    @NamedQuery(name = "EncounterRecord.findByTurn", query = "SELECT e FROM EncounterRecord e WHERE e.turn = :turn")})
+    @NamedQuery(name = "EncounterRecord.findByTurn", query = "SELECT e FROM EncounterRecord e WHERE e.turn = :turn"),
+    @NamedQuery(name = "EncounterRecord.findByScenarioRecord", query = "SELECT e FROM EncounterRecord e WHERE e.scenarioRecord = :scenarioRecord")})
 public class EncounterRecord implements Serializable {
     @Column(name = "TURN_CHARACTER")
     private BigInteger turnCharacter;

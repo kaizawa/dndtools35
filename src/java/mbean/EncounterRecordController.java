@@ -15,6 +15,7 @@ import java.text.StringCharacterIterator;
 import java.util.*;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlDataTable;
@@ -39,7 +40,18 @@ public class EncounterRecordController implements Serializable {
     private EncounterRecordFacade encounterRecordFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    @ManagedProperty(value="#{scenarioRecordController}")
+    private ScenarioRecordController scenarioRecordController;
 
+    public ScenarioRecordController getScenarioRecordController() {
+        return scenarioRecordController;
+    }
+
+    public void setScenarioRecordController(ScenarioRecordController scenarioRecordController) {
+        this.scenarioRecordController = scenarioRecordController;
+    }
+    
     public EncounterRecordController() {
     }
 
@@ -80,27 +92,38 @@ public class EncounterRecordController implements Serializable {
 
                 @Override
                 public int getItemsCount() {
-                    return getFacade().count();
+                    return getFacade().countByScenarioRecord(scenarioRecordController.getSelected());
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(
+                            getFacade().findByScenarioRecordRange( 
+                               scenarioRecordController.getSelected(), 
+                               new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()})
+                            );
                 }
             };
         }
         return pagination;
     }
-
+    
+    /* 
+     * encounterRecord/List は実際には表示されず、リストに相当するものは
+     * ScenarioRecord/Edit に手表示される。なのでここでは null を返す。
+     * (これがよばれるのは ScenarioRecord/Edit なので  null で大丈夫)
+     */
     public String prepareList() {
         recreateModel();
-        return "List";
+        current = new EncounterRecord();
+        selectedItemIndex = -1;
+        return null;
     }
 
     public String prepareView() {
         current = (EncounterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "/encounterRecord/View";
     }
 
     public String prepareCreate() {
@@ -111,10 +134,10 @@ public class EncounterRecordController implements Serializable {
 
     public String create() {
         try {
+            current.setScenarioRecord(scenarioRecordController.getSelected());
             getFacade().create(current);
             JsfUtil.addSuccessMessage("エンカウンターが追加されました。");
-            recreateModel();
-            return prepareCreate();
+            return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -124,7 +147,7 @@ public class EncounterRecordController implements Serializable {
     public String prepareEdit() {
         current = (EncounterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return "/encounterRecord/Edit";
     }
 
     public String update() {
@@ -144,7 +167,7 @@ public class EncounterRecordController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "List";
+        return null;
     }
 
     public String destroyAndView() {
@@ -163,14 +186,14 @@ public class EncounterRecordController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterRecordDeleted"));
+            JsfUtil.addSuccessMessage("削除されました");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
     private void updateCurrentItem() {
-        int count = getFacade().count();
+        int count = getFacade().countByScenarioRecord(scenarioRecordController.getSelected());
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
             selectedItemIndex = count - 1;
@@ -180,14 +203,16 @@ public class EncounterRecordController implements Serializable {
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            current = getFacade().findByScenarioRecordRange( 
+                               scenarioRecordController.getSelected(), 
+                               new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
     public DataModel getItems() {
-        if (items == null) {
+//        if (items == null) {
             items = getPagination().createPageDataModel();
-        }
+//        }
         return items;
     }
 

@@ -64,6 +64,8 @@ public class ScenarioRecordController implements Serializable {
 
     public String prepareList() {
         recreateModel();
+        current = new ScenarioRecord();
+        selectedItemIndex = -1;
         return "List";
     }
 
@@ -83,8 +85,7 @@ public class ScenarioRecordController implements Serializable {
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordCreated")); 
-            recreateModel();
-            return prepareCreate();
+            return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -101,7 +102,7 @@ public class ScenarioRecordController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordUpdated"));
-            return "List";
+            return "/scenarioRecord/Edit";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -113,8 +114,7 @@ public class ScenarioRecordController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
-        recreateModel();
-        return "List";
+        return prepareList();
     }
 
     public String destroyAndView() {

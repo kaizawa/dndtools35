@@ -43,11 +43,9 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{scenarioRecordController.prepareView}" value="#{bundle.ListScenarioRecordViewLink}"/>
+                            <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="編集"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{bundle.ListScenarioRecordEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{scenarioRecordController.destroy}" value="#{bundle.ListScenarioRecordDestroyLink}"/>
+                            <h:commandLink action="#{scenarioRecordController.destroy}" value="削除"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
@@ -68,9 +66,6 @@
                     </h:selectOneMenu>
                     <h:outputLabel value="シナリオ名" for="name" />
                     <h:inputText id="name" value="#{scenarioRecordController.selected.name}" style="width: 500px" title="#{bundle.EditScenarioRecordTitle_name}" />
-                    <h:outputLabel value="#{bundle.EditScenarioRecordLabel_description}" for="description" />
-                    <h:inputTextarea id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" title="#{bundle.EditScenarioRecordTitle_description}" />
-
                 </h:panelGrid>
                 <h:commandButton action="#{scenarioRecordController.create}" value="作成"/>
                 <br />
