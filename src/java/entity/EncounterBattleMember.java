@@ -4,6 +4,7 @@
  */
 package entity;
 
+import ejb.ScenarioCharacterRecord;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EncounterBattleMember.findByEncounterCharacter", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterCharacter = :encounterCharacter"),
     @NamedQuery(name = "EncounterBattleMember.findByEncounterRecord", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterRecord = :encounterRecord")})
 public class EncounterBattleMember implements Serializable {
+    @Column(name = "MY_TURN")
+    private Boolean myTurn;
+    @JoinColumn(name = "SCENARIO_CHARACTER_RECORD", referencedColumnName = "ID")
+    @ManyToOne
+    private ScenarioCharacterRecord scenarioCharacterRecord;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,8 +66,6 @@ public class EncounterBattleMember implements Serializable {
     public void setMyTurn(Boolean myTurn) {
         this.myTurn = myTurn;
     }
-    @Column(name = "MY_TURN")
-    private Boolean myTurn;
 
     public Integer getHitPoint() {
         return hitPoint;
@@ -126,6 +130,17 @@ public class EncounterBattleMember implements Serializable {
     @Override
     public String toString() {
         return "entity.EncounterBattleMember[ id=" + id + " ]";
+    }
+
+    public EncounterBattleMember() {
+    }
+
+    public ScenarioCharacterRecord getScenarioCharacterRecord() {
+        return scenarioCharacterRecord;
+    }
+
+    public void setScenarioCharacterRecord(ScenarioCharacterRecord scenarioCharacterRecord) {
+        this.scenarioCharacterRecord = scenarioCharacterRecord;
     }
         
 }

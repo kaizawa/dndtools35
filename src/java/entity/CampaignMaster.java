@@ -7,15 +7,9 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +19,8 @@ import javax.persistence.Table;
 @Table(name = "CAMPAIGN_MASTER")
 @NamedQueries({@NamedQuery(name = "CampaignMaster.findById", query = "SELECT c FROM CampaignMaster c WHERE c.id = :id"), @NamedQuery(name = "CampaignMaster.findByCampaignName", query = "SELECT c FROM CampaignMaster c WHERE c.campaignName = :campaignName"), @NamedQuery(name = "CampaignMaster.findByMaster", query = "SELECT c FROM CampaignMaster c WHERE c.master = :master")})
 public class CampaignMaster implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "campaignMaster")
+    private List<ScenarioRecord> scenarioRecordList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -99,6 +95,15 @@ public class CampaignMaster implements Serializable {
     @Override
     public String toString() {
         return "entity.CampaignMaster[id=" + id + "]";
+    }
+
+    @XmlTransient
+    public List<ScenarioRecord> getScenarioRecordList() {
+        return scenarioRecordList;
+    }
+
+    public void setScenarioRecordList(List<ScenarioRecord> scenarioRecordList) {
+        this.scenarioRecordList = scenarioRecordList;
     }
 
 }

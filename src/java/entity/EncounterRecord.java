@@ -5,6 +5,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,6 +26,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EncounterRecord.findByRound", query = "SELECT e FROM EncounterRecord e WHERE e.round = :round"),
     @NamedQuery(name = "EncounterRecord.findByTurn", query = "SELECT e FROM EncounterRecord e WHERE e.turn = :turn")})
 public class EncounterRecord implements Serializable {
+    @Column(name = "TURN_CHARACTER")
+    private BigInteger turnCharacter;
+    @Column(name = "SCENARIO")
+    private Integer scenario;
+    @JoinColumn(name = "SCENARIO_RECORD", referencedColumnName = "ID")
+    @ManyToOne
+    private ScenarioRecord scenarioRecord;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,6 +132,30 @@ public class EncounterRecord implements Serializable {
     @Override
     public String toString() {
         return "entity.Encounter[ id=" + id + " ]";
+    }
+
+    public BigInteger getTurnCharacter() {
+        return turnCharacter;
+    }
+
+    public void setTurnCharacter(BigInteger turnCharacter) {
+        this.turnCharacter = turnCharacter;
+    }
+
+    public Integer getScenario() {
+        return scenario;
+    }
+
+    public void setScenario(Integer scenario) {
+        this.scenario = scenario;
+    }
+
+    public ScenarioRecord getScenarioRecord() {
+        return scenarioRecord;
+    }
+
+    public void setScenarioRecord(ScenarioRecord scenarioRecord) {
+        this.scenarioRecord = scenarioRecord;
     }
 
 }

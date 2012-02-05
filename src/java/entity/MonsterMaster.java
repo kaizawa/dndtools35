@@ -42,6 +42,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonsterMaster.findByAdvancement", query = "SELECT m FROM MonsterMaster m WHERE m.advancement = :advancement"),
     @NamedQuery(name = "MonsterMaster.findByLevelAdjustment", query = "SELECT m FROM MonsterMaster m WHERE m.levelAdjustment = :levelAdjustment")})
 public class MonsterMaster implements Serializable {
+    @Column(name = "SPACE")
+    private Integer space;
+    @Column(name = "REACH")
+    private Integer reach;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
+    private List<MonsterSaveRecord> monsterSaveRecordList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
+    private List<MonsterFeatRecord> monsterFeatRecordList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
+    private List<MonsterAbilityRecord> monsterAbilityRecordList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
+    private List<MonsterSkillRecord> monsterSkillRecordList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "monsterMaster")
     private List<MonsterSubTypeRecord> monsterSubTypeRecordList;
     @ManyToMany
@@ -352,6 +364,58 @@ public class MonsterMaster implements Serializable {
 
     public void setMonsterSubTypeRecordList(List<MonsterSubTypeRecord> monsterSubTypeRecordList) {
         this.monsterSubTypeRecordList = monsterSubTypeRecordList;
+    }
+
+    public Integer getSpace() {
+        return space;
+    }
+
+    public void setSpace(Integer space) {
+        this.space = space;
+    }
+
+    public Integer getReach() {
+        return reach;
+    }
+
+    public void setReach(Integer reach) {
+        this.reach = reach;
+    }
+
+    @XmlTransient
+    public List<MonsterSaveRecord> getMonsterSaveRecordList() {
+        return monsterSaveRecordList;
+    }
+
+    public void setMonsterSaveRecordList(List<MonsterSaveRecord> monsterSaveRecordList) {
+        this.monsterSaveRecordList = monsterSaveRecordList;
+    }
+
+    @XmlTransient
+    public List<MonsterFeatRecord> getMonsterFeatRecordList() {
+        return monsterFeatRecordList;
+    }
+
+    public void setMonsterFeatRecordList(List<MonsterFeatRecord> monsterFeatRecordList) {
+        this.monsterFeatRecordList = monsterFeatRecordList;
+    }
+
+    @XmlTransient
+    public List<MonsterAbilityRecord> getMonsterAbilityRecordList() {
+        return monsterAbilityRecordList;
+    }
+
+    public void setMonsterAbilityRecordList(List<MonsterAbilityRecord> monsterAbilityRecordList) {
+        this.monsterAbilityRecordList = monsterAbilityRecordList;
+    }
+
+    @XmlTransient
+    public List<MonsterSkillRecord> getMonsterSkillRecordList() {
+        return monsterSkillRecordList;
+    }
+
+    public void setMonsterSkillRecordList(List<MonsterSkillRecord> monsterSkillRecordList) {
+        this.monsterSkillRecordList = monsterSkillRecordList;
     }
     
 }
