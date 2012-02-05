@@ -76,13 +76,14 @@ public class ScenarioRecordController implements Serializable {
     public String prepareCreate() {
         current = new ScenarioRecord();
         selectedItemIndex = -1;
-        return "Create";
+        return null;
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordCreated")); 
+            recreateModel();
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -100,8 +101,6 @@ public class ScenarioRecordController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordUpdated"));
-            current = new ScenarioRecord();
-            recreateModel();
             return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

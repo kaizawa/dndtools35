@@ -7,35 +7,91 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.EditScenarioRecordTitle}"></h:outputText>
+            <h:outputText value="シナリオの編集"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditScenarioRecordLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{scenarioRecordController.selected.id}" title="#{bundle.EditScenarioRecordTitle_id}" required="true" requiredMessage="#{bundle.EditScenarioRecordRequiredMessage_id}"/>
-                    <h:outputLabel value="#{bundle.EditScenarioRecordLabel_name}" for="name" />
-                    <h:inputText id="name" value="#{scenarioRecordController.selected.name}" title="#{bundle.EditScenarioRecordTitle_name}" />
-                    <h:outputLabel value="#{bundle.EditScenarioRecordLabel_description}" for="description" />
-                    <h:inputText id="description" value="#{scenarioRecordController.selected.description}" title="#{bundle.EditScenarioRecordTitle_description}" />
-                    <h:outputLabel value="#{bundle.EditScenarioRecordLabel_campaign}" for="campaign" />
+                <h:panelGrid columns="2">                 
+                    <h:outputLabel value="キャンペーン" for="campaign" />
                     <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
                         <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditScenarioRecordLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{scenarioRecordController.selected.name}" title="#{bundle.EditScenarioRecordTitle_name}" />
+                    <h:outputLabel value="備考" for="description" />
+                    <h:inputText id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" title="#{bundle.EditScenarioRecordTitle_description}" />
+
                 </h:panelGrid>
-                <h:commandLink action="#{scenarioRecordController.update}" value="#{bundle.EditScenarioRecordSaveLink}"/>
+                <h:commandButton action="#{scenarioRecordController.update}" value="更新"/>
                 <br />
                 <br />
-                <h:commandLink action="View" value="#{bundle.EditScenarioRecordViewLink}" immediate="true"/>
-                <br />
-                <h:commandLink action="#{scenarioRecordController.prepareList}" value="#{bundle.EditScenarioRecordShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:commandLink value="#{bundle.EditScenarioRecordIndexLink}" action="/index" immediate="true" />
+                <h:commandLink value="シナリオ一覧に戻る" action="/index" immediate="true" />
             </h:form>
+
+            <hr/>
+
+            <h:form styleClass="jsfcrud_list_form">
+                <br/>
+                <h:outputText escape="false" value="エンカウンターはありません。" rendered="#{encounterRecordController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
+                    <h:outputText value="#{encounterRecordController.pagination.pageFirstItem + 1}..#{encounterRecordController.pagination.pageLastItem + 1}/#{encounterRecordController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{encounterRecordController.previous}" value="#{bundle.Previous} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{encounterRecordController.next}" value="#{bundle.Next} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{encounterRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="エンカウンター名"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>                               
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="ラウンド"/>
+                            </f:facet>
+                            <h:outputText value="#{item.round}"/>
+                        </h:column>                 
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="備考"/>
+                            </f:facet>
+                            <h:outputText value="#{item.comments}"/>
+                        </h:column>                    
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{encounterRecordController.prepareView}" value="開始"/>
+                            <h:outputText value="  "/>
+                            <h:commandLink action="#{encounterRecordController.prepareEdit}" value="変更"/> 
+                            <h:outputText value="  "/>
+                            <h:commandLink action="#{encounterRecordController.destroy}" value="削除"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:form>
+
+            <hr/>
+            <h:form>
+                <p>
+                    <h:outputLabel styleClass="middleBold">新しいエンカウンターの作成</h:outputLabel>
+                </p>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="名前" for="name" />
+                    <h:inputText id="name" value="#{encounterRecordController.selected.name}" title="#{bundle.CreateEncounterRecordTitle_name}" />
+                </h:panelGrid>
+                <br />
+                <h:commandButton action="#{encounterRecordController.create}" value="作成" />
+                <br />
+                <br />
+
+                
+                <h:commandLink value="インデックスへ" action="/index" immediate="true" />
+            </h:form>
+
         </ui:define>
     </ui:composition>
 

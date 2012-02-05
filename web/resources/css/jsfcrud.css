@@ -89,3 +89,9 @@ tr.jsfcrud_even_row {
     font-size: 18px;
     font-weight: bold;
 }
+
+.middleTextArea {
+    font-size: 12px; 
+    width: 500px;
+    height: 170px
+}

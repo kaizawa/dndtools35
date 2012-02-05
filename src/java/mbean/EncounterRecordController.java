@@ -106,14 +106,15 @@ public class EncounterRecordController implements Serializable {
     public String prepareCreate() {
         current = new EncounterRecord();
         selectedItemIndex = -1;
-        return "Create";
+        return null;
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterRecordCreated"));
-            return "Edit";
+            JsfUtil.addSuccessMessage("エンカウンターが追加されました。");
+            recreateModel();
+            return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;

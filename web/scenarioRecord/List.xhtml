@@ -69,10 +69,10 @@
                     <h:outputLabel value="シナリオ名" for="name" />
                     <h:inputText id="name" value="#{scenarioRecordController.selected.name}" style="width: 500px" title="#{bundle.EditScenarioRecordTitle_name}" />
                     <h:outputLabel value="#{bundle.EditScenarioRecordLabel_description}" for="description" />
-                    <h:inputTextarea id="description" style="font-size: 12px; width: 500px;height: 170px" value="#{scenarioRecordController.selected.description}" title="#{bundle.EditScenarioRecordTitle_description}" />
+                    <h:inputTextarea id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" title="#{bundle.EditScenarioRecordTitle_description}" />
 
                 </h:panelGrid>
-                <h:commandButton action="#{scenarioRecordController.update}" value="作成"/>
+                <h:commandButton action="#{scenarioRecordController.create}" value="作成"/>
                 <br />
                 <br />
                 <h:commandLink action="View" value="#{bundle.EditScenarioRecordViewLink}" immediate="true"/>
