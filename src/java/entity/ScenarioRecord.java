@@ -4,7 +4,6 @@
  */
 package entity;
 
-import ejb.ScenarioCharacterRecord;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
@@ -22,11 +21,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ScenarioRecord.findAll", query = "SELECT s FROM ScenarioRecord s"),
-    @NamedQuery(name = "ScenarioRecord.findById", query = "SELECT s FROM ScenarioRecord s WHERE s.scenarioRecordPK.id = :id"),
-    @NamedQuery(name = "ScenarioRecord.findByCampaign", query = "SELECT s FROM ScenarioRecord s WHERE s.scenarioRecordPK.campaign = :campaign"),
-    @NamedQuery(name = "ScenarioRecord.findByTitle", query = "SELECT s FROM ScenarioRecord s WHERE s.title = :title"),
+    @NamedQuery(name = "ScenarioRecord.findById", query = "SELECT s FROM ScenarioRecord s WHERE s.id = :id"),
+    @NamedQuery(name = "ScenarioRecord.findByName", query = "SELECT s FROM ScenarioRecord s WHERE s.name = :name"),
     @NamedQuery(name = "ScenarioRecord.findByDescription", query = "SELECT s FROM ScenarioRecord s WHERE s.description = :description")})
 public class ScenarioRecord implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -36,64 +35,16 @@ public class ScenarioRecord implements Serializable {
     @Size(max = 400)
     @Column(name = "NAME", length = 400)
     private String name;
-    @OneToMany(mappedBy = "scenarioRecord")
-    private List<EncounterRecord> encounterRecordList;
-    @OneToMany(mappedBy = "scenario")
-    private List<ScenarioCharacterRecord> scenarioCharacterRecordList;
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ScenarioRecordPK scenarioRecordPK;
-    @Size(max = 400)
-    @Column(name = "TITLE", length = 400)
-    private String title;
     @Size(max = 8000)
     @Column(name = "DESCRIPTION", length = 8000)
     private String description;
-    @JoinColumn(name = "CAMPAIGN", referencedColumnName = "ID", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private CampaignMaster campaignMaster;
+    @OneToMany(mappedBy = "scenario")
+    private List<ScenarioCharacterRecord> scenarioCharacterRecordList;
+    @JoinColumn(name = "CAMPAIGN", referencedColumnName = "ID")
+    @ManyToOne
+    private CampaignMaster campaign;
 
     public ScenarioRecord() {
-    }
-
-    public ScenarioRecord(ScenarioRecordPK scenarioRecordPK) {
-        this.scenarioRecordPK = scenarioRecordPK;
-    }
-
-    public ScenarioRecord(int id, int campaign) {
-        this.scenarioRecordPK = new ScenarioRecordPK(id, campaign);
-    }
-
-    public ScenarioRecordPK getScenarioRecordPK() {
-        return scenarioRecordPK;
-    }
-
-    public void setScenarioRecordPK(ScenarioRecordPK scenarioRecordPK) {
-        this.scenarioRecordPK = scenarioRecordPK;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public CampaignMaster getCampaignMaster() {
-        return campaignMaster;
-    }
-
-    public void setCampaignMaster(CampaignMaster campaignMaster) {
-        this.campaignMaster = campaignMaster;
     }
 
     public ScenarioRecord(Integer id) {
@@ -116,13 +67,12 @@ public class ScenarioRecord implements Serializable {
         this.name = name;
     }
 
-    @XmlTransient
-    public List<EncounterRecord> getEncounterRecordList() {
-        return encounterRecordList;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEncounterRecordList(List<EncounterRecord> encounterRecordList) {
-        this.encounterRecordList = encounterRecordList;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @XmlTransient
@@ -132,6 +82,14 @@ public class ScenarioRecord implements Serializable {
 
     public void setScenarioCharacterRecordList(List<ScenarioCharacterRecord> scenarioCharacterRecordList) {
         this.scenarioCharacterRecordList = scenarioCharacterRecordList;
+    }
+
+    public CampaignMaster getCampaign() {
+        return campaign;
+    }
+
+    public void setCampaign(CampaignMaster campaign) {
+        this.campaign = campaign;
     }
 
     @Override

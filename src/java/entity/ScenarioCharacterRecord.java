@@ -2,17 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejb;
+package entity;
 
-import entity.EncounterBattleMember;
-import entity.ScenarioRecord;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -109,8 +105,6 @@ public class ScenarioCharacterRecord implements Serializable {
     @JoinColumn(name = "SCENARIO", referencedColumnName = "ID")
     @ManyToOne
     private ScenarioRecord scenario;
-    @OneToMany(mappedBy = "scenarioCharacterRecord")
-    private List<EncounterBattleMember> encounterBattleMemberList;
 
     public ScenarioCharacterRecord() {
     }
@@ -295,15 +289,6 @@ public class ScenarioCharacterRecord implements Serializable {
         this.scenario = scenario;
     }
 
-    @XmlTransient
-    public List<EncounterBattleMember> getEncounterBattleMemberList() {
-        return encounterBattleMemberList;
-    }
-
-    public void setEncounterBattleMemberList(List<EncounterBattleMember> encounterBattleMemberList) {
-        this.encounterBattleMemberList = encounterBattleMemberList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -326,7 +311,7 @@ public class ScenarioCharacterRecord implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.ScenarioCharacterRecord[ id=" + id + " ]";
+        return "entity.ScenarioCharacterRecord[ id=" + id + " ]";
     }
     
 }

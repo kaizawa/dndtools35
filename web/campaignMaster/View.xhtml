@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewCampaignMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewCampaignMasterLabel_id}"/>
+                    <h:outputText value="#{campaignMasterController.selected.id}" title="#{bundle.ViewCampaignMasterTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewCampaignMasterLabel_campaignName}"/>
+                    <h:outputText value="#{campaignMasterController.selected.campaignName}" title="#{bundle.ViewCampaignMasterTitle_campaignName}"/>
+                    <h:outputText value="#{bundle.ViewCampaignMasterLabel_master}"/>
+                    <h:outputText value="#{campaignMasterController.selected.master}" title="#{bundle.ViewCampaignMasterTitle_master}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{campaignMasterController.destroyAndView}" value="#{bundle.ViewCampaignMasterDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewCampaignMasterEditLink}"/>
+                <br />
+                <h:commandLink action="#{campaignMasterController.prepareCreate}" value="#{bundle.ViewCampaignMasterCreateLink}" />
+                <br />
+                <h:commandLink action="#{campaignMasterController.prepareList}" value="#{bundle.ViewCampaignMasterShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewCampaignMasterIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

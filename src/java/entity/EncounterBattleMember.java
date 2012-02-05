@@ -4,7 +4,7 @@
  */
 package entity;
 
-import ejb.ScenarioCharacterRecord;
+import entity.ScenarioCharacterRecord;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
