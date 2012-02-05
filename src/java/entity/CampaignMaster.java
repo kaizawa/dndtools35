@@ -90,7 +90,8 @@ public class CampaignMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.CampaignMaster[ id=" + id + " ]";
+        return campaignName;
+        //return "entity.CampaignMaster[ id=" + id + " ]";
     }
     
 }

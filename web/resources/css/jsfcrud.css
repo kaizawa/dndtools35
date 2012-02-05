@@ -80,3 +80,12 @@ tr.jsfcrud_even_row {
     left: 50%;
     top: 50%;
 }
+
+.middle {
+    font-size: 18px;
+}
+
+.middleBold {
+    font-size: 18px;
+    font-weight: bold;
+}

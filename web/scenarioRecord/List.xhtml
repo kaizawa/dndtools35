@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListScenarioRecordTitle}"></h:outputText>
+            <h:outputText value="シナリオ一覧"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
@@ -22,15 +22,15 @@
                     <h:dataTable value="#{scenarioRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListScenarioRecordTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListScenarioRecordTitle_name}"/>
                             </f:facet>
                             <h:outputText value="#{item.name}"/>
+                        </h:column>     
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioRecordTitle_campaign}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.campaign.campaignName}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
@@ -38,12 +38,7 @@
                             </f:facet>
                             <h:outputText value="#{item.description}"/>
                         </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListScenarioRecordTitle_campaign}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.campaign}"/>
-                        </h:column>
+                   
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
@@ -57,11 +52,36 @@
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{scenarioRecordController.prepareCreate}" value="#{bundle.ListScenarioRecordCreateLink}"/>
                 <br />
-                <br />
-                <h:commandLink value="#{bundle.ListScenarioRecordIndexLink}" action="/index" immediate="true" />
             </h:form>
+
+            <hr/>
+
+            <p>
+                <h:outputLabel styleClass="middleBold">新しいシナリオを作成</h:outputLabel>
+            </p>
+           <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="キャンペーン" for="campaign" />
+                    <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
+                        <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="シナリオ名" for="name" />
+                    <h:inputText id="name" value="#{scenarioRecordController.selected.name}" style="width: 500px" title="#{bundle.EditScenarioRecordTitle_name}" />
+                    <h:outputLabel value="#{bundle.EditScenarioRecordLabel_description}" for="description" />
+                    <h:inputTextarea id="description" style="font-size: 12px; width: 500px;height: 170px" value="#{scenarioRecordController.selected.description}" title="#{bundle.EditScenarioRecordTitle_description}" />
+
+                </h:panelGrid>
+                <h:commandButton action="#{scenarioRecordController.update}" value="作成"/>
+                <br />
+                <br />
+                <h:commandLink action="View" value="#{bundle.EditScenarioRecordViewLink}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{scenarioRecordController.prepareList}" value="#{bundle.EditScenarioRecordShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.EditScenarioRecordIndexLink}" action="/index" immediate="true" />
+            </h:form>            
         </ui:define>
     </ui:composition>
 

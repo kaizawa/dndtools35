@@ -16,7 +16,7 @@
                 </h:panelGroup>
                 <h:commandLink action="#{encounterRecordController.reread()}" value="再読み込み"/>                                
                 <br/>
-                <h:outputText escape="false" value="#{bundle.ListEncounterRecordEmpty}" rendered="#{encounterRecordController.items.rowCount == 0}"/>
+                <h:outputText escape="false" value="エンカウンターはありません。" rendered="#{encounterRecordController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
                     <h:outputText value="#{encounterRecordController.pagination.pageFirstItem + 1}..#{encounterRecordController.pagination.pageLastItem + 1}/#{encounterRecordController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{encounterRecordController.previous}" value="#{bundle.Previous} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasPreviousPage}"/>&nbsp;
@@ -62,7 +62,7 @@
                 <h:commandLink action="#{encounterRecordController.prepareCreate}" value="新しいエンカウンターの作成"/>
                 <br />
                 <br />
-                <h:commandLink value="#{bundle.ListEncounterRecordIndexLink}" action="/index" immediate="true" />
+                <h:commandLink value="インデックスへ" action="/index" immediate="true" />
             </h:form>
         </ui:define>
     </ui:composition>

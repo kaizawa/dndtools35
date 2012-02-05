@@ -29,7 +29,6 @@ public class ScenarioRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID", nullable = false)
     private Integer id;
     @Size(max = 400)
