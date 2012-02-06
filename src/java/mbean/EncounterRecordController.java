@@ -111,13 +111,13 @@ public class EncounterRecordController implements Serializable {
     /* 
      * encounterRecord/List は実際には表示されず、リストに相当するものは
      * ScenarioRecord/Edit に手表示される。なのでここでは null を返す。
-     * (これがよばれるのは ScenarioRecord/Edit なので  null で大丈夫)
+     * (これがよばれるのは ScenarioRecord/Edit)
      */
     public String prepareList() {
         recreateModel();
         current = new EncounterRecord();
         selectedItemIndex = -1;
-        return null;
+        return "/scenarioRecord/Edit";
     }
 
     public String prepareView() {
@@ -524,5 +524,11 @@ public class EncounterRecordController implements Serializable {
                 return member;
         }
         return memberList.get(0);
+    }
+    
+    public void reset (){
+        recreateModel();
+        current = new EncounterRecord();
+        selectedItemIndex = -1;
     }
 }

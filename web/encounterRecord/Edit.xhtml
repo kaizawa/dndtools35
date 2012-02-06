@@ -7,20 +7,22 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.EditEncounterRecordTitle}"></h:outputText>
+            <h:outputText value="エンカウンター『#{encounterRecordController.selected.name}』の編集"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditEncounterRecordLabel_name}" for="name" />
+                <h:panelGrid columns="4">
+                    <h:outputLabel value="エンカウンター名: " for="name" />
                     <h:inputText id="name" value="#{encounterRecordController.selected.name}" title="#{bundle.EditEncounterRecordTitle_name}" />
-                    <h:outputLabel value="#{bundle.EditEncounterRecordLabel_comments}" for="comments" />
-                    <h:inputText id="comments" value="#{encounterRecordController.selected.comments}" title="#{bundle.EditEncounterRecordTitle_comments}" />
-                    <h:outputLabel value="#{bundle.EditEncounterRecordLabel_round}" for="round" />
-                    <h:inputText id="round" value="#{encounterRecordController.selected.round}" title="#{bundle.EditEncounterRecordTitle_round}" />
+                    <h:outputLabel value="ラウンド: " for="round" />
+                    <h:inputText id="round" style="width: 30px" value="#{encounterRecordController.selected.round}" title="#{bundle.EditEncounterRecordTitle_round}" />
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="備考: " for="comments" />
+                    <h:inputText id="comments" styleClass="middleTextArea" value="#{encounterRecordController.selected.comments}" />
                 </h:panelGrid>
 
                 <h:panelGroup rendered="#{encounterCharacterController.items.rowCount > 0}">
@@ -51,7 +53,7 @@
                             </f:facet>
                             <h:outputText value="#{item.klass}"/>
                         </h:column>
-                      
+
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEncounterCharacterTitle_comments}"/>
@@ -73,14 +75,11 @@
                     </h:dataTable>
                 </h:panelGroup>                
 
-                <h:commandButton action="#{encounterRecordController.update}" value="#{bundle.EditEncounterRecordSaveLink}"/>
-                <br />
-                <h:commandLink action="View" value="#{bundle.EditEncounterRecordViewLink}" immediate="true"/>
-                <br />
-                <h:commandLink action="#{encounterRecordController.prepareList}" value="#{bundle.EditEncounterRecordShowAllLink}" immediate="true"/>
+                <h:commandButton action="#{encounterRecordController.update}" value="保存"/>
                 <br />
                 <br />
-                <h:commandLink value="#{bundle.EditEncounterRecordIndexLink}" action="/index" immediate="true" />
+                <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオの編集に戻る" immediate="true"/>
+                <br />
             </h:form>            
         </ui:define>
     </ui:composition>

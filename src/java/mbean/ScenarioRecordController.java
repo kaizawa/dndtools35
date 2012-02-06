@@ -4,11 +4,13 @@ import entity.ScenarioRecord;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.ScenarioRecordFacade;
+import entity.EncounterRecord;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -66,7 +68,7 @@ public class ScenarioRecordController implements Serializable {
         recreateModel();
         current = new ScenarioRecord();
         selectedItemIndex = -1;
-        return "List";
+        return "/scenarioRecord/List";
     }
 
     public String prepareView() {
@@ -95,7 +97,7 @@ public class ScenarioRecordController implements Serializable {
     public String prepareEdit() {
         current = (ScenarioRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return "/scenarioRecord/Edit";
     }
 
     public String update() {
@@ -224,5 +226,11 @@ public class ScenarioRecordController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ScenarioRecordController.class.getName());
             }
         }
+    }
+    
+    public void reset (){
+        recreateModel();
+        current = new ScenarioRecord();
+        selectedItemIndex = -1;
     }
 }

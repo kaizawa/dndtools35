@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="シナリオの編集"></h:outputText>
+            <h:outputText value="シナリオ『#{scenarioRecordController.selected.name}』の編集"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
@@ -22,13 +22,11 @@
                     <h:outputLabel value="シナリオ名" for="name" />
                     <h:inputText id="name" value="#{scenarioRecordController.selected.name}" title="#{bundle.EditScenarioRecordTitle_name}" />
                     <h:outputLabel value="備考" for="description" />
-                    <h:inputText id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" title="#{bundle.EditScenarioRecordTitle_description}" />
+                    <h:inputText id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" />
 
                 </h:panelGrid>
                 <h:commandButton action="#{scenarioRecordController.update}" value="更新"/>
                 <br />
-                <br />
-                <h:commandLink value="シナリオ一覧に戻る" action="#{scenarioRecordController.prepareList}" immediate="true" />
             </h:form>
 
             <hr/>
@@ -73,19 +71,14 @@
                 </h:panelGroup>
             </h:form>
             <br/>
-            <hr/>
             <h:form>
-                <p>
-                    <h:outputLabel styleClass="middleBold">新しいエンカウンターの作成</h:outputLabel>
-                </p>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="エンカウンター名" for="name" />
-                    <h:inputText id="name" style="width: 300px;" value="#{encounterRecordController.selected.name}" title="#{bundle.CreateEncounterRecordTitle_name}" />
+                <br/>
+                <h:outputLabel styleClass="smallBold">新しいエンカウンターの追加</h:outputLabel>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="名前" for="name" />
+                    <h:inputText id="name" style="width: 200px;" value="#{encounterRecordController.selected.name}" title="#{bundle.CreateEncounterRecordTitle_name}" />
+                    <h:commandButton action="#{encounterRecordController.create}" value="作成" />                    
                 </h:panelGrid>
-                <h:commandButton action="#{encounterRecordController.create}" value="作成" />
-                <br />
-                <br />
-                <h:commandLink value="インデックスへ" action="/index" immediate="true" />
             </h:form>
 
         </ui:define>

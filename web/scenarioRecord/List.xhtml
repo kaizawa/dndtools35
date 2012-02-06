@@ -68,14 +68,6 @@
                     <h:inputText id="name" value="#{scenarioRecordController.selected.name}" style="width: 500px" title="#{bundle.EditScenarioRecordTitle_name}" />
                 </h:panelGrid>
                 <h:commandButton action="#{scenarioRecordController.create}" value="作成"/>
-                <br />
-                <br />
-                <h:commandLink action="View" value="#{bundle.EditScenarioRecordViewLink}" immediate="true"/>
-                <br />
-                <h:commandLink action="#{scenarioRecordController.prepareList}" value="#{bundle.EditScenarioRecordShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:commandLink value="#{bundle.EditScenarioRecordIndexLink}" action="/index" immediate="true" />
             </h:form>            
         </ui:define>
     </ui:composition>
