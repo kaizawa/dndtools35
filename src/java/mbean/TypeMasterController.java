@@ -1,9 +1,9 @@
 package mbean;
 
-import entity.SizeMaster;
+import entity.TypeMaster;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
-import ejb.SizeMasterFacade;
+import ejb.TypeMasterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean (name="sizeMasterController")
+@ManagedBean (name="typeMasterController")
 @SessionScoped
-public class SizeMasterController implements Serializable {
+public class TypeMasterController implements Serializable {
 
 
-    private SizeMaster current;
+    private TypeMaster current;
     private DataModel items = null;
-    @EJB private ejb.SizeMasterFacade ejbFacade;
+    @EJB private ejb.TypeMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public SizeMasterController() {
+    public TypeMasterController() {
     }
 
-    public SizeMaster getSelected() {
+    public TypeMaster getSelected() {
         if (current == null) {
-            current = new SizeMaster();
+            current = new TypeMaster();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private SizeMasterFacade getFacade() {
+    private TypeMasterFacade getFacade() {
         return ejbFacade;
     }
     public PaginationHelper getPagination() {
@@ -67,13 +67,13 @@ public class SizeMasterController implements Serializable {
     }
 
     public String prepareView() {
-        current = (SizeMaster)getItems().getRowData();
+        current = (TypeMaster)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new SizeMaster();
+        current = new TypeMaster();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -81,7 +81,7 @@ public class SizeMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SizeMasterCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeMasterCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -90,7 +90,7 @@ public class SizeMasterController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (SizeMaster)getItems().getRowData();
+        current = (TypeMaster)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -98,7 +98,7 @@ public class SizeMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SizeMasterUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeMasterUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -107,7 +107,7 @@ public class SizeMasterController implements Serializable {
     }
 
     public String destroy() {
-        current = (SizeMaster)getItems().getRowData();
+        current = (TypeMaster)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -131,7 +131,7 @@ public class SizeMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SizeMasterDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TypeMasterDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -187,15 +187,15 @@ public class SizeMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass=SizeMaster.class)
-    public static class SizeMasterControllerConverter implements Converter {
+    @FacesConverter(forClass=TypeMaster.class)
+    public static class TypeMasterControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SizeMasterController controller = (SizeMasterController)facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "sizeMasterController");
+            TypeMasterController controller = (TypeMasterController)facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "typeMasterController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -215,11 +215,11 @@ public class SizeMasterController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SizeMaster) {
-                SizeMaster o = (SizeMaster) object;
+            if (object instanceof TypeMaster) {
+                TypeMaster o = (TypeMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+SizeMasterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+TypeMasterController.class.getName());
             }
         }
 

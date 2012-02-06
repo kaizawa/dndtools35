@@ -10,178 +10,184 @@
             <h:outputText value="#{bundle.ListMonsterMasterTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListMonsterMasterEmpty}" rendered="#{monsterMasterController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{monsterMasterController.items.rowCount > 0}">
-                    <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}..#{monsterMasterController.pagination.pageLastItem + 1}/#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{monsterMasterController.previous}" value="#{bundle.Previous} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{monsterMasterController.next}" value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{monsterMasterController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_type}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.type}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_hitDiceNum}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.hitDiceNum}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_initiative}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.initiative}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_speed}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.speed}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_ac}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.ac}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_acTouch}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.acTouch}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_acFlatFooted}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.acFlatFooted}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_baseAttack}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.baseAttack}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_grapple}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.grapple}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_attack}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.attack}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_spaceReach}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.spaceReach}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_specialAttacks}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.specialAttacks}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_specialQualities}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.specialQualities}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_environment}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.environment}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_organization}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.organization}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_challengeRating}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.challengeRating}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_treasure}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.treasure}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_alignment}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.alignment}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_advancement}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.advancement}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_levelAdjustment}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.levelAdjustment}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_sizeId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sizeId}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_hitDiceType}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.hitDiceType}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListMonsterMasterTitle_name}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{monsterMasterController.prepareView}" value="#{bundle.ListMonsterMasterViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{monsterMasterController.prepareEdit}" value="#{bundle.ListMonsterMasterEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{monsterMasterController.destroy}" value="#{bundle.ListMonsterMasterDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
-                <br />
-                <h:commandLink action="#{monsterMasterController.prepareCreate}" value="#{bundle.ListMonsterMasterCreateLink}"/>
-                <br />
-                <br />
-                <h:commandLink value="#{bundle.ListMonsterMasterIndexLink}" action="/index" immediate="true" />
-            </h:form>
+        <h:form styleClass="jsfcrud_list_form">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputText escape="false" value="#{bundle.ListMonsterMasterEmpty}" rendered="#{monsterMasterController.items.rowCount == 0}"/>
+            <h:panelGroup rendered="#{monsterMasterController.items.rowCount > 0}">
+                <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}..#{monsterMasterController.pagination.pageLastItem + 1}/#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
+                <h:commandLink action="#{monsterMasterController.previous}" value="#{bundle.Previous} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasPreviousPage}"/>&nbsp;
+                <h:commandLink action="#{monsterMasterController.next}" value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
+                <h:dataTable value="#{monsterMasterController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_id}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_name}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_hitDiceNum}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.hitDiceNum}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_initiative}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.initiative}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_speed}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.speed}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_ac}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.ac}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_acTouch}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.acTouch}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_acFlatFooted}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.acFlatFooted}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_baseAttack}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.baseAttack}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_grapple}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.grapple}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_attack}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.attack}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_reach}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.reach}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_specialAttacks}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.specialAttacks}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_specialQualities}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.specialQualities}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_environment}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.environment}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_organization}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.organization}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_challengeRating}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.challengeRating}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_treasure}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.treasure}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_advancement}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.advancement}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_levelAdjustment}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.levelAdjustment}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_contactSpace}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.contactSpace}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_type}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.type}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_sizeId}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.sizeId}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_hitDiceType}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.hitDiceType}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_alignment}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.alignment}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{monsterMasterController.prepareView}" value="#{bundle.ListMonsterMasterViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{monsterMasterController.prepareEdit}" value="#{bundle.ListMonsterMasterEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{monsterMasterController.destroy}" value="#{bundle.ListMonsterMasterDestroyLink}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+            <br />
+            <h:commandLink action="#{monsterMasterController.prepareCreate}" value="#{bundle.ListMonsterMasterCreateLink}"/>
+            <br />
+            <br />
+            <h:commandLink value="#{bundle.ListMonsterMasterIndexLink}" action="/index" immediate="true" />
+        </h:form>
         </ui:define>
     </ui:composition>
 

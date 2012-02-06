@@ -17,8 +17,8 @@
                 <h:panelGrid columns="2">
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_id}"/>
                     <h:outputText value="#{monsterMasterController.selected.id}" title="#{bundle.ViewMonsterMasterTitle_id}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_type}"/>
-                    <h:outputText value="#{monsterMasterController.selected.type}" title="#{bundle.ViewMonsterMasterTitle_type}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_name}"/>
+                    <h:outputText value="#{monsterMasterController.selected.name}" title="#{bundle.ViewMonsterMasterTitle_name}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_hitDiceNum}"/>
                     <h:outputText value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.ViewMonsterMasterTitle_hitDiceNum}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_initiative}"/>
@@ -37,8 +37,8 @@
                     <h:outputText value="#{monsterMasterController.selected.grapple}" title="#{bundle.ViewMonsterMasterTitle_grapple}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_attack}"/>
                     <h:outputText value="#{monsterMasterController.selected.attack}" title="#{bundle.ViewMonsterMasterTitle_attack}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_spaceReach}"/>
-                    <h:outputText value="#{monsterMasterController.selected.spaceReach}" title="#{bundle.ViewMonsterMasterTitle_spaceReach}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_reach}"/>
+                    <h:outputText value="#{monsterMasterController.selected.reach}" title="#{bundle.ViewMonsterMasterTitle_reach}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_specialAttacks}"/>
                     <h:outputText value="#{monsterMasterController.selected.specialAttacks}" title="#{bundle.ViewMonsterMasterTitle_specialAttacks}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_specialQualities}"/>
@@ -51,18 +51,20 @@
                     <h:outputText value="#{monsterMasterController.selected.challengeRating}" title="#{bundle.ViewMonsterMasterTitle_challengeRating}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_treasure}"/>
                     <h:outputText value="#{monsterMasterController.selected.treasure}" title="#{bundle.ViewMonsterMasterTitle_treasure}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_alignment}"/>
-                    <h:outputText value="#{monsterMasterController.selected.alignment}" title="#{bundle.ViewMonsterMasterTitle_alignment}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_advancement}"/>
                     <h:outputText value="#{monsterMasterController.selected.advancement}" title="#{bundle.ViewMonsterMasterTitle_advancement}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_levelAdjustment}"/>
                     <h:outputText value="#{monsterMasterController.selected.levelAdjustment}" title="#{bundle.ViewMonsterMasterTitle_levelAdjustment}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_contactSpace}"/>
+                    <h:outputText value="#{monsterMasterController.selected.contactSpace}" title="#{bundle.ViewMonsterMasterTitle_contactSpace}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_type}"/>
+                    <h:outputText value="#{monsterMasterController.selected.type}" title="#{bundle.ViewMonsterMasterTitle_type}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_sizeId}"/>
                     <h:outputText value="#{monsterMasterController.selected.sizeId}" title="#{bundle.ViewMonsterMasterTitle_sizeId}"/>
                     <h:outputText value="#{bundle.ViewMonsterMasterLabel_hitDiceType}"/>
                     <h:outputText value="#{monsterMasterController.selected.hitDiceType}" title="#{bundle.ViewMonsterMasterTitle_hitDiceType}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_name}"/>
-                    <h:outputText value="#{monsterMasterController.selected.name}" title="#{bundle.ViewMonsterMasterTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_alignment}"/>
+                    <h:outputText value="#{monsterMasterController.selected.alignment}" title="#{bundle.ViewMonsterMasterTitle_alignment}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{monsterMasterController.destroyAndView}" value="#{bundle.ViewMonsterMasterDestroyLink}"/>

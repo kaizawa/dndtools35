@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditAlignmentMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditAlignmentMasterLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{alignmentMasterController.selected.id}" title="#{bundle.EditAlignmentMasterTitle_id}" required="true" requiredMessage="#{bundle.EditAlignmentMasterRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditAlignmentMasterLabel_alignmentName}" for="alignmentName" />
+                    <h:inputText id="alignmentName" value="#{alignmentMasterController.selected.alignmentName}" title="#{bundle.EditAlignmentMasterTitle_alignmentName}" />
+                    <h:outputLabel value="#{bundle.EditAlignmentMasterLabel_alignmentShortName}" for="alignmentShortName" />
+                    <h:inputText id="alignmentShortName" value="#{alignmentMasterController.selected.alignmentShortName}" title="#{bundle.EditAlignmentMasterTitle_alignmentShortName}" />
+                </h:panelGrid>
+                <h:commandLink action="#{alignmentMasterController.update}" value="#{bundle.EditAlignmentMasterSaveLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="View" value="#{bundle.EditAlignmentMasterViewLink}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{alignmentMasterController.prepareList}" value="#{bundle.EditAlignmentMasterShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.EditAlignmentMasterIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

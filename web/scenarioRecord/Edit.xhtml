@@ -34,6 +34,7 @@
             <h:form styleClass="jsfcrud_list_form">
                 <h:outputText escape="false" value="エンカウンターはありません。" rendered="#{encounterRecordController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
+                    <h:outputLabel styleClass="middleBold">エンカウンター一覧</h:outputLabel><br/>
                     <h:outputText value="#{encounterRecordController.pagination.pageFirstItem + 1}..#{encounterRecordController.pagination.pageLastItem + 1}/#{encounterRecordController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{encounterRecordController.previous}" value="#{bundle.Previous} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{encounterRecordController.next}" value="#{bundle.Next} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasNextPage}"/>&nbsp;

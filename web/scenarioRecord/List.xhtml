@@ -22,19 +22,19 @@
                     <h:dataTable value="#{scenarioRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListScenarioRecordTitle_name}"/>
+                                <h:outputText value="シナリオ"/>
                             </f:facet>
                             <h:outputText value="#{item.name}"/>
                         </h:column>     
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListScenarioRecordTitle_campaign}"/>
+                                <h:outputText value="キャンペーン"/>
                             </f:facet>
                             <h:outputText value="#{item.campaign.campaignName}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListScenarioRecordTitle_description}"/>
+                                <h:outputText value="備考"/>
                             </f:facet>
                             <h:outputText value="#{item.description}"/>
                         </h:column>
@@ -53,21 +53,20 @@
                 <br />
             </h:form>
 
-            <hr/>
-
-            <p>
-                <h:outputLabel styleClass="middleBold">新しいシナリオを作成</h:outputLabel>
-            </p>
+            <h:outputLabel styleClass="middleBold">新しいシナリオを作成</h:outputLabel>
+            <br/>
+            <br/>
            <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="キャンペーン" for="campaign" />
+                    <h:outputLabel value="キャンペーン:" for="campaign" />
                     <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
                         <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="シナリオ名" for="name" />
-                    <h:inputText id="name" value="#{scenarioRecordController.selected.name}" style="width: 500px" title="#{bundle.EditScenarioRecordTitle_name}" />
+                    <h:outputLabel value="シナリオ名:" for="name" />
+                    <h:inputText id="name" value="#{scenarioRecordController.selected.name}" style="width: 250px" title="#{bundle.EditScenarioRecordTitle_name}" />
+                    <h:outputLabel></h:outputLabel>
+                    <h:commandButton action="#{scenarioRecordController.create}" value="作成"/>
                 </h:panelGrid>
-                <h:commandButton action="#{scenarioRecordController.create}" value="作成"/>
             </h:form>            
         </ui:define>
     </ui:composition>

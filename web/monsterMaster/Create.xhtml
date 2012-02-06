@@ -14,11 +14,11 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="6">
+                <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_id}" for="id" />
                     <h:inputText id="id" value="#{monsterMasterController.selected.id}" title="#{bundle.CreateMonsterMasterTitle_id}" required="true" requiredMessage="#{bundle.CreateMonsterMasterRequiredMessage_id}"/>
-                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_type}" for="type" />
-                    <h:inputText id="type" value="#{monsterMasterController.selected.type}" title="#{bundle.CreateMonsterMasterTitle_type}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{monsterMasterController.selected.name}" title="#{bundle.CreateMonsterMasterTitle_name}" />
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_hitDiceNum}" for="hitDiceNum" />
                     <h:inputText id="hitDiceNum" value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.CreateMonsterMasterTitle_hitDiceNum}" />
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_initiative}" for="initiative" />
@@ -37,8 +37,8 @@
                     <h:inputText id="grapple" value="#{monsterMasterController.selected.grapple}" title="#{bundle.CreateMonsterMasterTitle_grapple}" />
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_attack}" for="attack" />
                     <h:inputText id="attack" value="#{monsterMasterController.selected.attack}" title="#{bundle.CreateMonsterMasterTitle_attack}" />
-                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_spaceReach}" for="spaceReach" />
-                    <h:inputText id="spaceReach" value="#{monsterMasterController.selected.spaceReach}" title="#{bundle.CreateMonsterMasterTitle_spaceReach}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_reach}" for="reach" />
+                    <h:inputText id="reach" value="#{monsterMasterController.selected.reach}" title="#{bundle.CreateMonsterMasterTitle_reach}" />
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_specialAttacks}" for="specialAttacks" />
                     <h:inputText id="specialAttacks" value="#{monsterMasterController.selected.specialAttacks}" title="#{bundle.CreateMonsterMasterTitle_specialAttacks}" />
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_specialQualities}" for="specialQualities" />
@@ -51,12 +51,16 @@
                     <h:inputText id="challengeRating" value="#{monsterMasterController.selected.challengeRating}" title="#{bundle.CreateMonsterMasterTitle_challengeRating}" />
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_treasure}" for="treasure" />
                     <h:inputText id="treasure" value="#{monsterMasterController.selected.treasure}" title="#{bundle.CreateMonsterMasterTitle_treasure}" />
-                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_alignment}" for="alignment" />
-                    <h:inputText id="alignment" value="#{monsterMasterController.selected.alignment}" title="#{bundle.CreateMonsterMasterTitle_alignment}" />
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_advancement}" for="advancement" />
                     <h:inputText id="advancement" value="#{monsterMasterController.selected.advancement}" title="#{bundle.CreateMonsterMasterTitle_advancement}" />
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_levelAdjustment}" for="levelAdjustment" />
                     <h:inputText id="levelAdjustment" value="#{monsterMasterController.selected.levelAdjustment}" title="#{bundle.CreateMonsterMasterTitle_levelAdjustment}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_contactSpace}" for="contactSpace" />
+                    <h:inputText id="contactSpace" value="#{monsterMasterController.selected.contactSpace}" title="#{bundle.CreateMonsterMasterTitle_contactSpace}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_type}" for="type" />
+                    <h:selectOneMenu id="type" value="#{monsterMasterController.selected.type}" title="#{bundle.CreateMonsterMasterTitle_type}" >
+                        <f:selectItems value="#{typeMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_sizeId}" for="sizeId" />
                     <h:selectOneMenu id="sizeId" value="#{monsterMasterController.selected.sizeId}" title="#{bundle.CreateMonsterMasterTitle_sizeId}" >
                         <f:selectItems value="#{sizeMasterController.itemsAvailableSelectOne}"/>
@@ -65,8 +69,10 @@
                     <h:selectOneMenu id="hitDiceType" value="#{monsterMasterController.selected.hitDiceType}" title="#{bundle.CreateMonsterMasterTitle_hitDiceType}" >
                         <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_name}" for="name" />
-                    <h:inputText id="name" value="#{monsterMasterController.selected.name}" title="#{bundle.CreateMonsterMasterTitle_name}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_alignment}" for="alignment" />
+                    <h:selectOneMenu id="alignment" value="#{monsterMasterController.selected.alignment}" title="#{bundle.CreateMonsterMasterTitle_alignment}" >
+                        <f:selectItems value="#{alignmentMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{monsterMasterController.create}" value="#{bundle.CreateMonsterMasterSaveLink}" />

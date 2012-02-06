@@ -54,6 +54,6 @@ public class TemplateControl {
     public String prepareIndex(){
         encounterRecordController.reset();
         scenarioRecordController.reset();
-        return "/scenarioRecord/List";
+        return "/index";
     }
 }

@@ -2,44 +2,43 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ka78231
+ * @author kaizawa
  */
 @Entity
 @Table(name = "SIZE_MASTER")
-@NamedQueries({@NamedQuery(name = "SizeMaster.findById", query = "SELECT s FROM SizeMaster s WHERE s.id = :id"), @NamedQuery(name = "SizeMaster.findBySizeName", query = "SELECT s FROM SizeMaster s WHERE s.sizeName = :sizeName"), @NamedQuery(name = "SizeMaster.findByAcModifier", query = "SELECT s FROM SizeMaster s WHERE s.acModifier = :acModifier")})
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "SizeMaster.findAll", query = "SELECT s FROM SizeMaster s"),
+    @NamedQuery(name = "SizeMaster.findById", query = "SELECT s FROM SizeMaster s WHERE s.id = :id"),
+    @NamedQuery(name = "SizeMaster.findBySizeName", query = "SELECT s FROM SizeMaster s WHERE s.sizeName = :sizeName"),
+    @NamedQuery(name = "SizeMaster.findByAcModifier", query = "SELECT s FROM SizeMaster s WHERE s.acModifier = :acModifier")})
 public class SizeMaster implements Serializable {
-    @OneToMany(mappedBy = "sizeId")
-    private List<MonsterMaster> monsterMasterList;
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Column(name = "SIZE_NAME")
+    @Size(max = 100)
+    @Column(name = "SIZE_NAME", length = 100)
     private String sizeName;
     @Column(name = "AC_MODIFIER")
     private Integer acModifier;
     @OneToMany(mappedBy = "sizeId")
-    private Collection<RaceMaster> raceMasterCollection;
+    private List<MonsterMaster> monsterMasterList;
 
     public SizeMaster() {
     }
@@ -72,12 +71,13 @@ public class SizeMaster implements Serializable {
         this.acModifier = acModifier;
     }
 
-    public Collection<RaceMaster> getRaceMasterCollection() {
-        return raceMasterCollection;
+    @XmlTransient
+    public List<MonsterMaster> getMonsterMasterList() {
+        return monsterMasterList;
     }
 
-    public void setRaceMasterCollection(Collection<RaceMaster> raceMasterCollection) {
-        this.raceMasterCollection = raceMasterCollection;
+    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
+        this.monsterMasterList = monsterMasterList;
     }
 
     @Override
@@ -102,16 +102,7 @@ public class SizeMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.SizeMaster[id=" + id + "]";
+        return "entity.SizeMaster[ id=" + id + " ]";
     }
-
-    @XmlTransient
-    public List<MonsterMaster> getMonsterMasterList() {
-        return monsterMasterList;
-    }
-
-    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
-        this.monsterMasterList = monsterMasterList;
-    }
-
+    
 }

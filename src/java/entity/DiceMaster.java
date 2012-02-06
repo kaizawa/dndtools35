@@ -2,34 +2,43 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ka78231
+ * @author kaizawa
  */
 @Entity
 @Table(name = "DICE_MASTER")
-@NamedQueries({@NamedQuery(name = "DiceMaster.findById", query = "SELECT d FROM DiceMaster d WHERE d.id = :id"), @NamedQuery(name = "DiceMaster.findByName", query = "SELECT d FROM DiceMaster d WHERE d.name = :name"), @NamedQuery(name = "DiceMaster.findByType", query = "SELECT d FROM DiceMaster d WHERE d.type = :type")})
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "DiceMaster.findAll", query = "SELECT d FROM DiceMaster d"),
+    @NamedQuery(name = "DiceMaster.findById", query = "SELECT d FROM DiceMaster d WHERE d.id = :id"),
+    @NamedQuery(name = "DiceMaster.findByName", query = "SELECT d FROM DiceMaster d WHERE d.name = :name"),
+    @NamedQuery(name = "DiceMaster.findByType", query = "SELECT d FROM DiceMaster d WHERE d.type = :type")})
 public class DiceMaster implements Serializable {
-    @OneToMany(mappedBy = "hitDiceType")
-    private List<MonsterMaster> monsterMasterList;
-    @OneToMany(mappedBy = "hitDiceType")
-    private List<ClassMaster> classMasterList;
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Column(name = "NAME")
+    @Size(max = 20)
+    @Column(name = "NAME", length = 20)
     private String name;
     @Column(name = "TYPE")
     private Integer type;
+    @OneToMany(mappedBy = "hitDiceType")
+    private List<MonsterMaster> monsterMasterList;
 
     public DiceMaster() {
     }
@@ -62,6 +71,15 @@ public class DiceMaster implements Serializable {
         this.type = type;
     }
 
+    @XmlTransient
+    public List<MonsterMaster> getMonsterMasterList() {
+        return monsterMasterList;
+    }
+
+    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
+        this.monsterMasterList = monsterMasterList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -84,25 +102,7 @@ public class DiceMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.DiceMaster[id=" + id + "]";
+        return "entity.DiceMaster[ id=" + id + " ]";
     }
-
-    @XmlTransient
-    public List<ClassMaster> getClassMasterList() {
-        return classMasterList;
-    }
-
-    public void setClassMasterList(List<ClassMaster> classMasterList) {
-        this.classMasterList = classMasterList;
-    }
-
-    @XmlTransient
-    public List<MonsterMaster> getMonsterMasterList() {
-        return monsterMasterList;
-    }
-
-    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
-        this.monsterMasterList = monsterMasterList;
-    }
-
+    
 }

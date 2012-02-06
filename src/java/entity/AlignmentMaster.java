@@ -2,46 +2,44 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ka78231
+ * @author kaizawa
  */
 @Entity
 @Table(name = "ALIGNMENT_MASTER")
-@NamedQueries({@NamedQuery(name = "AlignmentMaster.findById", query = "SELECT a FROM AlignmentMaster a WHERE a.id = :id"), @NamedQuery(name = "AlignmentMaster.findByAlignmentName", query = "SELECT a FROM AlignmentMaster a WHERE a.alignmentName = :alignmentName"), @NamedQuery(name = "AlignmentMaster.findByAlignmentShortName", query = "SELECT a FROM AlignmentMaster a WHERE a.alignmentShortName = :alignmentShortName")})
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "AlignmentMaster.findAll", query = "SELECT a FROM AlignmentMaster a"),
+    @NamedQuery(name = "AlignmentMaster.findById", query = "SELECT a FROM AlignmentMaster a WHERE a.id = :id"),
+    @NamedQuery(name = "AlignmentMaster.findByAlignmentName", query = "SELECT a FROM AlignmentMaster a WHERE a.alignmentName = :alignmentName"),
+    @NamedQuery(name = "AlignmentMaster.findByAlignmentShortName", query = "SELECT a FROM AlignmentMaster a WHERE a.alignmentShortName = :alignmentShortName")})
 public class AlignmentMaster implements Serializable {
-    @OneToMany(mappedBy = "alignment")
-    private List<MonsterMaster> monsterMasterList;
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Column(name = "ALIGNMENT_NAME")
+    @Size(max = 100)
+    @Column(name = "ALIGNMENT_NAME", length = 100)
     private String alignmentName;
-    @Column(name = "ALIGNMENT_SHORT_NAME")
+    @Size(max = 100)
+    @Column(name = "ALIGNMENT_SHORT_NAME", length = 100)
     private String alignmentShortName;
-    @OneToMany(mappedBy = "alignmentId")
-    private Collection<CharacterRecord> characterRecordCollection;
-    @OneToMany(mappedBy = "alignmentId")
-    private Collection<ReligionMaster> religionMasterCollection;
+    @OneToMany(mappedBy = "alignment")
+    private List<MonsterMaster> monsterMasterList;
 
     public AlignmentMaster() {
     }
@@ -74,20 +72,13 @@ public class AlignmentMaster implements Serializable {
         this.alignmentShortName = alignmentShortName;
     }
 
-    public Collection<CharacterRecord> getCharacterRecordCollection() {
-        return characterRecordCollection;
+    @XmlTransient
+    public List<MonsterMaster> getMonsterMasterList() {
+        return monsterMasterList;
     }
 
-    public void setCharacterRecordCollection(Collection<CharacterRecord> characterRecordCollection) {
-        this.characterRecordCollection = characterRecordCollection;
-    }
-
-    public Collection<ReligionMaster> getReligionMasterCollection() {
-        return religionMasterCollection;
-    }
-
-    public void setReligionMasterCollection(Collection<ReligionMaster> religionMasterCollection) {
-        this.religionMasterCollection = religionMasterCollection;
+    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
+        this.monsterMasterList = monsterMasterList;
     }
 
     @Override
@@ -112,16 +103,7 @@ public class AlignmentMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.AlignmentMaster[id=" + id + "]";
+        return "entity.AlignmentMaster[ id=" + id + " ]";
     }
-
-    @XmlTransient
-    public List<MonsterMaster> getMonsterMasterList() {
-        return monsterMasterList;
-    }
-
-    public void setMonsterMasterList(List<MonsterMaster> monsterMasterList) {
-        this.monsterMasterList = monsterMasterList;
-    }
-
+    
 }

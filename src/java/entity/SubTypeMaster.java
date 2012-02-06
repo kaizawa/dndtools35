@@ -24,8 +24,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SubTypeMaster.findById", query = "SELECT s FROM SubTypeMaster s WHERE s.id = :id"),
     @NamedQuery(name = "SubTypeMaster.findByName", query = "SELECT s FROM SubTypeMaster s WHERE s.name = :name")})
 public class SubTypeMaster implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subTypeMaster")
-    private List<MonsterSubTypeRecord> monsterSubTypeRecordList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,15 +92,6 @@ public class SubTypeMaster implements Serializable {
     @Override
     public String toString() {
         return "entity.SubTypeMaster[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<MonsterSubTypeRecord> getMonsterSubTypeRecordList() {
-        return monsterSubTypeRecordList;
-    }
-
-    public void setMonsterSubTypeRecordList(List<MonsterSubTypeRecord> monsterSubTypeRecordList) {
-        this.monsterSubTypeRecordList = monsterSubTypeRecordList;
     }
     
 }
