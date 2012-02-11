@@ -24,7 +24,7 @@ public interface CharacterSummary {
     public String getSkills();
     public String getSpecialAttack();
     public String getSpecialQalities();
-    public Integer getSpeed();
+    public String getSpeed();
     public String getType();
     public String getBaseAttackAndGrapple();
     public String getContactSpaceAndReach();
