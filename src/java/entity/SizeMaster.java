@@ -102,7 +102,8 @@ public class SizeMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.SizeMaster[ id=" + id + " ]";
+        //return "entity.SizeMaster[ id=" + id + " ]";
+        return sizeName;
     }
     
 }

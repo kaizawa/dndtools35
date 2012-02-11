@@ -102,7 +102,8 @@ public class DiceMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.DiceMaster[ id=" + id + " ]";
+        //return "entity.DiceMaster[ id=" + id + " ]";
+        return name;
     }
     
 }

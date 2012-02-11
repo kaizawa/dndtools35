@@ -14,75 +14,68 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{monsterMasterController.selected.id}" title="#{bundle.EditMonsterMasterTitle_id}" required="true" requiredMessage="#{bundle.EditMonsterMasterRequiredMessage_id}"/>
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_name}" for="name" />
-                    <h:inputText id="name" value="#{monsterMasterController.selected.name}" title="#{bundle.EditMonsterMasterTitle_name}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_hitDiceNum}" for="hitDiceNum" />
-                    <h:inputText id="hitDiceNum" value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.EditMonsterMasterTitle_hitDiceNum}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_initiative}" for="initiative" />
-                    <h:inputText id="initiative" value="#{monsterMasterController.selected.initiative}" title="#{bundle.EditMonsterMasterTitle_initiative}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_speed}" for="speed" />
-                    <h:inputText id="speed" value="#{monsterMasterController.selected.speed}" title="#{bundle.EditMonsterMasterTitle_speed}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_ac}" for="ac" />
-                    <h:inputText id="ac" value="#{monsterMasterController.selected.ac}" title="#{bundle.EditMonsterMasterTitle_ac}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_acTouch}" for="acTouch" />
-                    <h:inputText id="acTouch" value="#{monsterMasterController.selected.acTouch}" title="#{bundle.EditMonsterMasterTitle_acTouch}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_acFlatFooted}" for="acFlatFooted" />
-                    <h:inputText id="acFlatFooted" value="#{monsterMasterController.selected.acFlatFooted}" title="#{bundle.EditMonsterMasterTitle_acFlatFooted}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_baseAttack}" for="baseAttack" />
-                    <h:inputText id="baseAttack" value="#{monsterMasterController.selected.baseAttack}" title="#{bundle.EditMonsterMasterTitle_baseAttack}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_grapple}" for="grapple" />
-                    <h:inputText id="grapple" value="#{monsterMasterController.selected.grapple}" title="#{bundle.EditMonsterMasterTitle_grapple}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_attack}" for="attack" />
-                    <h:inputText id="attack" value="#{monsterMasterController.selected.attack}" title="#{bundle.EditMonsterMasterTitle_attack}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_reach}" for="reach" />
-                    <h:inputText id="reach" value="#{monsterMasterController.selected.reach}" title="#{bundle.EditMonsterMasterTitle_reach}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_specialAttacks}" for="specialAttacks" />
-                    <h:inputText id="specialAttacks" value="#{monsterMasterController.selected.specialAttacks}" title="#{bundle.EditMonsterMasterTitle_specialAttacks}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_specialQualities}" for="specialQualities" />
-                    <h:inputText id="specialQualities" value="#{monsterMasterController.selected.specialQualities}" title="#{bundle.EditMonsterMasterTitle_specialQualities}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_environment}" for="environment" />
-                    <h:inputText id="environment" value="#{monsterMasterController.selected.environment}" title="#{bundle.EditMonsterMasterTitle_environment}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_organization}" for="organization" />
-                    <h:inputText id="organization" value="#{monsterMasterController.selected.organization}" title="#{bundle.EditMonsterMasterTitle_organization}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_challengeRating}" for="challengeRating" />
-                    <h:inputText id="challengeRating" value="#{monsterMasterController.selected.challengeRating}" title="#{bundle.EditMonsterMasterTitle_challengeRating}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_treasure}" for="treasure" />
-                    <h:inputText id="treasure" value="#{monsterMasterController.selected.treasure}" title="#{bundle.EditMonsterMasterTitle_treasure}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_advancement}" for="advancement" />
-                    <h:inputText id="advancement" value="#{monsterMasterController.selected.advancement}" title="#{bundle.EditMonsterMasterTitle_advancement}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_levelAdjustment}" for="levelAdjustment" />
-                    <h:inputText id="levelAdjustment" value="#{monsterMasterController.selected.levelAdjustment}" title="#{bundle.EditMonsterMasterTitle_levelAdjustment}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_contactSpace}" for="contactSpace" />
-                    <h:inputText id="contactSpace" value="#{monsterMasterController.selected.contactSpace}" title="#{bundle.EditMonsterMasterTitle_contactSpace}" />
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_type}" for="type" />
-                    <h:selectOneMenu id="type" value="#{monsterMasterController.selected.type}" title="#{bundle.EditMonsterMasterTitle_type}" >
+                <h:panelGrid columns="6"><h:outputLabel value="#{bundle.CreateMonsterMasterLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{monsterMasterController.selected.name}" title="#{bundle.CreateMonsterMasterTitle_name}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_sizeId}" for="sizeId" />
+                    <h:selectOneMenu id="sizeId" value="#{monsterMasterController.selected.sizeId}" title="#{bundle.CreateMonsterMasterTitle_sizeId}" >                        
+                        <f:selectItems value="#{sizeMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu> 
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_type}" for="type" />                    
+                    <h:selectOneMenu id="type" value="#{monsterMasterController.selected.type}" title="#{bundle.CreateMonsterMasterTitle_type}" >
                         <f:selectItems value="#{typeMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_sizeId}" for="sizeId" />
-                    <h:selectOneMenu id="sizeId" value="#{monsterMasterController.selected.sizeId}" title="#{bundle.EditMonsterMasterTitle_sizeId}" >
-                        <f:selectItems value="#{sizeMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_hitDiceType}" for="hitDiceType" />
-                    <h:selectOneMenu id="hitDiceType" value="#{monsterMasterController.selected.hitDiceType}" title="#{bundle.EditMonsterMasterTitle_hitDiceType}" >
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_hitDiceType}" for="hitDiceType" />
+                    <h:selectOneMenu id="hitDiceType" value="#{monsterMasterController.selected.hitDiceType}" title="#{bundle.CreateMonsterMasterTitle_hitDiceType}" >
                         <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditMonsterMasterLabel_alignment}" for="alignment" />
-                    <h:selectOneMenu id="alignment" value="#{monsterMasterController.selected.alignment}" title="#{bundle.EditMonsterMasterTitle_alignment}" >
+                    </h:selectOneMenu>                    
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_hitDiceNum}" for="hitDiceNum" />
+                    <h:inputText id="hitDiceNum" value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.CreateMonsterMasterTitle_hitDiceNum}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_initiative}" for="initiative" />
+                    <h:inputText id="initiative" value="#{monsterMasterController.selected.initiative}" title="#{bundle.CreateMonsterMasterTitle_initiative}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_speed}" for="speed" />
+                    <h:inputText id="speed" value="#{monsterMasterController.selected.speed}" title="#{bundle.CreateMonsterMasterTitle_speed}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_ac}" for="ac" />
+                    <h:inputText id="ac" value="#{monsterMasterController.selected.ac}" title="#{bundle.CreateMonsterMasterTitle_ac}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_acTouch}" for="acTouch" />
+                    <h:inputText id="acTouch" value="#{monsterMasterController.selected.acTouch}" title="#{bundle.CreateMonsterMasterTitle_acTouch}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_acFlatFooted}" for="acFlatFooted" />
+                    <h:inputText id="acFlatFooted" value="#{monsterMasterController.selected.acFlatFooted}" title="#{bundle.CreateMonsterMasterTitle_acFlatFooted}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_baseAttack}" for="baseAttack" />
+                    <h:inputText id="baseAttack" value="#{monsterMasterController.selected.baseAttack}" title="#{bundle.CreateMonsterMasterTitle_baseAttack}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_grapple}" for="grapple" />
+                    <h:inputText id="grapple" value="#{monsterMasterController.selected.grapple}" title="#{bundle.CreateMonsterMasterTitle_grapple}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_attack}" for="attack" />
+                    <h:inputText id="attack" value="#{monsterMasterController.selected.attack}" title="#{bundle.CreateMonsterMasterTitle_attack}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_contactSpace}" for="contactSpace" />
+                    <h:inputText id="contactSpace" value="#{monsterMasterController.selected.contactSpace}" title="#{bundle.CreateMonsterMasterTitle_contactSpace}" />                    
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_reach}" for="reach" />
+                    <h:inputText id="reach" value="#{monsterMasterController.selected.reach}" title="#{bundle.CreateMonsterMasterTitle_reach}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_specialAttacks}" for="specialAttacks" />
+                    <h:inputText id="specialAttacks" value="#{monsterMasterController.selected.specialAttacks}" title="#{bundle.CreateMonsterMasterTitle_specialAttacks}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_specialQualities}" for="specialQualities" />
+                    <h:inputText id="specialQualities" value="#{monsterMasterController.selected.specialQualities}" title="#{bundle.CreateMonsterMasterTitle_specialQualities}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_environment}" for="environment" />
+                    <h:inputText id="environment" value="#{monsterMasterController.selected.environment}" title="#{bundle.CreateMonsterMasterTitle_environment}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_organization}" for="organization" />
+                    <h:inputText id="organization" value="#{monsterMasterController.selected.organization}" title="#{bundle.CreateMonsterMasterTitle_organization}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_challengeRating}" for="challengeRating" />
+                    <h:inputText id="challengeRating" value="#{monsterMasterController.selected.challengeRating}" title="#{bundle.CreateMonsterMasterTitle_challengeRating}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_treasure}" for="treasure" />
+                    <h:inputText id="treasure" value="#{monsterMasterController.selected.treasure}" title="#{bundle.CreateMonsterMasterTitle_treasure}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_advancement}" for="advancement" />
+                    <h:inputText id="advancement" value="#{monsterMasterController.selected.advancement}" title="#{bundle.CreateMonsterMasterTitle_advancement}" />
+                    <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_alignment}" for="alignment" />
+                    <h:selectOneMenu id="alignment" value="#{monsterMasterController.selected.alignment}" title="#{bundle.CreateMonsterMasterTitle_alignment}" >
                         <f:selectItems value="#{alignmentMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
+                    </h:selectOneMenu>                    
+                    <h:inputText id="levelAdjustment" value="#{monsterMasterController.selected.levelAdjustment}" title="モンスター一覧" />               
                 </h:panelGrid>
-                <h:commandLink action="#{monsterMasterController.update}" value="#{bundle.EditMonsterMasterSaveLink}"/>
+                <h:commandButton action="#{monsterMasterController.update}" value="保存"/>
                 <br />
                 <br />
                 <h:commandLink action="View" value="#{bundle.EditMonsterMasterViewLink}" immediate="true"/>
                 <br />
                 <h:commandLink action="#{monsterMasterController.prepareList}" value="#{bundle.EditMonsterMasterShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:commandLink value="#{bundle.EditMonsterMasterIndexLink}" action="/index" immediate="true" />
             </h:form>
         </ui:define>
     </ui:composition>

@@ -103,7 +103,8 @@ public class AlignmentMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.AlignmentMaster[ id=" + id + " ]";
+        //return "entity.AlignmentMaster[ id=" + id + " ]";
+        return getAlignmentName();
     }
     
 }

@@ -91,7 +91,8 @@ public class TypeMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.TypeMaster[ id=" + id + " ]";
+        //return "entity.TypeMaster[ id=" + id + " ]";
+        return name;
     }
     
 }
