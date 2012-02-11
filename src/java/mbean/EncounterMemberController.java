@@ -3,7 +3,7 @@ package mbean;
 import entity.EncounterMember;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
-import ejb.EncounterBattleMemberFacade;
+import ejb.EncounterMemberFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,18 +18,18 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "encounterBattleMemberController")
+@ManagedBean(name = "encounterMemberController")
 @SessionScoped
-public class EncounterBattleMemberController implements Serializable {
+public class EncounterMemberController implements Serializable {
 
     private EncounterMember current;
     private DataModel items = null;
     @EJB
-    private ejb.EncounterBattleMemberFacade ejbFacade;
+    private ejb.EncounterMemberFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public EncounterBattleMemberController() {
+    public EncounterMemberController() {
     }
 
     public EncounterMember getSelected() {
@@ -40,7 +40,7 @@ public class EncounterBattleMemberController implements Serializable {
         return current;
     }
 
-    private EncounterBattleMemberFacade getFacade() {
+    private EncounterMemberFacade getFacade() {
         return ejbFacade;
     }
 
@@ -82,7 +82,7 @@ public class EncounterBattleMemberController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterBattleMemberCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterMemberCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -99,7 +99,7 @@ public class EncounterBattleMemberController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterBattleMemberUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterMemberUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -132,7 +132,7 @@ public class EncounterBattleMemberController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterBattleMemberDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EncounterMemberDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -189,14 +189,14 @@ public class EncounterBattleMemberController implements Serializable {
     }
 
     @FacesConverter(forClass = EncounterMember.class)
-    public static class EncounterBattleMemberControllerConverter implements Converter {
+    public static class EncounterMemberControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            EncounterBattleMemberController controller = (EncounterBattleMemberController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "encounterBattleMemberController");
+            EncounterMemberController controller = (EncounterMemberController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "encounterMemberController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -220,7 +220,7 @@ public class EncounterBattleMemberController implements Serializable {
                 EncounterMember o = (EncounterMember) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EncounterBattleMemberController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EncounterMemberController.class.getName());
             }
         }
     }

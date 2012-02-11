@@ -59,14 +59,14 @@ public class EncounterRecord implements Serializable {
     @Column(name = "TURN")
     private Integer turn;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encounterRecord")
-    private List<EncounterMember> encounterBattleMemberList;
+    private List<EncounterMember> encounterMemberList;
 
-    public List<EncounterMember> getEncounterBattleMemberList() {
-        return encounterBattleMemberList;
+    public List<EncounterMember> getEncounterMemberList() {
+        return encounterMemberList;
     }
 
-    public void setEncounterBattleMemberList(List<EncounterMember> encounterBattleMemberList) {
-        this.encounterBattleMemberList = encounterBattleMemberList;
+    public void setEncounterMemberList(List<EncounterMember> encounterMemberList) {
+        this.encounterMemberList = encounterMemberList;
     }
 
  

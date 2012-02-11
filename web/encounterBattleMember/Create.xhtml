@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.CreateEncounterBattleMemberTitle}"></h:outputText>
+            <h:outputText value="#{bundle.CreateEncounterMemberTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
@@ -15,23 +15,23 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateEncounterBattleMemberLabel_encounterCharacter}" for="encounterCharacter" />
-                    <h:selectOneMenu id="encounterCharacter" value="#{encounterBattleMemberController.selected.encounterCharacter}" title="#{bundle.CreateEncounterBattleMemberTitle_encounterCharacter}" >
+                    <h:outputLabel value="#{bundle.CreateEncounterMemberLabel_encounterCharacter}" for="encounterCharacter" />
+                    <h:selectOneMenu id="encounterCharacter" value="#{encounterMemberController.selected.encounterCharacter}" title="#{bundle.CreateEncounterMemberTitle_encounterCharacter}" >
                         <f:selectItems value="#{encounterCharacterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateEncounterBattleMemberLabel_encounterRecord}" for="encounterRecord" />
-                    <h:selectOneMenu id="encounterRecord" value="#{encounterBattleMemberController.selected.encounterRecord}" title="#{bundle.CreateEncounterBattleMemberTitle_encounterRecord}" >
+                    <h:outputLabel value="#{bundle.CreateEncounterMemberLabel_encounterRecord}" for="encounterRecord" />
+                    <h:selectOneMenu id="encounterRecord" value="#{encounterMemberController.selected.encounterRecord}" title="#{bundle.CreateEncounterMemberTitle_encounterRecord}" >
                         <f:selectItems value="#{encounterRecordController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{encounterBattleMemberController.create}" value="#{bundle.CreateEncounterBattleMemberSaveLink}" />
+                <h:commandLink action="#{encounterMemberController.create}" value="#{bundle.CreateEncounterMemberSaveLink}" />
                 <br />
                 <br />
-                <h:commandLink action="#{encounterBattleMemberController.prepareList}" value="#{bundle.CreateEncounterBattleMemberShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{encounterMemberController.prepareList}" value="#{bundle.CreateEncounterMemberShowAllLink}" immediate="true"/>
                 <br />
                 <br />
-                <h:commandLink value="#{bundle.CreateEncounterBattleMemberIndexLink}" action="/index" immediate="true" />
+                <h:commandLink value="#{bundle.CreateEncounterMemberIndexLink}" action="/index" immediate="true" />
             </h:form>
         </ui:define>
     </ui:composition>

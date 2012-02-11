@@ -236,7 +236,7 @@ public class EncounterCharacterController implements Serializable {
     public String copy() {
         EncounterCharacter newchara = new EncounterCharacter();
         newchara.setComments(current.getComments());
-        newchara.setEncounterBattleMemberList(current.getEncounterBattleMemberList());
+        newchara.setEncounterMemberList(current.getEncounterMemberList());
         newchara.setHitpoint(current.getHitpoint());
         newchara.setInitiative(current.getInitiative());
         newchara.setKlass(current.getKlass());

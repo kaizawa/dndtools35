@@ -18,7 +18,7 @@ import javax.persistence.Query;
  * @author kaizawa
  */
 @Stateless
-public class EncounterBattleMemberFacade extends AbstractFacade<EncounterMember> {
+public class EncounterMemberFacade extends AbstractFacade<EncounterMember> {
 
     @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
@@ -28,24 +28,24 @@ public class EncounterBattleMemberFacade extends AbstractFacade<EncounterMember>
         return em;
     }
 
-    public EncounterBattleMemberFacade() {
+    public EncounterMemberFacade() {
         super(EncounterMember.class);
     }
 
     public List<EncounterMember> findByEncounterCharacter(EncounterCharacter chara) {
-        Query query = em.createNamedQuery("EncounterBattleMember.findByEncounterCharacter");
+        Query query = em.createNamedQuery("EncounterMember.findByEncounterCharacter");
         query.setParameter("encounterCharacter", chara);
         return query.getResultList();
     }
     
     public List<EncounterMember> findByEncounterRecord(EncounterRecord record) {
-        Query query = em.createNamedQuery("EncounterBattleMember.findByEncounterRecord");
+        Query query = em.createNamedQuery("EncounterMember.findByEncounterRecord");
         query.setParameter("encounterRecord", record);
         return query.getResultList();
     }    
     
     public List<EncounterMember> findByEncounterCharacterAndEncounterRecord(EncounterCharacter chara, EncounterRecord record) {
-        Query query = em.createNamedQuery("EncounterBattleMember.findByEncounterCharacterAndEncounterRecord");
+        Query query = em.createNamedQuery("EncounterMember.findByEncounterCharacterAndEncounterRecord");
         query.setParameter("encounterRecord", record);
         query.setParameter("encounterCharacter", chara);
         return query.getResultList();
