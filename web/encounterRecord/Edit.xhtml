@@ -24,7 +24,6 @@
                     <h:outputLabel value="備考: " for="comments" />
                     <h:inputText id="comments" styleClass="middleTextArea" value="#{encounterRecordController.selected.comments}" />
                 </h:panelGrid>
-
                 <h:panelGroup rendered="#{encounterCharacterController.items.rowCount > 0}">
                     <h:outputText value="#{encounterCharacterController.pagination.pageFirstItem + 1}..#{encounterCharacterController.pagination.pageLastItem + 1}/#{encounterCharacterController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{encounterCharacterController.previous}" value="#{bundle.Previous} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasPreviousPage}"/>&nbsp;
@@ -76,6 +75,9 @@
                 </h:panelGroup>                
 
                 <h:commandButton action="#{encounterRecordController.update}" value="保存"/>
+                <br />
+                <br />
+                <h:commandButton action="/monsterData/List" value="モンスターの追加"/>
                 <br />
                 <br />
                 <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオの編集に戻る" immediate="true"/>
