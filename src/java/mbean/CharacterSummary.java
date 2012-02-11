@@ -19,14 +19,14 @@ public interface CharacterSummary {
     public String getKlass();
     public String getName();
     public String getOrganization();
-    public Integer getReach();
     public String getSave();
     public String getSize();
     public String getSkills();
-    public Integer getSpace();
     public String getSpecialAttack();
     public String getSpecialQalities();
     public Integer getSpeed();
     public String getType();
+    public String getBaseAttackAndGrapple();
+    public String getContactSpaceAndReach();
 
 }
