@@ -1,6 +1,6 @@
 package mbean;
 
-import entity.EncounterBattleMember;
+import entity.EncounterMember;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.EncounterBattleMemberFacade;
@@ -22,7 +22,7 @@ import javax.faces.model.SelectItem;
 @SessionScoped
 public class EncounterBattleMemberController implements Serializable {
 
-    private EncounterBattleMember current;
+    private EncounterMember current;
     private DataModel items = null;
     @EJB
     private ejb.EncounterBattleMemberFacade ejbFacade;
@@ -32,9 +32,9 @@ public class EncounterBattleMemberController implements Serializable {
     public EncounterBattleMemberController() {
     }
 
-    public EncounterBattleMember getSelected() {
+    public EncounterMember getSelected() {
         if (current == null) {
-            current = new EncounterBattleMember();
+            current = new EncounterMember();
             selectedItemIndex = -1;
         }
         return current;
@@ -68,13 +68,13 @@ public class EncounterBattleMemberController implements Serializable {
     }
 
     public String prepareView() {
-        current = (EncounterBattleMember) getItems().getRowData();
+        current = (EncounterMember) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new EncounterBattleMember();
+        current = new EncounterMember();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -91,7 +91,7 @@ public class EncounterBattleMemberController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (EncounterBattleMember) getItems().getRowData();
+        current = (EncounterMember) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -108,7 +108,7 @@ public class EncounterBattleMemberController implements Serializable {
     }
 
     public String destroy() {
-        current = (EncounterBattleMember) getItems().getRowData();
+        current = (EncounterMember) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -188,7 +188,7 @@ public class EncounterBattleMemberController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = EncounterBattleMember.class)
+    @FacesConverter(forClass = EncounterMember.class)
     public static class EncounterBattleMemberControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -216,8 +216,8 @@ public class EncounterBattleMemberController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof EncounterBattleMember) {
-                EncounterBattleMember o = (EncounterBattleMember) object;
+            if (object instanceof EncounterMember) {
+                EncounterMember o = (EncounterMember) object;
                 return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EncounterBattleMemberController.class.getName());

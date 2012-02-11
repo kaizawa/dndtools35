@@ -44,18 +44,18 @@ public class EncounterCharacter implements Serializable {
     @Column(name = "KLASS", length = 255)
     private String klass;
 
-    public List<EncounterBattleMember> getEncounterBattleMemberList() {
+    public List<EncounterMember> getEncounterBattleMemberList() {
         return encounterBattleMemberList;
     }
 
-    public void setEncounterBattleMemberList(List<EncounterBattleMember> encounterBattleMemberList) {
+    public void setEncounterBattleMemberList(List<EncounterMember> encounterBattleMemberList) {
         this.encounterBattleMemberList = encounterBattleMemberList;
     }
     @Size(max = 255)
     @Column(name = "NAME", length = 255)
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "encounterCharacter")
-    private List<EncounterBattleMember> encounterBattleMemberList;    
+    private List<EncounterMember> encounterBattleMemberList;    
 
     public EncounterCharacter() {
     }

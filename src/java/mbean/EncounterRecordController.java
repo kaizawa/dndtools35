@@ -7,7 +7,7 @@ import entity.EncounterRecord;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.EncounterRecordFacade;
-import entity.EncounterBattleMember;
+import entity.EncounterMember;
 import entity.EncounterCharacter;
 
 import java.io.Serializable;
@@ -72,10 +72,10 @@ public class EncounterRecordController implements Serializable {
     }
 
     public void sortBattleMember() {
-        Collections.sort(battleMemberList, new Comparator<EncounterBattleMember>() {
+        Collections.sort(battleMemberList, new Comparator<EncounterMember>() {
 
             @Override
-            public int compare(EncounterBattleMember mem1, EncounterBattleMember mem2) {
+            public int compare(EncounterMember mem1, EncounterMember mem2) {
 
                 return mem2.getInitiative().compareTo(mem1.getInitiative());
             }
@@ -285,7 +285,7 @@ public class EncounterRecordController implements Serializable {
     public boolean isCharaSelected() {
         EncounterCharacter encounterCharacter = (EncounterCharacter)encounterCharacterTable.getRowData();
 
-        for (EncounterBattleMember member : encounterBattleMemberFacade.findAll()) {
+        for (EncounterMember member : encounterBattleMemberFacade.findAll()) {
             if (member.getEncounterCharacter().equals(encounterCharacter)
                     && member.getEncounterRecord().equals(current)) {
                 return true;
@@ -307,14 +307,14 @@ public class EncounterRecordController implements Serializable {
             if (encounterCharacter != null) {
                 if (charaSelected) {
                     if (encounterBattleMemberFacade.findByEncounterCharacterAndEncounterRecord(encounterCharacter,current).isEmpty()) {
-                        EncounterBattleMember member = new EncounterBattleMember();
+                        EncounterMember member = new EncounterMember();
                         member.setEncounterRecord(current);
                         member.setEncounterCharacter(encounterCharacter);
                         encounterBattleMemberFacade.edit(member);
                     }
                 } else {
-                    List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterCharacterAndEncounterRecord(encounterCharacter,current);
-                    for (EncounterBattleMember member : memberList) {
+                    List<EncounterMember> memberList = encounterBattleMemberFacade.findByEncounterCharacterAndEncounterRecord(encounterCharacter,current);
+                    for (EncounterMember member : memberList) {
                         encounterBattleMemberFacade.remove(member);
                     }
                 }
@@ -323,9 +323,9 @@ public class EncounterRecordController implements Serializable {
             JsfUtil.addErrorMessage(e + "Persistence Error Occured");
         }
     }
-    List<EncounterBattleMember> battleMemberList;
+    List<EncounterMember> battleMemberList;
 
-    public List<EncounterBattleMember> getBattleMemberList() {
+    public List<EncounterMember> getBattleMemberList() {
         battleMemberList = encounterBattleMemberFacade.findByEncounterRecord(current);
         sortBattleMember();
         setTurn();
@@ -335,7 +335,7 @@ public class EncounterRecordController implements Serializable {
     public void setTurn() {
         if (getTurnMember() == null) {
             if (battleMemberList.size() > 0) {
-                EncounterBattleMember first = battleMemberList.get(0);
+                EncounterMember first = battleMemberList.get(0);
                 first.setMyTurn(true);
                 try {
                     encounterRecordFacade.edit(current);
@@ -345,7 +345,7 @@ public class EncounterRecordController implements Serializable {
                 }
             }
         } else {
-            for (EncounterBattleMember member : battleMemberList) {
+            for (EncounterMember member : battleMemberList) {
                 if (member.equals(getTurnMember())) {
                     member.setMyTurn(true);
                 }else { 
@@ -363,7 +363,7 @@ public class EncounterRecordController implements Serializable {
 
     public String saveBattleMembers() {
         try {
-            for (EncounterBattleMember member : battleMemberList) {
+            for (EncounterMember member : battleMemberList) {
                 encounterBattleMemberFacade.edit(member);
             }
             JsfUtil.addSuccessMessage("Member's Poropety Updated");
@@ -373,8 +373,8 @@ public class EncounterRecordController implements Serializable {
         return null;
     }
 
-    public void setSelectedMember(EncounterBattleMember selectedMember) {
-        EncounterBattleMember member = (EncounterBattleMember) battleMemberTable.getRowData();
+    public void setSelectedMember(EncounterMember selectedMember) {
+        EncounterMember member = (EncounterMember) battleMemberTable.getRowData();
 
     }
     private HtmlDataTable battleMemberTable = new HtmlDataTable();
@@ -387,8 +387,8 @@ public class EncounterRecordController implements Serializable {
         this.battleMemberTable = battleMemberTable;
     }
     
-    private EncounterBattleMember getNextMember(Integer current_index){
-        EncounterBattleMember nextMember;
+    private EncounterMember getNextMember(Integer current_index){
+        EncounterMember nextMember;
 
         if (battleMemberList.size() <= current_index + 1) {
             nextMember = battleMemberList.get(0);                    
@@ -403,7 +403,7 @@ public class EncounterRecordController implements Serializable {
     public String nextTrun() {
         int current_index;
         current_index = battleMemberList.indexOf(getTurnMember());
-        EncounterBattleMember nextMember;
+        EncounterMember nextMember;
         
         do{
             nextMember = getNextMember(current_index);
@@ -454,7 +454,7 @@ public class EncounterRecordController implements Serializable {
     public String setInitiativeByRandom(){
         Random rand =  new Random();
          try {
-            for (EncounterBattleMember member : battleMemberList) {
+            for (EncounterMember member : battleMemberList) {
                 int initiativeBonus = member.getEncounterCharacter().getInitiative();
 
                 member.setInitiative(rand.nextInt(19) + 1 + initiativeBonus);
@@ -478,7 +478,7 @@ public class EncounterRecordController implements Serializable {
     
     public String setInitialHitPoint(){
          try {
-            for (EncounterBattleMember member : battleMemberList) {
+            for (EncounterMember member : battleMemberList) {
                 member.setHitPoint(member.getEncounterCharacter().getHitpoint());
                 encounterBattleMemberFacade.edit(member);
             }
@@ -497,13 +497,13 @@ public class EncounterRecordController implements Serializable {
 
     public void setHpModifier(Integer mod) {
         int index = battleMemberTable.getRowIndex();
-        EncounterBattleMember member = battleMemberList.get(index);
+        EncounterMember member = battleMemberList.get(index);
         member.setHitPoint(member.getHitPoint() - mod);
 
     }
     
     public String getHpColor(){
-        EncounterBattleMember member = (EncounterBattleMember)battleMemberTable.getRowData();
+        EncounterMember member = (EncounterMember)battleMemberTable.getRowData();
         if(member.getHitPoint() > 0){
             return "black;";
         } else {
@@ -516,10 +516,10 @@ public class EncounterRecordController implements Serializable {
         return null;
     }       
     
-    public EncounterBattleMember getTurnMember(){
-        List<EncounterBattleMember> memberList = encounterBattleMemberFacade.findByEncounterRecord(current);
+    public EncounterMember getTurnMember(){
+        List<EncounterMember> memberList = encounterBattleMemberFacade.findByEncounterRecord(current);
         
-        for(EncounterBattleMember member : memberList){
+        for(EncounterMember member : memberList){
             if(member.getMyTurn())
                 return member;
         }

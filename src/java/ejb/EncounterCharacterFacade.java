@@ -4,7 +4,7 @@
  */
 package ejb;
 
-import entity.EncounterBattleMember;
+import entity.EncounterMember;
 import entity.EncounterCharacter;
 import entity.EncounterRecord;
 import java.util.List;

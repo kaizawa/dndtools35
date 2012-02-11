@@ -16,15 +16,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author kaizawa
  */
 @Entity
-@Table(name = "ENCOUNTER_BATTLE_MEMBER")
+@Table(name = "ENCOUNTER_MEMBER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EncounterBattleMember.findAll", query = "SELECT e FROM EncounterBattleMember e"),
-    @NamedQuery(name = "EncounterBattleMember.findById", query = "SELECT e FROM EncounterBattleMember e WHERE e.id = :id"),
-    @NamedQuery(name = "EncounterBattleMember.findByEncounterCharacterAndEncounterRecord", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterCharacter = :encounterCharacter AND e.encounterRecord = :encounterRecord"),
-    @NamedQuery(name = "EncounterBattleMember.findByEncounterCharacter", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterCharacter = :encounterCharacter"),
-    @NamedQuery(name = "EncounterBattleMember.findByEncounterRecord", query = "SELECT e FROM EncounterBattleMember e WHERE e.encounterRecord = :encounterRecord")})
-public class EncounterBattleMember implements Serializable {
+    @NamedQuery(name = "EncounterMember.findAll", query = "SELECT e FROM EncounterMember e"),
+    @NamedQuery(name = "EncounterMember.findById", query = "SELECT e FROM EncounterMember e WHERE e.id = :id"),
+    @NamedQuery(name = "EncounterMember.findByEncounterCharacterAndEncounterRecord", query = "SELECT e FROM EncounterMember e WHERE e.encounterCharacter = :encounterCharacter AND e.encounterRecord = :encounterRecord"),
+    @NamedQuery(name = "EncounterMember.findByEncounterCharacter", query = "SELECT e FROM EncounterMember e WHERE e.encounterCharacter = :encounterCharacter"),
+    @NamedQuery(name = "EncounterMember.findByEncounterRecord", query = "SELECT e FROM EncounterMember e WHERE e.encounterRecord = :encounterRecord")})
+public class EncounterMember implements Serializable {
     @Column(name = "MY_TURN")
     private Boolean myTurn;
     @JoinColumn(name = "SCENARIO_CHARACTER_RECORD", referencedColumnName = "ID")
@@ -117,10 +117,10 @@ public class EncounterBattleMember implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EncounterBattleMember)) {
+        if (!(object instanceof EncounterMember)) {
             return false;
         }
-        EncounterBattleMember other = (EncounterBattleMember) object;
+        EncounterMember other = (EncounterMember) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -129,10 +129,10 @@ public class EncounterBattleMember implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.EncounterBattleMember[ id=" + id + " ]";
+        return "entity.EncounterMember[ id=" + id + " ]";
     }
 
-    public EncounterBattleMember() {
+    public EncounterMember() {
     }
 
     public ScenarioCharacterRecord getScenarioCharacterRecord() {
