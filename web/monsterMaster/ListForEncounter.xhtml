@@ -20,15 +20,10 @@
                 <h:commandLink action="#{monsterDataController.previous}" value="#{bundle.Previous} #{monsterDataController.pagination.pageSize}" rendered="#{monsterDataController.pagination.hasPreviousPage}"/>&nbsp;
                 <h:commandLink action="#{monsterDataController.next}" value="#{bundle.Next} #{monsterDataController.pagination.pageSize}" rendered="#{monsterDataController.pagination.hasNextPage}"/>&nbsp;
                 <h:dataTable value="#{monsterDataController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value=""/>
-                        </f:facet>
-                        <h:selectBooleanCheckbox value="#{monsterDataController.checked}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="名前"/>
+                            <h:outputText value="#{bundle.ListMonsterMasterTitle_name}"/>
                         </f:facet>
                         <h:outputText value="#{item.name}"/>
                     </h:column>
@@ -147,6 +142,16 @@
                         <h:outputText value="#{item.sizeAndType}"/>
                     </h:column>
                     
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{monsterDataController.prepareView}" value="#{bundle.ListMonsterMasterViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{monsterDataController.prepareEdit}" value="#{bundle.ListMonsterMasterEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{monsterDataController.destroy}" value="#{bundle.ListMonsterMasterDestroyLink}"/>
+                    </h:column>
                 </h:dataTable>
             </h:panelGroup>
             <br />

@@ -163,14 +163,5 @@ public class MonsterDataController implements Serializable  {
         }
 
     }
-    
-    public Boolean getChecked(){
-        return false;
-    }
-    
-    public void setChecked(){
-        MonsterData monsterData = (MonsterData)getItems().getRowData();
-        
-        
-    }
+
 }

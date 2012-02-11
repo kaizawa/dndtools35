@@ -45,7 +45,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getAbilities() {
-        return "not implemented";
+        return "not implemented yet";
     }
 
     @Override
@@ -70,12 +70,12 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getFeats() {
-        return "not implemented";
+        return "not implemented yet";
     }
 
     @Override
     public String getFullAttackDescription() {
-        return "not implemented";
+        return "not implemented yet";
     }
 
     @Override
@@ -122,7 +122,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getKlass() {
-        return "not implemented";
+        return "not implemented yet";
     }
 
     @Override
@@ -145,7 +145,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getSave() {
-        return "not implemented";
+        return "not implemented yet";
     }
 
     private String getSize() {
@@ -154,7 +154,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getSkills() {
-        return "not implemented";
+        return "not implemented yet";
     }
 
     @Override
