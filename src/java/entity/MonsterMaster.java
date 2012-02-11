@@ -41,10 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonsterMaster.findByTreasure", query = "SELECT m FROM MonsterMaster m WHERE m.treasure = :treasure"),
     @NamedQuery(name = "MonsterMaster.findByAdvancement", query = "SELECT m FROM MonsterMaster m WHERE m.advancement = :advancement"),
     @NamedQuery(name = "MonsterMaster.findByLevelAdjustment", query = "SELECT m FROM MonsterMaster m WHERE m.levelAdjustment = :levelAdjustment"),
-    @NamedQuery(name = "MonsterMaster.findByContactSpace", query = "SELECT m FROM MonsterMaster m WHERE m.contactSpace = :contactSpace")})
+    @NamedQuery(name = "MonsterMaster.findByHitPointModifier", query = "SELECT m FROM MonsterMaster m WHERE m.hitPointModifier = :hitPointModifier")})
 public class MonsterMaster implements Serializable {
-    @Column(name = "HIT_POINT_MODIFIER")
-    private Integer hitPointModifier;
     @JoinTable(name = "MONSTER_MASTER_SUB_TYPE_MASTER", joinColumns = {
         @JoinColumn(name = "MONSTERMASTERLIST_ID", referencedColumnName = "ID", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "SUBTYPEMASTERLIST_ID", referencedColumnName = "ID", nullable = false)})
@@ -102,6 +100,8 @@ public class MonsterMaster implements Serializable {
     private String advancement;
     @Column(name = "LEVEL_ADJUSTMENT")
     private Integer levelAdjustment;
+    @Column(name = "HIT_POINT_MODIFIER")
+    private Integer hitPointModifier;
     @JoinColumn(name = "TYPE", referencedColumnName = "ID")
     @ManyToOne
     private TypeMaster type;
@@ -282,6 +282,14 @@ public class MonsterMaster implements Serializable {
         this.levelAdjustment = levelAdjustment;
     }
 
+    public Integer getHitPointModifier() {
+        return hitPointModifier;
+    }
+
+    public void setHitPointModifier(Integer hitPointModifier) {
+        this.hitPointModifier = hitPointModifier;
+    }
+
     public TypeMaster getType() {
         return type;
     }
@@ -338,22 +346,13 @@ public class MonsterMaster implements Serializable {
     public String toString() {
         return "entity.MonsterMaster[ id=" + id + " ]";
     }
-
+    
     @XmlTransient
     public List<SubTypeMaster> getSubTypeMasterList() {
         return subTypeMasterList;
-    }
+}
 
     public void setSubTypeMasterList(List<SubTypeMaster> subTypeMasterList) {
         this.subTypeMasterList = subTypeMasterList;
     }
-
-    public Integer getHitPointModifier() {
-        return hitPointModifier;
-    }
-
-    public void setHitPointModifier(Integer hitPointModifier) {
-        this.hitPointModifier = hitPointModifier;
-    }
-    
 }
