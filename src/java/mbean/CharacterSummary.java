@@ -20,13 +20,12 @@ public interface CharacterSummary {
     public String getName();
     public String getOrganization();
     public String getSave();
-    public String getSize();
     public String getSkills();
     public String getSpecialAttack();
     public String getSpecialQalities();
     public String getSpeed();
-    public String getType();
     public String getBaseAttackAndGrapple();
     public String getContactSpaceAndReach();
+    public String getSizeAndType();
 
 }

@@ -1666,8 +1666,7 @@ public class CharacterData implements CharacterSummary {
         return (getSaveTotalById(1) + "/" + getSaveTotalById(2) + "/" + getSaveTotalById(3));
     }
 
-    @Override
-    public String getSize() {
+    private String getSize() {
         return getRaceId().getSizeId().getSizeName();
     }
 
@@ -1692,8 +1691,7 @@ public class CharacterData implements CharacterSummary {
         return "";
     }
 
-    @Override
-    public String getType() {
+    private String getType() {
         return getRaceId().getRaceName();
     }
 
@@ -1715,5 +1713,10 @@ public class CharacterData implements CharacterSummary {
                 + characterRecord.getRaceId().getSizeId().getReach()
                 + "フィート";
 
+    }
+
+    @Override
+    public String getSizeAndType() {
+        return getSize() + "サイズの" + getType();
     }
 }
