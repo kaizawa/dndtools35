@@ -70,9 +70,9 @@ public class MonsterMaster implements Serializable {
     @Column(name = "AC_FLAT_FOOTED")
     private Integer acFlatFooted;
     @Column(name = "BASE_ATTACK")
-    private Integer baseAttack;
+    private Integer baseAttack = 0;
     @Column(name = "GRAPPLE")
-    private Integer grapple;
+    private Integer grapple = 0;
     @Size(max = 2000)
     @Column(name = "ATTACK", length = 2000)
     private String attack;
