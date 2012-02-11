@@ -50,8 +50,8 @@ import javax.faces.event.ValueChangeEvent;
 @ManagedBean
 @RequestScoped
 public class CharacterData implements CharacterSummary {
-    FacesContext context = FacesContext.getCurrentInstance();
 
+    FacesContext context = FacesContext.getCurrentInstance();
     @EJB
     private SkillSynergyMasterFacade skillSynergyMasterFacade;
     @EJB
@@ -92,7 +92,6 @@ public class CharacterData implements CharacterSummary {
     protected CharacterGrowthRecordFacade characterGrowthRecordFacade;
     @EJB
     protected CharacterRecordFacade characterRecordFacade;
-    
     private CharacterRecord characterRecord;
 
     private CharacterData() {
@@ -741,8 +740,18 @@ public class CharacterData implements CharacterSummary {
      */
     protected Integer speed;
 
-    public Integer getSpeed() {
+    public Integer getSpeedTotal() {
         return getSpeedRaceBasse() + getSpeedFeatModifier() + getSpeedMiscModifier();
+    }
+
+    @Override
+    public String getSpeed() {
+        StringBuilder str = new StringBuilder();
+        str.append(getSpeedTotal());
+        str.append("フィート(");
+        str.append((int) getSpeedTotal() / 5);
+        str.append("マス)");
+        return str.toString();
     }
 
     public void setSpeed(Integer speed) {
@@ -994,14 +1003,13 @@ public class CharacterData implements CharacterSummary {
     public Integer getAttackBonusDexBonus() {
         return getAbilityModifierById(DEX);
     }
-    
     /**
      * アイテム 武器 TODO: 未実装
      */
     /*
      * public String getArm1 (){ ArmMaster arm1 =
-     * characterRecord.getCharacterEquipment().getArm1(); if(arm1 != null)
-     * { return arm1.getName(); } return "未装備"; } public String getArm2 (){
+     * characterRecord.getCharacterEquipment().getArm1(); if(arm1 != null) {
+     * return arm1.getName(); } return "未装備"; } public String getArm2 (){
      * ArmMaster arm2 = characterRecord.getCharacterEquipment().getArm2();
      * if(arm2 != null) { return arm2.getName(); } return "未装備"; }
      */
@@ -1441,11 +1449,10 @@ public class CharacterData implements CharacterSummary {
     public void setCharacterSkillGrowthRecordList(List<CharacterSkillGrowthRecord> characterSkillGrowthRecordList) {
         characterRecord.setCharacterSkillGrowthRecordList(characterSkillGrowthRecordList);
     }
-    
+
     public List<CharacterSkillGrowthRecord> getCharacterSkillGrowthRecordList() {
         return characterRecord.getCharacterSkillGrowthRecordList();
     }
-      
 
     public void setCharacterSkillRecordList(List<CharacterSkillRecord> characterSkillRecordList) {
         characterRecord.setCharacterSkillRecordList(characterSkillRecordList);
@@ -1583,10 +1590,10 @@ public class CharacterData implements CharacterSummary {
     public String getAbilities() {
         StringBuilder str = new StringBuilder();
         List<CharacterAbilityRecord> abilityList = characterRecord.getCharacterAbilityRecordList();
-        for(CharacterAbilityRecord ability: abilityList){
+        for (CharacterAbilityRecord ability : abilityList) {
             str.append(getAbilityShortName(ability.getAbilityMaster())
-                    + " " + getAbilityTotalById(ability.getAbilityMaster().getId()) +
-                    "(" + getAbilityModifierById(ability.getAbilityMaster().getId()) + ")<br>");
+                    + " " + getAbilityTotalById(ability.getAbilityMaster().getId())
+                    + "(" + getAbilityModifierById(ability.getAbilityMaster().getId()) + ")<br>");
         }
         return str.toString();
     }
@@ -1610,9 +1617,9 @@ public class CharacterData implements CharacterSummary {
     public String getFeats() {
         return "";
     }
-    
+
     @Override
-    public String getNormalAttackDescription(){
+    public String getNormalAttackDescription() {
         return getAttackDescriptionWithBR();
     }
 
@@ -1633,7 +1640,7 @@ public class CharacterData implements CharacterSummary {
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getLevel()) {
                 break;
             }
-            str.append(growth.getClassId().getHitDiceType().getName() + " " );
+            str.append(growth.getClassId().getHitDiceType().getName() + " ");
         }
         str.append(")");
         return str.toString();
@@ -1654,7 +1661,6 @@ public class CharacterData implements CharacterSummary {
         return "";
     }
 
-
     @Override
     public String getSave() {
         return (getSaveTotalById(1) + "/" + getSaveTotalById(2) + "/" + getSaveTotalById(3));
@@ -1673,9 +1679,8 @@ public class CharacterData implements CharacterSummary {
                 + "視認: " + getSkillTotalCheckModifierById(14) + "<br>"
                 + "忍び足: " + getSkillTotalCheckModifierById(15) + "<br>"
                 + "真意看破: " + getSkillTotalCheckModifierById(21) + "<br>"
-                + "捜索: " + getSkillTotalCheckModifierById(28);    
+                + "捜索: " + getSkillTotalCheckModifierById(28);
     }
-
 
     @Override
     public String getSpecialAttack() {
@@ -1700,14 +1705,15 @@ public class CharacterData implements CharacterSummary {
         str.append("/");
         str.append(getGrappleBonus() < 0 ? "-" : "+");
         str.append(getGrappleBonus());
-        return str.toString();    }
+        return str.toString();
+    }
 
     @Override
     public String getContactSpaceAndReach() {
-        return characterRecord.getRaceId().getSizeId().getContactSpace() 
+        return characterRecord.getRaceId().getSizeId().getContactSpace()
                 + "フィート/"
                 + characterRecord.getRaceId().getSizeId().getReach()
                 + "フィート";
-        
+
     }
 }
