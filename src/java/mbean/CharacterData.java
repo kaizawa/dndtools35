@@ -1654,10 +1654,6 @@ public class CharacterData implements CharacterSummary {
         return "";
     }
 
-    @Override
-    public Integer getReach() {
-        return 5;
-    }
 
     @Override
     public String getSave() {
@@ -1677,12 +1673,9 @@ public class CharacterData implements CharacterSummary {
                 + "視認: " + getSkillTotalCheckModifierById(14) + "<br>"
                 + "忍び足: " + getSkillTotalCheckModifierById(15) + "<br>"
                 + "真意看破: " + getSkillTotalCheckModifierById(21) + "<br>"
-                + "捜索: " + getSkillTotalCheckModifierById(28);    }
-
-    @Override
-    public Integer getSpace() {
-        return 5;
+                + "捜索: " + getSkillTotalCheckModifierById(28);    
     }
+
 
     @Override
     public String getSpecialAttack() {
@@ -1697,5 +1690,24 @@ public class CharacterData implements CharacterSummary {
     @Override
     public String getType() {
         return getRaceId().getRaceName();
+    }
+
+    @Override
+    public String getBaseAttackAndGrapple() {
+        StringBuilder str = new StringBuilder();
+        str.append(getBaseAttackTotal() < 0 ? "-" : "+");
+        str.append(getBaseAttackTotal());
+        str.append("/");
+        str.append(getGrappleBonus() < 0 ? "-" : "+");
+        str.append(getGrappleBonus());
+        return str.toString();    }
+
+    @Override
+    public String getContactSpaceAndReach() {
+        return characterRecord.getRaceId().getSizeId().getContactSpace() 
+                + "フィート/"
+                + characterRecord.getRaceId().getSizeId().getReach()
+                + "フィート";
+        
     }
 }
