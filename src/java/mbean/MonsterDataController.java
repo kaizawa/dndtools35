@@ -19,7 +19,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
 
-@ManagedBean (name="monsterMasterController")
+@ManagedBean (name="monsterDataController")
 @SessionScoped
 public class MonsterDataController implements Serializable  {
 
