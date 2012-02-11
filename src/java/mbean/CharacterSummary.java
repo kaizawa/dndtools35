@@ -22,7 +22,7 @@ public interface CharacterSummary {
     public String getSave();
     public String getSkills();
     public String getSpecialAttack();
-    public String getSpecialQalities();
+    public String getSpecialQualities();
     public String getSpeed();
     public String getBaseAttackAndGrapple();
     public String getContactSpaceAndReach();
