@@ -65,7 +65,8 @@
                     <h:outputLabel value="#{bundle.CreateMonsterMasterLabel_alignment}" for="alignment" />
                     <h:selectOneMenu id="alignment" value="#{monsterMasterController.selected.alignment}" title="#{bundle.CreateMonsterMasterTitle_alignment}" >
                         <f:selectItems value="#{alignmentMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>                    
+                    </h:selectOneMenu>  
+                    <h:outputLabel value="レベル調整値" for="alignment" />
                     <h:inputText id="levelAdjustment" value="#{monsterMasterController.selected.levelAdjustment}" title="モンスター一覧" />               
                 </h:panelGrid>
                 <h:commandButton action="#{monsterMasterController.update}" value="保存"/>
