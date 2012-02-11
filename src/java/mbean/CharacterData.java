@@ -1687,7 +1687,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     @Override
-    public String getSpecialQalities() {
+    public String getSpecialQualities() {
         return "";
     }
 
