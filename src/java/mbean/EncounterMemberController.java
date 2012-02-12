@@ -223,11 +223,6 @@ public class EncounterMemberController implements Serializable {
         encounterMemberFacade.remove(member);
         return null;
     }
-    
-    
-    public String getTurnCharaComments(){
-        return getTurnMember().getScenarioCharacterRecord().getComments();
-    }      
 
     public Integer getHpModifier() {
         return 0;
