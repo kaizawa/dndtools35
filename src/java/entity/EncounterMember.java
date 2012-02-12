@@ -4,7 +4,6 @@
  */
 package entity;
 
-import entity.ScenarioCharacterRecord;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,58 +20,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "EncounterMember.findAll", query = "SELECT e FROM EncounterMember e"),
     @NamedQuery(name = "EncounterMember.findById", query = "SELECT e FROM EncounterMember e WHERE e.id = :id"),
-    @NamedQuery(name = "EncounterMember.findByEncounterCharacterAndEncounterRecord", query = "SELECT e FROM EncounterMember e WHERE e.encounterCharacter = :encounterCharacter AND e.encounterRecord = :encounterRecord"),
-    @NamedQuery(name = "EncounterMember.findByEncounterCharacter", query = "SELECT e FROM EncounterMember e WHERE e.encounterCharacter = :encounterCharacter"),
-    @NamedQuery(name = "EncounterMember.findByEncounterRecord", query = "SELECT e FROM EncounterMember e WHERE e.encounterRecord = :encounterRecord")})
+    @NamedQuery(name = "EncounterMember.findByInitiative", query = "SELECT e FROM EncounterMember e WHERE e.initiative = :initiative"),
+    @NamedQuery(name = "EncounterMember.findByMyTurn", query = "SELECT e FROM EncounterMember e WHERE e.myTurn = :myTurn"),
+    @NamedQuery(name = "EncounterMember.findByComments", query = "SELECT e FROM EncounterMember e WHERE e.comments = :comments")})
 public class EncounterMember implements Serializable {
-    @Column(name = "MY_TURN")
-    private Short myTurn;
-    @JoinColumn(name = "SCENARIO_CHARACTER_RECORD", referencedColumnName = "ID")
-    @ManyToOne
-    private ScenarioCharacterRecord scenarioCharacterRecord;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID")
-    private Long id;
-    @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID")
-    @ManyToOne
-    private EncounterRecord encounterRecord;
-    @Column(name = "HITPOINT")
-    private Integer hitPoint = 0;
+    @Column(name = "ID", nullable = false)
+    private Integer id;
     @Column(name = "INITIATIVE")
-    private Integer initiative = 0;
+    private Integer initiative;
+    @Column(name = "MY_TURN")
+    private Short myTurn;
     @Size(max = 255)
     @Column(name = "COMMENTS", length = 255)
     private String comments;
+    @JoinColumn(name = "SCENARIO_CHARACTER_RECORD", referencedColumnName = "ID")
+    @ManyToOne
+    private ScenarioCharacterRecord scenarioCharacterRecord;
+    @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID")
+    @ManyToOne
+    private EncounterRecord encounterRecord;
 
-    public String getComments() {
-        return comments;
+    public EncounterMember() {
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public EncounterMember(Integer id) {
+        this.id = id;
     }
 
-    public Boolean getMyTurn() {
-        return (myTurn != 0);
+    public Integer getId() {
+        return id;
     }
 
-    public void setMyTurn(Boolean myTurn) {
-        if(myTurn)
-            this.myTurn = 1;
-        else 
-            this.myTurn = 0;
-    }
-
-    public Integer getHitPoint() {
-        return hitPoint;
-    }
-
-    public void setHitPoint(Integer hitPoint) {
-        this.hitPoint = hitPoint;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getInitiative() {
@@ -83,12 +67,34 @@ public class EncounterMember implements Serializable {
         this.initiative = initiative;
     }
 
-    public Long getId() {
-        return id;
+    public Boolean getMyTurn() {
+        if(myTurn != 0)
+            return true;
+        else
+            return false;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMyTurn(Boolean myTurn) {
+        if(myTurn)
+            this.myTurn = 1;
+        else
+            this.myTurn = 0;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public ScenarioCharacterRecord getScenarioCharacterRecord() {
+        return scenarioCharacterRecord;
+    }
+
+    public void setScenarioCharacterRecord(ScenarioCharacterRecord scenarioCharacterRecord) {
+        this.scenarioCharacterRecord = scenarioCharacterRecord;
     }
 
     public EncounterRecord getEncounterRecord() {
@@ -123,15 +129,5 @@ public class EncounterMember implements Serializable {
     public String toString() {
         return "entity.EncounterMember[ id=" + id + " ]";
     }
-
-    public EncounterMember() {
-    }
-
-    public ScenarioCharacterRecord getScenarioCharacterRecord() {
-        return scenarioCharacterRecord;
-    }
-
-    public void setScenarioCharacterRecord(ScenarioCharacterRecord scenarioCharacterRecord) {
-        this.scenarioCharacterRecord = scenarioCharacterRecord;
-    }
+    
 }
