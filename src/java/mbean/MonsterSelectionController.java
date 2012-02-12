@@ -1,16 +1,22 @@
 package mbean;
 
+import ejb.EncounterMemberFacade;
 import mbean.util.PaginationHelper;
 import ejb.MonsterMasterFacade;
+import entity.EncounterMember;
+import entity.EncounterRecord;
 import entity.MonsterMaster;
+import entity.ScenarioCharacterRecord;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -19,18 +25,22 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
 
-@ManagedBean (name="monsterDataController")
+@ManagedBean(name = "monsterDataController")
 @SessionScoped
-public class MonsterDataController implements Serializable  {
+public class MonsterSelectionController implements Serializable {
 
-
+    @EJB
+    private EncounterMemberFacade encounterMemberFacade;
+    @ManagedProperty(value = "#{encounterRecordController}")
+    private EncounterRecordController encounterRecordController;
     private MonsterData current;
     private DataModel items = null;
-    @EJB private ejb.MonsterMasterFacade ejbFacade;
+    @EJB
+    private ejb.MonsterMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public MonsterDataController() {
+    public MonsterSelectionController() {
     }
 
     public MonsterData getSelected() {
@@ -44,6 +54,7 @@ public class MonsterDataController implements Serializable  {
     private MonsterMasterFacade getFacade() {
         return ejbFacade;
     }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -55,7 +66,7 @@ public class MonsterDataController implements Serializable  {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    List<MonsterMaster> monsterMasterList = getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()});
+                    List<MonsterMaster> monsterMasterList = getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()});
                     List<MonsterData> monsterDataList = MonsterData.getMonsterDataListFromMaster(monsterMasterList);
                     return new ListDataModel(monsterDataList);
                 }
@@ -70,7 +81,7 @@ public class MonsterDataController implements Serializable  {
     }
 
     public String prepareView() {
-        current = (MonsterData)getItems().getRowData();
+        current = (MonsterData) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
@@ -79,14 +90,14 @@ public class MonsterDataController implements Serializable  {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count-1;
+            selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            MonsterMaster monsterMaster = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
+            MonsterMaster monsterMaster = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
             current = new mbean.MonsterData(monsterMaster);
         }
     }
@@ -126,14 +137,14 @@ public class MonsterDataController implements Serializable  {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass=MonsterData.class)
+    @FacesConverter(forClass = MonsterData.class)
     public static class MonsterMasterControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            MonsterDataController controller = (MonsterDataController)facesContext.getApplication().getELResolver().
+            MonsterSelectionController controller = (MonsterSelectionController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "monsterMasterController");
             return controller.ejbFacade.find(getKey(value));
         }
@@ -158,10 +169,39 @@ public class MonsterDataController implements Serializable  {
                 MonsterData o = (MonsterData) object;
                 return o.getName();
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+MonsterDataController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + MonsterSelectionController.class.getName());
             }
         }
-
     }
 
+    public boolean isSelected() {
+        return false;
+    }
+
+    /*
+     * EncounterMember のメンバーとして選択/解除する
+     */
+    public void setSelected(boolean charaSelected) {
+        /*
+        EncounterRecord encounter = encounterRecordController.getCurrent();
+        MonsterData monster = (MonsterData) getItems().getRowData();
+        ScenarioCharacterRecord chara = ScenarioCharacterRecordFactory.getInstance(monster);
+
+        try {
+            if (charaSelected) {
+                    EncounterMember member = new EncounterMember();
+                    member.setEncounterRecord(encounter);
+                    member.setScenarioCharacterRecord(encounterCharacter);
+                    encounterMemberFacade.edit(member);
+            } else {
+                List<EncounterMember> memberList = encounterMemberFacade.findByEncounterMonsterRecordAndEncounterRecord(encounterCharacter, current);
+                for (EncounterMember member : memberList) {
+                    encounterMemberFacade.remove(member);
+                }
+            }
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e + "Persistence Error Occured");
+        }
+        */
+    }
 }

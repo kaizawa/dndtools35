@@ -31,7 +31,7 @@
                     <h:commandLink action="#{encounterCharacterController.next}" value="#{bundle.Next} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasNextPage}"/>&nbsp;
                     <h:dataTable value="#{encounterCharacterController.items}" var="item" border="0" 
                                  cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
-                                 rules="all" style="border:solid 1px" binding="#{encounterRecordController.encounterCharacterTable}">
+                                 rules="all" style="border:solid 1px" binding="#{encounterRecordController.encounterMemberTable}">
                         <h:column>
                             <h:selectBooleanCheckbox id="checkbox1" value="#{encounterRecordController.charaSelected}" />
                         </h:column> 
