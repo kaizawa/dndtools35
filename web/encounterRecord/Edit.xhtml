@@ -24,58 +24,48 @@
                     <h:outputLabel value="備考: " for="comments" />
                     <h:inputText id="comments" styleClass="middleTextArea" value="#{encounterRecordController.selected.comments}" />
                 </h:panelGrid>
+                <br/>
+                <h:commandButton action="#{encounterRecordController.update}" value="保存"/>
+                <br/>
+                <br/>
+                <h:outputLabel value="エンカウンターメンバー" styleClass="middleBold"/>
+                <h:panelGroup rendered="#{encounterMemberController.encounterMemberList.size() > 0}">
 
-                <h:panelGroup rendered="#{encounterCharacterController.items.rowCount > 0}">
-                    <h:outputText value="#{encounterCharacterController.pagination.pageFirstItem + 1}..#{encounterCharacterController.pagination.pageLastItem + 1}/#{encounterCharacterController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{encounterCharacterController.previous}" value="#{bundle.Previous} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{encounterCharacterController.next}" value="#{bundle.Next} #{encounterCharacterController.pagination.pageSize}" rendered="#{encounterCharacterController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{encounterCharacterController.items}" var="item" border="0" 
+                    <h:dataTable value="#{encounterMemberController.encounterMemberList}" var="member" border="0" 
                                  cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
-                                 rules="all" style="border:solid 1px" binding="#{encounterRecordController.encounterMemberTable}">
-                        <h:column>
-                            <h:selectBooleanCheckbox id="checkbox1" value="#{encounterRecordController.charaSelected}" />
-                        </h:column> 
+                                 rules="all" style="border:solid 1px" binding="#{encounterMemberController.encounterMemberTable}">
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_id}"/>
+                                <h:outputText value="名前" />
                             </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </h:column>  
+                            <h:outputText value="#{member.scenarioCharacterRecord.name}" style="color: #{encounterMemberController.hpColor}"/>
+                        </h:column>         
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_name}"/>
+                                <h:outputText value="クラス"/>
                             </f:facet>
-                            <h:outputText value="#{item.name}"/>
-                        </h:column>                          
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_klass}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.klass}"/>
+                            <h:outputText value="#{member.scenarioCharacterRecord.klass}"/>
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_comments}"/>
+                                <h:outputText value="ヒットダイス"/>
                             </f:facet>
-                            <h:outputText value="#{item.comments}" rendered="false"/>
+                            <h:outputText value="#{member.scenarioCharacterRecord.hitDice}"/>
+                        </h:column>  
+
+                        <h:column>
+                            <f:facet name="header" >
+                                <h:outputText value="HP"/>
+                            </f:facet>
+                            <h:outputText value="#{member.scenarioCharacterRecord.hitPoint}" style="width: 30px; color: #{encounterMemberController.hpColor}"/>
                         </h:column>
                         <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_hitpoint}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.hitpoint}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterCharacterTitle_initiative}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.initiative}"/>
+                            <h:commandLink action="#{encounterMemberController.decommission}" value="メンバーからはずす" />
                         </h:column>
                     </h:dataTable>
-                </h:panelGroup>                
+                </h:panelGroup>    
 
-                <h:commandButton action="#{encounterRecordController.update}" value="保存"/>
                 <br />
                 <br />
                 <h:commandLink action="/monsterSelection/List" value="モンスターを追加" immediate="true"/>
