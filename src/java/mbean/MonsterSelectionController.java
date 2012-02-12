@@ -33,6 +33,14 @@ public class MonsterSelectionController implements Serializable {
     private EncounterMemberFacade encounterMemberFacade;
     @ManagedProperty(value = "#{encounterRecordController}")
     private EncounterRecordController encounterRecordController;
+
+    public EncounterRecordController getEncounterRecordController() {
+        return encounterRecordController;
+    }
+
+    public void setEncounterRecordController(EncounterRecordController encounterRecordController) {
+        this.encounterRecordController = encounterRecordController;
+    }
     private MonsterData current;
     private DataModel items = null;
     @EJB
