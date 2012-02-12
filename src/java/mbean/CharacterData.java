@@ -1619,12 +1619,12 @@ public class CharacterData implements CharacterSummary {
     }
 
     @Override
-    public String getNormalAttackDescription() {
+    public String getAttack() {
         return getAttackDescriptionWithBR();
     }
 
     @Override
-    public String getFullAttackDescription() {
+    public String getFullAttack() {
         return "";
     }
 
@@ -1721,7 +1721,22 @@ public class CharacterData implements CharacterSummary {
     }
 
     @Override
-    public Integer getHitPointModifier() {
+    public String getTreasure() {
+        return "";
+    }
+
+    @Override
+    public String getAlignment() {
+        return characterRecord.getAlignmentId().getAlignmentName();
+    }
+
+    @Override
+    public String getAdvancement() {
+        return "";
+    }
+
+    @Override
+    public Integer getLevelAdjustment() {
         return 0;
     }
 }

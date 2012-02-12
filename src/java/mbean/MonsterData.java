@@ -54,7 +54,7 @@ public class MonsterData implements CharacterSummary {
     }
 
     @Override
-    public String getNormalAttackDescription() {
+    public String getAttack() {
         return monster.getAttack();
     }
 
@@ -74,13 +74,23 @@ public class MonsterData implements CharacterSummary {
     }
 
     @Override
-    public String getFullAttackDescription() {
+    public String getFullAttack() {
         return "not implemented yet";
     }
 
     @Override
     public String getHitDice() {
-        return monster.getHitDiceNum() + monster.getHitDiceType().getName();
+        StringBuilder str = new StringBuilder();
+        str.append(monster.getHitDiceNum());
+        str.append(monster.getHitDiceType().getName());
+        if(monster.getHitPointModifier() != 0) {
+            str.append(monster.getHitPointModifier() < 0 ? "-" : "+");
+            str.append(monster.getHitPointModifier());
+        }
+        str.append("(");
+        str.append(getHitPoint());
+        str.append(")");
+        return str.toString();
     }
 
     @Override
@@ -98,11 +108,13 @@ public class MonsterData implements CharacterSummary {
     public void setAverageHitPoint() {
         Integer hitdice = monster.getHitDiceType().getType();
         Integer diceNum = monster.getHitDiceNum();
+                
         Float tempNum = 0.0F;
         for (int i = 1 ; i < hitdice + 1 ; i++) {
             tempNum += i;
         }
-        hitpoint= (int )((tempNum / hitdice.floatValue()) * diceNum.floatValue());
+        hitpoint= (int )((tempNum / hitdice.floatValue()) * diceNum.floatValue())
+                + monster.getHitPointModifier();
     }
 
     public void setRandomHitPoint() {
@@ -198,7 +210,22 @@ public class MonsterData implements CharacterSummary {
     }
 
     @Override
-    public Integer getHitPointModifier() {
-        return monster.getHitPointModifier();
+    public String getTreasure() {
+        return monster.getTreasure();
+    }
+
+    @Override
+    public String getAlignment() {
+        return monster.getAlignment().getAlignmentName();
+    }
+
+    @Override
+    public String getAdvancement() {
+        return monster.getAdvancement();
+    }
+
+    @Override
+    public Integer getLevelAdjustment() {
+        return monster.getLevelAdjustment();
     }
 }
