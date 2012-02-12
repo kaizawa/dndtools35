@@ -60,12 +60,12 @@ public class EncounterRecordController implements Serializable {
         return current;
     }
 
-    public HtmlDataTable getEncounterCharacterTable() {
-        return encounterCharacterTable;
+    public HtmlDataTable getEncounterMemberTable() {
+        return encounterMemberTable;
     }
 
-    public void setEncounterCharacterTable(HtmlDataTable encounterCharacterTable) {
-        this.encounterCharacterTable = encounterCharacterTable;
+    public void setEncounterMemberTable(HtmlDataTable encounterCharacterTable) {
+        this.encounterMemberTable = encounterCharacterTable;
     }
 
     public void sortBattleMember() {
@@ -277,49 +277,9 @@ public class EncounterRecordController implements Serializable {
             }
         }
     }
-    private boolean charaSelected;
-
-    public boolean isCharaSelected() {
-        EncounterCharacter encounterCharacter = (EncounterCharacter)encounterCharacterTable.getRowData();
-
-        for (EncounterMember member : encounterMemberFacade.findAll()) {
-            if (member.getEncounterCharacter().equals(encounterCharacter)
-                    && member.getEncounterRecord().equals(current)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    private HtmlDataTable encounterCharacterTable = new HtmlDataTable();
-
-    /*
-     * EncounterRecord のメンバーとして選択/解除する
-     */
-    public void setCharaSelected(boolean charaSelected) {
-        int index = encounterCharacterTable.getRowIndex();
-
-        EncounterCharacter encounterCharacter = encounterCharacterFacade.findAll().get(index);
-
-        try {
-            if (encounterCharacter != null) {
-                if (charaSelected) {
-                    if (encounterMemberFacade.findByEncounterCharacterAndEncounterRecord(encounterCharacter,current).isEmpty()) {
-                        EncounterMember member = new EncounterMember();
-                        member.setEncounterRecord(current);
-                        member.setEncounterCharacter(encounterCharacter);
-                        encounterMemberFacade.edit(member);
-                    }
-                } else {
-                    List<EncounterMember> memberList = encounterMemberFacade.findByEncounterCharacterAndEncounterRecord(encounterCharacter,current);
-                    for (EncounterMember member : memberList) {
-                        encounterMemberFacade.remove(member);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e + "Persistence Error Occured");
-        }
-    }
+        
+    private HtmlDataTable encounterMemberTable = new HtmlDataTable();        
+ 
     List<EncounterMember> battleMemberList;
 
     public List<EncounterMember> getBattleMemberList() {
@@ -452,7 +412,7 @@ public class EncounterRecordController implements Serializable {
         Random rand =  new Random();
          try {
             for (EncounterMember member : battleMemberList) {
-                int initiativeBonus = member.getEncounterCharacter().getInitiative();
+                int initiativeBonus = member.getScenarioCharacterRecord().getInitiative();
 
                 member.setInitiative(rand.nextInt(19) + 1 + initiativeBonus);
                 encounterMemberFacade.edit(member);
@@ -469,24 +429,8 @@ public class EncounterRecordController implements Serializable {
     }
     
     public String getTurnCharaComments(){
-        String comments = getTurnMember().getEncounterCharacter().getComments();
-        return comments;
-    }   
-    
-    public String setInitialHitPoint(){
-         try {
-            for (EncounterMember member : battleMemberList) {
-                member.setHitPoint(member.getEncounterCharacter().getHitpoint());
-                encounterMemberFacade.edit(member);
-            }
-            JsfUtil.addSuccessMessage("Member's Poropety Updated");
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage("Persistence Error Occured");
-        }
-        return null;
-    }    
-
-    private Integer hpModifier;
+        return getTurnMember().getScenarioCharacterRecord().getComments();
+    }      
 
     public Integer getHpModifier() {
         return 0;
