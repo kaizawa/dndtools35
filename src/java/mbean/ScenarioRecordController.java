@@ -89,7 +89,7 @@ public class ScenarioRecordController implements Serializable {
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordCreated")); 
             return prepareList();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
             return null;
         }
     }
@@ -106,7 +106,7 @@ public class ScenarioRecordController implements Serializable {
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordUpdated"));
             return "/scenarioRecord/Edit";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
             return null;
         }
     }
@@ -137,7 +137,7 @@ public class ScenarioRecordController implements Serializable {
             getFacade().remove(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
         }
     }
 

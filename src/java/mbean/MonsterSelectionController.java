@@ -192,7 +192,7 @@ public class MonsterSelectionController implements Serializable {
      * EncounterMember のメンバーとして選択/解除する
      */
     public void setSelected(boolean charaSelected) {
-        /*
+
         EncounterRecord encounter = encounterRecordController.getCurrent();
         MonsterData monster = (MonsterData) getItems().getRowData();
         ScenarioCharacterRecord chara = ScenarioCharacterRecordFactory.getInstance(monster);
@@ -201,17 +201,19 @@ public class MonsterSelectionController implements Serializable {
             if (charaSelected) {
                     EncounterMember member = new EncounterMember();
                     member.setEncounterRecord(encounter);
-                    member.setScenarioCharacterRecord(encounterCharacter);
+                    member.setScenarioCharacterRecord(chara);
+                    member.setInitiative(0);
+                    member.setMyTurn(false);
                     encounterMemberFacade.edit(member);
-            } else {
-                List<EncounterMember> memberList = encounterMemberFacade.findByEncounterMonsterRecordAndEncounterRecord(encounterCharacter, current);
-                for (EncounterMember member : memberList) {
-                    encounterMemberFacade.remove(member);
-                }
-            }
+            } 
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e + "Persistence Error Occured");
         }
-        */
+
+    }
+    
+    public String add(){
+        
+        return "/encounterRecord/Edit";
     }
 }
