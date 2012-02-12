@@ -89,7 +89,7 @@ public class MonsterData implements CharacterSummary {
         }
         str.append("(");
         str.append(getHitPoint());
-        str.append(")");
+        str.append("hp)");
         return str.toString();
     }
 

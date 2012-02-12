@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EncounterMember.findByEncounterRecord", query = "SELECT e FROM EncounterMember e WHERE e.encounterRecord = :encounterRecord")})
 public class EncounterMember implements Serializable {
     @Column(name = "MY_TURN")
-    private Boolean myTurn;
+    private Short myTurn;
     @JoinColumn(name = "SCENARIO_CHARACTER_RECORD", referencedColumnName = "ID")
     @ManyToOne
     private ScenarioCharacterRecord scenarioCharacterRecord;
@@ -141,6 +141,14 @@ public class EncounterMember implements Serializable {
 
     public void setScenarioCharacterRecord(ScenarioCharacterRecord scenarioCharacterRecord) {
         this.scenarioCharacterRecord = scenarioCharacterRecord;
+    }
+
+    public Short getMyTurn() {
+        return myTurn;
+    }
+
+    public void setMyTurn(Short myTurn) {
+        this.myTurn = myTurn;
     }
         
 }

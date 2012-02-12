@@ -5,10 +5,12 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -23,6 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CampaignMaster.findByCampaignName", query = "SELECT c FROM CampaignMaster c WHERE c.campaignName = :campaignName"),
     @NamedQuery(name = "CampaignMaster.findByMaster", query = "SELECT c FROM CampaignMaster c WHERE c.master = :master")})
 public class CampaignMaster implements Serializable {
+    @OneToMany(mappedBy = "campaign")
+    private List<ScenarioRecord> scenarioRecordList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,6 +96,15 @@ public class CampaignMaster implements Serializable {
     public String toString() {
         return campaignName;
         //return "entity.CampaignMaster[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<ScenarioRecord> getScenarioRecordList() {
+        return scenarioRecordList;
+    }
+
+    public void setScenarioRecordList(List<ScenarioRecord> scenarioRecordList) {
+        this.scenarioRecordList = scenarioRecordList;
     }
     
 }

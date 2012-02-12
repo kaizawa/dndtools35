@@ -5,10 +5,12 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,6 +43,34 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ScenarioCharacterRecord.findByAdvancement", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.advancement = :advancement"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByLevelAdjustment", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.levelAdjustment = :levelAdjustment")})
 public class ScenarioCharacterRecord implements Serializable {
+    @Size(max = 200)
+    @Column(name = "KLASS", length = 200)
+    private String klass;
+    @Size(max = 400)
+    @Column(name = "SIZE_AND_TYPE", length = 400)
+    private String sizeAndType;
+    @Size(max = 2000)
+    @Column(name = "FULL_ATTACK", length = 2000)
+    private String fullAttack;
+    @Size(max = 200)
+    @Column(name = "SPACE_AND_REACH", length = 200)
+    private String spaceAndReach;
+    @Size(max = 2000)
+    @Column(name = "SAVE", length = 2000)
+    private String save;
+    @Size(max = 2000)
+    @Column(name = "ABILITIES", length = 2000)
+    private String abilities;
+    @Size(max = 2000)
+    @Column(name = "SKILLS", length = 2000)
+    private String skills;
+    @Size(max = 2000)
+    @Column(name = "FEATS", length = 2000)
+    private String feats;
+    @Column(name = "IS_PLAYER_CHARACTER")
+    private Short isPlayerCharacter;
+    @OneToMany(mappedBy = "scenarioCharacterRecord")
+    private List<EncounterMember> encounterMemberList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -312,6 +342,87 @@ public class ScenarioCharacterRecord implements Serializable {
     @Override
     public String toString() {
         return "entity.ScenarioCharacterRecord[ id=" + id + " ]";
+    }
+
+    public String getKlass() {
+        return klass;
+    }
+
+    public void setKlass(String klass) {
+        this.klass = klass;
+    }
+
+    public String getSizeAndType() {
+        return sizeAndType;
+    }
+
+    public void setSizeAndType(String sizeAndType) {
+        this.sizeAndType = sizeAndType;
+    }
+
+    public String getFullAttack() {
+        return fullAttack;
+    }
+
+    public void setFullAttack(String fullAttack) {
+        this.fullAttack = fullAttack;
+    }
+
+    public String getSpaceAndReach() {
+        return spaceAndReach;
+    }
+
+    public void setSpaceAndReach(String spaceAndReach) {
+        this.spaceAndReach = spaceAndReach;
+    }
+
+    public String getSave() {
+        return save;
+    }
+
+    public void setSave(String save) {
+        this.save = save;
+    }
+
+    public String getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(String abilities) {
+        this.abilities = abilities;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public String getFeats() {
+        return feats;
+    }
+
+    public void setFeats(String feats) {
+        this.feats = feats;
+    }
+
+    public Short getIsPlayerCharacter() {
+        return isPlayerCharacter;
+    }
+
+    public void setIsPlayerCharacter(Short isPlayerCharacter) {
+        this.isPlayerCharacter = isPlayerCharacter;
+    }
+
+    @XmlTransient
+    public List<EncounterMember> getEncounterMemberList() {
+        return encounterMemberList;
+    }
+
+    public void setEncounterMemberList(List<EncounterMember> encounterMemberList) {
+        this.encounterMemberList = encounterMemberList;
     }
     
 }

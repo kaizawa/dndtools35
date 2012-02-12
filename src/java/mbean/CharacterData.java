@@ -1632,17 +1632,20 @@ public class CharacterData implements CharacterSummary {
     public String getHitDice() {
         StringBuilder str = new StringBuilder();
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
-        str.append(getLevel() + "(");
+
 
         int bonus = getAbilityModifierById(CON);
         for (CharacterGrowthRecord growth : growthList) {
             // 経験値から見たキャラクタレベル以上は考慮しない
-            if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getLevel()) {
-                break;
+            if (growth.getCharacterGrowthRecordPK().getCharacterLevel() == getLevel()) {
+                str.append(getLevel());
+                str.append(growth.getClassId().getHitDiceType().getName());
             }
-            str.append(growth.getClassId().getHitDiceType().getName() + " ");
+
         }
-        str.append(")");
+        str.append(getLevel() + "(");
+        str.append(getHitPoint());
+        str.append("hp)");
         return str.toString();
     }
 

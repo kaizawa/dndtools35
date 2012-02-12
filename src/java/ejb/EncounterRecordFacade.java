@@ -5,7 +5,6 @@
 package ejb;
 
 import entity.EncounterMember;
-import entity.EncounterCharacter;
 import entity.EncounterRecord;
 import entity.ScenarioRecord;
 import java.util.List;

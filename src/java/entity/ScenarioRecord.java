@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ScenarioRecord.findByName", query = "SELECT s FROM ScenarioRecord s WHERE s.name = :name"),
     @NamedQuery(name = "ScenarioRecord.findByDescription", query = "SELECT s FROM ScenarioRecord s WHERE s.description = :description")})
 public class ScenarioRecord implements Serializable {
+    @OneToMany(mappedBy = "scenarioRecord")
+    private List<EncounterRecord> encounterRecordList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,6 +116,15 @@ public class ScenarioRecord implements Serializable {
     @Override
     public String toString() {
         return "entity.ScenarioRecord[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<EncounterRecord> getEncounterRecordList() {
+        return encounterRecordList;
+    }
+
+    public void setEncounterRecordList(List<EncounterRecord> encounterRecordList) {
+        this.encounterRecordList = encounterRecordList;
     }
     
 }

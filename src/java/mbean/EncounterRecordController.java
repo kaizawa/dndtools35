@@ -2,13 +2,11 @@ package mbean;
 
 import com.google.common.collect.Collections2;
 import ejb.EncounterMemberFacade;
-import ejb.EncounterCharacterFacade;
 import entity.EncounterRecord;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.EncounterRecordFacade;
 import entity.EncounterMember;
-import entity.EncounterCharacter;
 
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
@@ -33,7 +31,6 @@ public class EncounterRecordController implements Serializable {
     @EJB
     private EncounterMemberFacade encounterMemberFacade;
     @EJB
-    private EncounterCharacterFacade encounterCharacterFacade;
     private EncounterRecord current;
     private DataModel items = null;
     @EJB
