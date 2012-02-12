@@ -59,7 +59,7 @@ public class MonsterData implements CharacterSummary {
     }
 
     @Override
-    public Integer getCharangingRate() {
+    public Integer getChallengeRating() {
         return monster.getChallengeRating();
     }
 
@@ -194,7 +194,7 @@ public class MonsterData implements CharacterSummary {
     }
 
     @Override
-    public String getBaseAttackAndGrapple() {
+    public String getBaseAttackGrapple() {
         StringBuilder str = new StringBuilder();
         str.append(monster.getGrapple() < 0 ? "-" : "+");
         str.append(monster.getBaseAttack());

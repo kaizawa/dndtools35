@@ -14,7 +14,7 @@ public interface CharacterSummary {
     public Integer getInitiative();    
     public String  getSpeed();
     public String  getArmorClass();
-    public String  getBaseAttackAndGrapple();
+    public String  getBaseAttackGrapple();
     public String  getAttack();    
     public String  getFullAttack();    
     public String  getSpaceAndReach();
@@ -26,7 +26,7 @@ public interface CharacterSummary {
     public String  getFeats();
     public String  getEnvironment();    
     public String  getOrganization();
-    public Integer getCharangingRate();
+    public Integer getChallengeRating();
     public String  getTreasure();
     public String  getAlignment();
     public String  getAdvancement();
