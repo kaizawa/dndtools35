@@ -16,8 +16,8 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean
 @RequestScoped
 public class TemplateControl {
-    
-     @ManagedProperty(value="#{scenarioRecordController}")
+
+    @ManagedProperty(value = "#{scenarioRecordController}")
     private ScenarioRecordController scenarioRecordController;
 
     public EncounterRecordController getEncounterRecordController() {
@@ -35,8 +35,8 @@ public class TemplateControl {
     public void setScenarioRecordController(ScenarioRecordController scenarioRecordController) {
         this.scenarioRecordController = scenarioRecordController;
     }
-     
-      @ManagedProperty(value="#{encounterRecordController}")
+    
+    @ManagedProperty(value = "#{encounterRecordController}")
     private EncounterRecordController encounterRecordController;
 
     /**
@@ -44,14 +44,14 @@ public class TemplateControl {
      */
     public TemplateControl() {
     }
-    
+
     public String prepareScenarioList() {
         encounterRecordController.reset();
         scenarioRecordController.reset();
         return "/scenarioRecord/List";
     }
-    
-    public String prepareIndex(){
+
+    public String prepareIndex() {
         encounterRecordController.reset();
         scenarioRecordController.reset();
         return "/index";
