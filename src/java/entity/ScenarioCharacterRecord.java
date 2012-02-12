@@ -43,6 +43,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ScenarioCharacterRecord.findByAdvancement", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.advancement = :advancement"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByLevelAdjustment", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.levelAdjustment = :levelAdjustment")})
 public class ScenarioCharacterRecord implements Serializable {
+    @Size(max = 400)
+    @Column(name = "SPEED", length = 400)
+    private String speed;
+    @Size(max = 400)
+    @Column(name = "ARMOR_CLASS", length = 400)
+    private String armorClass;
+    @Size(max = 4000)
+    @Column(name = "COMMENTS", length = 4000)
+    private String comments;
     @Size(max = 200)
     @Column(name = "KLASS", length = 200)
     private String klass;
@@ -93,8 +102,6 @@ public class ScenarioCharacterRecord implements Serializable {
     private Integer hitPoint;
     @Column(name = "INITIATIVE")
     private Integer initiative;
-    @Column(name = "SPEED")
-    private Integer speed;
     @Size(max = 400)
     @Column(name = "AC", length = 400)
     private String ac;
@@ -197,14 +204,6 @@ public class ScenarioCharacterRecord implements Serializable {
 
     public void setInitiative(Integer initiative) {
         this.initiative = initiative;
-    }
-
-    public Integer getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(Integer speed) {
-        this.speed = speed;
     }
 
     public String getAc() {
@@ -423,6 +422,30 @@ public class ScenarioCharacterRecord implements Serializable {
 
     public void setEncounterMemberList(List<EncounterMember> encounterMemberList) {
         this.encounterMemberList = encounterMemberList;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getArmorClass() {
+        return armorClass;
+    }
+
+    public void setArmorClass(String armorClass) {
+        this.armorClass = armorClass;
+    }
+
+    public String getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(String speed) {
+        this.speed = speed;
     }
     
 }
