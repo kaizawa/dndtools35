@@ -129,11 +129,10 @@ public class EncounterRecordController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage("保存されました。");
-            return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
-            return null;
         }
+        return null;        
     }
 
     public String destroy() {
