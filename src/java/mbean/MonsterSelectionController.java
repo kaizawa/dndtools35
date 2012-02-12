@@ -25,7 +25,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
 
-@ManagedBean(name = "monsterDataController")
+@ManagedBean(name = "monsterSelectionController")
 @SessionScoped
 public class MonsterSelectionController implements Serializable {
 
@@ -44,7 +44,7 @@ public class MonsterSelectionController implements Serializable {
     private MonsterData current;
     private DataModel items = null;
     @EJB
-    private ejb.MonsterMasterFacade ejbFacade;
+    private ejb.MonsterMasterFacade monsterMasterFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -59,8 +59,8 @@ public class MonsterSelectionController implements Serializable {
         return current;
     }
 
-    private MonsterMasterFacade getFacade() {
-        return ejbFacade;
+    private MonsterMasterFacade getMonsterMasterFacade() {
+        return monsterMasterFacade;
     }
 
     public PaginationHelper getPagination() {
@@ -69,12 +69,12 @@ public class MonsterSelectionController implements Serializable {
 
                 @Override
                 public int getItemsCount() {
-                    return getFacade().count();
+                    return getMonsterMasterFacade().count();
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    List<MonsterMaster> monsterMasterList = getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()});
+                    List<MonsterMaster> monsterMasterList = getMonsterMasterFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()});
                     List<MonsterData> monsterDataList = MonsterData.getMonsterDataListFromMaster(monsterMasterList);
                     return new ListDataModel(monsterDataList);
                 }
@@ -95,7 +95,7 @@ public class MonsterSelectionController implements Serializable {
     }
 
     private void updateCurrentItem() {
-        int count = getFacade().count();
+        int count = getMonsterMasterFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
             selectedItemIndex = count - 1;
@@ -105,15 +105,15 @@ public class MonsterSelectionController implements Serializable {
             }
         }
         if (selectedItemIndex >= 0) {
-            MonsterMaster monsterMaster = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            MonsterMaster monsterMaster = getMonsterMasterFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
             current = new mbean.MonsterData(monsterMaster);
         }
     }
 
     public DataModel getItems() {
-        if (items == null) {
+//        if (items == null) {
             items = getPagination().createPageDataModel();
-        }
+//        }
         return items;
     }
 
@@ -138,23 +138,24 @@ public class MonsterSelectionController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return JsfUtil.getSelectItems(monsterMasterFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return JsfUtil.getSelectItems(monsterMasterFacade.findAll(), true);
     }
 
     @FacesConverter(forClass = MonsterData.class)
     public static class MonsterMasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             MonsterSelectionController controller = (MonsterSelectionController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "monsterMasterController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.monsterMasterFacade.find(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -164,11 +165,12 @@ public class MonsterSelectionController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
