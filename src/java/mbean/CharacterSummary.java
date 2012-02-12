@@ -17,7 +17,7 @@ public interface CharacterSummary {
     public String  getBaseAttackAndGrapple();
     public String  getAttack();    
     public String  getFullAttack();    
-    public String  getContactSpaceAndReach();
+    public String  getSpaceAndReach();
     public String  getSpecialAttack();    
     public String  getSpecialQualities();
     public String  getSave();    

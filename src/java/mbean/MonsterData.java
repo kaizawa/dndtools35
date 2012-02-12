@@ -148,7 +148,7 @@ public class MonsterData implements CharacterSummary {
     }
 
     @Override
-    public String getContactSpaceAndReach(){
+    public String getSpaceAndReach(){
         return monster.getSizeId().getContactSpace() 
                 + "フィート/" 
                 + monster.getReach()

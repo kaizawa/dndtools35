@@ -1707,7 +1707,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     @Override
-    public String getContactSpaceAndReach() {
+    public String getSpaceAndReach() {
         return characterRecord.getRaceId().getSizeId().getContactSpace()
                 + "フィート/"
                 + characterRecord.getRaceId().getSizeId().getReach()
