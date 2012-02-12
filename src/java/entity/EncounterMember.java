@@ -22,7 +22,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EncounterMember.findById", query = "SELECT e FROM EncounterMember e WHERE e.id = :id"),
     @NamedQuery(name = "EncounterMember.findByInitiative", query = "SELECT e FROM EncounterMember e WHERE e.initiative = :initiative"),
     @NamedQuery(name = "EncounterMember.findByMyTurn", query = "SELECT e FROM EncounterMember e WHERE e.myTurn = :myTurn"),
-    @NamedQuery(name = "EncounterMember.findByComments", query = "SELECT e FROM EncounterMember e WHERE e.comments = :comments")})
+    @NamedQuery(name = "EncounterMember.findByComments", query = "SELECT e FROM EncounterMember e WHERE e.comments = :comments"),
+    @NamedQuery(name = "EncounterMember.findByEncounterRecord", query = "SELECT e FROM EncounterMember e WHERE e.encounterRecord = :encounterRecord"),    
+    @NamedQuery(name = "EncounterMember.findByScenarioCharacterRecord", query = "SELECT e FROM EncounterMember e WHERE e.scenarioCharacterRecord = :scenarioCharacterRecord"),
+    @NamedQuery(name = "EncounterMember.findByScenarioCharacterRecordAndEncounterRecord", query = "SELECT e FROM EncounterMember e WHERE e.encounterRecord = :encounterRecord AND e.scenarioCharacterRecord = :scenarioCharacterRecord")})
 public class EncounterMember implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,7 +36,7 @@ public class EncounterMember implements Serializable {
     @Column(name = "INITIATIVE")
     private Integer initiative;
     @Column(name = "MY_TURN")
-    private Short myTurn;
+    private Short myTurn = 0;
     @Size(max = 255)
     @Column(name = "COMMENTS", length = 255)
     private String comments;
