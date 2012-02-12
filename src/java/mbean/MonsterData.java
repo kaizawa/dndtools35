@@ -29,8 +29,8 @@ public class MonsterData implements CharacterSummary {
     }
     
     /**
-     * MonsterMaster の配列から MosterData の配列を作る。Database 上のモンスター データのリストを印字ように加工した
-     * MonsterData のリストに変換する。
+     * MonsterMaster の配列から MosterData の配列を作る。Database 上のモンスター 
+     * データのリストを印字ように加工した MonsterData のリストに変換する。
      *
      * @param masterList
      * @return
@@ -45,7 +45,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getAbilities() {
-        return "not implemented yet";
+        return "未実装";
     }
 
     @Override
@@ -70,12 +70,12 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getFeats() {
-        return "not implemented yet";
+        return "未実装";
     }
 
     @Override
     public String getFullAttack() {
-        return "not implemented yet";
+        return "未実装";
     }
 
     @Override
@@ -84,7 +84,7 @@ public class MonsterData implements CharacterSummary {
         str.append(monster.getHitDiceNum());
         str.append(monster.getHitDiceType().getName());
         if(monster.getHitPointModifier() != 0) {
-            str.append(monster.getHitPointModifier() < 0 ? "-" : "+");
+            str.append(monster.getHitPointModifier() < 0 ? "未実装" : "+");
             str.append(monster.getHitPointModifier());
         }
         str.append("(");
@@ -134,7 +134,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getKlass() {
-        return "not implemented yet";
+        return "未実装";
     }
 
     @Override
@@ -157,7 +157,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getSave() {
-        return "not implemented yet";
+        return "未実装";
     }
 
     private String getSize() {
@@ -166,7 +166,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getSkills() {
-        return "not implemented yet";
+        return "未実装";
     }
 
     @Override
@@ -196,10 +196,10 @@ public class MonsterData implements CharacterSummary {
     @Override
     public String getBaseAttackGrapple() {
         StringBuilder str = new StringBuilder();
-        str.append(monster.getGrapple() < 0 ? "-" : "+");
+        str.append(monster.getGrapple() < 0 ? "未実装" : "+");
         str.append(monster.getBaseAttack());
         str.append("/");
-        str.append(monster.getBaseAttack() < 0 ? "-" : "+");
+        str.append(monster.getBaseAttack() < 0 ? "未実装" : "+");
         str.append(monster.getGrapple().toString());
         return str.toString();
     }
