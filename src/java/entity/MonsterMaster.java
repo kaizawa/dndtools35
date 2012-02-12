@@ -101,7 +101,7 @@ public class MonsterMaster implements Serializable {
     @Column(name = "LEVEL_ADJUSTMENT")
     private Integer levelAdjustment;
     @Column(name = "HIT_POINT_MODIFIER")
-    private Integer hitPointModifier;
+    private Integer hitPointModifier = 0;
     @JoinColumn(name = "TYPE", referencedColumnName = "ID")
     @ManyToOne
     private TypeMaster type;
