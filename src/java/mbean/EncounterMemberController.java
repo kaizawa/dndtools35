@@ -218,7 +218,7 @@ public class EncounterMemberController implements Serializable {
             }
             if (object instanceof EncounterMember) {
                 EncounterMember o = (EncounterMember) object;
-                return getStringKey(o.getId());
+                return o.getId().toString();
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EncounterMemberController.class.getName());
             }
