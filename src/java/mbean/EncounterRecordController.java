@@ -30,7 +30,7 @@ public class EncounterRecordController implements Serializable {
 
     @EJB
     private EncounterMemberFacade encounterMemberFacade;
-    @EJB
+
     private EncounterRecord current;
     private DataModel items = null;
     @EJB
@@ -365,7 +365,7 @@ public class EncounterRecordController implements Serializable {
         do{
             nextMember = getNextMember(current_index);
             current_index++;
-        } while(nextMember.getHitPoint() < 0);
+        } while(nextMember.getScenarioCharacterRecord().getHitPoint() < 0);
 
         getTurnMember().setMyTurn(false);
         nextMember.setMyTurn(true);        
@@ -439,13 +439,12 @@ public class EncounterRecordController implements Serializable {
     public void setHpModifier(Integer mod) {
         int index = battleMemberTable.getRowIndex();
         EncounterMember member = battleMemberList.get(index);
-        member.setHitPoint(member.getHitPoint() - mod);
-
+        member.getScenarioCharacterRecord().setHitPoint(member.getScenarioCharacterRecord().getHitPoint() - mod);
     }
     
     public String getHpColor(){
         EncounterMember member = (EncounterMember)battleMemberTable.getRowData();
-        if(member.getHitPoint() > 0){
+        if(member.getScenarioCharacterRecord().getHitPoint() > 0){
             return "black;";
         } else {
             return "red;";
