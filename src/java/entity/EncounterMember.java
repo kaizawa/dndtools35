@@ -37,9 +37,6 @@ public class EncounterMember implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @JoinColumn(name = "ENCOUNTER_CHARACTER", referencedColumnName = "ID")
-    @ManyToOne
-    private EncounterCharacter encounterCharacter;
     @JoinColumn(name = "ENCOUNTER_RECORD", referencedColumnName = "ID")
     @ManyToOne
     private EncounterRecord encounterRecord;
@@ -60,11 +57,14 @@ public class EncounterMember implements Serializable {
     }
 
     public Boolean getMyTurn() {
-        return myTurn;
+        return (myTurn != 0);
     }
 
     public void setMyTurn(Boolean myTurn) {
-        this.myTurn = myTurn;
+        if(myTurn)
+            this.myTurn = 1;
+        else 
+            this.myTurn = 0;
     }
 
     public Integer getHitPoint() {
@@ -89,14 +89,6 @@ public class EncounterMember implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public EncounterCharacter getEncounterCharacter() {
-        return encounterCharacter;
-    }
-
-    public void setEncounterCharacter(EncounterCharacter encounterCharacter) {
-        this.encounterCharacter = encounterCharacter;
     }
 
     public EncounterRecord getEncounterRecord() {
@@ -142,13 +134,4 @@ public class EncounterMember implements Serializable {
     public void setScenarioCharacterRecord(ScenarioCharacterRecord scenarioCharacterRecord) {
         this.scenarioCharacterRecord = scenarioCharacterRecord;
     }
-
-    public Short getMyTurn() {
-        return myTurn;
-    }
-
-    public void setMyTurn(Short myTurn) {
-        this.myTurn = myTurn;
-    }
-        
 }
