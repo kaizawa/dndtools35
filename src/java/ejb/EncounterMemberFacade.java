@@ -6,6 +6,7 @@ package ejb;
 
 import entity.EncounterMember;
 import entity.EncounterRecord;
+import entity.ScenarioCharacterRecord;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,25 +32,22 @@ public class EncounterMemberFacade extends AbstractFacade<EncounterMember> {
         super(EncounterMember.class);
     }
 
-    /*
-    public List<EncounterMember> findByEncounterCharacter(EncounterCharacter chara) {
-        Query query = em.createNamedQuery("EncounterMember.findByEncounterCharacter");
-        query.setParameter("encounterCharacter", chara);
+    public List<EncounterMember> findByScenarioCharacterRecord(ScenarioCharacterRecord chara) {
+        Query query = em.createNamedQuery("EncounterMember.findByScenarioCharacterRecord");
+        query.setParameter("scenarioCharacterRecord", chara);
         return query.getResultList();
     }
-    */
     
     public List<EncounterMember> findByEncounterRecord(EncounterRecord record) {
         Query query = em.createNamedQuery("EncounterMember.findByEncounterRecord");
         query.setParameter("encounterRecord", record);
         return query.getResultList();
     }    
-    /*   
-    public List<EncounterMember> findByEncounterCharacterAndEncounterRecord(EncounterCharacter chara, EncounterRecord record) {
-        Query query = em.createNamedQuery("EncounterMember.findByEncounterCharacterAndEncounterRecord");
-        query.setParameter("encounterRecord", record);
-        query.setParameter("encounterCharacter", chara);
-        return query.getResultList();
+
+    public EncounterMember findByScenarioCharacterRecordAndEncounterRecord(ScenarioCharacterRecord chara, EncounterRecord record) {
+        Query query = em.createNamedQuery("EncounterMember.findBySchenarioCharacterRecordAndEncounterRecord");
+        query.setParameter("encounterRecord", record);        
+        query.setParameter("scenarioCharacterRecord", chara);
+        return (EncounterMember) query.getSingleResult();
     }      
-    */
 }
