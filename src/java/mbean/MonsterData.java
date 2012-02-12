@@ -197,5 +197,8 @@ public class MonsterData implements CharacterSummary {
         return getSize() + "サイズの" + getType();
     }
 
-
+    @Override
+    public Integer getHitPointModifier() {
+        return monster.getHitPointModifier();
+    }
 }

@@ -27,5 +27,6 @@ public interface CharacterSummary {
     public String getBaseAttackAndGrapple();
     public String getContactSpaceAndReach();
     public String getSizeAndType();
+    public Integer getHitPointModifier();
 
 }

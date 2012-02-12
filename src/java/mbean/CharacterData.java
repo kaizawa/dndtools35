@@ -1719,4 +1719,9 @@ public class CharacterData implements CharacterSummary {
     public String getSizeAndType() {
         return getSize() + "サイズの" + getType();
     }
+
+    @Override
+    public Integer getHitPointModifier() {
+        return 0;
+    }
 }
