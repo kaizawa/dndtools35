@@ -23,47 +23,75 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ScenarioCharacterRecord.findAll", query = "SELECT s FROM ScenarioCharacterRecord s"),
     @NamedQuery(name = "ScenarioCharacterRecord.findById", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.id = :id"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByName", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.name = :name"),
-    @NamedQuery(name = "ScenarioCharacterRecord.findBySizeId", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.sizeId = :sizeId"),
-    @NamedQuery(name = "ScenarioCharacterRecord.findByType", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.type = :type"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findByKlass", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.klass = :klass"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findBySizeAndType", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.sizeAndType = :sizeAndType"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByHitDice", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.hitDice = :hitDice"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByHitPoint", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.hitPoint = :hitPoint"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByInitiative", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.initiative = :initiative"),
-    @NamedQuery(name = "ScenarioCharacterRecord.findBySpeed", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.speed = :speed"),
-    @NamedQuery(name = "ScenarioCharacterRecord.findByAc", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.ac = :ac"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByBaseAttackGrapple", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.baseAttackGrapple = :baseAttackGrapple"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByAttack", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.attack = :attack"),
-    @NamedQuery(name = "ScenarioCharacterRecord.findBySpaceReach", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.spaceReach = :spaceReach"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findByFullAttack", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.fullAttack = :fullAttack"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findBySpaceAndReach", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.spaceAndReach = :spaceAndReach"),
     @NamedQuery(name = "ScenarioCharacterRecord.findBySpecialAttacks", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.specialAttacks = :specialAttacks"),
     @NamedQuery(name = "ScenarioCharacterRecord.findBySpecialQualities", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.specialQualities = :specialQualities"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findBySave", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.save = :save"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findByAbilities", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.abilities = :abilities"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findBySkills", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.skills = :skills"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findByFeats", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.feats = :feats"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByEnvironment", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.environment = :environment"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByOrganization", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.organization = :organization"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByChallengeRating", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.challengeRating = :challengeRating"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByTreasure", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.treasure = :treasure"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByAlignment", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.alignment = :alignment"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByAdvancement", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.advancement = :advancement"),
-    @NamedQuery(name = "ScenarioCharacterRecord.findByLevelAdjustment", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.levelAdjustment = :levelAdjustment")})
+    @NamedQuery(name = "ScenarioCharacterRecord.findByLevelAdjustment", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.levelAdjustment = :levelAdjustment"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findByIsPlayerCharacter", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.isPlayerCharacter = :isPlayerCharacter"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findByComments", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.comments = :comments"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findByArmorClass", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.armorClass = :armorClass"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findBySpeed", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.speed = :speed")})
 public class ScenarioCharacterRecord implements Serializable {
+    @OneToMany(mappedBy = "scenarioCharacterRecord")
+    private List<EncounterMember> encounterMemberList;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID", nullable = false)
+    private Integer id;
     @Size(max = 400)
-    @Column(name = "SPEED", length = 400)
-    private String speed;
-    @Size(max = 400)
-    @Column(name = "ARMOR_CLASS", length = 400)
-    private String armorClass;
-    @Size(max = 4000)
-    @Column(name = "COMMENTS", length = 4000)
-    private String comments;
+    @Column(name = "NAME", length = 400)
+    private String name;
     @Size(max = 200)
     @Column(name = "KLASS", length = 200)
     private String klass;
     @Size(max = 400)
     @Column(name = "SIZE_AND_TYPE", length = 400)
     private String sizeAndType;
+    @Size(max = 400)
+    @Column(name = "HIT_DICE", length = 400)
+    private String hitDice;
+    @Column(name = "HIT_POINT")
+    private Integer hitPoint;
+    @Column(name = "INITIATIVE")
+    private Integer initiative;
+    @Size(max = 400)
+    @Column(name = "BASE_ATTACK_GRAPPLE", length = 400)
+    private String baseAttackGrapple;
+    @Size(max = 2000)
+    @Column(name = "ATTACK", length = 2000)
+    private String attack;
     @Size(max = 2000)
     @Column(name = "FULL_ATTACK", length = 2000)
     private String fullAttack;
     @Size(max = 200)
     @Column(name = "SPACE_AND_REACH", length = 200)
     private String spaceAndReach;
+    @Size(max = 4000)
+    @Column(name = "SPECIAL_ATTACKS", length = 4000)
+    private String specialAttacks;
+    @Size(max = 2000)
+    @Column(name = "SPECIAL_QUALITIES", length = 2000)
+    private String specialQualities;
     @Size(max = 2000)
     @Column(name = "SAVE", length = 2000)
     private String save;
@@ -76,50 +104,6 @@ public class ScenarioCharacterRecord implements Serializable {
     @Size(max = 2000)
     @Column(name = "FEATS", length = 2000)
     private String feats;
-    @Column(name = "IS_PLAYER_CHARACTER")
-    private Short isPlayerCharacter;
-    @OneToMany(mappedBy = "scenarioCharacterRecord")
-    private List<EncounterMember> encounterMemberList;
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID", nullable = false)
-    private Integer id;
-    @Size(max = 400)
-    @Column(name = "NAME", length = 400)
-    private String name;
-    @Column(name = "SIZE_ID")
-    private Integer sizeId;
-    @Size(max = 400)
-    @Column(name = "TYPE", length = 400)
-    private String type;
-    @Size(max = 400)
-    @Column(name = "HIT_DICE", length = 400)
-    private String hitDice;
-    @Column(name = "HIT_POINT")
-    private Integer hitPoint;
-    @Column(name = "INITIATIVE")
-    private Integer initiative;
-    @Size(max = 400)
-    @Column(name = "AC", length = 400)
-    private String ac;
-    @Size(max = 400)
-    @Column(name = "BASE_ATTACK_GRAPPLE", length = 400)
-    private String baseAttackGrapple;
-    @Size(max = 2000)
-    @Column(name = "ATTACK", length = 2000)
-    private String attack;
-    @Size(max = 200)
-    @Column(name = "SPACE_REACH", length = 200)
-    private String spaceReach;
-    @Size(max = 4000)
-    @Column(name = "SPECIAL_ATTACKS", length = 4000)
-    private String specialAttacks;
-    @Size(max = 2000)
-    @Column(name = "SPECIAL_QUALITIES", length = 2000)
-    private String specialQualities;
     @Size(max = 2000)
     @Column(name = "ENVIRONMENT", length = 2000)
     private String environment;
@@ -139,6 +123,17 @@ public class ScenarioCharacterRecord implements Serializable {
     private String advancement;
     @Column(name = "LEVEL_ADJUSTMENT")
     private Integer levelAdjustment;
+    @Column(name = "IS_PLAYER_CHARACTER")
+    private Short isPlayerCharacter;
+    @Size(max = 4000)
+    @Column(name = "COMMENTS", length = 4000)
+    private String comments;
+    @Size(max = 400)
+    @Column(name = "ARMOR_CLASS", length = 400)
+    private String armorClass;
+    @Size(max = 400)
+    @Column(name = "SPEED", length = 400)
+    private String speed;
     @JoinColumn(name = "SCENARIO", referencedColumnName = "ID")
     @ManyToOne
     private ScenarioRecord scenario;
@@ -166,20 +161,20 @@ public class ScenarioCharacterRecord implements Serializable {
         this.name = name;
     }
 
-    public Integer getSizeId() {
-        return sizeId;
+    public String getKlass() {
+        return klass;
     }
 
-    public void setSizeId(Integer sizeId) {
-        this.sizeId = sizeId;
+    public void setKlass(String klass) {
+        this.klass = klass;
     }
 
-    public String getType() {
-        return type;
+    public String getSizeAndType() {
+        return sizeAndType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setSizeAndType(String sizeAndType) {
+        this.sizeAndType = sizeAndType;
     }
 
     public String getHitDice() {
@@ -206,14 +201,6 @@ public class ScenarioCharacterRecord implements Serializable {
         this.initiative = initiative;
     }
 
-    public String getAc() {
-        return ac;
-    }
-
-    public void setAc(String ac) {
-        this.ac = ac;
-    }
-
     public String getBaseAttackGrapple() {
         return baseAttackGrapple;
     }
@@ -230,12 +217,20 @@ public class ScenarioCharacterRecord implements Serializable {
         this.attack = attack;
     }
 
-    public String getSpaceReach() {
-        return spaceReach;
+    public String getFullAttack() {
+        return fullAttack;
     }
 
-    public void setSpaceReach(String spaceReach) {
-        this.spaceReach = spaceReach;
+    public void setFullAttack(String fullAttack) {
+        this.fullAttack = fullAttack;
+    }
+
+    public String getSpaceAndReach() {
+        return spaceAndReach;
+    }
+
+    public void setSpaceAndReach(String spaceAndReach) {
+        this.spaceAndReach = spaceAndReach;
     }
 
     public String getSpecialAttacks() {
@@ -252,6 +247,38 @@ public class ScenarioCharacterRecord implements Serializable {
 
     public void setSpecialQualities(String specialQualities) {
         this.specialQualities = specialQualities;
+    }
+
+    public String getSave() {
+        return save;
+    }
+
+    public void setSave(String save) {
+        this.save = save;
+    }
+
+    public String getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(String abilities) {
+        this.abilities = abilities;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public String getFeats() {
+        return feats;
+    }
+
+    public void setFeats(String feats) {
+        this.feats = feats;
     }
 
     public String getEnvironment() {
@@ -310,6 +337,38 @@ public class ScenarioCharacterRecord implements Serializable {
         this.levelAdjustment = levelAdjustment;
     }
 
+    public Short getIsPlayerCharacter() {
+        return isPlayerCharacter;
+    }
+
+    public void setIsPlayerCharacter(Short isPlayerCharacter) {
+        this.isPlayerCharacter = isPlayerCharacter;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String getArmorClass() {
+        return armorClass;
+    }
+
+    public void setArmorClass(String armorClass) {
+        this.armorClass = armorClass;
+    }
+
+    public String getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(String speed) {
+        this.speed = speed;
+    }
+
     public ScenarioRecord getScenario() {
         return scenario;
     }
@@ -343,78 +402,6 @@ public class ScenarioCharacterRecord implements Serializable {
         return "entity.ScenarioCharacterRecord[ id=" + id + " ]";
     }
 
-    public String getKlass() {
-        return klass;
-    }
-
-    public void setKlass(String klass) {
-        this.klass = klass;
-    }
-
-    public String getSizeAndType() {
-        return sizeAndType;
-    }
-
-    public void setSizeAndType(String sizeAndType) {
-        this.sizeAndType = sizeAndType;
-    }
-
-    public String getFullAttack() {
-        return fullAttack;
-    }
-
-    public void setFullAttack(String fullAttack) {
-        this.fullAttack = fullAttack;
-    }
-
-    public String getSpaceAndReach() {
-        return spaceAndReach;
-    }
-
-    public void setSpaceAndReach(String spaceAndReach) {
-        this.spaceAndReach = spaceAndReach;
-    }
-
-    public String getSave() {
-        return save;
-    }
-
-    public void setSave(String save) {
-        this.save = save;
-    }
-
-    public String getAbilities() {
-        return abilities;
-    }
-
-    public void setAbilities(String abilities) {
-        this.abilities = abilities;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
-
-    public String getFeats() {
-        return feats;
-    }
-
-    public void setFeats(String feats) {
-        this.feats = feats;
-    }
-
-    public Short getIsPlayerCharacter() {
-        return isPlayerCharacter;
-    }
-
-    public void setIsPlayerCharacter(Short isPlayerCharacter) {
-        this.isPlayerCharacter = isPlayerCharacter;
-    }
-
     @XmlTransient
     public List<EncounterMember> getEncounterMemberList() {
         return encounterMemberList;
@@ -422,30 +409,6 @@ public class ScenarioCharacterRecord implements Serializable {
 
     public void setEncounterMemberList(List<EncounterMember> encounterMemberList) {
         this.encounterMemberList = encounterMemberList;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public String getArmorClass() {
-        return armorClass;
-    }
-
-    public void setArmorClass(String armorClass) {
-        this.armorClass = armorClass;
-    }
-
-    public String getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(String speed) {
-        this.speed = speed;
     }
     
 }
