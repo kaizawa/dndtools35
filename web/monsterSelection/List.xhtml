@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListMonsterMasterTitle}"></h:outputText>
+            <h:outputText value="モンスターの選択"></h:outputText>
         </ui:define>
         <ui:define name="body">
         <h:form styleClass="jsfcrud_list_form">
@@ -23,16 +23,22 @@
 
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value=""/>
+                            <h:outputText value="選択"/>
                         </f:facet>  
-                        <h:selectManyCheckbox value="#{monsterSelectionController.selected}"/>
+                        <h:selectBooleanCheckbox value="#{monsterSelectionController.selected}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="名前"/>
                         </f:facet>
-                        <h:outputText value="#{item.name}"/>
+                        <h:outputText value="#{item.name}" style="width: 100%"/>
                     </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="サイズと種別"/>
+                        </f:facet>
+                        <h:outputText value="#{item.sizeAndType}"/>
+                    </h:column>                    
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="能力値"/>
@@ -89,12 +95,6 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="クラス"/>
-                        </f:facet>
-                        <h:outputText value="#{item.klass}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
                             <h:outputText value="組織"/>
                         </f:facet>
                         <h:outputText value="#{item.organization}"/>
@@ -141,27 +141,10 @@
                         </f:facet>
                         <h:outputText value="#{item.spaceAndReach}"/>
                     </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="サイズと種別"/>
-                        </f:facet>
-                        <h:outputText value="#{item.sizeAndType}"/>
-                    </h:column>
-                    
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="&nbsp;"/>
-                        </f:facet>
-                        <h:commandLink action="#{monsterSelectionController.prepareView}" value="#{bundle.ListMonsterMasterViewLink}"/>
-                        <h:outputText value=" "/>
-                        <h:commandLink action="#{monsterSelectionController.prepareEdit}" value="#{bundle.ListMonsterMasterEditLink}"/>
-                        <h:outputText value=" "/>
-                        <h:commandLink action="#{monsterSelectionController.destroy}" value="#{bundle.ListMonsterMasterDestroyLink}"/>
-                    </h:column>
+
                 </h:dataTable>
             </h:panelGroup>
             <br />
-            <h:commandLink action="#{monsterSelectionController.prepareCreate}" value="#{bundle.ListMonsterMasterCreateLink}"/>
         </h:form>
         </ui:define>
     </ui:composition>
