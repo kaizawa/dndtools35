@@ -10,10 +10,11 @@
             <h:outputText value="エンカウンター『#{encounterRecordController.selected.name}』の編集"></h:outputText>
         </ui:define>
         <ui:define name="body">
+            <h:form>            
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
+
                 <h:panelGrid columns="4">
                     <h:outputLabel value="エンカウンター名: " for="name" />
                     <h:inputText id="name" value="#{encounterRecordController.selected.name}" title="#{bundle.EditEncounterRecordTitle_name}" />
@@ -22,59 +23,19 @@
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="備考: " for="comments" />
-                    <h:inputText id="comments" styleClass="middleTextArea" value="#{encounterRecordController.selected.comments}" />
+                    <h:inputTextarea id="comments" styleClass="middleTextArea" value="#{encounterRecordController.selected.comments}" />
                 </h:panelGrid>
                 <br/>
                 <h:commandButton action="#{encounterRecordController.update}" value="保存"/>
-                <br/>
-                <br/>
-                <h:outputLabel value="エンカウンターメンバー" styleClass="middleBold"/>
-                <h:panelGroup rendered="#{encounterMemberController.encounterMemberList.size() > 0}">
-
-                    <h:dataTable value="#{encounterMemberController.encounterMemberList}" var="member" border="0" 
-                                 cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
-                                 rules="all" style="border:solid 1px" binding="#{encounterMemberController.encounterMemberTable}">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="名前" />
-                            </f:facet>
-                            <h:outputText value="#{member.scenarioCharacterRecord.name}" style="color: #{encounterMemberController.hpColor}"/>
-                        </h:column>         
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="クラス"/>
-                            </f:facet>
-                            <h:outputText value="#{member.scenarioCharacterRecord.klass}"/>
-                        </h:column>
-
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="ヒットダイス"/>
-                            </f:facet>
-                            <h:outputText value="#{member.scenarioCharacterRecord.hitDice}"/>
-                        </h:column>  
-
-                        <h:column>
-                            <f:facet name="header" >
-                                <h:outputText value="HP"/>
-                            </f:facet>
-                            <h:outputText value="#{member.scenarioCharacterRecord.hitPoint}" style="width: 30px; color: #{encounterMemberController.hpColor}"/>
-                        </h:column>
-                        <h:column>
-                            <h:commandLink action="#{encounterMemberController.decommission}" value="メンバーからはずす" />
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>    
+                <h:commandButton action="#{encounterRecordController.prepareList}" value="キャンセル"/>
 
                 <br />
                 <br />
-                <h:commandLink action="/monsterSelection/List" value="モンスターを追加" immediate="true"/>
-                <br />
-                <br />
-                <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオの編集に戻る" immediate="true"/>
+                <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオ『#{scenarioRecordController.selected.name}』の編集に戻る" immediate="true"/>
+                <h:outputLabel> / </h:outputLabel>
+                <h:commandLink action="/encounterRecord/View" value="戦闘及びモンスターの追加)"/>                
                 <br />
             </h:form>            
         </ui:define>
     </ui:composition>
-
 </html>

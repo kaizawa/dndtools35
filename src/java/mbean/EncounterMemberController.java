@@ -168,7 +168,12 @@ public class EncounterMemberController implements Serializable {
 
     public String nextTrun() {
         int current_index;
-        current_index = encounterMemberList.indexOf(getTurnMember());
+        EncounterMember current_member = getTurnMember();
+        
+        if(current_member == null)
+            return null;
+        
+        current_index = encounterMemberList.indexOf(current_member);
         EncounterMember nextMember;
         
         do{
@@ -176,7 +181,7 @@ public class EncounterMemberController implements Serializable {
             current_index++;
         } while(nextMember.getScenarioCharacterRecord().getHitPoint() < 0);
 
-        getTurnMember().setMyTurn(false);
+        current_member.setMyTurn(false);
         nextMember.setMyTurn(true);        
         
         try {
@@ -212,6 +217,9 @@ public class EncounterMemberController implements Serializable {
             if(member.getMyTurn())
                 return member;
         }
+        if (memberList.size() == 0)
+            return null;
+                    
         return memberList.get(0);
     }
     

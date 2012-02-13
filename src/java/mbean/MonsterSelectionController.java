@@ -214,6 +214,6 @@ public class MonsterSelectionController implements Serializable {
     
     public String add(){
         
-        return "/encounterRecord/Edit";
+        return "/encounterRecord/View";
     }
 }

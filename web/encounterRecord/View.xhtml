@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{encounterRecordController.selected.name} - Round: #{encounterRecordController.selected.round}"></h:outputText>
+            <h:outputText value="#{encounterRecordController.selected.name} - ラウンド: #{encounterRecordController.selected.round}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
@@ -18,7 +18,8 @@
                 <h:outputText value="#{bundle.ViewEncounterRecordLabel_round}" style="font-size: 20px"/>
                 <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}" style="font-size: 20px"/>
                 -->
-                <h:outputText value="#{encounterRecordController.selected.comments}" title="#{bundle.ViewEncounterRecordTitle_comments}"/>
+                <h:outputText value="#{encounterRecordController.selected.comments}" />
+                <h:commandButton action="Edit" value="編集"/>                                                                
                 <br/><br/>
                 <h:commandButton action="#{encounterRecordController.nextTrun()}" value="次のターン"/>
                 <h:outputLabel value=" "/>
@@ -91,22 +92,12 @@
                     <h:commandButton value="イニシアチブランダム入力" action="#{encounterRecordController.setInitiativeByRandom}"/>                                        
                     <h:commandButton value="HPをリセット" action="#{encounterRecordController.setInitialHitPoint()}"/>                                                            
                 </h:panelGrid>
-
                 <br/>
-                <h:outputText value="#{encounterMemberController.turnMember.scenarioCharacterRecord.name}"/>                                    
-                <h:panelGrid border="1" cellpadding="2" cellspacing="0">
-                    <h:inputTextarea style="font-size: 12px; width: 500px;height: 200px" value="#{encounterMemberController.turnMember.scenarioCharacterRecord.comments}" readonly="true"/>
-                </h:panelGrid>
+                <h:commandLink action="/monsterSelection/List" styleClass="smallBold" value="モンスターを追加" immediate="true"/>
+                <br/>
                 <br />
-                <h:commandLink action="Edit" value="戦闘メンバを変更"/>
+                <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオ『#{scenarioRecordController.selected.name}』の編集に戻る"/>
                 <br />
-                <h:commandLink action="#{encounterRecordController.prepareCreate}" value="新しいエンカウンターを作成" />
-                <br />
-                <h:commandLink action="#{encounterRecordController.prepareList}" value="エンカウンター一覧に戻る"/>
-                <br />
-                <br />
-                <h:commandLink value="#{bundle.ViewEncounterRecordIndexLink}" action="/index" immediate="true" />
-
             </h:form>
         </ui:define>
     </ui:composition>
