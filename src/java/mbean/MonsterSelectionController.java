@@ -29,6 +29,7 @@ import mbean.util.JsfUtil;
 @SessionScoped
 public class MonsterSelectionController implements Serializable {
 
+    private Integer MAX_NAME_INDEX = 100;
     @EJB
     private EncounterMemberFacade encounterMemberFacade;
     @ManagedProperty(value = "#{encounterRecordController}")
@@ -111,9 +112,9 @@ public class MonsterSelectionController implements Serializable {
     }
 
     public DataModel getItems() {
-//        if (items == null) {
+        if (items == null) {
             items = getPagination().createPageDataModel();
-//        }
+        }
         return items;
     }
 
@@ -184,40 +185,54 @@ public class MonsterSelectionController implements Serializable {
         }
     }
 
-    public boolean isSelected() {
-        return false;
-    }
-
     /*
      * EncounterMember のメンバーとして選択/解除する
      */
-    public void setSelected(boolean charaSelected) {
+    public String add() {
+        current = (MonsterData) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 
+        JsfUtil.addSuccessMessage(current.getName() + " index = " + selectedItemIndex + ", num rows = " + getItems().getRowCount());
         EncounterRecord encounter = encounterRecordController.getCurrent();
-        MonsterData monster = (MonsterData) getItems().getRowData();
-        ScenarioCharacterRecord chara = ScenarioCharacterRecordFactory.getInstance(monster);
-        JsfUtil.addSuccessMessage(monster.getName() +  " is added");
+        ScenarioCharacterRecord chara = ScenarioCharacterRecordFactory.getInstance(current);
+        /*
+         * ユニークな名前をつける
+         */
+        int i;
+        List<EncounterMember> members = encounterMemberFacade.findByEncounterRecord(encounter);
+        for (i = 1; i <= MAX_NAME_INDEX; i++) {
+            Boolean found = false;
+            for (EncounterMember member : members) {
+                if (member.getScenarioCharacterRecord().getName().equals(chara.getName() + i)) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                chara.setName(chara.getName() + i);
+                break;
+            }
+        }
+        if (i > MAX_NAME_INDEX) {
+            JsfUtil.addErrorMessage("これ以上同じモンスターを追加できません.");
+            return "/encounterRecord/View";            
+        }
+
+        JsfUtil.addSuccessMessage(current.getName() + " is added");
 
         try {
-            if (charaSelected) {
-                    EncounterMember member = new EncounterMember();
-                    member.setEncounterRecord(encounter);
-                    member.setScenarioCharacterRecord(chara);
-                    member.setInitiative(0);
-                    member.setMyTurn(false);
-                    encounterMemberFacade.edit(member);
-            } 
+            EncounterMember member = new EncounterMember();
+            member.setEncounterRecord(encounter);
+            member.setScenarioCharacterRecord(chara);
+            member.setInitiative(0);
+            member.setMyTurn(false);
+            encounterMemberFacade.edit(member);
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e + "Persistence Error Occured");
         }
-
-    }
-    
-    public String add(){
         return "/encounterRecord/View";
     }
-    
+
     public String cancel() {
-        return "/encounterRecord/View";        
+        return "/encounterRecord/View";
     }
 }

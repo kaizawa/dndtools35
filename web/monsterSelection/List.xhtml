@@ -25,7 +25,7 @@
                         <f:facet name="header">
                             <h:outputText value="選択"/>
                         </f:facet>  
-                        <h:selectBooleanCheckbox value="#{monsterSelectionController.selected}"/>
+                        <h:commandButton action="#{monsterSelectionController.add()}" value="追加"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
@@ -145,7 +145,6 @@
                 </h:dataTable>
             </h:panelGroup>
             <br />
-            <h:commandButton action="#{monsterSelectionController.add}" value="エンカウンターに追加"/>
             <h:commandButton action="#{monsterSelectionController.cancel}" value="キャンセル"/>            
         </h:form>
         </ui:define>
