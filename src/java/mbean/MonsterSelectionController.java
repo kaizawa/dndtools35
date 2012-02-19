@@ -196,6 +196,7 @@ public class MonsterSelectionController implements Serializable {
         EncounterRecord encounter = encounterRecordController.getCurrent();
         MonsterData monster = (MonsterData) getItems().getRowData();
         ScenarioCharacterRecord chara = ScenarioCharacterRecordFactory.getInstance(monster);
+        JsfUtil.addSuccessMessage(monster.getName() +  " is added");
 
         try {
             if (charaSelected) {
@@ -213,7 +214,10 @@ public class MonsterSelectionController implements Serializable {
     }
     
     public String add(){
-        
         return "/encounterRecord/View";
+    }
+    
+    public String cancel() {
+        return "/encounterRecord/View";        
     }
 }
