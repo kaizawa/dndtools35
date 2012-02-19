@@ -86,7 +86,7 @@ public class ScenarioRecordController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordCreated")); 
+            JsfUtil.addSuccessMessage("新しいシナリオが作成されました"); 
             return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -103,7 +103,7 @@ public class ScenarioRecordController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordUpdated"));
+            JsfUtil.addSuccessMessage("シナリオが更新されました");
             return "/scenarioRecord/Edit";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -135,7 +135,7 @@ public class ScenarioRecordController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioRecordDeleted"));
+            JsfUtil.addSuccessMessage("シナリオが削除されました");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
         }
