@@ -83,6 +83,13 @@
                             </f:facet>
                             <h:inputText value="#{member.comments}"/>
                         </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value=""/>
+                            </f:facet>
+                            <h:commandLink action="#{encounterMemberController.decommission}" value="戦闘メンバからはずす"/>
+                        </h:column>
                     </h:dataTable>
                 </h:panelGroup>              
 
