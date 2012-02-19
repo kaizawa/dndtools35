@@ -1,16 +1,10 @@
 package mbean;
 
-import entity.ScenarioRecord;
-import mbean.util.JsfUtil;
-import mbean.util.PaginationHelper;
 import ejb.ScenarioRecordFacade;
-import entity.EncounterRecord;
-
+import entity.ScenarioRecord;
 import java.io.Serializable;
-import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -19,6 +13,8 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import mbean.util.JsfUtil;
+import mbean.util.PaginationHelper;
 
 @ManagedBean(name = "scenarioRecordController")
 @SessionScoped
@@ -86,7 +82,7 @@ public class ScenarioRecordController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage("新しいシナリオが作成されました"); 
+            JsfUtil.addSuccessMessage("新しいシナリオが作成されました");
             return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -110,7 +106,7 @@ public class ScenarioRecordController implements Serializable {
             return null;
         }
     }
-    
+
     public String cancel(){
         return "/scenarioRecord/List";
     }
@@ -231,7 +227,7 @@ public class ScenarioRecordController implements Serializable {
             }
         }
     }
-    
+
     public void reset (){
         recreateModel();
         current = new ScenarioRecord();
