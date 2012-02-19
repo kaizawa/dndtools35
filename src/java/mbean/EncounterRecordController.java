@@ -85,14 +85,30 @@ public class EncounterRecordController implements Serializable {
     
     /* 
      * encounterRecord/List は実際には表示されず、リストに相当するものは
-     * ScenarioRecord/Edit に手表示される。なのでここでは null を返す。
-     * (これがよばれるのは ScenarioRecord/Edit)
-     */
+     * ScenarioRecord/Edit に手表示される。なのでここでは ScenarioRecord/Edit を返す。
+     */     
     public String prepareList() {
         recreateModel();
         current = new EncounterRecord();
         selectedItemIndex = -1;
         return "/scenarioRecord/Edit";
+    }
+    
+
+    /*
+     * Edit ページが呼ばれる前のページに戻る。
+     */
+    public String cancelEdit(){
+        /*
+         * もしシナリオ編集画面から来ている場合には現在選択されている
+         * エンカウンターをリセットしておく。
+         */
+        if("/scenarioRecord/Edit.xhtml".equals(previousPage)){
+            recreateModel();
+            current = new EncounterRecord();
+            selectedItemIndex = -1;
+        }        
+        return previousPage;
     }
 
     public String prepareView() {
@@ -119,9 +135,25 @@ public class EncounterRecordController implements Serializable {
         }
     }
 
+    public String getPreviousPage() {
+        return previousPage;
+    }
+
+    public void setPreviousPage(String previousPage) {
+        this.previousPage = previousPage;
+    }
+    
+    private String previousPage = null;
+
     public String prepareEdit() {
         current = (EncounterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        previousPage = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        return "/encounterRecord/Edit";
+    }
+    
+    public String editCurrentEncounter(){
+        previousPage = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         return "/encounterRecord/Edit";
     }
 
@@ -132,7 +164,8 @@ public class EncounterRecordController implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
         }
-        return null;        
+        /* 編集ページの前のページに戻る */
+        return previousPage;        
     }
 
     public String destroy() {

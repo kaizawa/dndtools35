@@ -19,7 +19,7 @@
                 <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}" style="font-size: 20px"/>
                 -->
                 <h:outputText value="#{encounterRecordController.selected.comments}" />
-                <h:commandButton action="Edit" value="編集"/>                                                                
+                <h:commandButton action="#{encounterRecordController.editCurrentEncounter}" value="編集"/>                                                                
                 <br/><br/>
                 <h:commandButton action="#{encounterRecordController.nextTrun()}" value="次のターン"/>
                 <h:outputLabel value=" "/>
