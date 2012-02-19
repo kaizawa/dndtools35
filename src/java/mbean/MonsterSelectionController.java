@@ -34,7 +34,7 @@ public class MonsterSelectionController implements Serializable {
     private EncounterMemberFacade encounterMemberFacade;
     @ManagedProperty(value = "#{encounterRecordController}")
     private EncounterRecordController encounterRecordController;
-
+    
     public EncounterRecordController getEncounterRecordController() {
         return encounterRecordController;
     }
@@ -86,7 +86,7 @@ public class MonsterSelectionController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "List";
+        return "/monsterSelection/List";
     }
 
     public String prepareView() {
@@ -192,7 +192,6 @@ public class MonsterSelectionController implements Serializable {
         current = (MonsterData) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 
-        JsfUtil.addSuccessMessage(current.getName() + " index = " + selectedItemIndex + ", num rows = " + getItems().getRowCount());
         EncounterRecord encounter = encounterRecordController.getCurrent();
         ScenarioCharacterRecord chara = ScenarioCharacterRecordFactory.getInstance(current);
         /*
@@ -217,7 +216,7 @@ public class MonsterSelectionController implements Serializable {
             return "/encounterRecord/View";            
         }
 
-        JsfUtil.addSuccessMessage(current.getName() + " is added");
+        JsfUtil.addSuccessMessage(chara.getName() + "が追加されました。");
 
         try {
             EncounterMember member = new EncounterMember();

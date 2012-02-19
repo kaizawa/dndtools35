@@ -100,7 +100,7 @@
                     <h:commandButton value="HPをリセット" action="#{encounterRecordController.setInitialHitPoint()}"/>                                                            
                 </h:panelGrid>
                 <br/>
-                <h:commandLink action="/monsterSelection/List" styleClass="smallBold" value="モンスターを追加" immediate="true"/>
+                <h:commandLink action="#{monsterSelectionController.prepareList}" styleClass="smallBold" value="モンスターを追加" immediate="true"/>
                 <br/>
                 <br />
                 <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオ『#{scenarioRecordController.selected.name}』の編集に戻る"/>
