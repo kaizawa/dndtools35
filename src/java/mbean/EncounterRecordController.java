@@ -1,12 +1,15 @@
 package mbean;
 
 import com.google.common.collect.Collections2;
+import ejb.CharacterRecordFacade;
 import ejb.EncounterMemberFacade;
 import entity.EncounterRecord;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.EncounterRecordFacade;
+import entity.CharacterRecord;
 import entity.EncounterMember;
+import entity.ScenarioCharacterRecord;
 
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
@@ -28,6 +31,10 @@ import javax.faces.model.SelectItem;
 @SessionScoped
 public class EncounterRecordController implements Serializable {
 
+    @EJB
+    private CharacterRecordFacade characterRecordFacade;
+    @EJB
+    private EncounterMemberFacade encounterMemberFacade;
     private EncounterRecord current;
     private DataModel items = null;
     @EJB
@@ -45,7 +52,7 @@ public class EncounterRecordController implements Serializable {
     public void setScenarioRecordController(ScenarioRecordController scenarioRecordController) {
         this.scenarioRecordController = scenarioRecordController;
     }
-    
+
     public EncounterRecordController() {
     }
 
@@ -73,41 +80,39 @@ public class EncounterRecordController implements Serializable {
                 @Override
                 public DataModel createPageDataModel() {
                     return new ListDataModel(
-                            getFacade().findByScenarioRecordRange( 
-                               scenarioRecordController.getSelected(), 
-                               new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()})
-                            );
+                            getFacade().findByScenarioRecordRange(
+                            scenarioRecordController.getSelected(),
+                            new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
         return pagination;
     }
-    
-    /* 
-     * encounterRecord/List は実際には表示されず、リストに相当するものは
-     * ScenarioRecord/Edit に手表示される。なのでここでは ScenarioRecord/Edit を返す。
-     */     
+
+    /*
+     * encounterRecord/List は実際には表示されず、リストに相当するものは ScenarioRecord/Edit
+     * に手表示される。なのでここでは ScenarioRecord/Edit を返す。
+     */
     public String prepareList() {
         recreateModel();
         current = new EncounterRecord();
         selectedItemIndex = -1;
         return "/scenarioRecord/Edit";
     }
-    
+
 
     /*
      * Edit ページが呼ばれる前のページに戻る。
      */
-    public String cancelEdit(){
+    public String cancelEdit() {
         /*
-         * もしシナリオ編集画面から来ている場合には現在選択されている
-         * エンカウンターをリセットしておく。
+         * もしシナリオ編集画面から来ている場合には現在選択されている エンカウンターをリセットしておく。
          */
-        if("/scenarioRecord/Edit.xhtml".equals(previousPage)){
+        if ("/scenarioRecord/Edit.xhtml".equals(previousPage)) {
             recreateModel();
             current = new EncounterRecord();
             selectedItemIndex = -1;
-        }        
+        }
         return previousPage;
     }
 
@@ -127,6 +132,7 @@ public class EncounterRecordController implements Serializable {
         try {
             current.setScenarioRecord(scenarioRecordController.getSelected());
             getFacade().create(current);
+            addPlayerCharacter();
             JsfUtil.addSuccessMessage("エンカウンターが追加されました。");
             return prepareList();
         } catch (Exception e) {
@@ -142,7 +148,6 @@ public class EncounterRecordController implements Serializable {
     public void setPreviousPage(String previousPage) {
         this.previousPage = previousPage;
     }
-    
     private String previousPage = null;
 
     public String prepareEdit() {
@@ -151,8 +156,8 @@ public class EncounterRecordController implements Serializable {
         previousPage = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         return "/encounterRecord/Edit";
     }
-    
-    public String editCurrentEncounter(){
+
+    public String editCurrentEncounter() {
         previousPage = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         return "/encounterRecord/Edit";
     }
@@ -164,8 +169,10 @@ public class EncounterRecordController implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
         }
-        /* 編集ページの前のページに戻る */
-        return previousPage;        
+        /*
+         * 編集ページの前のページに戻る
+         */
+        return previousPage;
     }
 
     public String destroy() {
@@ -210,9 +217,9 @@ public class EncounterRecordController implements Serializable {
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findByScenarioRecordRange( 
-                               scenarioRecordController.getSelected(), 
-                               new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            current = getFacade().findByScenarioRecordRange(
+                    scenarioRecordController.getSelected(),
+                    new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -287,38 +294,82 @@ public class EncounterRecordController implements Serializable {
             }
         }
     }
-    
-    public String resetBattle(){
+
+    public String resetBattle() {
         current.setRound(1);
         try {
             encounterRecordFacade.edit(current);
-        } catch (Exception e){
-            JsfUtil.addErrorMessage("Persistence Error Occured");                        
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
         }
         return null;
     }
-    
-    public String resetRound(){
+
+    public String resetRound() {
         try {
             encounterRecordFacade.edit(current);
-        } catch (Exception e){
-            JsfUtil.addErrorMessage("Persistence Error Occured");                        
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
         }
         return null;
-    }    
-    
-    public EncounterRecord getCurrent(){
+    }
+
+    public EncounterRecord getCurrent() {
         return current;
     }
-    
-    public String reread(){
+
+    public String reread() {
         items = null;
-        return null;        
-    }       
-    
-    public void reset (){
+        return null;
+    }
+
+    public void reset() {
         recreateModel();
         current = new EncounterRecord();
         selectedItemIndex = -1;
+    }
+
+    /*
+     * EncounterMember のメンバーキャンペーンの PC を追加する。
+     */
+    private String addPlayerCharacter() {
+        Integer campaignId = current.getScenarioRecord().getCampaign().getId();
+        List<CharacterRecord> charaRecordList;
+        try {
+            charaRecordList = characterRecordFacade.findByCampaignId(campaignId);
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, "プレイヤーキャラクターの取得時に永続性エラーが発生しました");
+            return "/encounterRecord/View";
+        }
+
+        /*
+         * CharacterRecord は DB の CHARACTER_RECORD のエンティティ。 CharacterData は
+         * CharacterRecode を内包し、各種計算を行うメソッドを持つ。 SenarioCharacterRecord は元となる
+         * CharacterData/MonstterData を元にして シナリオを通じて使う一時的な情報を保持する。
+         */
+        for (CharacterRecord charaRecord : charaRecordList) {
+            ScenarioCharacterRecord chara;
+            try {
+                CharacterData charaData = new CharacterData(charaRecord);
+                chara = ScenarioCharacterRecordFactory.getInstance(charaData);
+            }catch(Exception e){
+                JsfUtil.addErrorMessage("ScenarioCharacterRecord 作成時にエラーが発生しました。 " + e.toString());
+                e.printStackTrace();
+                return "/encounterRecord/View";                                
+            }
+
+            try {
+                EncounterMember member = new EncounterMember();
+                member.setEncounterRecord(current);
+                member.setScenarioCharacterRecord(chara);
+                member.setInitiative(0);
+                member.setMyTurn(false);
+                encounterMemberFacade.edit(member);
+            } catch (Exception e) {
+                JsfUtil.addErrorMessage(e, "プレイヤーキャラクターの追加時に永続性エラーが発生しました");
+                return "/encounterRecord/View";                
+            }
+        }
+        return "/encounterRecord/View";
     }
 }
