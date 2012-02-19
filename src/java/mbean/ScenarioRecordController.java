@@ -110,6 +110,10 @@ public class ScenarioRecordController implements Serializable {
             return null;
         }
     }
+    
+    public String cancel(){
+        return "/scenarioRecord/List";
+    }
 
     public String destroy() {
         current = (ScenarioRecord) getItems().getRowData();
