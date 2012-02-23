@@ -23,9 +23,4 @@
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/faces/index.xhtml</location>
     </error-page>
-    <ejb-local-ref>
-        <ejb-ref-name>AbilityMasterFacade</ejb-ref-name>
-        <ejb-ref-type>Session</ejb-ref-type>
-        <ejb-link>#AbilityMasterFacade</ejb-link>
-    </ejb-local-ref>
 </web-app>
