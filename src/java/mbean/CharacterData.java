@@ -27,70 +27,44 @@ import entity.*;
 import java.text.SimpleDateFormat;
 import java.text.StringCharacterIterator;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
-/**
- * <p>Page bean that corresponds to a similarly named JSP page. This class
- * contains component definitions (and initialization code) for all components
- * that you have defined on this page, as well as lifecycle methods and event
- * handlers where you may add behavior to respond to incoming events.</p>
- *
- * @version CharacterEditPage.java
- * @version Created on 2009/03/29, 22:47:51
- * @author ka78231
- */
-@ManagedBean
-@RequestScoped
 public class CharacterData implements CharacterSummary {
 
+    InitialContext ctx;
     FacesContext context = FacesContext.getCurrentInstance();
-    @EJB
     private SkillSynergyMasterFacade skillSynergyMasterFacade;
-    @EJB
     private CharacterEquipmentFacade characterEquipmentFacade;
-    @EJB
     private CharacterSaveRecordFacade characterSaveRecordFacade;
-    @EJB
     private ClassSaveMasterFacade classSaveMasterFacade;
-    @EJB
     private RaceAbilityMasterFacade raceAbilityMasterFacade;
-    @EJB
     private CharacterSkillRecordFacade characterSkillRecordFacade;
-    @EJB
     private CharacterAbilityRecordFacade characterAbilityRecordFacade;
-    @EJB
     private SaveMasterFacade saveMasterFacade;
-    @EJB
     private SkillMasterFacade skillMasterFacade1;
-    @EJB
     private ClassSkillMasterFacade classSkillMasterFacade;
-    @EJB
     protected ClassMasterFacade classMasterFacade;
-    @EJB
     protected CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
-    @EJB
     protected SkillMasterFacade skillMasterFacade;
-    @EJB
     protected ReligionMasterFacade religionMasterFacade;
-    @EJB
     protected AlignmentMasterFacade alignmentMasterFacade;
-    @EJB
     protected AbilityMasterFacade abilityMasterFacade;
-    @EJB
     protected GenderMasterFacade genderMasterFacade;
-    @EJB
     protected RaceMasterFacade raceMasterFacade;
-    @EJB
     protected CharacterGrowthRecordFacade characterGrowthRecordFacade;
-    @EJB
     protected CharacterRecordFacade characterRecordFacade;
     private CharacterRecord characterRecord;
 
@@ -99,6 +73,33 @@ public class CharacterData implements CharacterSummary {
 
     public CharacterData(CharacterRecord characterRecord) {
         this.characterRecord = characterRecord;
+        try {
+            ctx = new InitialContext();
+            abilityMasterFacade = (AbilityMasterFacade) ctx.lookup("java:module/AbilityMasterFacade");
+            skillSynergyMasterFacade = (SkillSynergyMasterFacade) ctx.lookup("java:module/SkillSynergyMasterFacade");
+            characterEquipmentFacade = (CharacterEquipmentFacade) ctx.lookup("java:module/CharacterEquipmentFacade");
+            characterSaveRecordFacade = (CharacterSaveRecordFacade) ctx.lookup("java:module/CharacterSaveRecordFacade");
+            classSaveMasterFacade = (ClassSaveMasterFacade) ctx.lookup("java:module/ClassSaveMasterFacade");
+            raceAbilityMasterFacade = (RaceAbilityMasterFacade) ctx.lookup("java:module/RaceAbilityMasterFacade");
+            characterSkillRecordFacade = (CharacterSkillRecordFacade) ctx.lookup("java:module/CharacterSkillRecordFacade");
+            characterAbilityRecordFacade = (CharacterAbilityRecordFacade) ctx.lookup("java:module/CharacterAbilityRecordFacade");
+            saveMasterFacade = (SaveMasterFacade) ctx.lookup("java:module/SaveMasterFacade");
+            skillMasterFacade = (SkillMasterFacade) ctx.lookup("java:module/SkillMasterFacade");
+            classSkillMasterFacade = (ClassSkillMasterFacade) ctx.lookup("java:module/ClassSkillMasterFacade");
+            classMasterFacade = (ClassMasterFacade) ctx.lookup("java:module/ClassMasterFacade");
+            characterSkillGrowthRecordFacade = (CharacterSkillGrowthRecordFacade) ctx.lookup("java:module/CharacterSkillGrowthRecordFacade");
+            skillMasterFacade = (SkillMasterFacade) ctx.lookup("java:module/SkillMasterFacade");
+            religionMasterFacade = (ReligionMasterFacade) ctx.lookup("java:module/ReligionMasterFacade");
+            alignmentMasterFacade = (AlignmentMasterFacade) ctx.lookup("java:module/AlignmentMasterFacade");
+            abilityMasterFacade = (AbilityMasterFacade) ctx.lookup("java:module/AbilityMasterFacade");
+            genderMasterFacade = (GenderMasterFacade) ctx.lookup("java:module/GenderMasterFacade");
+            raceMasterFacade = (RaceMasterFacade) ctx.lookup("java:module/RaceMasterFacade");
+            characterGrowthRecordFacade = (CharacterGrowthRecordFacade) ctx.lookup("java:module/CharacterGrowthRecordFacade");
+            characterRecordFacade = (CharacterRecordFacade) ctx.lookup("java:module/CharacterRecordFacade");
+            characterRecord = (CharacterRecord) ctx.lookup("java:module/CharacterRecord");
+        } catch (NamingException ex) {
+            Logger.getLogger(CharacterData.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Integer getSkillMiscModifierById(int index) {
