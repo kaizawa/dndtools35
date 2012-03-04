@@ -96,7 +96,7 @@ public class EncounterMemberController implements Serializable {
     
     private HtmlDataTable encounterMemberTable = new HtmlDataTable();        
  
-    List<EncounterMember> encounterMemberList;
+    private List<EncounterMember> encounterMemberList;
 
     public List<EncounterMember> getEncounterMemberList() {
         encounterMemberList = encounterMemberFacade.findByEncounterRecord(encounterRecordController.getCurrent());
@@ -153,7 +153,7 @@ public class EncounterMemberController implements Serializable {
 
     }
 
-    private EncounterMember getNextMember(Integer current_index){
+    public EncounterMember getNextMember(Integer current_index){
         EncounterMember nextMember;
 
         if (encounterMemberList.size() <= current_index + 1) {
@@ -168,12 +168,12 @@ public class EncounterMemberController implements Serializable {
 
     public String nextTurn() {
         int current_index;
-        EncounterMember current_member = getTurnMember();
-        
-        if(current_member == null)
+        EncounterMember currentMember = getTurnMember();
+
+        if(currentMember == null)
             return null;
-        
-        current_index = encounterMemberList.indexOf(current_member);
+    
+        current_index = encounterMemberList.indexOf(currentMember);
         EncounterMember nextMember;
         
         do{
@@ -181,12 +181,14 @@ public class EncounterMemberController implements Serializable {
             current_index++;
         } while(nextMember.getScenarioCharacterRecord().getHitPoint() < 0);
 
-        current_member.setMyTurn(false);
+        currentMember.setMyTurn(false);
         nextMember.setMyTurn(true);        
         
         try {
             encounterRecordFacade.edit(encounterRecordController.getCurrent());
+            encounterMemberFacade.edit(currentMember);       
             encounterMemberFacade.edit(nextMember);                
+
         } catch (Exception e){
             JsfUtil.addErrorMessage("Persistence Error Occured");            
         }
@@ -217,13 +219,11 @@ public class EncounterMemberController implements Serializable {
             if(member.getMyTurn())
                 return member;
         }
-        if (memberList.size() == 0)
+        if (memberList.isEmpty())
             return null;
                     
         return memberList.get(0);
     }
-    
-
     
     public String decommission(){
         EncounterMember member = (EncounterMember) encounterMemberTable.getRowData();

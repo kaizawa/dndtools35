@@ -44,7 +44,7 @@ public class EncounterRecordController implements Serializable {
     
     @ManagedProperty(value="#{scenarioRecordController}")
     private ScenarioRecordController scenarioRecordController;
-
+    
     public ScenarioRecordController getScenarioRecordController() {
         return scenarioRecordController;
     }
