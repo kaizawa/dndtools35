@@ -166,7 +166,7 @@ public class EncounterMemberController implements Serializable {
         return nextMember;
     }
 
-    public String nextTrun() {
+    public String nextTurn() {
         int current_index;
         EncounterMember current_member = getTurnMember();
         
