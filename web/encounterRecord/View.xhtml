@@ -21,9 +21,9 @@
                 <h:outputText value="#{encounterRecordController.selected.comments}" />
                 <h:commandButton action="#{encounterRecordController.editCurrentEncounter}" value="編集"/>                                                                
                 <br/><br/>
-                <h:commandButton action="#{encounterRecordController.nextTrun()}" value="次のターン"/>
+                <h:commandButton action="#{encounterMemberController.nextTurn()}" value="次のターン"/>
                 <h:outputLabel value=" "/>
-                <h:commandButton action="#{encounterRecordController.saveBattleMembers}" value="Save and Sort"/>                        
+                <h:commandButton action="#{encounterMemberontroller.saveEncounterMembers}" value="Save and Sort"/>                        
 
                 <h:panelGroup rendered="#{encounterMemberController.encounterMemberList.size() > 0}">
 
@@ -88,7 +88,7 @@
                             <f:facet name="header">
                                 <h:outputText value=""/>
                             </f:facet>
-                            <h:commandLink action="#{encounterMemberController.decommission}" value="戦闘メンバからはずす"/>
+                            <h:commandLink action="#{encounterMemberController.decommission}" value="はずす"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>              
