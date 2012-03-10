@@ -5,10 +5,14 @@ import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.EncounterMemberFacade;
 import ejb.EncounterRecordFacade;
+import ejb.ScenarioCharacterRecordFacade;
 import entity.EncounterRecord;
+import entity.ScenarioCharacterRecord;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -25,6 +29,16 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "encounterMemberController")
 @SessionScoped
 public class EncounterMemberController implements Serializable {
+    @EJB
+    private ScenarioCharacterRecordFacade scenarioCharacterRecordFacade;
+
+    public ScenarioCharacterRecordFacade getScenarioCharacterRecordFacade() {
+        return scenarioCharacterRecordFacade;
+    }
+
+    public void setScenarioCharacterRecordFacade(ScenarioCharacterRecordFacade scenarioCharacterRecordFacade) {
+        this.scenarioCharacterRecordFacade = scenarioCharacterRecordFacade;
+    }
     @EJB
     private EncounterRecordFacade encounterRecordFacade;
 
@@ -82,7 +96,8 @@ public class EncounterMemberController implements Serializable {
     public void setHpModifier(Integer mod) {
         int index = encounterMemberTable.getRowIndex();
         EncounterMember member = encounterMemberList.get(index);
-        member.getScenarioCharacterRecord().setHitPoint(member.getScenarioCharacterRecord().getHitPoint() - mod);
+        ScenarioCharacterRecord chara = member.getScenarioCharacterRecord();
+        chara.setHitPoint(member.getScenarioCharacterRecord().getHitPoint() - mod);
     }
     
     public String getHpColor(){
@@ -139,6 +154,8 @@ public class EncounterMemberController implements Serializable {
     public String saveEncounterMembers() {
         try {
             for (EncounterMember member : encounterMemberList) {
+                ScenarioCharacterRecord chara =  member.getScenarioCharacterRecord();
+                scenarioCharacterRecordFacade.edit(chara);
                 encounterMemberFacade.edit(member);
             }
             JsfUtil.addSuccessMessage("Member's Poropety Updated");
@@ -320,6 +337,28 @@ public class EncounterMemberController implements Serializable {
 
     public String resetRound() {
         setTurnToFirstMember();        
+        return null;
+    }
+    
+    public String setInitialHitPoint(){
+         try {
+             for (EncounterMember member : encounterMemberList) {
+                 int initialHp = 0;
+                 String regxp = "\\d+d\\d+\\((\\d+)hp\\)";
+                 Pattern pattern = Pattern.compile(regxp);
+                 Matcher matcher = pattern.matcher(member.getScenarioCharacterRecord().getHitDice());
+                 if(matcher.find()){
+                     initialHp = Integer.parseInt(matcher.group(1));
+                 } 
+                 ScenarioCharacterRecord chara = member.getScenarioCharacterRecord();
+                 chara.setHitPoint(initialHp);    
+                 scenarioCharacterRecordFacade.edit(chara);
+                 encounterMemberFacade.edit(member);
+            }
+            JsfUtil.addSuccessMessage("Member's Poropety Updated");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
+        }
         return null;
     }
 }
