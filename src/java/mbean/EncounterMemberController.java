@@ -214,7 +214,7 @@ public class EncounterMemberController implements Serializable {
         do{
             nextMember = getNextMember(current_index);
             current_index++;
-        } while(nextMember.getScenarioCharacterRecord().getHitPoint() < 0);
+        } while(nextMember.getScenarioCharacterRecord().getHitPoint() <= 0);
 
         currentMember.setMyTurn(false);
         nextMember.setMyTurn(true);        
@@ -251,7 +251,7 @@ public class EncounterMemberController implements Serializable {
                 JsfUtil.addErrorMessage("最初のターンです。これ以上戻れません。");
                 return null;
             }
-        } while(prevMember.getScenarioCharacterRecord().getHitPoint() < 0);
+        } while(prevMember.getScenarioCharacterRecord().getHitPoint() <= 0);
 
         currentMember.setMyTurn(false);
         prevMember.setMyTurn(true);        
