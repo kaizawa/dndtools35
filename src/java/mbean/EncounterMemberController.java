@@ -165,6 +165,24 @@ public class EncounterMemberController implements Serializable {
         }        
         return nextMember;
     }
+    
+    public EncounterMember getPreviousMember(Integer current_index) throws NoPreviousMemberException{
+        EncounterMember prevMember;
+        int current_round = encounterRecordController.getCurrent().getRound();
+
+        if (current_index == 0) {
+            if(current_round == 1){
+                // It's first rounds's first member.
+                throw new NoPreviousMemberException();
+            }
+            prevMember = encounterMemberList.get(encounterMemberList.size() -1);            
+            // got previous round
+            encounterRecordController.getCurrent().setRound(current_round - 1);            
+        } else {
+            prevMember = encounterMemberList.get(current_index - 1);                                
+        }        
+        return prevMember;
+    }
 
     public String nextTurn() {
         int current_index;
@@ -188,6 +206,43 @@ public class EncounterMemberController implements Serializable {
             encounterRecordFacade.edit(encounterRecordController.getCurrent());
             encounterMemberFacade.edit(currentMember);       
             encounterMemberFacade.edit(nextMember);                
+
+        } catch (Exception e){
+            JsfUtil.addErrorMessage("Persistence Error Occured");            
+        }
+        return null;
+    }
+    
+        public String previousTurn() {
+        int current_index;
+        EncounterMember currentMember = getTurnMember();
+
+        if(currentMember == null)
+            return null;
+    
+        current_index = encounterMemberList.indexOf(currentMember);
+        EncounterMember prevMember = null;
+
+        do{
+            try {
+                prevMember = getPreviousMember(current_index);
+                if(current_index == 0){
+                    current_index = encounterMemberList.size() - 1;
+                }
+                current_index--;
+            } catch (NoPreviousMemberException e){
+                JsfUtil.addErrorMessage("最初のターンです。これ以上戻れません。");
+                return null;
+            }
+        } while(prevMember.getScenarioCharacterRecord().getHitPoint() < 0);
+
+        currentMember.setMyTurn(false);
+        prevMember.setMyTurn(true);        
+        
+        try {
+            encounterRecordFacade.edit(encounterRecordController.getCurrent());
+            encounterMemberFacade.edit(currentMember);       
+            encounterMemberFacade.edit(prevMember);                
 
         } catch (Exception e){
             JsfUtil.addErrorMessage("Persistence Error Occured");            
@@ -239,5 +294,32 @@ public class EncounterMemberController implements Serializable {
     public Integer getHpModifier() {
         return 0;
     }    
+    
+    public void setTurnToFirstMember(){
+        EncounterMember currentMember = getTurnMember();
+        EncounterMember firstMember = encounterMemberList.get(0);
+        
+        currentMember.setMyTurn(false);
+        firstMember.setMyTurn(true);        
+        
+        try {
+            encounterRecordFacade.edit(encounterRecordController.getCurrent());
+            encounterMemberFacade.edit(currentMember);       
+            encounterMemberFacade.edit(firstMember);                
 
+        } catch (Exception e){
+            JsfUtil.addErrorMessage("Persistence Error Occured");            
+        }
+    }
+
+    
+    public String resetBattle() {
+        encounterRecordController.resetBattle();
+        return resetRound();
+    }
+
+    public String resetRound() {
+        setTurnToFirstMember();        
+        return null;
+    }
 }

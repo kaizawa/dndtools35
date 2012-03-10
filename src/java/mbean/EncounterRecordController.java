@@ -305,15 +305,6 @@ public class EncounterRecordController implements Serializable {
         return null;
     }
 
-    public String resetRound() {
-        try {
-            encounterRecordFacade.edit(current);
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage("Persistence Error Occured");
-        }
-        return null;
-    }
-
     public EncounterRecord getCurrent() {
         return current;
     }

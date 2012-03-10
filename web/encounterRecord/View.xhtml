@@ -19,9 +19,11 @@
                 <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}" style="font-size: 20px"/>
                 -->
                 <h:outputText value="#{encounterRecordController.selected.comments}" />
-                <h:commandButton action="#{encounterRecordController.editCurrentEncounter}" value="編集"/>                                                                
+                <h:commandButton action="#{encounterRecordController.editCurrentEncounter}" value="編集"/>
                 <br/><br/>
                 <h:commandButton action="#{encounterMemberController.nextTurn()}" value="次のターン"/>
+                <h:outputLabel value=" "/>                
+                <h:commandButton action="#{encounterMemberController.previousTurn()}" value="前のターン"/>                                
                 <h:outputLabel value=" "/>
                 <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="セーブとソート"/>                        
 
@@ -94,8 +96,8 @@
                 </h:panelGroup>              
 
                 <h:panelGrid columns="4">
-                    <h:commandButton value="ラウンドの最初へ" action="#{encounterRecordController.resetRound}"/>
-                    <h:commandButton value="戦闘の最初に戻る" action="#{encounterRecordController.resetBattle}"/>                    
+                    <h:commandButton value="ラウンドの最初へ" action="#{encounterMemberController.resetRound}"/>
+                    <h:commandButton value="戦闘の最初に戻る" action="#{encounterMemberController.resetBattle}"/>                    
                     <h:commandButton value="イニシアチブランダム入力" action="#{encounterMemberController.setInitiativeByRandom}"/>                                        
                     <h:commandButton value="HPをリセット" action="#{encounterRecordController.setInitialHitPoint()}"/>                                                            
                 </h:panelGrid>
