@@ -195,15 +195,19 @@ public class EncounterMemberController implements Serializable {
         return null;
     }
     
-    
+
+    /** 
+     * Player Character 以外(モンスター)のイニシアチブをランダム値に設定
+     */
     public String setInitiativeByRandom(){
         Random rand =  new Random();
          try {
-            for (EncounterMember member : encounterMemberList) {
-                int initiativeBonus = member.getScenarioCharacterRecord().getInitiative();
-
-                member.setInitiative(rand.nextInt(19) + 1 + initiativeBonus);
-                encounterMemberFacade.edit(member);
+             for (EncounterMember member : encounterMemberList) {
+                 if(member.getScenarioCharacterRecord().isPlayerCharacter() == false ){
+                     int initiativeBonus = member.getScenarioCharacterRecord().getInitiative();
+                     member.setInitiative(rand.nextInt(19) + 1 + initiativeBonus);
+                     encounterMemberFacade.edit(member);
+                 }
             }
             JsfUtil.addSuccessMessage("Member's Poropety Updated");
         } catch (Exception e) {

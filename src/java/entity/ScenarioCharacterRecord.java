@@ -124,7 +124,7 @@ public class ScenarioCharacterRecord implements Serializable {
     @Column(name = "LEVEL_ADJUSTMENT")
     private Integer levelAdjustment;
     @Column(name = "IS_PLAYER_CHARACTER")
-    private Short isPlayerCharacter;
+    private Short isPlayerCharacter = 0;
     @Size(max = 4000)
     @Column(name = "COMMENTS", length = 4000)
     private String comments;
@@ -345,7 +345,7 @@ public class ScenarioCharacterRecord implements Serializable {
         this.isPlayerCharacter = isPlayerCharacter;
     }
     
-    Boolean isPlayerCharacter (){
+    public Boolean isPlayerCharacter (){
         return getIsPlayerCharacter() != 0 ? true : false;
     }
 

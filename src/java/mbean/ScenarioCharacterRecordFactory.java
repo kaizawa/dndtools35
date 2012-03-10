@@ -40,6 +40,7 @@ public class ScenarioCharacterRecordFactory {
         chara.setAlignment(base.getAlignment());
         chara.setAdvancement(base.getAdvancement());
         chara.setLevelAdjustment(base.getLevelAdjustment());
+        chara.setIsPlayerCharacter(base.getClass().equals(CharacterData.class) ? (short)1 : 0);
 
         return chara;
     }
