@@ -344,6 +344,10 @@ public class ScenarioCharacterRecord implements Serializable {
     public void setIsPlayerCharacter(Short isPlayerCharacter) {
         this.isPlayerCharacter = isPlayerCharacter;
     }
+    
+    Boolean isPlayerCharacter (){
+        return getIsPlayerCharacter() != 0 ? true : false;
+    }
 
     public String getComments() {
         return comments;
