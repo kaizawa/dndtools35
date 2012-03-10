@@ -28,6 +28,16 @@ import mbean.util.JsfUtil;
 @ManagedBean(name = "monsterSelectionController")
 @SessionScoped
 public class MonsterSelectionController implements Serializable {
+    
+    private int numberOfMonsters = 1;
+
+    public int getNumberOfMonsters() {
+        return 1;
+    }
+
+    public void setNumberOfMonsters(int numberOfMonsters) {
+        this.numberOfMonsters = numberOfMonsters;
+    }
 
     private Integer MAX_NAME_INDEX = 100;
     @EJB
@@ -184,11 +194,21 @@ public class MonsterSelectionController implements Serializable {
             }
         }
     }
-
+    
     /*
      * EncounterMember のメンバーとして選択/解除する
      */
     public String add() {
+        for(int i = 0 ; i < numberOfMonsters ; i ++){
+            addOne();
+        }            
+        return "/encounterRecord/View";                    
+    }    
+
+    /*
+     * EncounterMember のメンバーとして選択/解除する
+     */
+    public void addOne() {
         current = (MonsterData) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 
@@ -213,7 +233,7 @@ public class MonsterSelectionController implements Serializable {
         }
         if (i > MAX_NAME_INDEX) {
             JsfUtil.addErrorMessage("これ以上同じモンスターを追加できません.");
-            return "/encounterRecord/View";            
+            return;
         }
 
         JsfUtil.addSuccessMessage(chara.getName() + "が追加されました。");
@@ -228,7 +248,7 @@ public class MonsterSelectionController implements Serializable {
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e + "Persistence Error Occured");
         }
-        return "/encounterRecord/View";
+        return;
     }
 
     public String cancel() {

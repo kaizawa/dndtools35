@@ -14,12 +14,15 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
+            <h:outputLabel value="一度に追加するモンスターの数: "/> <h:inputText value="#{monsterSelectionController.numberOfMonsters}" />
+            <br/>
             <h:outputText escape="false" value="#{bundle.ListMonsterMasterEmpty}" rendered="#{monsterSelectionController.items.rowCount == 0}"/>
             <h:panelGroup rendered="#{monsterSelectionController.items.rowCount > 0}">
                 <h:outputText value="#{monsterSelectionController.pagination.pageFirstItem + 1}..#{monsterSelectionController.pagination.pageLastItem + 1}/#{monsterSelectionController.pagination.itemsCount}"/>&nbsp;
                 <h:commandLink action="#{monsterSelectionController.previous}" value="#{bundle.Previous} #{monsterSelectionController.pagination.pageSize}" rendered="#{monsterSelectionController.pagination.hasPreviousPage}"/>&nbsp;
                 <h:commandLink action="#{monsterSelectionController.next}" value="#{bundle.Next} #{monsterSelectionController.pagination.pageSize}" rendered="#{monsterSelectionController.pagination.hasNextPage}"/>&nbsp;
-                <h:dataTable value="#{monsterSelectionController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                <h:dataTable value="#{monsterSelectionController.items}" var="item" border="0" cellpadding="2" 
+                             cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px" >
 
                     <h:column>
                         <f:facet name="header">
