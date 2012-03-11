@@ -1,9 +1,9 @@
 package mbean;
 
-import entity.CampaignMaster;
+import entity.GenderMaster;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
-import ejb.CampaignMasterFacade;
+import ejb.GenderMasterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "campaignMasterController")
+@ManagedBean(name = "genderMasterController")
 @SessionScoped
-public class CampaignMasterController implements Serializable {
+public class GenderMasterController implements Serializable {
 
-    private CampaignMaster current;
+    private GenderMaster current;
     private DataModel items = null;
     @EJB
-    private ejb.CampaignMasterFacade ejbFacade;
+    private ejb.GenderMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public CampaignMasterController() {
+    public GenderMasterController() {
     }
 
-    public CampaignMaster getSelected() {
+    public GenderMaster getSelected() {
         if (current == null) {
-            current = new CampaignMaster();
+            current = new GenderMaster();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private CampaignMasterFacade getFacade() {
+    private GenderMasterFacade getFacade() {
         return ejbFacade;
     }
 
@@ -68,13 +68,13 @@ public class CampaignMasterController implements Serializable {
     }
 
     public String prepareView() {
-        current = (CampaignMaster) getItems().getRowData();
+        current = (GenderMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new CampaignMaster();
+        current = new GenderMaster();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class CampaignMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("GenderMasterCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class CampaignMasterController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (CampaignMaster) getItems().getRowData();
+        current = (GenderMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class CampaignMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("GenderMasterUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class CampaignMasterController implements Serializable {
     }
 
     public String destroy() {
-        current = (CampaignMaster) getItems().getRowData();
+        current = (GenderMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class CampaignMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("GenderMasterDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,15 +188,15 @@ public class CampaignMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = CampaignMaster.class)
-    public static class CampaignMasterControllerConverter implements Converter {
+    @FacesConverter(forClass = GenderMaster.class)
+    public static class GenderMasterControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CampaignMasterController controller = (CampaignMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "campaignMasterController");
+            GenderMasterController controller = (GenderMasterController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "genderMasterController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -216,11 +216,11 @@ public class CampaignMasterController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof CampaignMaster) {
-                CampaignMaster o = (CampaignMaster) object;
+            if (object instanceof GenderMaster) {
+                GenderMaster o = (GenderMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CampaignMasterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + GenderMasterController.class.getName());
             }
         }
     }

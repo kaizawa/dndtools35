@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateCharacterEquipmentTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_characterId}" for="characterId" />
+                    <h:inputText id="characterId" value="#{characterEquipmentController.selected.characterId}" title="#{bundle.CreateCharacterEquipmentTitle_characterId}" required="true" requiredMessage="#{bundle.CreateCharacterEquipmentRequiredMessage_characterId}"/>
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_head}" for="head" />
+                    <h:inputText id="head" value="#{characterEquipmentController.selected.head}" title="#{bundle.CreateCharacterEquipmentTitle_head}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_cloak}" for="cloak" />
+                    <h:inputText id="cloak" value="#{characterEquipmentController.selected.cloak}" title="#{bundle.CreateCharacterEquipmentTitle_cloak}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_necklace}" for="necklace" />
+                    <h:inputText id="necklace" value="#{characterEquipmentController.selected.necklace}" title="#{bundle.CreateCharacterEquipmentTitle_necklace}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_armRing}" for="armRing" />
+                    <h:inputText id="armRing" value="#{characterEquipmentController.selected.armRing}" title="#{bundle.CreateCharacterEquipmentTitle_armRing}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_ring1}" for="ring1" />
+                    <h:inputText id="ring1" value="#{characterEquipmentController.selected.ring1}" title="#{bundle.CreateCharacterEquipmentTitle_ring1}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_ring2}" for="ring2" />
+                    <h:inputText id="ring2" value="#{characterEquipmentController.selected.ring2}" title="#{bundle.CreateCharacterEquipmentTitle_ring2}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_belt}" for="belt" />
+                    <h:inputText id="belt" value="#{characterEquipmentController.selected.belt}" title="#{bundle.CreateCharacterEquipmentTitle_belt}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_armor}" for="armor" />
+                    <h:inputText id="armor" value="#{characterEquipmentController.selected.armor}" title="#{bundle.CreateCharacterEquipmentTitle_armor}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_arm1}" for="arm1" />
+                    <h:inputText id="arm1" value="#{characterEquipmentController.selected.arm1}" title="#{bundle.CreateCharacterEquipmentTitle_arm1}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_arm2}" for="arm2" />
+                    <h:inputText id="arm2" value="#{characterEquipmentController.selected.arm2}" title="#{bundle.CreateCharacterEquipmentTitle_arm2}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_eye}" for="eye" />
+                    <h:inputText id="eye" value="#{characterEquipmentController.selected.eye}" title="#{bundle.CreateCharacterEquipmentTitle_eye}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_robe}" for="robe" />
+                    <h:inputText id="robe" value="#{characterEquipmentController.selected.robe}" title="#{bundle.CreateCharacterEquipmentTitle_robe}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_vest}" for="vest" />
+                    <h:inputText id="vest" value="#{characterEquipmentController.selected.vest}" title="#{bundle.CreateCharacterEquipmentTitle_vest}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_glove}" for="glove" />
+                    <h:inputText id="glove" value="#{characterEquipmentController.selected.glove}" title="#{bundle.CreateCharacterEquipmentTitle_glove}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_shield}" for="shield" />
+                    <h:inputText id="shield" value="#{characterEquipmentController.selected.shield}" title="#{bundle.CreateCharacterEquipmentTitle_shield}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_boots}" for="boots" />
+                    <h:inputText id="boots" value="#{characterEquipmentController.selected.boots}" title="#{bundle.CreateCharacterEquipmentTitle_boots}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_pocket}" for="pocket" />
+                    <h:inputText id="pocket" value="#{characterEquipmentController.selected.pocket}" title="#{bundle.CreateCharacterEquipmentTitle_pocket}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_skillArmorMod}" for="skillArmorMod" />
+                    <h:inputText id="skillArmorMod" value="#{characterEquipmentController.selected.skillArmorMod}" title="#{bundle.CreateCharacterEquipmentTitle_skillArmorMod}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_skillShieldMod}" for="skillShieldMod" />
+                    <h:inputText id="skillShieldMod" value="#{characterEquipmentController.selected.skillShieldMod}" title="#{bundle.CreateCharacterEquipmentTitle_skillShieldMod}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_dexAcArmorLimit}" for="dexAcArmorLimit" />
+                    <h:inputText id="dexAcArmorLimit" value="#{characterEquipmentController.selected.dexAcArmorLimit}" title="#{bundle.CreateCharacterEquipmentTitle_dexAcArmorLimit}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_dexAcShieldLimit}" for="dexAcShieldLimit" />
+                    <h:inputText id="dexAcShieldLimit" value="#{characterEquipmentController.selected.dexAcShieldLimit}" title="#{bundle.CreateCharacterEquipmentTitle_dexAcShieldLimit}" />
+                    <h:outputLabel value="#{bundle.CreateCharacterEquipmentLabel_characterRecord}" for="characterRecord" />
+                    <h:selectOneMenu id="characterRecord" value="#{characterEquipmentController.selected.characterRecord}" title="#{bundle.CreateCharacterEquipmentTitle_characterRecord}" >
+                        <f:selectItems value="#{characterRecordController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{characterEquipmentController.create}" value="#{bundle.CreateCharacterEquipmentSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{characterEquipmentController.prepareList}" value="#{bundle.CreateCharacterEquipmentShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.CreateCharacterEquipmentIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

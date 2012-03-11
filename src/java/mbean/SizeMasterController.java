@@ -18,14 +18,14 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean (name="sizeMasterController")
+@ManagedBean(name = "sizeMasterController")
 @SessionScoped
 public class SizeMasterController implements Serializable {
 
-
     private SizeMaster current;
     private DataModel items = null;
-    @EJB private ejb.SizeMasterFacade ejbFacade;
+    @EJB
+    private ejb.SizeMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -43,6 +43,7 @@ public class SizeMasterController implements Serializable {
     private SizeMasterFacade getFacade() {
         return ejbFacade;
     }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -54,7 +55,7 @@ public class SizeMasterController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -67,7 +68,7 @@ public class SizeMasterController implements Serializable {
     }
 
     public String prepareView() {
-        current = (SizeMaster)getItems().getRowData();
+        current = (SizeMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
@@ -84,13 +85,13 @@ public class SizeMasterController implements Serializable {
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SizeMasterCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String prepareEdit() {
-        current = (SizeMaster)getItems().getRowData();
+        current = (SizeMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -101,13 +102,13 @@ public class SizeMasterController implements Serializable {
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SizeMasterUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String destroy() {
-        current = (SizeMaster)getItems().getRowData();
+        current = (SizeMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -133,7 +134,7 @@ public class SizeMasterController implements Serializable {
             getFacade().remove(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SizeMasterDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -141,14 +142,14 @@ public class SizeMasterController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count-1;
+            selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -187,14 +188,14 @@ public class SizeMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass=SizeMaster.class)
+    @FacesConverter(forClass = SizeMaster.class)
     public static class SizeMasterControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SizeMasterController controller = (SizeMasterController)facesContext.getApplication().getELResolver().
+            SizeMasterController controller = (SizeMasterController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "sizeMasterController");
             return controller.ejbFacade.find(getKey(value));
         }
@@ -219,10 +220,8 @@ public class SizeMasterController implements Serializable {
                 SizeMaster o = (SizeMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+SizeMasterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + SizeMasterController.class.getName());
             }
         }
-
     }
-
 }

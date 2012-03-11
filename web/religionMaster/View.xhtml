@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewReligionMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewReligionMasterLabel_id}"/>
+                    <h:outputText value="#{religionMasterController.selected.id}" title="#{bundle.ViewReligionMasterTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewReligionMasterLabel_religionName}"/>
+                    <h:outputText value="#{religionMasterController.selected.religionName}" title="#{bundle.ViewReligionMasterTitle_religionName}"/>
+                    <h:outputText value="#{bundle.ViewReligionMasterLabel_description}"/>
+                    <h:outputText value="#{religionMasterController.selected.description}" title="#{bundle.ViewReligionMasterTitle_description}"/>
+                    <h:outputText value="#{bundle.ViewReligionMasterLabel_alignmentId}"/>
+                    <h:outputText value="#{religionMasterController.selected.alignmentId}" title="#{bundle.ViewReligionMasterTitle_alignmentId}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{religionMasterController.destroyAndView}" value="#{bundle.ViewReligionMasterDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundle.ViewReligionMasterEditLink}"/>
+                <br />
+                <h:commandLink action="#{religionMasterController.prepareCreate}" value="#{bundle.ViewReligionMasterCreateLink}" />
+                <br />
+                <h:commandLink action="#{religionMasterController.prepareList}" value="#{bundle.ViewReligionMasterShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ViewReligionMasterIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

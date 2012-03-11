@@ -40,6 +40,18 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSizeMasterTitle_reach}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.reach}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSizeMasterTitle_contactSpace}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.contactSpace}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
                             <h:commandLink action="#{sizeMasterController.prepareView}" value="#{bundle.ListSizeMasterViewLink}"/>

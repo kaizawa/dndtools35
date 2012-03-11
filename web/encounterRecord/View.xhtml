@@ -100,6 +100,7 @@
                     <h:commandButton value="戦闘の最初に戻る" action="#{encounterMemberController.resetBattle}"/>                    
                     <h:commandButton value="イニシアチブランダム入力" action="#{encounterMemberController.setInitiativeByRandom}"/>                                        
                     <h:commandButton value="HPをリセット" action="#{encounterMemberController.setInitialHitPoint()}"/>                                                            
+                    <h:commandButton value="プレイヤーキャラクターを再読み込み" action="#{encounterRecordController.reloadPlayerCharacter()}"/>                                                                                
                 </h:panelGrid>
                 <br/>
                 <h:commandLink action="#{monsterSelectionController.prepareList}" styleClass="smallBold" value="モンスターを追加" immediate="true"/>

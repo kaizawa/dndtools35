@@ -49,5 +49,5 @@ public class EncounterMemberFacade extends AbstractFacade<EncounterMember> {
         query.setParameter("encounterRecord", record);        
         query.setParameter("scenarioCharacterRecord", chara);
         return (EncounterMember) query.getSingleResult();
-    }      
+    }
 }

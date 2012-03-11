@@ -21,6 +21,10 @@
                     <h:inputText id="sizeName" value="#{sizeMasterController.selected.sizeName}" title="#{bundle.EditSizeMasterTitle_sizeName}" />
                     <h:outputLabel value="#{bundle.EditSizeMasterLabel_acModifier}" for="acModifier" />
                     <h:inputText id="acModifier" value="#{sizeMasterController.selected.acModifier}" title="#{bundle.EditSizeMasterTitle_acModifier}" />
+                    <h:outputLabel value="#{bundle.EditSizeMasterLabel_reach}" for="reach" />
+                    <h:inputText id="reach" value="#{sizeMasterController.selected.reach}" title="#{bundle.EditSizeMasterTitle_reach}" />
+                    <h:outputLabel value="#{bundle.EditSizeMasterLabel_contactSpace}" for="contactSpace" />
+                    <h:inputText id="contactSpace" value="#{sizeMasterController.selected.contactSpace}" title="#{bundle.EditSizeMasterTitle_contactSpace}" />
                 </h:panelGrid>
                 <h:commandLink action="#{sizeMasterController.update}" value="#{bundle.EditSizeMasterSaveLink}"/>
                 <br />

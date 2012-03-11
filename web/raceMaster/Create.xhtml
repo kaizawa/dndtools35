@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateRaceMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateRaceMasterLabel_speed}" for="speed" />
+                    <h:inputText id="speed" value="#{raceMasterController.selected.speed}" title="#{bundle.CreateRaceMasterTitle_speed}" />
+                    <h:outputLabel value="#{bundle.CreateRaceMasterLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{raceMasterController.selected.id}" title="#{bundle.CreateRaceMasterTitle_id}" required="true" requiredMessage="#{bundle.CreateRaceMasterRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.CreateRaceMasterLabel_raceName}" for="raceName" />
+                    <h:inputText id="raceName" value="#{raceMasterController.selected.raceName}" title="#{bundle.CreateRaceMasterTitle_raceName}" />
+                    <h:outputLabel value="#{bundle.CreateRaceMasterLabel_description}" for="description" />
+                    <h:inputText id="description" value="#{raceMasterController.selected.description}" title="#{bundle.CreateRaceMasterTitle_description}" />
+                    <h:outputLabel value="#{bundle.CreateRaceMasterLabel_sizeId}" for="sizeId" />
+                    <h:selectOneMenu id="sizeId" value="#{raceMasterController.selected.sizeId}" title="#{bundle.CreateRaceMasterTitle_sizeId}" >
+                        <f:selectItems value="#{sizeMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{raceMasterController.create}" value="#{bundle.CreateRaceMasterSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{raceMasterController.prepareList}" value="#{bundle.CreateRaceMasterShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.CreateRaceMasterIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

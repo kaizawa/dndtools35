@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ScenarioCharacterRecord.findAll", query = "SELECT s FROM ScenarioCharacterRecord s"),
+    @NamedQuery(name = "ScenarioCharacterRecord.findByScenario", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.scenario = :scenario"),
     @NamedQuery(name = "ScenarioCharacterRecord.findById", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.id = :id"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByName", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.name = :name"),
     @NamedQuery(name = "ScenarioCharacterRecord.findByKlass", query = "SELECT s FROM ScenarioCharacterRecord s WHERE s.klass = :klass"),

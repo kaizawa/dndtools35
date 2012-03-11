@@ -7,9 +7,8 @@ import entity.EncounterRecord;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.EncounterRecordFacade;
-import entity.CharacterRecord;
-import entity.EncounterMember;
-import entity.ScenarioCharacterRecord;
+import ejb.ScenarioCharacterRecordFacade;
+import entity.*;
 
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
@@ -32,6 +31,16 @@ import javax.faces.model.SelectItem;
 public class EncounterRecordController implements Serializable {
 
     @EJB
+    private ScenarioCharacterRecordFacade scenarioCharacterRecordFacade;
+
+    public ScenarioCharacterRecordFacade getScenarioCharacterRecordFacade() {
+        return scenarioCharacterRecordFacade;
+    }
+
+    public void setScenarioCharacterRecordFacade(ScenarioCharacterRecordFacade scenarioCharacterRecordFacade) {
+        this.scenarioCharacterRecordFacade = scenarioCharacterRecordFacade;
+    }
+    @EJB
     private CharacterRecordFacade characterRecordFacade;
     @EJB
     private EncounterMemberFacade encounterMemberFacade;
@@ -41,10 +50,9 @@ public class EncounterRecordController implements Serializable {
     private EncounterRecordFacade encounterRecordFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    
-    @ManagedProperty(value="#{scenarioRecordController}")
+    @ManagedProperty(value = "#{scenarioRecordController}")
     private ScenarioRecordController scenarioRecordController;
-    
+
     public ScenarioRecordController getScenarioRecordController() {
         return scenarioRecordController;
     }
@@ -132,7 +140,7 @@ public class EncounterRecordController implements Serializable {
         try {
             current.setScenarioRecord(scenarioRecordController.getSelected());
             getFacade().create(current);
-            addPlayerCharacter();
+            addPlayerCharacter(false);
             JsfUtil.addSuccessMessage("エンカウンターが追加されました。");
             return prepareList();
         } catch (Exception e) {
@@ -320,11 +328,19 @@ public class EncounterRecordController implements Serializable {
         selectedItemIndex = -1;
     }
 
-    /*
+    public String reloadPlayerCharacter() {
+        addPlayerCharacter(true);
+        return null;
+    }
+
+    /**
      * EncounterMember のメンバーキャンペーンの PC を追加する。
+     *
+     * @param reload 既存の ScenarioCharacterRecord を上書きする
      */
-    private String addPlayerCharacter() {
-        Integer campaignId = current.getScenarioRecord().getCampaign().getId();
+    private String addPlayerCharacter(Boolean reload) {
+        ScenarioRecord scenario = current.getScenarioRecord();
+        Integer campaignId = scenario.getCampaign().getId();
         List<CharacterRecord> charaRecordList;
         try {
             charaRecordList = characterRecordFacade.findByCampaignId(campaignId);
@@ -339,28 +355,69 @@ public class EncounterRecordController implements Serializable {
          * CharacterData/MonstterData を元にして シナリオを通じて使う一時的な情報を保持する。
          */
         for (CharacterRecord charaRecord : charaRecordList) {
-            ScenarioCharacterRecord chara;
+            ScenarioCharacterRecord scenarioChara = getScenarioCharacterRecord(charaRecord, reload);
+            EncounterMember member = getEncounterMember(charaRecord);            
             try {
-                CharacterData charaData = new CharacterData(charaRecord);
-                chara = ScenarioCharacterRecordFactory.getInstance(charaData);
-            }catch(Exception e){
-                JsfUtil.addErrorMessage("ScenarioCharacterRecord 作成時にエラーが発生しました。 " + e.toString());
-                e.printStackTrace();
-                return "/encounterRecord/View";                                
-            }
-
-            try {
-                EncounterMember member = new EncounterMember();
                 member.setEncounterRecord(current);
-                member.setScenarioCharacterRecord(chara);
+                member.setScenarioCharacterRecord(scenarioChara);
                 member.setInitiative(0);
                 member.setMyTurn(false);
                 encounterMemberFacade.edit(member);
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, "プレイヤーキャラクターの追加時に永続性エラーが発生しました");
-                return "/encounterRecord/View";                
+                return "/encounterRecord/View";
             }
         }
         return "/encounterRecord/View";
+    }
+
+    /**
+     * このシナリオ用のシナリオキャラクターレコードを作成して返す。 もし既存のエントリがあり、reloadを望まない場合は古いエントリを返す
+     */
+    private ScenarioCharacterRecord getScenarioCharacterRecord(CharacterRecord charaRecord, Boolean reload) {
+        ScenarioRecord scenario = current.getScenarioRecord();
+        List<ScenarioCharacterRecord> scenarioCharaList = scenarioCharacterRecordFacade.findByScenarioRecord(scenario);
+        ScenarioCharacterRecord newScenarioChara;
+        ScenarioCharacterRecord scenarioChara = null;
+
+        for (ScenarioCharacterRecord chara : scenarioCharaList) {
+            if (chara.getName().equals(charaRecord.getCharacterName())) {
+                scenarioChara = chara;
+                break;
+            }
+        }
+        /*
+         * 古いエントリがあり、リリード禁止なら古いエントリをリターン
+         */
+        if (scenarioChara != null && !reload) {
+            return scenarioChara;
+        }
+        CharacterData charaData = new CharacterData(charaRecord);
+        newScenarioChara = ScenarioCharacterRecordFactory.getInstance(charaData);
+
+        if (scenarioChara != null) {
+            ScenarioCharacterRecordFactory.copy(newScenarioChara, scenarioChara);
+            scenarioChara.setScenario(scenario);            
+            try{
+                scenarioCharacterRecordFacade.edit(scenarioChara);
+            } catch (Exception e) {
+                JsfUtil.addErrorMessage(e, "シナリオキャラクタレコードの更新時に永続性エラーが発生しました");
+            } 
+        } else {
+            scenarioChara = newScenarioChara;
+            scenarioChara.setScenario(scenario);            
+        }
+
+        return scenarioChara;
+    }
+    
+    private EncounterMember getEncounterMember(CharacterRecord charaRecord){
+            List<EncounterMember> memberList = encounterMemberFacade.findByEncounterRecord(current);
+            for(EncounterMember member : memberList){
+                if(member.getScenarioCharacterRecord().getName().equals(charaRecord.getCharacterName())){
+                    return member;
+                }
+            }        
+            return new EncounterMember();
     }
 }

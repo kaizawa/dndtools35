@@ -14,7 +14,7 @@
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListScenarioRecordEmpty}" rendered="#{scenarioRecordController.items.rowCount == 0}"/>
+                <h:outputText escape="false" value="シナリオが有りません" rendered="#{scenarioRecordController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{scenarioRecordController.items.rowCount > 0}">
                     <h:outputText value="#{scenarioRecordController.pagination.pageFirstItem + 1}..#{scenarioRecordController.pagination.pageLastItem + 1}/#{scenarioRecordController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{scenarioRecordController.previous}" value="#{bundle.Previous} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasPreviousPage}"/>&nbsp;

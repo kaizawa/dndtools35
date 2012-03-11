@@ -12,7 +12,7 @@ import entity.ScenarioCharacterRecord;
  */
 public class ScenarioCharacterRecordFactory {
 
-    static ScenarioCharacterRecord getInstance(CharacterSummary base) {
+    public static ScenarioCharacterRecord getInstance(CharacterSummary base) {
         ScenarioCharacterRecord chara = new ScenarioCharacterRecord();
 
         chara.setName(base.getName());
@@ -40,8 +40,40 @@ public class ScenarioCharacterRecordFactory {
         chara.setAlignment(base.getAlignment());
         chara.setAdvancement(base.getAdvancement());
         chara.setLevelAdjustment(base.getLevelAdjustment());
-        chara.setIsPlayerCharacter(base.getClass().equals(CharacterData.class) ? (short)1 : 0);
+        chara.setIsPlayerCharacter(base.getClass().equals(CharacterData.class) ? (short) 1 : 0);
 
         return chara;
+    }
+
+    public static void copy(ScenarioCharacterRecord from, ScenarioCharacterRecord to) {
+        to.setName(from.getName());
+        to.setKlass(from.getKlass());
+        to.setSizeAndType(from.getSizeAndType());
+        to.setHitDice(from.getHitDice());
+        to.setHitPoint(from.getHitPoint());
+        to.setInitiative(from.getInitiative());
+        to.setBaseAttackGrapple(from.getBaseAttackGrapple());
+        to.setAttack(from.getAttack());
+        to.setFullAttack(from.getFullAttack());
+        to.setSpaceAndReach(from.getSpaceAndReach());
+        to.setSpecialAttacks(from.getSpecialAttacks());
+        to.setSpecialQualities(from.getSpecialQualities());
+        to.setSave(from.getSave());
+        to.setAbilities(from.getAbilities());
+        to.setSkills(from.getSkills());
+        to.setFeats(from.getFeats());
+        to.setEnvironment(from.getEnvironment());
+        to.setOrganization(from.getOrganization());
+        to.setChallengeRating(from.getChallengeRating());
+        to.setTreasure(from.getTreasure());
+        to.setAlignment(from.getAlignment());
+        to.setAdvancement(from.getAdvancement());
+        to.setLevelAdjustment(from.getLevelAdjustment());
+        to.setIsPlayerCharacter(from.getIsPlayerCharacter());
+        to.setComments(from.getComments());
+        to.setArmorClass(from.getArmorClass());
+        to.setSpeed(from.getSpeed());
+        to.setScenario(from.getScenario());
+        to.setEncounterMemberList(from.getEncounterMemberList());
     }
 }

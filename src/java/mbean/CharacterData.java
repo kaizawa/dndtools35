@@ -1637,14 +1637,16 @@ public class CharacterData implements CharacterSummary {
 
         int bonus = getAbilityModifierById(CON);
         for (CharacterGrowthRecord growth : growthList) {
-            // 経験値から見たキャラクタレベル以上は考慮しない
+            // 経験値から見たキャラクタレベルだけで判断する。
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() == getLevel()) {
-                str.append(getLevel());
+                if(growth.getClassId() == null){
+                    return("未設定");
+                }
+                str.append(getLevel());                
                 str.append(growth.getClassId().getHitDiceType().getName());
             }
-
         }
-        str.append(getLevel() + "(");
+        str.append("(");
         str.append(getHitPoint());
         str.append("hp)");
         return str.toString();
