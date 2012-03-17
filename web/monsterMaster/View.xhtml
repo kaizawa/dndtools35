@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.ViewMonsterMasterTitle}"></h:outputText>
+            <h:outputText value="モンスター詳細表示"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
@@ -15,64 +15,64 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_id}"/>
+                    <h:outputText value="id"/>
                     <h:outputText value="#{monsterMasterController.selected.id}" title="#{bundle.ViewMonsterMasterTitle_id}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_name}"/>
+                    <h:outputText value="name"/>
                     <h:outputText value="#{monsterMasterController.selected.name}" title="#{bundle.ViewMonsterMasterTitle_name}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_hitDiceNum}"/>
+                    <h:outputText value="hitDiceNum"/>
                     <h:outputText value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.ViewMonsterMasterTitle_hitDiceNum}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_initiative}"/>
+                    <h:outputText value="initiative"/>
                     <h:outputText value="#{monsterMasterController.selected.initiative}" title="#{bundle.ViewMonsterMasterTitle_initiative}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_speed}"/>
+                    <h:outputText value="speed"/>
                     <h:outputText value="#{monsterMasterController.selected.speed}" title="#{bundle.ViewMonsterMasterTitle_speed}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_ac}"/>
+                    <h:outputText value="ac"/>
                     <h:outputText value="#{monsterMasterController.selected.ac}" title="#{bundle.ViewMonsterMasterTitle_ac}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_acTouch}"/>
+                    <h:outputText value="acTouch"/>
                     <h:outputText value="#{monsterMasterController.selected.acTouch}" title="#{bundle.ViewMonsterMasterTitle_acTouch}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_acFlatFooted}"/>
+                    <h:outputText value="acFlatFooted"/>
                     <h:outputText value="#{monsterMasterController.selected.acFlatFooted}" title="#{bundle.ViewMonsterMasterTitle_acFlatFooted}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_baseAttack}"/>
+                    <h:outputText value="baseAttack"/>
                     <h:outputText value="#{monsterMasterController.selected.baseAttack}" title="#{bundle.ViewMonsterMasterTitle_baseAttack}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_grapple}"/>
+                    <h:outputText value="grapple"/>
                     <h:outputText value="#{monsterMasterController.selected.grapple}" title="#{bundle.ViewMonsterMasterTitle_grapple}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_attack}"/>
+                    <h:outputText value="attack"/>
                     <h:outputText value="#{monsterMasterController.selected.attack}" title="#{bundle.ViewMonsterMasterTitle_attack}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_reach}"/>
+                    <h:outputText value="reach"/>
                     <h:outputText value="#{monsterMasterController.selected.reach}" title="#{bundle.ViewMonsterMasterTitle_reach}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_specialAttacks}"/>
+                    <h:outputText value="specialAttacks"/>
                     <h:outputText value="#{monsterMasterController.selected.specialAttacks}" title="#{bundle.ViewMonsterMasterTitle_specialAttacks}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_specialQualities}"/>
+                    <h:outputText value="specialQualities"/>
                     <h:outputText value="#{monsterMasterController.selected.specialQualities}" title="#{bundle.ViewMonsterMasterTitle_specialQualities}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_environment}"/>
+                    <h:outputText value="environment"/>
                     <h:outputText value="#{monsterMasterController.selected.environment}" title="#{bundle.ViewMonsterMasterTitle_environment}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_organization}"/>
+                    <h:outputText value="organization"/>
                     <h:outputText value="#{monsterMasterController.selected.organization}" title="#{bundle.ViewMonsterMasterTitle_organization}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_challengeRating}"/>
+                    <h:outputText value="challengeRating"/>
                     <h:outputText value="#{monsterMasterController.selected.challengeRating}" title="#{bundle.ViewMonsterMasterTitle_challengeRating}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_treasure}"/>
+                    <h:outputText value="treasure"/>
                     <h:outputText value="#{monsterMasterController.selected.treasure}" title="#{bundle.ViewMonsterMasterTitle_treasure}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_advancement}"/>
+                    <h:outputText value="advancement"/>
                     <h:outputText value="#{monsterMasterController.selected.advancement}" title="#{bundle.ViewMonsterMasterTitle_advancement}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_levelAdjustment}"/>
+                    <h:outputText value="levelAdjustment"/>
                     <h:outputText value="#{monsterMasterController.selected.levelAdjustment}" title="#{bundle.ViewMonsterMasterTitle_levelAdjustment}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_type}"/>
+                    <h:outputText value="type"/>
                     <h:outputText value="#{monsterMasterController.selected.type}" title="#{bundle.ViewMonsterMasterTitle_type}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_sizeId}"/>
+                    <h:outputText value="sizeId"/>
                     <h:outputText value="#{monsterMasterController.selected.sizeId}" title="#{bundle.ViewMonsterMasterTitle_sizeId}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_hitDiceType}"/>
+                    <h:outputText value="hitDiceType"/>
                     <h:outputText value="#{monsterMasterController.selected.hitDiceType}" title="#{bundle.ViewMonsterMasterTitle_hitDiceType}"/>
-                    <h:outputText value="#{bundle.ViewMonsterMasterLabel_alignment}"/>
+                    <h:outputText value="alignment"/>
                     <h:outputText value="#{monsterMasterController.selected.alignment}" title="#{bundle.ViewMonsterMasterTitle_alignment}"/>
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{monsterMasterController.destroyAndView}" value="#{bundle.ViewMonsterMasterDestroyLink}"/>
+                <h:commandLink action="#{monsterMasterController.destroyAndView}" value="Destroy"/>
                 <br />
                 <br />
-                <h:commandLink action="Edit" value="#{bundle.ViewMonsterMasterEditLink}"/>
+                <h:commandLink action="Edit" value="Edit"/>
                 <br />
-                <h:commandLink action="#{monsterMasterController.prepareCreate}" value="#{bundle.ViewMonsterMasterCreateLink}" />
+                <h:commandLink action="#{monsterMasterController.prepareCreate}" value="Create" />
                 <br />
-                <h:commandLink action="#{monsterMasterController.prepareList}" value="#{bundle.ViewMonsterMasterShowAllLink}"/>
+                <h:commandLink action="#{monsterMasterController.prepareList}" value="Show All"/>
                 <br />
                 <br />
                 <h:commandLink value="#{bundle.ViewMonsterMasterIndexLink}" action="/index" immediate="true" />
