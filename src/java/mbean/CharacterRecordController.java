@@ -82,10 +82,10 @@ public class CharacterRecordController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterRecordCreated"));
+            JsfUtil.addSuccessMessage("CharacterRecordCreated");
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
             return null;
         }
     }
@@ -99,10 +99,10 @@ public class CharacterRecordController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterRecordUpdated"));
+            JsfUtil.addSuccessMessage("CharacterRecordUpdated");
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
             return null;
         }
     }
@@ -132,9 +132,9 @@ public class CharacterRecordController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterRecordDeleted"));
+            JsfUtil.addSuccessMessage("CharacterRecordDeleted");
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
         }
     }
 

@@ -82,10 +82,10 @@ public class AlignmentMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AlignmentMasterCreated"));
+            JsfUtil.addSuccessMessage("AlignmentMasterCreated");
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
             return null;
         }
     }
@@ -99,10 +99,10 @@ public class AlignmentMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AlignmentMasterUpdated"));
+            JsfUtil.addSuccessMessage("AlignmentMasterUpdated");
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
             return null;
         }
     }
@@ -132,9 +132,9 @@ public class AlignmentMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AlignmentMasterDeleted"));
+            JsfUtil.addSuccessMessage("AlignmentMasterDeleted");
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
         }
     }
 

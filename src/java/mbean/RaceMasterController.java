@@ -82,10 +82,10 @@ public class RaceMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("RaceMasterCreated"));
+            JsfUtil.addSuccessMessage("RaceMasterCreated");
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
             return null;
         }
     }
@@ -99,10 +99,10 @@ public class RaceMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("RaceMasterUpdated"));
+            JsfUtil.addSuccessMessage("RaceMasterUpdated");
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
             return null;
         }
     }
@@ -132,9 +132,9 @@ public class RaceMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("RaceMasterDeleted"));
+            JsfUtil.addSuccessMessage("RaceMasterDeleted");
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
         }
     }
 

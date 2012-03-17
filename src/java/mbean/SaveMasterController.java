@@ -82,7 +82,7 @@ public class SaveMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SaveMasterCreated"));
+            JsfUtil.addSuccessMessage("SaveMasterCreated");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -99,7 +99,7 @@ public class SaveMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SaveMasterUpdated"));
+            JsfUtil.addSuccessMessage("SaveMasterUpdated");
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -132,7 +132,7 @@ public class SaveMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SaveMasterDeleted"));
+            JsfUtil.addSuccessMessage("SaveMasterDeleted");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
         }

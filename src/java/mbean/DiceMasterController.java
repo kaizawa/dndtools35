@@ -81,7 +81,7 @@ public class DiceMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("DiceMasterCreated"));
+            JsfUtil.addSuccessMessage("DiceMasterCreated");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -98,7 +98,7 @@ public class DiceMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("DiceMasterUpdated"));
+            JsfUtil.addSuccessMessage("DiceMasterUpdated");
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -131,7 +131,7 @@ public class DiceMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("DiceMasterDeleted"));
+            JsfUtil.addSuccessMessage("DiceMasterDeleted");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
         }
