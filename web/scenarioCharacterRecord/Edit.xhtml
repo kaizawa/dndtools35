@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditScenarioCharacterRecordTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{scenarioCharacterRecordController.selected.id}" title="#{bundle.EditScenarioCharacterRecordTitle_id}" required="true" requiredMessage="#{bundle.EditScenarioCharacterRecordRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{scenarioCharacterRecordController.selected.name}" title="#{bundle.EditScenarioCharacterRecordTitle_name}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_klass}" for="klass" />
+                    <h:inputText id="klass" value="#{scenarioCharacterRecordController.selected.klass}" title="#{bundle.EditScenarioCharacterRecordTitle_klass}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_sizeAndType}" for="sizeAndType" />
+                    <h:inputText id="sizeAndType" value="#{scenarioCharacterRecordController.selected.sizeAndType}" title="#{bundle.EditScenarioCharacterRecordTitle_sizeAndType}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_hitDice}" for="hitDice" />
+                    <h:inputText id="hitDice" value="#{scenarioCharacterRecordController.selected.hitDice}" title="#{bundle.EditScenarioCharacterRecordTitle_hitDice}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_hitPoint}" for="hitPoint" />
+                    <h:inputText id="hitPoint" value="#{scenarioCharacterRecordController.selected.hitPoint}" title="#{bundle.EditScenarioCharacterRecordTitle_hitPoint}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_initiative}" for="initiative" />
+                    <h:inputText id="initiative" value="#{scenarioCharacterRecordController.selected.initiative}" title="#{bundle.EditScenarioCharacterRecordTitle_initiative}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_baseAttackGrapple}" for="baseAttackGrapple" />
+                    <h:inputText id="baseAttackGrapple" value="#{scenarioCharacterRecordController.selected.baseAttackGrapple}" title="#{bundle.EditScenarioCharacterRecordTitle_baseAttackGrapple}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_attack}" for="attack" />
+                    <h:inputText id="attack" value="#{scenarioCharacterRecordController.selected.attack}" title="#{bundle.EditScenarioCharacterRecordTitle_attack}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_fullAttack}" for="fullAttack" />
+                    <h:inputText id="fullAttack" value="#{scenarioCharacterRecordController.selected.fullAttack}" title="#{bundle.EditScenarioCharacterRecordTitle_fullAttack}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_spaceAndReach}" for="spaceAndReach" />
+                    <h:inputText id="spaceAndReach" value="#{scenarioCharacterRecordController.selected.spaceAndReach}" title="#{bundle.EditScenarioCharacterRecordTitle_spaceAndReach}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_specialAttacks}" for="specialAttacks" />
+                    <h:inputText id="specialAttacks" value="#{scenarioCharacterRecordController.selected.specialAttacks}" title="#{bundle.EditScenarioCharacterRecordTitle_specialAttacks}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_specialQualities}" for="specialQualities" />
+                    <h:inputText id="specialQualities" value="#{scenarioCharacterRecordController.selected.specialQualities}" title="#{bundle.EditScenarioCharacterRecordTitle_specialQualities}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_save}" for="save" />
+                    <h:inputText id="save" value="#{scenarioCharacterRecordController.selected.save}" title="#{bundle.EditScenarioCharacterRecordTitle_save}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_abilities}" for="abilities" />
+                    <h:inputText id="abilities" value="#{scenarioCharacterRecordController.selected.abilities}" title="#{bundle.EditScenarioCharacterRecordTitle_abilities}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_skills}" for="skills" />
+                    <h:inputText id="skills" value="#{scenarioCharacterRecordController.selected.skills}" title="#{bundle.EditScenarioCharacterRecordTitle_skills}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_feats}" for="feats" />
+                    <h:inputText id="feats" value="#{scenarioCharacterRecordController.selected.feats}" title="#{bundle.EditScenarioCharacterRecordTitle_feats}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_environment}" for="environment" />
+                    <h:inputText id="environment" value="#{scenarioCharacterRecordController.selected.environment}" title="#{bundle.EditScenarioCharacterRecordTitle_environment}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_organization}" for="organization" />
+                    <h:inputText id="organization" value="#{scenarioCharacterRecordController.selected.organization}" title="#{bundle.EditScenarioCharacterRecordTitle_organization}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_challengeRating}" for="challengeRating" />
+                    <h:inputText id="challengeRating" value="#{scenarioCharacterRecordController.selected.challengeRating}" title="#{bundle.EditScenarioCharacterRecordTitle_challengeRating}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_treasure}" for="treasure" />
+                    <h:inputText id="treasure" value="#{scenarioCharacterRecordController.selected.treasure}" title="#{bundle.EditScenarioCharacterRecordTitle_treasure}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_alignment}" for="alignment" />
+                    <h:inputText id="alignment" value="#{scenarioCharacterRecordController.selected.alignment}" title="#{bundle.EditScenarioCharacterRecordTitle_alignment}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_advancement}" for="advancement" />
+                    <h:inputText id="advancement" value="#{scenarioCharacterRecordController.selected.advancement}" title="#{bundle.EditScenarioCharacterRecordTitle_advancement}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_levelAdjustment}" for="levelAdjustment" />
+                    <h:inputText id="levelAdjustment" value="#{scenarioCharacterRecordController.selected.levelAdjustment}" title="#{bundle.EditScenarioCharacterRecordTitle_levelAdjustment}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_isPlayerCharacter}" for="isPlayerCharacter" />
+                    <h:inputText id="isPlayerCharacter" value="#{scenarioCharacterRecordController.selected.isPlayerCharacter}" title="#{bundle.EditScenarioCharacterRecordTitle_isPlayerCharacter}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_comments}" for="comments" />
+                    <h:inputText id="comments" value="#{scenarioCharacterRecordController.selected.comments}" title="#{bundle.EditScenarioCharacterRecordTitle_comments}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_armorClass}" for="armorClass" />
+                    <h:inputText id="armorClass" value="#{scenarioCharacterRecordController.selected.armorClass}" title="#{bundle.EditScenarioCharacterRecordTitle_armorClass}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_speed}" for="speed" />
+                    <h:inputText id="speed" value="#{scenarioCharacterRecordController.selected.speed}" title="#{bundle.EditScenarioCharacterRecordTitle_speed}" />
+                    <h:outputLabel value="#{bundle.EditScenarioCharacterRecordLabel_scenario}" for="scenario" />
+                    <h:selectOneMenu id="scenario" value="#{scenarioCharacterRecordController.selected.scenario}" title="#{bundle.EditScenarioCharacterRecordTitle_scenario}" >
+                        <f:selectItems value="#{scenarioRecordController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{scenarioCharacterRecordController.update}" value="#{bundle.EditScenarioCharacterRecordSaveLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="View" value="#{bundle.EditScenarioCharacterRecordViewLink}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{scenarioCharacterRecordController.prepareList}" value="#{bundle.EditScenarioCharacterRecordShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.EditScenarioCharacterRecordIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

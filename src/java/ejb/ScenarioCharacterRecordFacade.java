@@ -21,6 +21,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ScenarioCharacterRecordFacade extends AbstractFacade<ScenarioCharacterRecord> {
+
     @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
@@ -32,17 +33,17 @@ public class ScenarioCharacterRecordFacade extends AbstractFacade<ScenarioCharac
     public ScenarioCharacterRecordFacade() {
         super(ScenarioCharacterRecord.class);
     }
-    
-   public List<ScenarioCharacterRecord> findByScenarioRecord(ScenarioRecord scenario) {
+
+    public List<ScenarioCharacterRecord> findByScenarioRecord(ScenarioRecord scenario) {
 
         // シナリオが指定されていなかったら
         if (scenario == null) {
             return new ArrayList<ScenarioCharacterRecord>();
         }
-        
+
         Query query = em.createNamedQuery("ScenarioCharacterRecord.findByScenario");
         query.setParameter("scenario", scenario);
-        return query.getResultList();        
-    } 
+        return query.getResultList();
+    }
     
 }

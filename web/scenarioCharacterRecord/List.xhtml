@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListScenarioCharacterRecordEmpty}" rendered="#{scenarioCharacterRecordController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{scenarioCharacterRecordController.items.rowCount > 0}">
+                    <h:outputText value="#{scenarioCharacterRecordController.pagination.pageFirstItem + 1}..#{scenarioCharacterRecordController.pagination.pageLastItem + 1}/#{scenarioCharacterRecordController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{scenarioCharacterRecordController.previous}" value="#{bundle.Previous} #{scenarioCharacterRecordController.pagination.pageSize}" rendered="#{scenarioCharacterRecordController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{scenarioCharacterRecordController.next}" value="#{bundle.Next} #{scenarioCharacterRecordController.pagination.pageSize}" rendered="#{scenarioCharacterRecordController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{scenarioCharacterRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_klass}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.klass}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_sizeAndType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sizeAndType}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_hitDice}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hitDice}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_hitPoint}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hitPoint}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_initiative}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.initiative}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_baseAttackGrapple}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.baseAttackGrapple}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_attack}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.attack}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_fullAttack}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fullAttack}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_spaceAndReach}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.spaceAndReach}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_specialAttacks}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.specialAttacks}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_specialQualities}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.specialQualities}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_save}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.save}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_abilities}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.abilities}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_skills}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.skills}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_feats}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.feats}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_environment}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.environment}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_organization}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.organization}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_challengeRating}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.challengeRating}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_treasure}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.treasure}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_alignment}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.alignment}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_advancement}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.advancement}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_levelAdjustment}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.levelAdjustment}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_isPlayerCharacter}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.isPlayerCharacter}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_comments}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.comments}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_armorClass}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.armorClass}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_speed}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.speed}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_scenario}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.scenario}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{scenarioCharacterRecordController.prepareView}" value="#{bundle.ListScenarioCharacterRecordViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{scenarioCharacterRecordController.prepareEdit}" value="#{bundle.ListScenarioCharacterRecordEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{scenarioCharacterRecordController.destroy}" value="#{bundle.ListScenarioCharacterRecordDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{scenarioCharacterRecordController.prepareCreate}" value="#{bundle.ListScenarioCharacterRecordCreateLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ListScenarioCharacterRecordIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

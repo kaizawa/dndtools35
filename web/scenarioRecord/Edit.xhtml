@@ -14,7 +14,7 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">                 
+                <h:panelGrid columns="2">
                     <h:outputLabel value="キャンペーン" for="campaign" />
                     <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
                         <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
