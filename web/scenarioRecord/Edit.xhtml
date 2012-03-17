@@ -22,7 +22,7 @@
                     <h:outputLabel value="シナリオ名" for="name" />
                     <h:inputText id="name" value="#{scenarioRecordController.selected.name}" title="#{bundle.EditScenarioRecordTitle_name}" />
                     <h:outputLabel value="備考" for="description" />
-                    <h:inputText id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" />
+                    <h:inputTextarea id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" />
 
                 </h:panelGrid>
                 <h:commandButton action="#{scenarioRecordController.update}" value="更新"/>
@@ -79,7 +79,7 @@
                 <h:outputLabel styleClass="smallBold">新しいエンカウンターの追加</h:outputLabel>
                 <h:panelGrid columns="3">
                     <h:outputLabel value="名前" for="name" />
-                    <h:inputText id="name" style="width: 200px;" value="#{encounterRecordController.selected.name}" title="#{bundle.CreateEncounterRecordTitle_name}" />
+                    <h:inputText id="name" style="width: 200px;" value="#{encounterRecordController.selected.name}" />
                     <h:commandButton action="#{encounterRecordController.create}" value="作成" />                    
                 </h:panelGrid>
             </h:form>

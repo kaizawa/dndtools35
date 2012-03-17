@@ -24,7 +24,7 @@
                             <f:facet name="header">
                                 <h:outputText value="シナリオ"/>
                             </f:facet>
-                            <h:outputText value="#{item.name}"/>
+                            <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{item.name}"/>
                         </h:column>     
                         <h:column>
                             <f:facet name="header">
@@ -43,8 +43,6 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="編集"/>
-                            <h:outputText value=" "/>
                             <h:commandLink action="#{scenarioRecordController.destroy}" value="削除"/>
                         </h:column>
                     </h:dataTable>

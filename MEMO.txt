@@ -217,3 +217,10 @@ CREATE TABLE "ENCOUNTER_MEMBER"
         FOREIGN KEY ("SCENARIO_CHARACTER_RECORD") REFERENCES "SCENARIO_CHARACTER_RECORD" ("ID") ON DELETE CASCADE,
         FOREIGN KEY ("ENCOUNTER_RECORD") REFERENCES "ENCOUNTER_RECORD" ("ID") ON DELETE CASCADE
    );
+
+//------------
+
+"\#\{bundle.ListTypeMaster(Title_)*(.*)(Link)*}"
+
+
+ResourceBundle.getBundle\("/Bundle"\)\.getString\("(.*)"\)

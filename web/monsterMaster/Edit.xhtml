@@ -23,13 +23,13 @@
                     <h:outputLabel value="type" for="type" />                    
                     <h:selectOneMenu id="type" value="#{monsterMasterController.selected.type}" title="#{bundle.CreateMonsterMasterTitle_type}" >
                         <f:selectItems value="#{typeMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
+                    </h:selectOneMenu>                 
+                    <h:outputLabel value="hitDiceNum" for="hitDiceNum" />
+                    <h:inputText id="hitDiceNum" value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.CreateMonsterMasterTitle_hitDiceNum}" />
                     <h:outputLabel value="hitDiceType" for="hitDiceType" />
                     <h:selectOneMenu id="hitDiceType" value="#{monsterMasterController.selected.hitDiceType}" title="#{bundle.CreateMonsterMasterTitle_hitDiceType}" >
                         <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>                    
-                    <h:outputLabel value="hitDiceNum" for="hitDiceNum" />
-                    <h:inputText id="hitDiceNum" value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.CreateMonsterMasterTitle_hitDiceNum}" />
+                    </h:selectOneMenu>                       
                     <h:outputLabel value="initiative" for="initiative" />
                     <h:inputText id="initiative" value="#{monsterMasterController.selected.initiative}" title="#{bundle.CreateMonsterMasterTitle_initiative}" />
                     <h:outputLabel value="speed" for="speed" />
