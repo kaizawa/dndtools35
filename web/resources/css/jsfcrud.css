@@ -102,3 +102,7 @@ tr.jsfcrud_even_row {
     font-size: 14px;
     font-weight: bold;
 }
+
+.smallText {
+    font-size: 11px;
+}

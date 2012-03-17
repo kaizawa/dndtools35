@@ -50,7 +50,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getArmorClass() {
-        return monster.getAc() + "、接触" + monster.getAcTouch() + "、立ちすくみ" + monster.getAcFlatFooted();
+        return monster.getAc() + "/" + monster.getAcTouch() + "/" + monster.getAcFlatFooted();
     }
 
     @Override
