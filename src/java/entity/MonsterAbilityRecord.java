@@ -29,11 +29,11 @@ public class MonsterAbilityRecord implements Serializable {
     @EmbeddedId
     protected MonsterAbilityRecordPK monsterAbilityRecordPK;
     @Column(name = "BASE")
-    private Integer base;
+    private Integer base = 0;
     @Column(name = "FEAT_MODIFIER")
-    private Integer featModifier;
+    private Integer featModifier = 0;
     @Column(name = "MISC_MODIFIER")
-    private Integer miscModifier;
+    private Integer miscModifier = 0;
     @Size(max = 400)
     @Column(name = "DESCRIPTION", length = 400)
     private String description;

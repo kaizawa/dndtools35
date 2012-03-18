@@ -125,18 +125,14 @@ public class MonsterMasterController implements Serializable {
             getFacade().create(current);
             List<AbilityMaster> abilities = abilityMasterFacade.findAll();
             for (AbilityMaster ability : abilities) {
-                MonsterAbilityRecord ab = new MonsterAbilityRecord();
-                ab.setAbilityMaster(ability);
-                ab.setMonsterMaster(current);
+                MonsterAbilityRecord ab = new MonsterAbilityRecord(current.getId().intValue(), ability.getId().intValue());
                 getMonsterAbilityRecordFacade().create(ab);
             }
             List<SaveMaster> saves = saveMasterFacade.findAll();
             for (SaveMaster save : saves) {
-                MonsterSaveRecord sv = new MonsterSaveRecord();
-                sv.setSaveMaster(save);
-                sv.setMonsterMaster(current);
+                MonsterSaveRecord sv = new MonsterSaveRecord(current.getId().intValue(), save.getId().intValue());
                 monsterSaveRecordFacade.create(sv);
-            }            
+            }                
             JsfUtil.addSuccessMessage("MonsterMasterCreated");            
             return prepareCreate();
         } catch (Exception e) {
