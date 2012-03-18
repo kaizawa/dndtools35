@@ -133,7 +133,7 @@ public class MonsterMasterController implements Serializable {
                 MonsterSaveRecord sv = new MonsterSaveRecord(current.getId().intValue(), save.getId().intValue());
                 monsterSaveRecordFacade.create(sv);
             }                
-            JsfUtil.addSuccessMessage("MonsterMasterCreated");            
+            JsfUtil.addSuccessMessage("モンスターが作成されました");            
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -150,7 +150,7 @@ public class MonsterMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage("MonsterMasterUpdated" );
+            JsfUtil.addSuccessMessage("更新されました" );
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
