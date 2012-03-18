@@ -1,11 +1,13 @@
 package mbean;
 
+import ejb.*;
 import entity.MonsterMaster;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
-import ejb.MonsterMasterFacade;
+import entity.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -21,7 +23,47 @@ import javax.faces.model.SelectItem;
 @ManagedBean (name="monsterMasterController")
 @SessionScoped
 public class MonsterMasterController implements Serializable {
+    @EJB
+    private MonsterSaveRecordFacade monsterSaveRecordFacade;
+    @EJB
+    private SaveMasterFacade saveMasterFacade;
+    @EJB
+    private MonsterAbilityRecordFacade monsterAbilityRecordFacade;
+    @EJB
+    private AbilityMasterFacade abilityMasterFacade;
 
+    public AbilityMasterFacade getAbilityMasterFacade() {
+        return abilityMasterFacade;
+    }
+
+    public void setAbilityMasterFacade(AbilityMasterFacade abilityMasterFacade) {
+        this.abilityMasterFacade = abilityMasterFacade;
+    }
+
+
+    public MonsterAbilityRecordFacade getMonsterAbilityRecordFacade() {
+        return monsterAbilityRecordFacade;
+    }
+
+    public void setMonsterAbilityRecordFacade(MonsterAbilityRecordFacade monsterAbilityRecordFacade) {
+        this.monsterAbilityRecordFacade = monsterAbilityRecordFacade;
+    }
+
+    public MonsterSaveRecordFacade getMonsterSaveRecordFacade() {
+        return monsterSaveRecordFacade;
+    }
+
+    public void setMonsterSaveRecordFacade(MonsterSaveRecordFacade monsterSaveRecordFacade) {
+        this.monsterSaveRecordFacade = monsterSaveRecordFacade;
+    }
+
+    public SaveMasterFacade getSaveMasterFacade() {
+        return saveMasterFacade;
+    }
+
+    public void setSaveMasterFacade(SaveMasterFacade saveMasterFacade) {
+        this.saveMasterFacade = saveMasterFacade;
+    }
 
     private MonsterMaster current;
     private DataModel items = null;
@@ -81,7 +123,21 @@ public class MonsterMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage("MonsterMasterCreated");
+            List<AbilityMaster> abilities = abilityMasterFacade.findAll();
+            for (AbilityMaster ability : abilities) {
+                MonsterAbilityRecord ab = new MonsterAbilityRecord();
+                ab.setAbilityMaster(ability);
+                ab.setMonsterMaster(current);
+                getMonsterAbilityRecordFacade().create(ab);
+            }
+            List<SaveMaster> saves = saveMasterFacade.findAll();
+            for (SaveMaster save : saves) {
+                MonsterSaveRecord sv = new MonsterSaveRecord();
+                sv.setSaveMaster(save);
+                sv.setMonsterMaster(current);
+                monsterSaveRecordFacade.create(sv);
+            }            
+            JsfUtil.addSuccessMessage("MonsterMasterCreated");            
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
