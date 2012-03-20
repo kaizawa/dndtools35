@@ -36,11 +36,9 @@
                         <f:facet name="header">
                             <h:outputText value="&nbsp;"/>
                         </f:facet>
-                        <h:commandLink action="#{monsterMasterController.prepareView}" value="View"/>
+                        <h:commandLink action="#{monsterMasterController.prepareEdit}" value="編集"/>
                         <h:outputText value=" "/>
-                        <h:commandLink action="#{monsterMasterController.prepareEdit}" value="Edit"/>
-                        <h:outputText value=" "/>
-                        <h:commandLink action="#{monsterMasterController.destroy}" value="Destroy"/>
+                        <h:commandLink action="#{monsterMasterController.destroy}" value="削除"/>
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>
