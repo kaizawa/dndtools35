@@ -276,5 +276,5 @@ public class MonsterMasterController implements Serializable {
         }
 
     }
-
+    
 }
