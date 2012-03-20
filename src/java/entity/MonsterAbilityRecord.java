@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MonsterAbilityRecord.findAll", query = "SELECT m FROM MonsterAbilityRecord m"),
     @NamedQuery(name = "MonsterAbilityRecord.findByMonster", query = "SELECT m FROM MonsterAbilityRecord m WHERE m.monsterAbilityRecordPK.monster = :monster"),
+    @NamedQuery(name = "MonsterAbilityRecord.findByMonsterMaster", query = "SELECT m FROM MonsterAbilityRecord m WHERE m.monsterMaster = :monster order by m.monsterAbilityRecordPK.abilityId"),
     @NamedQuery(name = "MonsterAbilityRecord.findByAbilityId", query = "SELECT m FROM MonsterAbilityRecord m WHERE m.monsterAbilityRecordPK.abilityId = :abilityId"),
     @NamedQuery(name = "MonsterAbilityRecord.findByBase", query = "SELECT m FROM MonsterAbilityRecord m WHERE m.base = :base"),
     @NamedQuery(name = "MonsterAbilityRecord.findByFeatModifier", query = "SELECT m FROM MonsterAbilityRecord m WHERE m.featModifier = :featModifier"),

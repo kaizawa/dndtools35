@@ -94,7 +94,6 @@ tr.jsfcrud_even_row {
     font-size: 12px; 
     width: 500px;
     height: 170px;
-
     vertical-align: sub;
 }
 
@@ -105,4 +104,15 @@ tr.jsfcrud_even_row {
 
 .smallText {
     font-size: 11px;
+}
+
+.smallTextField {
+    width: 30px;
+}
+
+.smallTextArea {
+    font-size: 12px; 
+    width: 300px;
+    height: 100px;
+    vertical-align: sub;
 }

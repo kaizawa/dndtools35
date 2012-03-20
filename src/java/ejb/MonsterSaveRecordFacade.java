@@ -4,10 +4,13 @@
  */
 package ejb;
 
+import entity.MonsterMaster;
 import entity.MonsterSaveRecord;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,4 +30,9 @@ public class MonsterSaveRecordFacade extends AbstractFacade<MonsterSaveRecord> {
         super(MonsterSaveRecord.class);
     }
     
+    public List<MonsterSaveRecord> findByMonsterMaster(MonsterMaster monster){
+        Query query = em.createNamedQuery("MonsterSaveRecord.findByMonsterMaster");
+        query.setParameter("monster", monster);
+        return query.getResultList();
+    }
 }

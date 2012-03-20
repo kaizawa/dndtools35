@@ -7,6 +7,7 @@ import mbean.util.PaginationHelper;
 import entity.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -20,9 +21,10 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean (name="monsterMasterController")
+@ManagedBean(name = "monsterMasterController")
 @SessionScoped
 public class MonsterMasterController implements Serializable {
+
     @EJB
     private MonsterSaveRecordFacade monsterSaveRecordFacade;
     @EJB
@@ -39,7 +41,6 @@ public class MonsterMasterController implements Serializable {
     public void setAbilityMasterFacade(AbilityMasterFacade abilityMasterFacade) {
         this.abilityMasterFacade = abilityMasterFacade;
     }
-
 
     public MonsterAbilityRecordFacade getMonsterAbilityRecordFacade() {
         return monsterAbilityRecordFacade;
@@ -64,14 +65,26 @@ public class MonsterMasterController implements Serializable {
     public void setSaveMasterFacade(SaveMasterFacade saveMasterFacade) {
         this.saveMasterFacade = saveMasterFacade;
     }
-
     private MonsterMaster current;
     private DataModel items = null;
-    @EJB private ejb.MonsterMasterFacade ejbFacade;
+    @EJB
+    private ejb.MonsterMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     public MonsterMasterController() {
+        initList();
+    }
+
+    private void initList() {
+        monsterAbilityList.clear();
+        monsterSaveList.clear();
+        for (int i = 0; i < 6; i++) {
+            monsterAbilityList.add(10);
+        }
+        for (int i = 0; i < 3; i++) {
+            monsterSaveList.add(0);
+        }
     }
 
     public MonsterMaster getSelected() {
@@ -85,6 +98,7 @@ public class MonsterMasterController implements Serializable {
     private MonsterMasterFacade getFacade() {
         return ejbFacade;
     }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -96,7 +110,7 @@ public class MonsterMasterController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -109,12 +123,13 @@ public class MonsterMasterController implements Serializable {
     }
 
     public String prepareView() {
-        current = (MonsterMaster)getItems().getRowData();
+        current = (MonsterMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
+        initList();
         current = new MonsterMaster();
         selectedItemIndex = -1;
         return "Create";
@@ -126,14 +141,16 @@ public class MonsterMasterController implements Serializable {
             List<AbilityMaster> abilities = abilityMasterFacade.findAll();
             for (AbilityMaster ability : abilities) {
                 MonsterAbilityRecord ab = new MonsterAbilityRecord(current.getId().intValue(), ability.getId().intValue());
+                ab.setBase(monsterAbilityList.get(ability.getId() - 1));
                 getMonsterAbilityRecordFacade().create(ab);
             }
             List<SaveMaster> saves = saveMasterFacade.findAll();
             for (SaveMaster save : saves) {
                 MonsterSaveRecord sv = new MonsterSaveRecord(current.getId().intValue(), save.getId().intValue());
+                sv.setMiscModifier(monsterSaveList.get(save.getId() - 1));
                 monsterSaveRecordFacade.create(sv);
-            }                
-            JsfUtil.addSuccessMessage("モンスターが作成されました");            
+            }
+            JsfUtil.addSuccessMessage("モンスターが作成されました");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
@@ -142,16 +159,36 @@ public class MonsterMasterController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (MonsterMaster)getItems().getRowData();
+        current = (MonsterMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        List<MonsterAbilityRecord> abilityList = monsterAbilityRecordFacade.findByMonsterMaster(current);
+        for (MonsterAbilityRecord ability : abilityList) {
+            monsterAbilityList.set(ability.getAbilityMaster().getId() - 1, ability.getBase());
+        }
+        List<MonsterSaveRecord> saveList = monsterSaveRecordFacade.findByMonsterMaster(current);
+        for (MonsterSaveRecord save : saveList) {
+            monsterSaveList.set(save.getSaveMaster().getId() - 1, save.getMiscModifier());
+        }
         return "Edit";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage("更新されました" );
-            return "View";
+            List<AbilityMaster> abilities = abilityMasterFacade.findAll();
+            for (AbilityMaster ability : abilities) {
+                MonsterAbilityRecord ab = new MonsterAbilityRecord(current.getId().intValue(), ability.getId().intValue());
+                ab.setBase(monsterAbilityList.get(ability.getId() - 1));
+                getMonsterAbilityRecordFacade().edit(ab);
+            }
+            List<SaveMaster> saves = saveMasterFacade.findAll();
+            for (SaveMaster save : saves) {
+                MonsterSaveRecord sv = new MonsterSaveRecord(current.getId().intValue(), save.getId().intValue());
+                sv.setMiscModifier(monsterSaveList.get(save.getId() - 1));
+                monsterSaveRecordFacade.edit(sv);
+            }
+            JsfUtil.addSuccessMessage("更新されました");
+            return null;
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
             return null;
@@ -159,7 +196,7 @@ public class MonsterMasterController implements Serializable {
     }
 
     public String destroy() {
-        current = (MonsterMaster)getItems().getRowData();
+        current = (MonsterMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -183,7 +220,7 @@ public class MonsterMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage("MonsterMasterDeleted" );
+            JsfUtil.addSuccessMessage("MonsterMasterDeleted");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
         }
@@ -193,14 +230,14 @@ public class MonsterMasterController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count-1;
+            selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -239,14 +276,14 @@ public class MonsterMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass=MonsterMaster.class)
+    @FacesConverter(forClass = MonsterMaster.class)
     public static class MonsterMasterControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            MonsterMasterController controller = (MonsterMasterController)facesContext.getApplication().getELResolver().
+            MonsterMasterController controller = (MonsterMasterController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "monsterMasterController");
             return controller.ejbFacade.find(getKey(value));
         }
@@ -271,10 +308,104 @@ public class MonsterMasterController implements Serializable {
                 MonsterMaster o = (MonsterMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+MonsterMasterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + MonsterMasterController.class.getName());
             }
         }
-
     }
-    
+    /*
+     * 各種セーブの setter/getter Index は 0 から順に 頑健(fort), 反応(Ref), 意思(will)
+     */
+    private List<Integer> monsterSaveList = new ArrayList<Integer>(3);
+
+    public List<Integer> getMonsterSaveList() {
+        return monsterSaveList;
+    }
+
+    public void setMonsterSaveList(List<Integer> monsterSaveList) {
+        this.monsterSaveList = monsterSaveList;
+    }
+
+    public int getFortSave() {
+        return monsterSaveList.get(0);
+    }
+
+    public void setFortSave(int fortSave) {
+        monsterSaveList.set(0, fortSave);
+    }
+
+    public int getRefSave() {
+        return monsterSaveList.get(1);
+    }
+
+    public void setRefSave(int refSave) {
+        monsterSaveList.set(1, refSave);
+    }
+
+    public int getWillSave() {
+        return monsterSaveList.get(2);
+    }
+
+    public void setWillSave(int willSave) {
+        monsterSaveList.set(2, willSave);
+    }
+    /*
+     * 各種能力値の setter/getter インデックスは 0 から順に Str, Dex, Con, Int Wis, Cha
+     */
+    private List<Integer> monsterAbilityList = new ArrayList<Integer>();
+
+    public List<Integer> getMonsterAbilityList() {
+        return monsterAbilityList;
+    }
+
+    public void setMonsterAbilityList(List<Integer> monsterAbilityList) {
+        this.monsterAbilityList = monsterAbilityList;
+    }
+
+    public int getStrAbility() {
+        return monsterAbilityList.get(0);
+    }
+
+    public void setStrAbility(int strAbility) {
+        monsterAbilityList.set(0, strAbility);
+    }
+
+    public int getDexAbility() {
+        return monsterAbilityList.get(1);
+    }
+
+    public void setDexAbility(int dexAbility) {
+        monsterAbilityList.set(1, dexAbility);
+    }
+
+    public int getConAbility() {
+        return monsterAbilityList.get(2);
+    }
+
+    public void setConAbility(int conAbility) {
+        monsterAbilityList.set(2, conAbility);
+    }
+
+    public int getIntAbility() {
+        return monsterAbilityList.get(3);
+    }
+
+    public void setIntAbility(int intAbility) {
+        monsterAbilityList.set(3, intAbility);
+    }
+
+    public int getWisAbility() {
+        return monsterAbilityList.get(4);
+    }
+
+    public void setWisAbility(int wisAbility) {
+        monsterAbilityList.set(4, wisAbility);
+    }
+
+    public int getChaAbility() {
+        return monsterAbilityList.get(5);
+    }
+
+    public void setChaAbility(int chaAbility) {
+        monsterAbilityList.set(5, chaAbility);
+    }
 }
