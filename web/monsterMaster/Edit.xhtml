@@ -11,10 +11,13 @@
         </ui:define>
 
         <ui:define name="control">
-            <h:panelGrid columns="3">
-                <h:commandButton style="text-align: left" action="#{monsterMasterController.update}" value="保存"/>                
-                <h:outputLabel value="       "/>
-                <h:commandButton style="text-align: right" action="#{monsterMasterController.destroyAndView}" value="削除"/>            
+            <h:panelGrid columns="2" style="width: 100%">
+                <h:panelGrid style="text-align: left">
+                    <h:commandButton action="#{monsterMasterController.update}" value="保存"/>                
+                </h:panelGrid>
+                <h:panelGrid style="text-align: right">
+                    <h:commandButton style="color: #ff0033" onclick="return confirm('削除しますか?')" action="#{monsterMasterController.destroyAndView}"  value="削除"/>            
+                </h:panelGrid>                
             </h:panelGrid>
             <br />
             <br />
