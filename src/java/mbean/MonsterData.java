@@ -75,7 +75,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getFullAttack() {
-        return "未実装";
+        return monster.getFullAttack();
     }
 
     @Override

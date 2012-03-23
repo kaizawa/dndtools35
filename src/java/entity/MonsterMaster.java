@@ -43,6 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MonsterMaster.findByLevelAdjustment", query = "SELECT m FROM MonsterMaster m WHERE m.levelAdjustment = :levelAdjustment"),
     @NamedQuery(name = "MonsterMaster.findByHitPointModifier", query = "SELECT m FROM MonsterMaster m WHERE m.hitPointModifier = :hitPointModifier")})
 public class MonsterMaster implements Serializable {
+    @Size(max = 2000)
+    @Column(name = "FULL_ATTACK", length = 2000)
+    private String fullAttack;
     @JoinTable(name = "MONSTER_MASTER_SUB_TYPE_MASTER", joinColumns = {
         @JoinColumn(name = "MONSTERMASTERLIST_ID", referencedColumnName = "ID", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "SUBTYPEMASTERLIST_ID", referencedColumnName = "ID", nullable = false)})
@@ -354,5 +357,13 @@ public class MonsterMaster implements Serializable {
 
     public void setSubTypeMasterList(List<SubTypeMaster> subTypeMasterList) {
         this.subTypeMasterList = subTypeMasterList;
+    }
+
+    public String getFullAttack() {
+        return fullAttack;
+    }
+
+    public void setFullAttack(String fullAttack) {
+        this.fullAttack = fullAttack;
     }
 }
