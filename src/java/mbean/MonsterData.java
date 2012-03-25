@@ -134,7 +134,7 @@ public class MonsterData implements CharacterSummary {
 
     @Override
     public String getKlass() {
-        return "未実装";
+        return "";
     }
 
     @Override

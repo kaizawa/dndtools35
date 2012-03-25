@@ -19,12 +19,12 @@
                 <h:outputText value="#{scenarioRecordController.pagination.pageFirstItem + 1}..#{scenarioRecordController.pagination.pageLastItem + 1}/#{scenarioRecordController.pagination.itemsCount}"/>&nbsp;
                 <h:commandLink action="#{scenarioRecordController.previous}" value="#{bundle.Previous} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasPreviousPage}"/>&nbsp;
                 <h:commandLink action="#{scenarioRecordController.next}" value="#{bundle.Next} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasNextPage}"/>&nbsp;
-                <h:dataTable value="#{scenarioRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                <h:dataTable value="#{scenarioRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px; width: 100%">
                     <h:column>
                         <f:facet name="header">
                                 <h:outputText value="シナリオ"/>
                         </f:facet>
-                            <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{item.name}"/>
+                        <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{item.name}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">

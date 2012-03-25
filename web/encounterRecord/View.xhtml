@@ -47,17 +47,24 @@
                                 <h:outputText value="名前" />
                             </f:facet>
                             <h:outputText value="#{member.scenarioCharacterRecord.name}" style="color: #{encounterMemberController.hpColor}" styleClass="smallText"/>
-                            <h:commandLink value=" [クラス]" title="#{member.scenarioCharacterRecord.klass}" styleClass="smallText"/>                            
-                        </h:column>         
+                        </h:column>  
+                         <h:column >
+                            <f:facet name="header">
+                                <h:outputText value="クラス"/>
+                            </f:facet>
+                             <h:commandLink onclick="alert('#{member.scenarioCharacterRecord.klass}')" value="有り" rendered="#{member.scenarioCharacterRecord.hasKlass()}" title="#{member.scenarioCharacterRecord.klass}"  styleClass="smallText"/>                            
+                        </h:column>                         
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="攻撃" />
+                                <h:outputText value="攻撃・特殊能力" />
                             </f:facet>
-                            <h:commandLink value="通常" title="#{member.scenarioCharacterRecord.attack}" styleClass="smallText" />
+                            <h:commandLink value="通常" onclick="alert('#{member.scenarioCharacterRecord.attack}')" title="#{member.scenarioCharacterRecord.attack}" styleClass="smallText" />
                             <h:outputLabel value=" "/>
-                            <h:commandLink value="全力" title="#{member.scenarioCharacterRecord.fullAttack}" styleClass="smallText"/>                            
+                            <h:commandLink value="全力" onclick="alert('#{member.scenarioCharacterRecord.fullAttack}')" title="#{member.scenarioCharacterRecord.fullAttack}" styleClass="smallText"/>                            
                             <h:outputLabel value=" "/>                            
-                            <h:commandLink value="特殊" title="#{member.scenarioCharacterRecord.specialAttacks}" styleClass="smallText"/>
+                            <h:commandLink value="特殊攻撃" onclick="alert('#{member.scenarioCharacterRecord.specialAttacks}')" title="#{member.scenarioCharacterRecord.specialAttacks}" styleClass="smallText"/>
+                            <h:outputLabel value=" "/>                            
+                            <h:commandLink value="特殊能力" onclick="alert('#{member.scenarioCharacterRecord.specialQualities}')" title="#{member.scenarioCharacterRecord.specialQualities}" styleClass="smallText"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

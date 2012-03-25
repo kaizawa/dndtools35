@@ -209,7 +209,7 @@ public class MonsterMasterController implements Serializable {
         recreateModel();
         updateCurrentItem();
         if (selectedItemIndex >= 0) {
-            return "View";
+            return "List";
         } else {
             // all items were removed - go back to list
             recreateModel();

@@ -169,6 +169,13 @@ public class ScenarioCharacterRecord implements Serializable {
     public void setKlass(String klass) {
         this.klass = klass;
     }
+    
+    public boolean hasKlass(){
+        if (this.klass.isEmpty())
+            return false;
+        else 
+            return true;
+    }
 
     public String getSizeAndType() {
         return sizeAndType;

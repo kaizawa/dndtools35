@@ -29,6 +29,7 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "encounterMemberController")
 @SessionScoped
 public class EncounterMemberController implements Serializable {
+
     @EJB
     private ScenarioCharacterRecordFacade scenarioCharacterRecordFacade;
 
@@ -57,8 +58,7 @@ public class EncounterMemberController implements Serializable {
     public void setEncounterRecordFacade(EncounterRecordFacade encounterRecordFacade) {
         this.encounterRecordFacade = encounterRecordFacade;
     }
-    
-    @ManagedProperty(value="#{encounterRecordController}")
+    @ManagedProperty(value = "#{encounterRecordController}")
     private EncounterRecordController encounterRecordController;
 
     public EncounterRecordController getEncounterRecordController() {
@@ -68,12 +68,9 @@ public class EncounterMemberController implements Serializable {
     public void setEncounterRecordController(EncounterRecordController encounterRecordController) {
         this.encounterRecordController = encounterRecordController;
     }
-
-    
     @EJB
     private EncounterMemberFacade encounterMemberFacade;
 
-    
     public HtmlDataTable getEncounterMemberTable() {
         return encounterMemberTable;
     }
@@ -99,23 +96,21 @@ public class EncounterMemberController implements Serializable {
         ScenarioCharacterRecord chara = member.getScenarioCharacterRecord();
         chara.setHitPoint(member.getScenarioCharacterRecord().getHitPoint() - mod);
     }
-    
-    public String getHpColor(){
-        EncounterMember member = (EncounterMember)encounterMemberTable.getRowData();
-        if(member.getScenarioCharacterRecord().getHitPoint() > 0){
+
+    public String getHpColor() {
+        EncounterMember member = (EncounterMember) encounterMemberTable.getRowData();
+        if (member.getScenarioCharacterRecord().getHitPoint() > 0) {
             return "black;";
         } else {
             return "red;";
         }
-    } 
-    
-    private HtmlDataTable encounterMemberTable = new HtmlDataTable();        
- 
+    }
+    private HtmlDataTable encounterMemberTable = new HtmlDataTable();
     private List<EncounterMember> encounterMemberList;
 
     public List<EncounterMember> getEncounterMemberList() {
         encounterMemberList = encounterMemberFacade.findByEncounterRecord(encounterRecordController.getCurrent());
-        if(encounterMemberList.size() > 0){
+        if (encounterMemberList.size() > 0) {
             sortEncounterMember();
             setTurn();
         }
@@ -138,13 +133,13 @@ public class EncounterMemberController implements Serializable {
             for (EncounterMember member : encounterMemberList) {
                 if (member.equals(getTurnMember())) {
                     member.setMyTurn(true);
-                }else { 
+                } else {
                     member.setMyTurn(false);
                 }
                 try {
                     encounterMemberFacade.edit(member);
-                } catch (Exception e){
-                    JsfUtil.addErrorMessage("Persistance Error Happened");                    
+                } catch (Exception e) {
+                    JsfUtil.addErrorMessage("Persistance Error Happened");
                 }
             }
             //JsfUtil.addSuccessMessage("TrunCharacter is " + getTrunMember().getEncounterCharacter().getName());
@@ -154,7 +149,7 @@ public class EncounterMemberController implements Serializable {
     public String saveEncounterMembers() {
         try {
             for (EncounterMember member : encounterMemberList) {
-                ScenarioCharacterRecord chara =  member.getScenarioCharacterRecord();
+                ScenarioCharacterRecord chara = member.getScenarioCharacterRecord();
                 scenarioCharacterRecordFacade.edit(chara);
                 encounterMemberFacade.edit(member);
             }
@@ -170,116 +165,114 @@ public class EncounterMemberController implements Serializable {
 
     }
 
-    public EncounterMember getNextMember(Integer current_index){
-        EncounterMember nextMember;
+    public Integer getNextMemberIndex(Integer current_index) {
+        Integer new_index;
 
         if (encounterMemberList.size() <= current_index + 1) {
-            nextMember = encounterMemberList.get(0);                    
+            new_index = 0;
             // got next round
-            encounterRecordController.getCurrent().setRound(encounterRecordController.getCurrent().getRound() + 1);            
+            encounterRecordController.getCurrent().setRound(encounterRecordController.getCurrent().getRound() + 1);
         } else {
-            nextMember = encounterMemberList.get(current_index + 1);                                
-        }        
-        return nextMember;
+            new_index = current_index + 1;
+        }
+        return new_index;
     }
-    
-    public EncounterMember getPreviousMember(Integer current_index) throws NoPreviousMemberException{
-        EncounterMember prevMember;
+
+    public Integer getPreviousMemberIndex(Integer current_index) throws NoPreviousMemberException {
         int current_round = encounterRecordController.getCurrent().getRound();
+        Integer new_index;
 
         if (current_index == 0) {
-            if(current_round == 1){
+            if (current_round == 1) {
                 // It's first rounds's first member.
                 throw new NoPreviousMemberException();
             }
-            prevMember = encounterMemberList.get(encounterMemberList.size() -1);            
+            new_index = encounterMemberList.size() - 1;
             // got previous round
-            encounterRecordController.getCurrent().setRound(current_round - 1);            
+            encounterRecordController.getCurrent().setRound(current_round - 1);
         } else {
-            prevMember = encounterMemberList.get(current_index - 1);                                
-        }        
-        return prevMember;
+            new_index = current_index - 1;
+        }
+        return new_index;
     }
 
     public String nextTurn() {
         int current_index;
         EncounterMember currentMember = getTurnMember();
 
-        if(currentMember == null)
+        if (currentMember == null) {
             return null;
-    
+        }
+
         current_index = encounterMemberList.indexOf(currentMember);
         EncounterMember nextMember;
-        
-        do{
-            nextMember = getNextMember(current_index);
-            current_index++;
-        } while(nextMember.getScenarioCharacterRecord().getHitPoint() <= 0);
+
+        do {
+            current_index = getNextMemberIndex(current_index);
+            nextMember = encounterMemberList.get(current_index);
+        } while (nextMember.getScenarioCharacterRecord().getHitPoint() <= 0);
 
         currentMember.setMyTurn(false);
-        nextMember.setMyTurn(true);        
-        
+        nextMember.setMyTurn(true);
+
         try {
             encounterRecordFacade.edit(encounterRecordController.getCurrent());
-            encounterMemberFacade.edit(currentMember);       
-            encounterMemberFacade.edit(nextMember);                
+            encounterMemberFacade.edit(currentMember);
+            encounterMemberFacade.edit(nextMember);
 
-        } catch (Exception e){
-            JsfUtil.addErrorMessage("Persistence Error Occured");            
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
         }
         return null;
     }
-    
-        public String previousTurn() {
+
+    public String previousTurn() {
         int current_index;
         EncounterMember currentMember = getTurnMember();
 
-        if(currentMember == null)
+        if (currentMember == null) {
             return null;
-    
+        }
+
         current_index = encounterMemberList.indexOf(currentMember);
         EncounterMember prevMember = null;
 
-        do{
+        do {
             try {
-                prevMember = getPreviousMember(current_index);
-                if(current_index == 0){
-                    current_index = encounterMemberList.size() - 1;
-                }
-                current_index--;
-            } catch (NoPreviousMemberException e){
+                current_index = getPreviousMemberIndex(current_index);
+                prevMember = encounterMemberList.get(current_index);
+            } catch (NoPreviousMemberException e) {
                 JsfUtil.addErrorMessage("最初のターンです。これ以上戻れません。");
                 return null;
             }
-        } while(prevMember.getScenarioCharacterRecord().getHitPoint() <= 0);
+        } while (prevMember.getScenarioCharacterRecord().getHitPoint() <= 0);
 
         currentMember.setMyTurn(false);
-        prevMember.setMyTurn(true);        
-        
+        prevMember.setMyTurn(true);
+
         try {
             encounterRecordFacade.edit(encounterRecordController.getCurrent());
-            encounterMemberFacade.edit(currentMember);       
-            encounterMemberFacade.edit(prevMember);                
+            encounterMemberFacade.edit(currentMember);
+            encounterMemberFacade.edit(prevMember);
 
-        } catch (Exception e){
-            JsfUtil.addErrorMessage("Persistence Error Occured");            
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
         }
         return null;
     }
-    
 
-    /** 
+    /**
      * Player Character 以外(モンスター)のイニシアチブをランダム値に設定
      */
-    public String setInitiativeByRandom(){
-        Random rand =  new Random();
-         try {
-             for (EncounterMember member : encounterMemberList) {
-                 if(member.getScenarioCharacterRecord().isPlayerCharacter() == false ){
-                     int initiativeBonus = member.getScenarioCharacterRecord().getInitiative();
-                     member.setInitiative(rand.nextInt(19) + 1 + initiativeBonus);
-                     encounterMemberFacade.edit(member);
-                 }
+    public String setInitiativeByRandom() {
+        Random rand = new Random();
+        try {
+            for (EncounterMember member : encounterMemberList) {
+                if (member.getScenarioCharacterRecord().isPlayerCharacter() == false) {
+                    int initiativeBonus = member.getScenarioCharacterRecord().getInitiative();
+                    member.setInitiative(rand.nextInt(19) + 1 + initiativeBonus);
+                    encounterMemberFacade.edit(member);
+                }
             }
             JsfUtil.addSuccessMessage("Member's Poropety Updated");
         } catch (Exception e) {
@@ -287,73 +280,74 @@ public class EncounterMemberController implements Serializable {
         }
         return null;
     }
-    
-    public EncounterMember getTurnMember(){
+
+    public EncounterMember getTurnMember() {
         List<EncounterMember> memberList = encounterMemberFacade.findByEncounterRecord(encounterRecordController.getCurrent());
-        
-        for(EncounterMember member : memberList){
-            if(member.getMyTurn())
+
+        for (EncounterMember member : memberList) {
+            if (member.getMyTurn()) {
                 return member;
+            }
         }
-        if (memberList.isEmpty())
+        if (memberList.isEmpty()) {
             return null;
-                    
+        }
+
         return memberList.get(0);
     }
-    
-    public String decommission(){
+
+    public String decommission() {
         EncounterMember member = (EncounterMember) encounterMemberTable.getRowData();
-        
+
         encounterMemberFacade.remove(member);
         return null;
     }
 
     public Integer getHpModifier() {
         return 0;
-    }    
-    
-    public void setTurnToFirstMember(){
+    }
+
+    public void setTurnToFirstMember() {
         EncounterMember currentMember = getTurnMember();
         EncounterMember firstMember = encounterMemberList.get(0);
-        
+
         currentMember.setMyTurn(false);
-        firstMember.setMyTurn(true);        
-        
+        firstMember.setMyTurn(true);
+
         try {
             encounterRecordFacade.edit(encounterRecordController.getCurrent());
-            encounterMemberFacade.edit(currentMember);       
-            encounterMemberFacade.edit(firstMember);                
+            encounterMemberFacade.edit(currentMember);
+            encounterMemberFacade.edit(firstMember);
 
-        } catch (Exception e){
-            JsfUtil.addErrorMessage("Persistence Error Occured");            
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Persistence Error Occured");
         }
     }
 
-    
     public String resetBattle() {
         encounterRecordController.resetBattle();
         return resetRound();
     }
 
     public String resetRound() {
-        setTurnToFirstMember();        
+        setTurnToFirstMember();
         return null;
     }
-    
-    public String setInitialHitPoint(){
-         try {
-             for (EncounterMember member : encounterMemberList) {
-                 int initialHp = 0;
-                 String regxp = "\\d+d\\d+\\((\\d+)hp\\)";
-                 Pattern pattern = Pattern.compile(regxp);
-                 Matcher matcher = pattern.matcher(member.getScenarioCharacterRecord().getHitDice());
-                 if(matcher.find()){
-                     initialHp = Integer.parseInt(matcher.group(1));
-                 } 
-                 ScenarioCharacterRecord chara = member.getScenarioCharacterRecord();
-                 chara.setHitPoint(initialHp);    
-                 scenarioCharacterRecordFacade.edit(chara);
-                 encounterMemberFacade.edit(member);
+
+    public String setInitialHitPoint() {
+        try {
+            for (EncounterMember member : encounterMemberList) {
+                int initialHp = 0;
+                String regxp = "\\d+d\\d+\\((\\d+)hp\\)";
+                Pattern pattern = Pattern.compile(regxp);
+                Matcher matcher = pattern.matcher(member.getScenarioCharacterRecord().getHitDice());
+                if (matcher.find()) {
+                    initialHp = Integer.parseInt(matcher.group(1));
+                }
+                ScenarioCharacterRecord chara = member.getScenarioCharacterRecord();
+                chara.setHitPoint(initialHp);
+                scenarioCharacterRecordFacade.edit(chara);
+                encounterMemberFacade.edit(member);
             }
             JsfUtil.addSuccessMessage("Member's Poropety Updated");
         } catch (Exception e) {
