@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- TODO: characterSheetController.characterRecord は sessionBeans から取ってくるべき。-->
+
+    <ui:composition template="/template2.xhtml">
+        <ui:define name="title">
+            <h:outputText value="キャラクタ編集"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <h:panelGrid id="contents" style="width: 100%" styleClass="contents">
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                    </h:panelGroup> 
+                    <h:panelGrid columns="1" id="contentsGrid" style="width: 100%">
+                        <h:panelGrid columns="4" id="charaIdGridPanel1" style="height: 100%; text-align: left; width: 100%">
+                            <h:panelGrid id="gridPanel14" style="width: 100%; height: 100%;">
+                                <h:commandButton action="#{characterSheetController.editCharaSaveButton_action}" id="saveButton1" value="保存"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="gridPanel15" style="width: 100%; height: 100%;">
+                                <h:commandLink action="#{characterSheetController.viewLink_action}" style="font-size: 12px" id="viewLink" target="blank" value="印刷用画面へ"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="gridPanel16" style="width: 100%; height: 100%;">
+                                <h:outputText id="characterId1" style="font-size: 8px; width: 10px" value="#{characterSheetController.characterData.id}"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="gridPanel17" style="height: 100%; text-align: right; width: 100%">
+                                <h:commandButton action="#{characterSheetController.editCharaCancelButton_action}" id="cancelButton" value="キャンセル" immediate="true"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" id="charaGridPanel1" style="height: 100%; width: 100%">
+                            <h:panelGrid id="characterNameGridPane1" rowClasses="tableTitleBlackMiddle" styleClass="tableGrid">
+                                <h:panelGrid columns="3" id="gridPanel5" style="text-align: center; vertical-align: middle; width: 100%">
+                                    <h:outputText id="outputText2" value="キャラクター名"/>
+                                    <h:outputText id="outputText3" value="プレイヤー名"/>
+                                    <h:outputText id="outputText4" value="キャンペーン"/>
+
+                                </h:panelGrid>
+                                <h:panelGrid columns="4" id="gridPanel6" style="text-align: center; width: 100%" styleClass="g">
+                                    <h:inputText id="textField1" onchange="" requiredMessage="キャラクター名を入力して下さい" style="width: 180px" value="#{characterSheetController.characterData.characterName}"/>
+                                    <h:inputText id="textField2" onchange="" requiredMessage="プレイヤー名を入力して下さい" style="width: 181px" value="#{characterSheetController.characterData.playerName}"/>
+                                    <h:selectOneMenu id="dropdown1" onchange="" requiredMessage="キャンペーンを選択して下さい" value="#{characterSheetController.selectedCampaign}">
+                                        <f:selectItems id="dropdown1SelectItems1" value="#{applicationBean.campaignArray}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                                <h:panelGrid columns="4" id="gridPanel7" style="background-color: rgb(51, 51, 51); color: rgb(255, 255, 255); height: 100%; text-align: center; width: 100%">
+                                    <h:outputText id="staticText1" value="レベル"/>
+                                    <h:outputText id="staticText2" value="経験点"/>
+                                    <h:outputText id="staticText3" value="次レベル"/>
+                                    <h:outputText id="staticText4" value="最終更新"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="4" id="gridPanel8" style="color: rgb(51,51,51); text-align: center" styleClass="g">
+                                    <h:outputText id="outputText5"
+                                                  style="font-size: 18px; font-weight: bold; left: 55px; position: relative; text-align: right; width: 100px" value="#{characterSheetController.characterData.characterLevel}"/>
+                                    <h:inputText id="textField3" onchange="" style="left: 40px; position: relative; text-align: right; width: 100px" value="#{characterSheetController.characterData.experience}"/>
+                                    <h:outputText id="outputText6" style="left: 10px; position: relative; text-align: right; width: 100px" value="#{characterSheetController.characterData.getExpForNextLevel()}"/>
+                                    <h:outputText id="outputText7" value="#{characterSheetController.characterData.lastChange}"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" id="gridPanel9" style="height: 100%; text-align: center; width: 100%">
+                                    <h:outputText id="outputText8" value="属性"/>
+                                    <h:outputText id="outputText9" value="信仰する神格"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" id="aligngridPanel1" style="text-align: left" styleClass="g">
+                                    <h:selectOneMenu id="dropdown2" onchange="" style="" value="#{characterSheetController.selectedAlignment}" valueChangeListener="#{characterSheetController.dropdown2_processValueChange(vce)}">
+                                        <f:selectItems id="dropdown2SelectItems1" value="#{applicationBean.alignmentArray}"/>
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu id="dropdown3" onchange="" value="#{characterSheetController.selectedReligion}">
+                                        <f:selectItems id="dropdown3SelectItems1" value="#{applicationBean.religionArray}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                                <h:panelGrid columns="5" id="gridPanel10" style="height: 100%; width: 100%">
+                                    <h:outputText id="outputText10" value="種族"/>
+                                    <h:outputText id="outputText11" value="年齢"/>
+                                    <h:outputText id="outputText12" value="性別"/>
+                                    <h:outputText id="outputText13" value="身長"/>
+                                    <h:outputText id="outputText14" value="体重"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="7" id="racegridPanel1" styleClass="g">
+                                    <h:selectOneMenu id="dropdown4" onchange="" value="#{characterSheetController.selectedRace}">
+                                        <f:selectItems id="dropdown4SelectItems1" value="#{applicationBean.raceArray}"/>
+                                    </h:selectOneMenu>
+                                    <h:inputText id="textField4" onchange="" style="left: 10px; position: relative; text-align: right; width: 30px" value="#{characterSheetController.characterData.age}"/>
+                                    <h:selectOneMenu id="dropdown5" onchange="" value="#{characterSheetController.selectedGender}">
+                                        <f:selectItems id="dropdown5SelectItems1" value="#{applicationBean.genderArray}"/>
+                                    </h:selectOneMenu>
+                                    <h:inputText id="textField5" onchange="" style="text-align: right; width: 40px" value="#{characterSheetController.characterData.height}"/>
+                                    <h:outputText id="outputText15" style="color: #000000; font-size: 10px; text-align: left" value="cm"/>
+                                    <h:inputText id="textField6" onchange="" style="width: 40px; text-align: right;" value="#{characterSheetController.characterData.weight}"/>
+                                    <h:outputText id="outputText16" style="color: #000000; font-size: 10px; text-align: left" value="kg"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="3" id="gridPanel11" style="height: 100%; width: 100%">
+                                    <h:outputText id="outputText17" value="眼の色"/>
+                                    <h:outputText id="outputText18" value="肌の色"/>
+                                    <h:outputText id="outputText19" value="髪の色"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="3" id="colorgridPanel1" styleClass="g">
+                                    <h:inputText id="textField7" style="width: 100px" value="#{characterSheetController.characterData.eyeColor}"/>
+                                    <h:inputText id="textField8" style="width: 100px" value="#{characterSheetController.characterData.skinColor}"/>
+                                    <h:inputText id="textField9" style="width: 100px" value="#{characterSheetController.characterData.hairColor}"/>
+                                </h:panelGrid>
+                                <h:panelGrid id="descgridPanel1" style="height: 100%; width: 100%">
+                                    <h:outputText id="outputText20" value="キャラ設定"/>
+                                </h:panelGrid>
+                                <h:panelGrid id="gridPanel12" styleClass="g">
+                                    <h:inputTextarea id="textArea1" style="font-size: 12px; height: 150px; width: 100%" value="#{characterSheetController.characterData.description}"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <h:panelGrid id="gridPanel13" style="height: 431px; width: 100%" styleClass="middle"/>
+                        </h:panelGrid>
+                        <h:panelGrid id="klassGridPanel1" style="width: 100%; height: 100%;">
+                            <h:panelGrid id="buttonGridPanel1" style="height: 100%; text-align: left; width: 100%">
+                                <h:commandButton action="#{characterSheetController.saveButton_action}" id="button2" value="保存"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="klassTableGridPanel1" styleClass="tableGrid">
+                                <h:outputText id="outputText21" styleClass="tableTitleBlack" value="クラスとレベル"/>
+                                <h:dataTable binding="#{characterSheetController.growthTable}" cellpadding="1" cellspacing="0"
+                                             id="growthTable" rowClasses="list-row-even,list-row-odd" styleClass="w"
+                                             value="#{characterSheetController.characterData.characterGrowthRecordList}" var="currentRow">
+                                    <h:column id="column1">
+                                        <h:outputText id="outputText22" value="#{currentRow.characterGrowthRecordPK['characterLevel']}"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText23" style="font-size: 10px" value="キャラクタレベル"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column2">
+                                        <h:selectOneMenu id="classDropDown1" value="#{characterSheetController.selectedClassByRow}">
+                                            <f:selectItems id="dropdown6SelectItems1" value="#{applicationBean.classArray}"/>
+                                        </h:selectOneMenu>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText24" value="クラス"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column3">
+                                        <h:inputText id="textField10" style="text-align: right; width: 20px" value="#{currentRow.hitPoint}"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText25" style="font-size: 12px" value="HP(ダイス出目）"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column4">
+                                        <h:selectOneMenu disabled="#{characterSheetController.abilityEnhancementDisabled}" id="dropdown6"
+                                                         onchange="" value="#{characterSheetController.selectedAbilityEnhancementByRow}">
+                                            <f:selectItems id="dropdown6SelectItems2" value="#{applicationBean.abilityArray}"/>
+                                        </h:selectOneMenu>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText26" style="font-size: 12px" value="能力値上昇"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column5">
+                                        <h:commandButton action="#{characterSheetController.editSkillButton_action}" id="editSkillButton1" value="技能を編集"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText27"/>
+                                        </f:facet>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" id="abilityAndSkillGridPanel1" style="width: 100%; height: 100%;">
+                            <h:panelGrid columns="1" id="leftGridPanel1" style="height: 100%; width: 100% ">
+                                <h:panelGrid id="buttonGridPanel2" style="height: 100%; text-align: left; width: 100%">
+                                    <h:commandButton action="#{characterSheetController.saveButton_action}" id="button3" style="width: 48px" value="保存"/>
+                                </h:panelGrid>
+                                <h:panelGrid id="abilityGridPanel1" style="" styleClass="tableGrid">
+                                    <h:outputText id="outputText28" styleClass="tableTitleBlack" value="能力値"/>
+                                    <h:dataTable binding="#{characterSheetController.abilityTable}" id="abilityTable" styleClass="w"
+                                                 value="#{applicationBean.abilityList}" var="currentRow">
+                                        <h:column id="column6">
+                                            <h:outputText id="outputText29" style="font-size: 12px; font-weight: bold" value="#{currentRow.abilityName}"/>
+                                            <f:facet name="header">
+                                                <h:outputText escape="false" id="outputText30" style=""/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column7">
+                                            <h:outputText id="outputText31" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.abilityTotal}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText32" value="現在値"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column8">
+                                            <h:outputText id="outputText33" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.abilityModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText34" value="修正"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column9">
+                                            <h:inputText id="textField11" style="width: 25px; text-align: right;" value="#{characterSheetController.abilityBase}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText35" style="" value="初期値"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column10">
+                                            <h:outputText id="outputText36" value="#{characterSheetController.abilityRaceModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText37" value="種族"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column11">
+                                            <h:inputText id="textField12" style="width: 30px; text-align: right;" value="#{characterSheetController.abilityFeatModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText38" value="特技"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column12">
+                                            <h:outputText id="outputText39" value="#{characterSheetController.abilityLevelModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText40" value="レベル"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column13">
+                                            <h:inputText id="textField13" style="width: 30px; text-align: right;" value="#{characterSheetController.abilityMiscModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText41" value="その他"/>
+                                            </f:facet>
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:panelGrid>
+                                <h:panelGrid id="buttonGridPanel3" style="height: 100%; text-align: left; width: 100%">
+                                    <h:commandButton action="#{characterSheetController.saveButton_action}" id="button4" value="保存"/>
+                                </h:panelGrid>
+                                <h:panelGrid id="saveGridPanel1" style="" styleClass="tableGrid">
+                                    <h:outputText id="outputText42" styleClass="tableTitleBlack" value="セーヴィングスロー"/>
+                                    <h:dataTable binding="#{characterSheetController.saveTable}" cellpadding="1" cellspacing="0"
+                                                 id="saveTable" style="" styleClass="w" value="#{applicationBean.saveList}" var="currentRow">
+                                        <h:column id="column14">
+                                            <h:outputText id="outputText43" style="font-size: 12px; font-weight: bold" value="#{currentRow.saveName}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText44"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column15">
+                                            <h:outputText id="outputText45" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.saveTotal}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText46" value="判定値"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column16">
+                                            <h:outputText id="outputText47" value="#{characterSheetController.saveClassBonus}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText48" value="基本"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column17">
+                                            <h:outputText id="outputText49" value="#{characterSheetController.saveAbilityModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText50" value="能力"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column28">
+                                            <h:outputText id="outputText55" value="#{characterSheetController.saveRaceModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText56" value="種族"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column18">
+                                            <h:inputText id="textField14" style="width: 30px; text-align: right;" value="#{characterSheetController.saveMiscModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText51" value="その他修正"/>
+                                            </f:facet>
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:panelGrid>
+                                <h:panelGrid id="buttonGridPanel4" style="height: 100%; text-align: left; width: 100%">
+                                    <h:commandButton action="#{characterSheetController.saveButton_action}" id="button5" value="保存"/>
+                                </h:panelGrid>
+                                <h:panelGrid id="battleDataGridPanel" style="" styleClass="tableGrid">
+                                    <h:outputText id="outputText1" styleClass="tableTitleBlack" value="戦闘データ"/>
+                                    <h:panelGrid columns="3" id="battleData1" style="height: 100%; width: 100%">
+                                        <h:panelGrid id="gridPanel24" style="height: 100%; width: 50px" styleClass="tableTitleBlackMiddle">
+                                            <h:outputText id="outputText57" style="font-size: 8px" value="イニシアチブ"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel25" style="width: 50px" styleClass="p">
+                                            <h:outputText id="outputText60" style="font-size: 18px; font-weight: bold;" value="#{characterSheetController.characterData.initiativeTotal}"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="10" id="gridPanel26" style="font-size: 10px; height: 100%; width: 100%" styleClass="w">
+                                            <h:outputText id="outputText80" style="text-align: right;" value="#{characterSheetController.characterData.initiativeAbilityModifier}"/>
+                                            <h:outputText id="outputText75" style="font-size: 10px" value="【敏】"/>
+                                            <h:outputText id="outputText79" style="font-size: 8px" value="+"/>
+                                            <h:inputText id="textField17" style="width: 30px; text-align: right;" value="#{characterSheetController.initiativeFeatModifier}"/>
+                                            <h:outputText id="outputText76" style="font-size: 10px" value="特技"/>
+                                            <h:outputText id="outputText77" style="font-size: 8px" value="+"/>
+                                            <h:inputText id="textField18" style="width: 30px; text-align: right;" value="#{characterSheetController.characterData.initiativeMiscModifier}"/>
+                                            <h:outputText id="outputText78" style="font-size: 10px" value="その他"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel1" style="height: 100%; width: 50px" styleClass="tableTitleBlackMiddle">
+                                            <h:outputText id="outputText164" style="font-size: 14px" value="HP"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel2" style="width: 50px" styleClass="p">
+                                            <h:outputText id="outputText165" style="font-size: 18px; font-weight: bold;" value="#{characterSheetController.characterData.hitPoint}"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="10" id="gridPanel3" style="height: 100%;  width: 100%" styleClass="w">
+                                            <h:commandButton action="#{characterSheetController.editSkillNomalButton_action}"
+                                                             id="editSkillNomalButton3" value="レベル別HPを編集"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel4" style=" height: 100%; width: 50px" styleClass="tableTitleBlackMiddle">
+                                            <h:outputText id="outputText166" style="font-size: 10px" value="移動速度"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel55" style="width: 50px" styleClass="p">
+                                            <h:outputText id="outputText167" style="font-size: 18px; font-weight: bold;" value="#{characterSheetController.characterData.speedTotal}"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="10" id="gridPanel56" style="height: 100%;  width: 100%" styleClass="w">
+                                            <h:outputText id="outputText168" value="#{characterSheetController.characterData.speedRaceBasse}"/>
+                                            <h:outputText id="outputText169" style="font-size: 10px" value="種族"/>
+                                            <h:outputText id="outputText170" style="font-size: 8px" value="+"/>
+                                            <h:inputText id="textField46" style="width: 30px; text-align: right;" value="#{characterSheetController.characterData.speedFeatModifier}"/>
+                                            <h:outputText id="outputText171" style="font-size: 10px" value="特技"/>
+                                            <h:outputText id="outputText172" style="font-size: 8px" value="+"/>
+                                            <h:inputText id="textField47" style="width: 30px; text-align: right;" value="#{characterSheetController.characterData.speedMiscModifier}"/>
+                                            <h:outputText id="outputText173" style="font-size: 10px" value="その他"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel57" style="height: 85px; width: 50px" styleClass="tableTitleBlackMiddle">
+                                            <h:outputText id="outputText174" style="font-size: 14px" value="AC"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel58" style="height: 100px; width: 50px" styleClass="p">
+                                            <h:outputText id="outputText175" style="font-size: 18px; font-weight: bold; " value="#{characterSheetController.characterData.acNormal}"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel59" style="border-width: 0px; border-style: solid; margin: 0px; height: 100%; width: 100%">
+                                            <h:panelGrid columns="14" id="gridPanel60" style="margin: 0px; height: 100%; width: 100%" styleClass="w">
+                                                <h:outputText id="outputText176" style="width: 30px" value="#{characterSheetController.characterData.acAbilityModifier}"/>
+                                                <h:outputText id="outputText177" style="font-size: 10px" value="【敏】"/>
+                                                <h:outputText id="outputText178" value="+"/>
+                                                <h:outputText id="outputText179" style="width: 30px" value="#{characterSheetController.characterData.acArmor}"/>
+                                                <h:outputText id="outputText180" style="font-size: 10px" value="鎧"/>
+                                                <h:outputText id="outputText181" value="+"/>
+                                                <h:outputText id="outputText182" style="width: 30px" value="#{characterSheetController.characterData.acShield}"/>
+                                                <h:outputText id="outputText183" style="font-size: 10px" value="盾"/>
+                                                <h:outputText id="outputText52" value="+"/>
+                                                <h:outputText id="outputText53" style="width: 30px" value="#{characterSheetController.characterData.acRaceModifier}"/>
+                                                <h:outputText id="outputText54" style="font-size: 10px" value="種"/>
+                                                <h:outputText id="outputText184" value="+"/>
+                                                <h:inputText id="textField48" style="text-align: right; width: 20px" value="#{characterSheetController.characterData.acMiscMod}"/>
+                                                <h:outputText id="outputText185" style="font-size: 10px" value="他"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="2" id="gridPanel61" style="text-align: right">
+                                                <h:panelGrid id="gridPanel62" style="height: 100%; vertical-align: middle; " styleClass="tableTitleBlackMiddle">
+                                                    <h:outputText id="outputText186" value="接触"/>
+                                                    <h:outputText id="outputText187" value="立ちすくみ"/>
+                                                </h:panelGrid>
+                                                <h:panelGrid id="gridPanel63" style="height: 100%; width: 50%" styleClass="p">
+                                                    <h:outputText id="outputText188" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.characterData.acTouch}"/>
+                                                    <h:outputText id="outputText189" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.characterData.acFlatFooted}"/>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="defenceGridPanel2" style="background-color: rgb(51,51,51); font-size: 12px; text-align: center; vertical-align: middle; width: 100%">
+                                        <h:inputTextarea id="textArea8" style="height: 200px; width: 100%" value="#{characterSheetController.characterData.defenceDescription}"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="attackgridPanel2" style="background-color: #333333; font-size: 12px; text-align: center; vertical-align: middle; width: 100%">
+                                        <h:outputText id="outputText190"
+                                                      style="background-color: rgb(51,51,51); color: rgb(255, 255, 255); font-size: 14px" value="攻撃方法"/>
+                                        <h:panelGrid columns="3" id="attackGridPanel1" style="height: 100%; width: 100%">
+                                            <h:panelGrid id="gridPanel64" style=" height: 100%; width: 70px" styleClass="tableTitleBlackMiddle">
+                                                <h:outputText id="outputText191" value="近接攻撃"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid id="gridPanel65" style="width: 30px" styleClass="p">
+                                                <h:outputText id="outputText192" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.characterData.meleeAttackBonus}"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="10" id="gridPanel66" style="height: 100%; width: 260px" styleClass="w">
+                                                <h:outputText id="outputText193" value="#{characterSheetController.characterData.baseAttackTotal}"/>
+                                                <h:outputText id="outputText194" style="font-size: 10px" value="基本"/>
+                                                <h:outputText id="outputText195" style="font-size: 8px" value="+"/>
+                                                <h:outputText id="outputText196" value="#{characterSheetController.characterData.attackBonusStrengthBonus}"/>
+                                                <h:outputText id="outputText197" style="font-size: 10px" value="筋力"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid id="gridPanel67" style="height: 100%; width: 70px" styleClass="tableTitleBlackMiddle">
+                                                <h:outputText id="outputText198" value="遠隔攻撃"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid id="gridPanel68" style="width: 30px" styleClass="p">
+                                                <h:outputText id="outputText199" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.characterData.rangeAttackBonus}"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="10" id="gridPanel69" style="height: 100%; width: 260px" styleClass="w">
+                                                <h:outputText id="outputText200" value="#{characterSheetController.characterData.baseAttackTotal}"/>
+                                                <h:outputText id="outputText201" style="font-size: 10px" value="基本"/>
+                                                <h:outputText id="outputText202" style="font-size: 8px" value="+"/>
+                                                <h:outputText id="outputText203" value="#{characterSheetController.characterData.attackBonusDexBonus}"/>
+                                                <h:outputText id="outputText204" style="font-size: 10px" value="敏捷"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid id="gridPanel70" style="height: 100%; width: 70px" styleClass="tableTitleBlackMiddle">
+                                                <h:outputText id="outputText205" value="組み付き"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid id="gridPanel71" style="width: 30px" styleClass="p">
+                                                <h:outputText id="outputText206" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.characterData.getGrappleBonus()}"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="10" id="gridPanel72" style="height: 100%; width: 260px" styleClass="w">
+                                                <h:outputText id="outputText207" value="#{characterSheetController.characterData.baseAttackTotal}"/>
+                                                <h:outputText id="outputText208" style="font-size: 10px" value="基本"/>
+                                                <h:outputText id="outputText209" style="font-size: 8px" value="+"/>
+                                                <h:outputText id="outputText210" value="#{characterSheetController.characterData.attackBonusStrengthBonus}"/>
+                                                <h:outputText id="outputText211" style="font-size: 10px" value="筋力"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                        <h:inputTextarea id="textArea9" style="height: 200px; width: 100%" value="#{characterSheetController.characterData.attackDescription}"/>
+                                        <h:panelGrid columns="1" id="attackGridPanel2" rendered="false" style="height: 100%; width: 100%">
+                                            <h:panelGrid id="armGrid1" style="width: 100%">
+                                                <h:panelGrid id="gridPanel18" rowClasses="tableTitleBlackMiddle" style="width: 100%" styleClass="tableGrid">
+                                                    <h:panelGrid columns="4" id="gridPanel22" style="text-align: center; vertical-align: middle; width: 100%">
+                                                        <h:outputText id="outputText65" value="武器名"/>
+                                                        <h:outputText id="outputText66" value="攻撃ボーナス"/>
+                                                        <h:outputText id="outputText67" value="ダメージ"/>
+                                                        <h:outputText id="outputText68" value="クリティカル"/>
+                                                    </h:panelGrid>
+                                                    <h:panelGrid columns="4" id="gridPanel23"
+                                                                 style="color: rgb(0, 0, 0); font-size: 12px; text-align: center; vertical-align: middle; width: 100%" styleClass="q">
+                                                        <h:outputText id="outputText69" value="キャラクター名"/>
+                                                        <h:outputText id="outputText70" value="プレイヤー名"/>
+                                                        <h:outputText id="outputText71" value="キャンペーン"/>
+                                                        <h:outputText id="outputText72" value="キャラクター名"/>
+                                                    </h:panelGrid>
+                                                </h:panelGrid>
+                                                <h:panelGrid id="gridPanel21" rowClasses="tableTitleBlackMiddle" style="width: 100%" styleClass="tableGrid">
+                                                    <h:panelGrid columns="3" id="gridPanel19" style="text-align: center; vertical-align: middle; width: 100%">
+                                                        <h:outputText id="outputText58" value="射程"/>
+                                                        <h:outputText id="outputText59" value="タイプ"/>
+                                                        <h:outputText id="outputText63" value="その他"/>
+                                                    </h:panelGrid>
+                                                    <h:panelGrid columns="3" id="gridPanel20"
+                                                                 style="color: rgb(0, 0, 0); font-size: 12px; text-align: center; vertical-align: middle; width: 100%" styleClass="q">
+                                                        <h:outputText id="outputText61" value="プレイヤー名"/>
+                                                        <h:outputText id="outputText62" value="キャンペーン"/>
+                                                        <h:outputText id="outputText64" value="キャラクター名"/>
+                                                    </h:panelGrid>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="gridPanel73" style="height: 100%; width: 100%">
+                                        <h:panelGrid columns="2" id="gridPanel74" style="width: 100%; height: 100%;" styleClass="tableTitleBlackMiddle">
+                                            <h:outputText id="outputText212" value="ダメージ減少"/>
+                                            <h:outputText id="outputText213" value="呪文抵抗"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" id="gridPanel75" style="width: 100%; height: 100%;" styleClass="p">
+                                            <h:inputText id="textField49" style="font-size: 10px; text-align: right; width: 30px" value="#{characterSheetController.characterData.damageReduction}"/>
+                                            <h:inputText id="textField50" style="font-size: 10px; text-align: right; width: 30px" value="#{characterSheetController.characterData.spellResistance}"/>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+
+                                <h:panelGrid id="buttonGridPanel6" style="height: 100%; text-align: left; width: 100%">
+                                    <h:commandButton action="#{characterSheetController.saveButton_action}" id="button7" value="保存"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="1" id="itemgridPanel1" style="width: 100%; height: 100%;" styleClass="tableGrid">
+                                    <h:outputText id="outputText113" styleClass="tableTitleBlack" value="マジックアイテム/装備など"/>
+                                    <h:panelGrid columns="3" id="pocketGridPanel1" style="width: 100%; height: 100%;">
+                                        <h:outputText id="outputText114" styleClass="tableTitleBlackMiddle" value="所持金"/>
+                                        <h:panelGrid columns="2" id="gridPanel42" style="text-align: left" styleClass="p">
+                                            <h:inputText id="textField22" style="text-align: right" value="#{characterSheetController.characterData.characterEquipment.pocket}"/>
+                                            <h:outputText id="outputText115" style="font-size: 10px; text-align: left" value="gp"/>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2" id="gridPanel43" style="width: 100%; height: 100%;">
+                                        <h:panelGrid columns="2" id="gridPanel44" style="height: 100%; width: 100%">
+                                            <h:outputText id="outputText116" styleClass="tableTitleBlackMiddle" value="頭"/>
+                                            <h:inputText id="textField23" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.head}"/>
+                                            <h:outputText id="outputText117" styleClass="tableTitleBlackMiddle" value="マント"/>
+                                            <h:inputText id="textField24" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.cloak}"/>
+                                            <h:outputText id="outputText118" styleClass="tableTitleBlackMiddle" value="首輪"/>
+                                            <h:inputText id="textField25" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.necklace}"/>
+                                            <h:outputText id="outputText119" styleClass="tableTitleBlackMiddle" value="腕輪"/>
+                                            <h:inputText id="textField26" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.armRing}"/>
+                                            <h:outputText id="outputText120" styleClass="tableTitleBlackMiddle" value="指輪1"/>
+                                            <h:inputText id="textField27" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.ring1}"/>
+                                            <h:outputText id="outputText121" styleClass="tableTitleBlackMiddle" value="ベルト"/>
+                                            <h:inputText id="textField28" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.belt}"/>
+                                            <h:outputText id="outputText122" styleClass="tableTitleBlackMiddle" value="鎧"/>
+                                            <h:inputText id="textField29" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.armor}"/>
+                                            <h:outputText id="outputText123" styleClass="tableTitleBlackMiddle" value="武器1"/>
+                                            <h:inputText id="textField129" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.arm1}"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" id="gridPanel45" style="height: 100%; width: 100%">
+                                            <h:outputText id="outputText124" styleClass="tableTitleBlackMiddle" value="眼"/>
+                                            <h:inputText id="textField31" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.eye}"/>
+                                            <h:outputText id="outputText125" styleClass="tableTitleBlackMiddle" value="ローブ"/>
+                                            <h:inputText id="textField32" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.robe}"/>
+                                            <h:outputText id="outputText126" styleClass="tableTitleBlackMiddle" value="ベスト"/>
+                                            <h:inputText id="textField33" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.vest}"/>
+                                            <h:outputText id="outputText127" styleClass="tableTitleBlackMiddle" value="手袋"/>
+                                            <h:inputText id="textField34" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.glove}"/>
+                                            <h:outputText id="outputText128" styleClass="tableTitleBlackMiddle" value="指輪2"/>
+                                            <h:inputText id="textField35" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.ring2}"/>
+                                            <h:outputText id="outputText129" styleClass="tableTitleBlackMiddle" value="靴"/>
+                                            <h:inputText id="textField36" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.boots}"/>
+                                            <h:outputText id="outputText130" styleClass="tableTitleBlackMiddle" value="盾"/>
+                                            <h:inputText id="textField37" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.shield}"/>
+                                            <h:outputText id="outputText131" styleClass="tableTitleBlackMiddle" value="武器2"/>
+                                            <h:inputText id="textField130" style="width: 100px" value="#{characterSheetController.characterData.characterEquipment.arm2}"/>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="3" id="armorgridPanel1" style="height: 100%; width: 100%">
+                                        <h:panelGrid id="gridPanel46" style="height: 70px; width: 100%">
+                                            <h:panelGrid columns="4" id="gridPanel47" style="font-size: 12px; height: 25px; width: 100%" styleClass="tableTitleBlackMiddle">
+                                                <h:outputText id="outputText132" style="font-size: 10px; width: 30px"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="4" id="gridPanel48" style=" font-size: 12px; height: 25px; width: 100%" styleClass="b">
+                                                <h:outputText id="outputText133"
+                                                              style="padding: 2px; color: rgb(255, 255, 255); font-size: 14px; font-weight: bold; text-align: right; width: 30px" value="鎧"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="4" id="gridPanel49" style="font-size: 12px; height: 25px; width: 100%" styleClass="b">
+                                                <h:outputText id="outputText134"
+                                                              style="padding: 2px; font-size: 14px; text-align: right; width: 30px" value="盾"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                        <h:panelGrid id="gridPanel50" style="height: 70px; width: 100%">
+                                            <h:panelGrid columns="4" id="gridPanel51" style="font-size: 12px; height: 25px; width: 100%" styleClass="tableTitleBlackMiddle">
+                                                <h:outputText id="outputText135" style="font-size: 10px" value="ACボーナス"/>
+                                                <h:outputText id="outputText136" style="font-size: 10px" value="技能ペナルティ"/>
+                                                <h:outputText id="outputText137" style="font-size: 10px; width: 30px" value="敏捷力ボーナス上限"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="4" id="gridPanel52" style="font-size: 12px; height: 25px; width: 100%" styleClass="p">
+                                                <h:inputText id="textField39" style="font-size: 12px; text-align: right; width: 30px" value="#{characterSheetController.characterData.acArmor}"/>
+                                                <h:inputText id="textField40" style="font-size: 12px; text-align: right; width: 30px" value="#{characterSheetController.characterData.characterEquipment.skillArmorMod}"/>
+                                                <h:inputText id="textField41" style="font-size: 12px; text-align: right; width: 30px" value="#{characterSheetController.characterData.characterEquipment.dexAcArmorLimit}"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="4" id="gridPanel53" style="font-size: 12px; height: 25px; width: 100%" styleClass="p">
+                                                <h:inputText id="textField42" style="font-size: 12px; text-align: right; width: 30px" value="#{characterSheetController.characterData.acShield}"/>
+                                                <h:inputText id="textField43" style="font-size: 12px; text-align: right; width: 30px" value="#{characterSheetController.characterData.characterEquipment.skillShieldMod}"/>
+                                                <h:inputText id="textField44" style="font-size: 12px; text-align: right; width: 30px" value="#{characterSheetController.characterData.characterEquipment.dexAcShieldLimit}"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <h:inputTextarea id="textArea5" style="height: 200px; width: 100%" value="#{characterSheetController.characterData.itemDescription}"/>
+                                    <h:panelGrid columns="3" id="loadGridPanel1" style="height: 100%; width: 100%">
+                                        <h:outputText id="outputText138" styleClass="tableTitleBlackMiddle" value="軽荷重"/>
+                                        <h:outputText id="outputText139" styleClass="tableTitleBlackMiddle" value="中荷重"/>
+                                        <h:outputText id="outputText140" styleClass="tableTitleBlackMiddle" value="重荷重"/>
+                                        <h:outputText id="outputText141"/>
+                                        <h:outputText id="outputText142"/>
+                                        <h:outputText id="outputText143"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </h:panelGrid>      
+                            <h:panelGrid id="rightGridPanel1" style="height: 100%; width: 100%">
+                                <h:panelGrid columns="2" id="gridPanel54" style="width: 100%; height: 100%;">
+                                    <h:panelGrid id="buttonGridPanel7" style="height: 100%; text-align: left; width: 100%">
+                                        <h:commandButton action="#{characterSheetController.saveButton_action}" id="button8" value="保存"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="buttonGridPanel8" style="height: 100%; text-align: right; width: 100%">
+                                        <h:commandButton action="#{characterSheetController.editSkillNomalButton_action}"
+                                                         id="editSkillNomalButton2" value="技能を編集"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <h:panelGrid id="skillGridPanel1" style="" styleClass="tableGrid">
+                                    <h:outputText id="outputText144" style="" styleClass="tableTitleBlack" value="技能"/>
+                                    <h:dataTable binding="#{characterSheetController.skillTable}" id="skillTable" style="" styleClass="w"
+                                                 value="#{applicationBean.skillList}" var="currentRow">
+                                        <h:column id="column19">
+                                            <h:outputText id="outputText145" value="#{characterSheetController.skillRankCheck}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText146" style="font-size: 10px" value="習得"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column20">
+                                            <h:outputText id="outputText147" style="font-size: 10px;" value="#{currentRow.skillName} #{characterSheetController.skillCheckAcceptNoRank}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText148" style="font-size: 10px" value="技能名"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column21">
+                                            <h:outputText id="outputText149" rendered="#{characterSheetController.isTriableSkill()}" style="font-size: 18px; font-weight: bold" value="#{characterSheetController.skillTotalCheckModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText150" value="判定値"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column22">
+                                            <h:outputText id="outputText151" rendered="#{characterSheetController.isTriableSkill()}" style="font-size: 10px; width: 40px" value="#{characterSheetController.skillAbilityModifier} 【#{characterSheetController.skillAbilityShortName}】"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText152" style="font-size: 10px" value="能力"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column23">
+                                            <h:outputText id="outputText153" rendered="#{characterSheetController.isTriableSkill()}" value="#{characterSheetController.skillTotalRank}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText154" style="font-size: 10px" value="ランク"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column24">
+                                            <h:outputText id="outputText155" rendered="#{characterSheetController.isTriableSkill()}" value="#{characterSheetController.skillTotalPoint}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText156" style="font-size: 10px" value="ポイント"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column25">
+                                            <h:outputText id="outputText157" rendered="#{characterSheetController.isTriableSkill()}" value="#{characterSheetController.skillSynergyModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText158" style="font-size: 10px" value="相乗"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column26">
+                                            <h:outputText id="outputText159" rendered="#{characterSheetController.isTriableSkill()}" value="#{characterSheetController.skillArmorModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText160" style="font-size: 10px" value="防具"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column27">
+                                            <h:inputText id="textField45" rendered="#{characterSheetController.isTriableSkill()}" style="text-align: right; width: 20px" value="#{characterSheetController.skillMiscModifier}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText161" style="font-size: 10px" value="その他"/>
+                                            </f:facet>
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:panelGrid>
+                            </h:panelGrid>                               
+                        </h:panelGrid>
+
+                        <h:panelGrid style="height: 100%; width: 100%">
+                            <h:panelGrid style="height: 100%; text-align: left; width: 100%">
+                                <h:commandButton action="#{characterSheetController.saveButton_action}"  value="保存"/>
+                            </h:panelGrid>
+                            <h:panelGrid style="height: 100%; width: 100%" styleClass="tableGrid">
+                                <h:outputText  styleClass="tableTitleBlack" value="特技・特殊能力など"/>
+                                <h:inputTextarea style="height: 200px; width: 100%" value="#{characterSheetController.characterData.featDescription}"/>
+                            </h:panelGrid>                       
+                        </h:panelGrid>                          
+
+                        <h:panelGrid style="height: 100%; width: 100%">
+                            <h:panelGrid style="height: 100%; text-align: left; width: 100%">
+                                <h:commandButton action="#{characterSheetController.saveButton_action}"  value="保存"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="spellgridPanel1" style="height: 100%; width: 100%" styleClass="tableGrid">
+                                <h:outputText id="outputText162" styleClass="tableTitleBlack" value="呪文・メモなど"/>
+                                <h:inputTextarea id="textArea6" style="height: 250px; width: 100%" value="#{characterSheetController.characterData.spellDescription}"/>
+                            </h:panelGrid>                                                        
+                        </h:panelGrid>   
+
+                        <h:panelGrid id="updateGridPanel1" style="height: 100%; width: 100%">
+                            <h:panelGrid id="buttonGridPanel10" style="height: 100%; text-align: left; width: 100%">
+                                <h:commandButton action="#{characterSheetController.saveButton_action}" id="button10" value="保存"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="updateGridPanel2" style="height: 100%;; width: 100%" styleClass="tableGrid">
+                                <h:outputText id="outputText163" styleClass="tableTitleBlack" value="セッションログ／更新履歴"/>
+                                <h:inputTextarea id="textArea7" style="height: 150px; width: 100%" value="#{characterSheetController.characterData.updateDescription}"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
+                            <h:commandButton action="#{characterSheetController.editCharaDeleteButton_action}"
+                                             disabled="#{characterSheetController.deleteButtonDisabled}" id="deleteButton1" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="キャラクタの削除"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>            
+    </ui:composition>
+</html> 

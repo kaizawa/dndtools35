@@ -6,7 +6,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <ui:composition template="/characterSheet/template.xhtml">
+    <ui:composition template="/template2.xhtml">
         <ui:define name="title">
             <h:outputText value="キャラクターリスト"></h:outputText>
 
@@ -52,14 +52,14 @@
                                     </f:facet>
                                 </h:column>
                                 <h:column id="column4">
-                                    <h:outputText id="outputText8" style="font-size: 14px" value="#{characterSheetController.characterLevel}"/>
+                                    <h:outputText id="outputText8" style="font-size: 14px" value="#{currentRow.level}"/>
                                     <f:facet name="header">
                                         <h:outputText id="outputText10"  value="Lv"/>
                                     </f:facet>
                                 </h:column>
                                 <h:column id="column7">
                                     <h:panelGrid id="gridPanel2" style="max-width: 360px" styleClass="qPrint">
-                                        <h:outputText id="outputText13" value="#{characterSheetController.classList}"/>
+                                        <h:outputText id="outputText13" value="#{currentRow.classList}"/>
                                     </h:panelGrid>
                                     <f:facet name="header">
                                         <h:outputText id="outputText14" value="クラスリスト"/>
@@ -72,7 +72,7 @@
                                     </f:facet>
                                 </h:column>
                                 <h:column id="column8">
-                                    <h:outputText id="outputText15" value="#{characterSheetController.lastChange}"/>
+                                    <h:outputText id="outputText15" value="#{currentRow.lastChange}"/>
                                     <f:facet name="header">
                                         <h:outputText id="outputText16" value="更新日"/>
                                     </f:facet>

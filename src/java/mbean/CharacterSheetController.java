@@ -7,16 +7,14 @@ package mbean;
 import ejb.*;
 import entity.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
@@ -62,6 +60,9 @@ public class CharacterSheetController implements Serializable {
     private SkillMasterFacade skillMasterFacade;
     @EJB
     private CharacterSkillRecordFacade characterSkillRecordFacade;
+    @EJB
+    protected ClassMasterFacade classMasterFacade;
+    
     boolean loggedIn = false;
 
     public boolean isLoggedIn() {
@@ -115,18 +116,17 @@ public class CharacterSheetController implements Serializable {
 
         List<CharacterData> charaDataList = new ArrayList<CharacterData>();
         if (getCharacterListSelectedCampaign() == null) {
-            for(CharacterRecord charaRecord : characterRecordFacade.findAll()){
-                charaDataList.add(new CharacterData(charaRecord));
+            for (CharacterRecord charaData : characterRecordFacade.findAll()) {
+                charaDataList.add(new CharacterData(charaData));
             }
         } else {
             //選択されたキャンペーンキャラクターレコードのリストを得る
-            for(CharacterRecord charaRecord :  characterRecordFacade.findByCampaignId(getCharacterListSelectedCampaign())){
-                charaDataList.add(new CharacterData(charaRecord));                
+            for (CharacterRecord charaData : characterRecordFacade.findByCampaignId(getCharacterListSelectedCampaign())) {
+                charaDataList.add(new CharacterData(charaData));
             }
         }
         return charaDataList;
     }
-
     // キャラクターデータ
     private CharacterData characterData;
 
@@ -137,8 +137,6 @@ public class CharacterSheetController implements Serializable {
     public void setCharacterData(CharacterData characterData) {
         this.characterData = characterData;
     }
-
-
     // キャラクタの削除ボタンを有効比するかどうかの判定。使ってないか？
     private boolean deleteButtonDisabled;
 
@@ -153,7 +151,10 @@ public class CharacterSheetController implements Serializable {
     public void setDeleteButtonDisabled(boolean deleteButtonDisabled) {
         this.deleteButtonDisabled = deleteButtonDisabled;
     }
-    // キャンペーンの選択が必要？   使ってる？
+    
+    /*
+     * キャンペーンの選択が必要？   使ってる？
+     */
     private boolean campaignSelectRequired;
 
     public boolean isCampaignSelectRequired() {
@@ -165,21 +166,21 @@ public class CharacterSheetController implements Serializable {
     }
     // キャラクタの成長レコードのリスト
     private List<CharacterGrowthRecord> characterGrowthRecordList;
-
+    
     public List<CharacterGrowthRecord> getCharacterGrowthRecordList() {
         return characterGrowthRecordList;
     }
-
+    
     public void setCharacterGrowthRecordList(List<CharacterGrowthRecord> characterGrowthRecordList) {
         this.characterGrowthRecordList = characterGrowthRecordList;
     }
     // キャラクタの技能成長レコードのリスト
     private List<CharacterSkillGrowthRecord> characterSkillGrowthRecordList;
-
+    
     public List<CharacterSkillGrowthRecord> getCharacterSkillGrowthRecordList() {
         return characterSkillGrowthRecordList;
     }
-
+    
     public void setCharacterSkillGrowthRecordList(List<CharacterSkillGrowthRecord> characterSkillGrowthRecordList) {
         this.characterSkillGrowthRecordList = characterSkillGrowthRecordList;
     }
@@ -202,7 +203,9 @@ public class CharacterSheetController implements Serializable {
         CampaignMaster campaign = campaignMasterFacade.find(campaignId);
         this.characterData.setCampaignId(campaign);
     }
-    //  選択された属性
+    /*
+     * 選択された属性
+     */
     Integer selectedAlignment;
 
     public Integer getSelectedAlignment() {
@@ -220,9 +223,10 @@ public class CharacterSheetController implements Serializable {
         AlignmentMaster alignment = alignmentMasterFacade.find(selectedAlignment);
         this.characterData.setAlignmentId(alignment);
     }
-    //  選択された種族  .. ここにある必要はないか？ EditCharacterRecord の Bean でよいかも
+    /*
+     * 選択された種族  
+     */
     Integer selectedRace;
-
     public Integer getSelectedRace() {
         if (this.characterData.getRaceId() == null) {
             return null;
@@ -238,9 +242,11 @@ public class CharacterSheetController implements Serializable {
         RaceMaster race = raceMasterFacade.find(selectedRace);
         this.characterData.setRaceId(race);
     }
-    //選択された性別
-    Integer selectedGender;
 
+    /*
+     * 選択された性別
+     */
+    Integer selectedGender;
     public Integer getSelectedGender() {
         if (this.characterData.getGenderId() == null) {
             return null;
@@ -256,7 +262,9 @@ public class CharacterSheetController implements Serializable {
         GenderMaster gender = genderMasterFacade.find(selectedGender);
         this.characterData.setGenderId(gender);
     }
-    // 選択された神格
+    /*
+     * 選択された神格
+     */
     Integer selectedReligion;
 
     public Integer getSelectedReligion() {
@@ -274,16 +282,7 @@ public class CharacterSheetController implements Serializable {
         ReligionMaster religion = religionMasterFacade.find(selectedReligion);
         this.characterData.setReligionId(religion);
     }
-    // キャラクタ技能レコード のリスト
-    private List<CharacterSkillRecord> characterSkillRecordList;
-
-    public List<CharacterSkillRecord> getCharacterSkillRecordList() {
-        return characterSkillRecordList;
-    }
-
-    public void setCharacterSkillRecordList(List<CharacterSkillRecord> characterSkillRecordList) {
-        this.characterSkillRecordList = characterSkillRecordList;
-    }
+    
     // キャラクタ編集画面で選択されたレベル値
     private Integer editCharacterPageSelectedLevel;
 
@@ -294,7 +293,10 @@ public class CharacterSheetController implements Serializable {
     public void setEditCharacterPageSelectedLevel(Integer editCharacterSelectedLevel) {
         this.editCharacterPageSelectedLevel = editCharacterSelectedLevel;
     }
-    // ------------- レベル別技能編集ページ用 レベル一覧 --------------------
+
+    /*
+     * レベル別技能編集ページ用 レベル一覧
+     */
     protected SelectItem[] levelArray;
 
     public SelectItem[] getLevelArray() {
@@ -313,85 +315,6 @@ public class CharacterSheetController implements Serializable {
 
     public void setCharacterGrowthRecord(CharacterGrowthRecord characterGrowthRecord) {
         this.characterGrowthRecord = characterGrowthRecord;
-    }
-    //キャラクタ能力値レコードのリスト
-    protected List<CharacterAbilityRecord> characterAbilityRecordList;
-
-    public List<CharacterAbilityRecord> getCharacterAbilityRecordList() {
-        return characterAbilityRecordList;
-    }
-
-    public void setCharacterAbilityRecordList(List<CharacterAbilityRecord> characterAbilityRecordList) {
-        this.characterAbilityRecordList = characterAbilityRecordList;
-    }
-    // キャラクターセーブレコードのリスト
-    protected List<CharacterSaveRecord> characterSaveRecordList;
-
-    public List<CharacterSaveRecord> getCharacterSaveRecordList() {
-        return characterSaveRecordList;
-    }
-
-    public void setCharacterSaveRecordList(List<CharacterSaveRecord> characterSaveRecordList) {
-        this.characterSaveRecordList = characterSaveRecordList;
-    }
-    //クラス設定ページ用 編集しているクラス
-    private ClassMaster classMaster;
-
-    public ClassMaster getClassMaster() {
-        return classMaster;
-    }
-
-    public void setClassMaster(ClassMaster classMaster) {
-        this.classMaster = classMaster;
-    }
-    // ヒットポイント
-    protected Integer hitPointTotal;
-
-    public Integer getHitPointTotal() {
-        return hitPointTotal;
-    }
-
-    public void setHitPointTotal(Integer totalHitPoint) {
-        this.hitPointTotal = totalHitPoint;
-    }
-    // 装備データ
-    protected CharacterEquipment characterEquipment;
-
-    public CharacterEquipment getCharacterEquipment() {
-        return characterEquipment;
-    }
-
-    public void setCharacterEquipment(CharacterEquipment characterEquipment) {
-        this.characterEquipment = characterEquipment;
-    }
-    // 種族設定ページ用。
-    protected RaceMaster raceMaster;
-
-    /**
-     * Get the value of raceMaster
-     *
-     * @return the value of raceMaster
-     */
-    public RaceMaster getRaceMaster() {
-        return raceMaster;
-    }
-
-    /**
-     * Set the value of raceMaster
-     *
-     * @param raceMaster new value of raceMaster
-     */
-    public void setRaceMaster(RaceMaster raceMaster) {
-        this.raceMaster = raceMaster;
-    }
-    protected boolean mainArm;
-
-    public boolean isMainArm() {
-        return mainArm;
-    }
-
-    public void setMainArm(boolean mainArm) {
-        this.mainArm = mainArm;
     }
 
     /*
@@ -426,33 +349,27 @@ public class CharacterSheetController implements Serializable {
 
     public String charaEditLink_action() {
         //管理Beanへ反映
-        setCharacterData((CharacterData)characterListDataTable.getRowData());
+        setCharacterData((CharacterData) characterListDataTable.getRowData());
 
         return "EditCharacterRecordPage";
     }
 
     public String charaViewButton_action() {
         //管理Beanへ反映
-        setCharacterData((CharacterData)characterListDataTable.getRowData());
+        setCharacterData((CharacterData) characterListDataTable.getRowData());
 
         return "PrintableCharacterRecordPage";
     }
 
     public String button1_action() {
-        // TODO: ボタンクリックアクションを処理します。戻り値は、
-        // ナビゲーションケース名で、null の場合は同じページに戻ります。
         return "EditClassPage";
     }
 
     public String saveButton_action() {
-        // TODO: ボタンクリックアクションを処理します。戻り値は、
-        // ナビゲーションケース名で、null の場合は同じページに戻ります。
         return null;
     }
 
     public String classListButton_action() {
-        // TODO: ボタンクリックアクションを処理します。戻り値は、
-        // ナビゲーションケース名で、null の場合は同じページに戻ります。
         return null;
     }
 
@@ -582,7 +499,7 @@ public class CharacterSheetController implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
             JsfUtil.addSuccessMessage("キャラクターの成長レコードの作成に失敗しました");
-                   
+
             return null;
         }
         charaGrowthList.add(charaGrowth);
@@ -612,14 +529,13 @@ public class CharacterSheetController implements Serializable {
         return "PrintableCharacterSummaryListPage";
 
     }
-    private boolean charaSelected;
 
     /**
      * @return the charaSelected
      */
     public boolean isCharaSelected() {
 
-        CharacterData charaData= (CharacterData)characterListDataTable.getRowData();
+        CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
 
         return getSelectedCharas() != null && getSelectedCharas().contains(charaData);
     }
@@ -656,20 +572,500 @@ public class CharacterSheetController implements Serializable {
         charaSet.clear();
         return null;
     }
+    protected HtmlDataTable abilityTable = new HtmlDataTable();
 
-    public Integer getCharacterLevel() {
-
-        CharacterData charaData = (CharacterData)characterListDataTable.getRowData();
-        return charaData.getLevel();
+    public HtmlDataTable getAbilityTable() {
+        return abilityTable;
     }
 
-    public String getClassList() {
-        CharacterData charaData = (CharacterData)characterListDataTable.getRowData();
-        return charaData.getClassList();
+    public void setAbilityTable(HtmlDataTable hdt) {
+        this.abilityTable = hdt;
+    }
+    protected HtmlDataTable skillTable = new HtmlDataTable();
+
+    public HtmlDataTable getSkillTable() {
+        return skillTable;
     }
 
-    public String getLastChange() {
-        CharacterData charaData = (CharacterData)characterListDataTable.getRowData();
-        return charaData.getLastChange();
+    public void setSkillTable(HtmlDataTable hdt) {
+        this.skillTable = hdt;
+    }
+    protected HtmlSelectOneMenu classDropDown = new HtmlSelectOneMenu();
+
+    public HtmlSelectOneMenu getClassDropDown() {
+        return classDropDown;
+    }
+
+    public void setClassDropDown(HtmlSelectOneMenu hsom) {
+        this.classDropDown = hsom;
+    }
+    protected HtmlDataTable growthTable = new HtmlDataTable();
+
+    public HtmlDataTable getGrowthTable() {
+        return growthTable;
+    }
+
+    public void setGrowthTable(HtmlDataTable hdt) {
+        this.growthTable = hdt;
+    }
+    private HtmlDataTable saveTable = new HtmlDataTable();
+
+    public HtmlDataTable getSaveTable() {
+        return saveTable;
+    }
+
+    public void setSaveTable(HtmlDataTable hdt) {
+        this.saveTable = hdt;
+    }
+
+    public void textField1_processValueChange(ValueChangeEvent vce) {
+    }
+
+    public String charaListButton_action() {
+        return "CharacterListPage";
+    }
+
+    public String editCharaSaveButton_action() {
+
+        CharacterData charaData = getCharacterData();
+        CharacterEquipment equip = getCharacterData().getCharacterEquipment();
+        List<CharacterSkillRecord> skillRecordList = getCharacterData().getCharacterSkillRecordList();
+        List<CharacterSkillGrowthRecord> skillGrowthList = getCharacterData().getCharacterSkillGrowthRecordList();
+        List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
+        List<CharacterAbilityRecord> abilityList = getCharacterData().getCharacterAbilityRecordList();
+        List<CharacterSaveRecord> saveList = getCharacterData().getCharacterSaveRecordList();
+
+        //更新時間を記録
+        Date date = new Date();
+        charaData.setSaveTime(date);
+
+        try {
+            // CharacterRecord(CHARACTER_RECORD)の更新
+            characterRecordFacade.edit(charaData.getCharacterRecord());
+            characterEquipmentFacade.edit(equip);
+            for (CharacterGrowthRecord growth : growthList) {
+                characterGrowthRecordFacade.edit(growth);
+            }
+            for (CharacterSkillRecord skillRecord : skillRecordList) {
+                characterSkillRecordFacade.edit(skillRecord);
+            }
+            for (CharacterSkillGrowthRecord skillGrowth : skillGrowthList) {
+                characterSkillGrowthRecordFacade.edit(skillGrowth);
+            }
+            for (CharacterAbilityRecord ability : abilityList) {
+                characterAbilityRecordFacade.edit(ability);
+            }
+            for (CharacterSaveRecord save : saveList) {
+                characterSaveRecordFacade.edit(save);
+            }
+            JsfUtil.addSuccessMessage("保存されました");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JsfUtil.addSuccessMessage("キャラクターの保存に失敗しました");
+            return null;
+        }
+
+        return null;
+    }
+
+    public String editCharaDeleteButton_action() {
+
+        try {
+            characterRecordFacade.remove(getCharacterData().getCharacterRecord());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JsfUtil.addSuccessMessage("削除に失敗しました");
+            return null;
+        }
+        return "CharacterListPage";
+    }
+
+    /*
+     * ベース能力値
+     */
+    public Integer getAbilityBase() {
+        int abid = abilityTable.getRowIndex() + 1;
+        return getCharacterData().getAbilityBaseById(abid);
+    }
+
+    public void setAbilityBase(Integer newVal) {
+        int ability = abilityTable.getRowIndex() + 1;
+        getCharacterData().setAbilityBaseById(ability, newVal);
+    }
+
+    /**
+     * 能力値 その他修正
+     */
+    public Integer getAbilityMiscModifier() {
+        int abid = abilityTable.getRowIndex() + 1;
+        return getCharacterData().getAbilityMiscModifierById(abid);
+    }
+
+    public void setAbilityMiscModifier(Integer newVal) {
+        int ability = abilityTable.getRowIndex() + 1;
+        getCharacterData().setAbilityMiscModifierById(ability, newVal);
+    }
+
+    public void setAbilityMiscModifierById(int id, Integer newVal) {
+        getCharacterData().getCharacterAbilityRecordList().get(id - 1).setMiscModifier(newVal);
+    }
+
+    /*
+     * 能力値 特技修正値
+     */
+    public Integer getAbilityFeatModifier() {
+        int abid = abilityTable.getRowIndex() + 1;
+        return getCharacterData().getAbilityFeatModifierById(abid);
+    }
+
+    public void setAbilityFeatModifier(Integer newVal) {
+        int ability = abilityTable.getRowIndex() + 1;
+        getCharacterData().setAbilityFeatModifierById(ability, newVal);
+    }
+
+    /*
+     * 能力値 種族 修正値
+     */
+    public Integer getAbilityRaceModifier() {
+        int abid = abilityTable.getRowIndex() + 1;
+
+        return getCharacterData().getAbilityRaceModifierById(abid);
+    }
+
+    /*
+     * 能力値 レベル修正値 (計算値）
+     */
+    public Integer getAbilityLevelModifier() {
+        int abid = abilityTable.getRowIndex() + 1;
+        return getCharacterData().getAbilityLevelModifierById(abid);
+    }
+
+    /*
+     * 能力値 合計
+     */
+    public Integer getAbilityTotal() {
+        int abid = abilityTable.getRowIndex() + 1;
+        return getCharacterData().getAbilityTotalById(abid);
+    }
+
+    /*
+     * 能力値 修正値
+     */
+    public Integer getAbilityModifier() {
+        int ability = abilityTable.getRowIndex() + 1;
+        return getCharacterData().getAbilityModifierById(ability);
+    }
+
+    /*
+     * 技能 対応能力修正値
+     */
+    public Integer getSkillAbilityModifier() {
+        int skill = skillTable.getRowIndex() + 1;
+        return getCharacterData().getSkillAbilityModifierById(skill);
+    }
+
+    /*
+     * 技能 対応能力値名
+     */
+    public String getSkillAbilityName() {
+        int skill = skillTable.getRowIndex() + 1;
+        return getCharacterData().getSkillAbilityNameById(skill);
+    }
+
+    /*
+     * 技能 対応能力値名 省略名
+     */
+    public String getSkillAbilityShortName() {
+        int skill = skillTable.getRowIndex() + 1;
+        return getCharacterData().getSkillAbilityShortNameById(skill);
+    }
+
+    /*
+     * 技能 ポイント
+     */
+    public Integer getSkillTotalPoint() {
+        int skill = skillTable.getRowIndex() + 1;
+        return getCharacterData().getSkillTotalPointById(skill);
+    }
+
+    /*
+     * 技能 判定値
+     */
+    public Integer getSkillTotalCheckModifier() {
+        return getSkillAbilityModifier()
+                + getSkillTotalRank()
+                + getSkillMiscModifier()
+                + getSkillArmorModifier()
+                + getSkillSynergyModifier();
+    }
+
+    /*
+     * 技能 その他修正
+     */
+    public Integer getSkillMiscModifier() {
+        Integer result;
+        int index = skillTable.getRowIndex();
+        List<CharacterSkillRecord> skillRecordList = getCharacterData().getCharacterSkillRecordList();
+        // skillTable の RowIndex と List の index は同一の特技をさしているはず
+        result = skillRecordList.get(index).getMiscModifier();
+        if (result == null) {
+            return 0;
+        } else {
+            return result;
+        }
+    }
+
+    public void setSkillMiscModifier(Integer skillMiscModifier) {
+        int index = skillTable.getRowIndex();
+        List<CharacterSkillRecord> skillRecord = getCharacterData().getCharacterSkillRecordList();
+        // skillTable の RowIndex と List の index は同一の特技をさしているはず
+        skillRecord.get(index).setMiscModifier(skillMiscModifier);
+    }
+    /*
+     * 技能 ランク（計算値) ポイントとクラスから計算する
+     */
+    protected Integer skillRank;
+    protected Integer skillRankByLevelAndSkill;
+
+    public Integer getSkillTotalRank() {
+        int result;
+        int skillId = skillTable.getRowIndex() + 1;
+
+        result = getCharacterData().getSkillTotalRankById(skillId);
+        return result;
+    }
+
+    /*
+     * 技能がランク無しでも実施可能か
+     */
+    protected boolean skillAcceptNoRankBySkillId;
+    protected String abilityCheckAcceptNoRank;
+
+    public String getSkillCheckAcceptNoRank() {
+        int skill = skillTable.getRowIndex() + 1;
+        if (getCharacterData().isSkillAcceptoRankBySkillId(skill)) {
+            return "■";
+        } else {
+            return "□";
+        }
+    }
+
+
+    /*
+     * 技能 鎧、盾ペナルティ
+     */
+    public Integer getSkillArmorModifier() {
+        Integer result;
+        int skillId = skillTable.getRowIndex() + 1;
+        result = getCharacterData().getSkillArmorModifierById(skillId);
+        return result;
+    }
+
+    /**
+     * 技能 相乗効果
+     */
+    public Integer getSkillSynergyModifier() {
+        Integer result;
+        int skillId = skillTable.getRowIndex() + 1;
+        result = getCharacterData().getSkillSynergyModifierById(skillId);
+        return result;
+    }
+
+    /**
+     * 技能 ランクもっているか？
+     */
+    public String getSkillRankCheck() {
+        int skillId = skillTable.getRowIndex() + 1;
+        SkillMaster skill = skillMasterFacade.find(skillId);
+        ClassMaster klass;
+
+        List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
+
+        if (getCharacterData().hasSkillRankBySkill(skill)) {
+            return "■";
+        }
+        return "□";
+    }
+
+    /*
+     * キャラクタレベル毎のクラスの選択
+     */
+    public Integer getSelectedClassByRow() {
+        int index = growthTable.getRowIndex();
+        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+        if (growth.getClassId() == null) {
+            return null;
+        } else {
+            return growth.getClassId().getId();
+        }
+
+    }
+
+    public void setSelectedClassByRow(Integer classId) {
+        int index = growthTable.getRowIndex();
+        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+        ClassMaster klass;
+
+        if (classId == null) {
+            growth.setClassId(null);
+            return;
+
+        }
+        klass = classMasterFacade.find(classId);
+        growth.setClassId(klass);
+    }
+
+    /*
+     * キャラクタレベル 4 レベル毎の上昇能力値の設定
+     */
+    public Integer getSelectedAbilityEnhancementByRow() {
+        int index = growthTable.getRowIndex();
+        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+        if (growth.getAbilityEnhancement() == null) {
+            return null;
+        } else {
+            return growth.getAbilityEnhancement();
+        }
+    }
+
+    public void setSelectedAbilityEnhancementByRow(Integer abilityId) {
+        int index = growthTable.getRowIndex();
+        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+
+        if (abilityId == null) {
+            growth.setAbilityEnhancement(null);
+            return;
+        }
+        growth.setAbilityEnhancement(abilityId);
+    }
+
+    /*
+     * キャラクタレベル毎のスキルの変更ボタン
+     */
+    public String editSkillButton_action() {
+        int index = growthTable.getRowIndex();
+        // Lv とキャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする
+        setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(index));
+
+        return "EditCharacterPerLevelPage";
+    }
+
+    /*
+     * セーヴ 対応能力修正値
+     */
+    public Integer getSaveAbilityModifier() {
+        int saveId = saveTable.getRowIndex() + 1;
+        return getCharacterData().getSaveAbilityModifierById(saveId);
+    }
+
+    /*
+     * セーヴボーナス クラス合計
+     */
+    protected Integer saveClassBonus;
+
+    public Integer getSaveClassBonus() {
+        int saveId = saveTable.getRowIndex() + 1;
+        return getCharacterData().getSaveClassBonusById(saveId);
+    }
+
+    /*
+     * セーヴ その他修正値
+     */
+    public Integer getSaveMiscModifier() {
+        int saveId = saveTable.getRowIndex() + 1;
+        return getCharacterData().getSaveMiscModifierById(saveId);
+    }
+
+    public void setSaveMiscModifier(Integer miscModifier) {
+        int saveId = saveTable.getRowIndex() + 1;
+        CharacterSaveRecord saveRecord = getCharacterData().getCharacterSaveRecordList().get(saveId - 1);
+        saveRecord.setMiscModifier(miscModifier);
+    }
+
+    /*
+     * セーヴ 種族修正値
+     */
+    public Integer getSaveRaceModifier() {
+        int saveId = saveTable.getRowIndex() + 1;
+        return getCharacterData().getSaveRaceModifierById(saveId);
+    }
+
+    /*
+     * セーヴボーナス トータル計
+     */
+    public Integer getSaveTotal() {
+        int saveId = saveTable.getRowIndex() + 1;
+        return getCharacterData().getSaveTotalById(saveId);
+    }
+
+    /*
+     * イニシアチブ 技能修正
+     */
+    public Integer getInitiativeFeatModifier() {
+        Integer mod = getCharacterData().getInitiativeFeatModifier();
+        if (mod == null) {
+            return new Integer(0);
+        }
+        return mod;
+    }
+
+    public void setInitiativeFeatModifier(Integer modifier) {
+        getCharacterData().setInitiativeFeatModifier(modifier);
+    }
+
+    public void setSpeedFeatModifier(Integer speedFeatModifier) {
+        getCharacterData().setSpeedFeatModifier(speedFeatModifier);
+    }
+
+    public void textField13_processValueChange(ValueChangeEvent vce) {
+    }
+
+    /**
+     * 技能編集ボタン（レベル無し)
+     */
+    public String editSkillNomalButton_action() {
+        // キャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする。Lv は 1 固定
+        setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(0));
+        return "EditCharacterPerLevelPage";
+    }
+
+    /**
+     * 能力値上昇の選択リストを非表示にするかどうかを決める
+     */
+    public boolean isAbilityEnhancementDisabled() {
+        int level = growthTable.getRowIndex() + 1;
+        // 4 レベルの倍数のときは表示
+        return (level % 4 != 0);
+    }
+
+    public void dropdown2_processValueChange(ValueChangeEvent vce) {
+    }
+
+    public String editCharaCancelButton_action() {
+        if (getCharacterData().getSaveTime() == null) {
+            return editCharaDeleteButton_action();
+        } else {
+            return "CharacterListPage";
+        }
+    }
+
+    public String viewLink_action() {
+        return "PrintableCharacterRecordPage";
+    }
+
+    /**
+     * アイテム 武器 TODO: 未実装
+     */
+    /*
+     * public String getArm1 (){ ArmMaster arm1 =
+     * getCharacterData().getCharacterEquipment().getArm1(); if(arm1 != null) {
+     * return arm1.getName(); } return "未装備"; } public String getArm2 (){
+     * ArmMaster arm2 = getCharacterData().getCharacterEquipment().getArm2();
+     * if(arm2 != null) { return arm2.getName(); } return "未装備"; }
+     */
+    public Boolean isTriableSkill() {
+        SkillMaster skill = (SkillMaster) skillTable.getRowData();
+        return getCharacterData().isSkillAcceptoRankBySkillId(skill.getId())
+                || getCharacterData().hasSkillRankBySkill(skill);
     }
 }

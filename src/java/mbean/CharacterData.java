@@ -68,6 +68,10 @@ public class CharacterData implements CharacterSummary {
     protected CharacterRecordFacade characterRecordFacade;
     private CharacterRecord characterRecord;
 
+    public CharacterRecord getCharacterRecord() {
+        return characterRecord;
+    }
+
     private CharacterData() {
     }
 
@@ -1145,6 +1149,7 @@ public class CharacterData implements CharacterSummary {
         return save;
     }
 
+    @Override
     public Integer getHitPoint() {
         List growthList = characterRecord.getCharacterGrowthRecordList();
         int total = 0;
@@ -1639,10 +1644,10 @@ public class CharacterData implements CharacterSummary {
         for (CharacterGrowthRecord growth : growthList) {
             // 経験値から見たキャラクタレベルだけで判断する。
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() == getLevel()) {
-                if(growth.getClassId() == null){
-                    return("未設定");
+                if (growth.getClassId() == null) {
+                    return ("未設定");
                 }
-                str.append(getLevel());                
+                str.append(getLevel());
                 str.append(growth.getClassId().getHitDiceType().getName());
             }
         }
@@ -1744,5 +1749,17 @@ public class CharacterData implements CharacterSummary {
     @Override
     public Integer getLevelAdjustment() {
         return 0;
+    }
+
+    public List<CharacterSkillRecord> getCharacterSkillRecordList() {
+        return characterRecord.getCharacterSkillRecordList();
+    }
+    
+    public List<CharacterAbilityRecord> getCharacterAbilityRecordList(){
+        return characterRecord.getCharacterAbilityRecordList();
+    }
+    
+    public Date getSaveTime() {
+        return characterRecord.getSaveTime();
     }
 }

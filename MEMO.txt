@@ -224,3 +224,10 @@ CREATE TABLE "ENCOUNTER_MEMBER"
 
 
 ResourceBundle.getBundle\("/Bundle"\)\.getString\("(.*)"\)
+
+//------------
+
+context.addMessage\("(.*) FacesMessage\(\("(.*)"\)\)\);
+JsfUtil.addSuccessMessage("$2");
+
+//-------------
