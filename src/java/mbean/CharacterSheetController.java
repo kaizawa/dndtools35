@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.component.html.HtmlSelectOneMenu;
@@ -62,6 +63,16 @@ public class CharacterSheetController implements Serializable {
     private CharacterSkillRecordFacade characterSkillRecordFacade;
     @EJB
     protected ClassMasterFacade classMasterFacade;
+    
+    public static final int STR = 1;
+    public static final int DEX = 2;
+    public static final int CON = 3;
+    public static final int INT = 4;
+    public static final int WIS = 5;
+    public static final int CHA = 6;
+    public static final int FORTITUTE = 1;
+    public static final int REFLEX = 2;
+    public static final int WILL = 3;    
     
     boolean loggedIn = false;
 
@@ -164,26 +175,7 @@ public class CharacterSheetController implements Serializable {
     public void setCampaignSelectRequired(boolean campaignSelectRequired) {
         this.campaignSelectRequired = campaignSelectRequired;
     }
-    // キャラクタの成長レコードのリスト
-    private List<CharacterGrowthRecord> characterGrowthRecordList;
-    
-    public List<CharacterGrowthRecord> getCharacterGrowthRecordList() {
-        return characterGrowthRecordList;
-    }
-    
-    public void setCharacterGrowthRecordList(List<CharacterGrowthRecord> characterGrowthRecordList) {
-        this.characterGrowthRecordList = characterGrowthRecordList;
-    }
-    // キャラクタの技能成長レコードのリスト
-    private List<CharacterSkillGrowthRecord> characterSkillGrowthRecordList;
-    
-    public List<CharacterSkillGrowthRecord> getCharacterSkillGrowthRecordList() {
-        return characterSkillGrowthRecordList;
-    }
-    
-    public void setCharacterSkillGrowthRecordList(List<CharacterSkillGrowthRecord> characterSkillGrowthRecordList) {
-        this.characterSkillGrowthRecordList = characterSkillGrowthRecordList;
-    }
+
     //キャンペーンの選択  
     // このプロパティはページ間でやり取りされるので、セッションBeanでよい
     Integer selectedCampaign;
@@ -306,16 +298,7 @@ public class CharacterSheetController implements Serializable {
     public void setLevelArray(SelectItem[] levelArray) {
         this.levelArray = levelArray;
     }
-    // キャラクタ成長レコード
-    protected CharacterGrowthRecord characterGrowthRecord;
-
-    public CharacterGrowthRecord getCharacterGrowthRecord() {
-        return characterGrowthRecord;
-    }
-
-    public void setCharacterGrowthRecord(CharacterGrowthRecord characterGrowthRecord) {
-        this.characterGrowthRecord = characterGrowthRecord;
-    }
+ 
 
     /*
      * この valueChangeListener は CharacterListPage の PostConstract の init
@@ -945,8 +928,6 @@ public class CharacterSheetController implements Serializable {
     public String editSkillButton_action() {
         int index = growthTable.getRowIndex();
         // Lv とキャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする
-        setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(index));
-
         return "EditCharacterPerLevelPage";
     }
 
@@ -1025,7 +1006,6 @@ public class CharacterSheetController implements Serializable {
      */
     public String editSkillNomalButton_action() {
         // キャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする。Lv は 1 固定
-        setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(0));
         return "EditCharacterPerLevelPage";
     }
 
