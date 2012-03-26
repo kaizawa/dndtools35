@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="レベル毎キャラクタ編集"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+
+                <h:panelGrid id="contents" style="width: 100%" styleClass="contents">
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                    </h:panelGroup> 
+                    <h:panelGrid columns="1" id="gridPanel1" style="width: 100%">
+                        <h:panelGrid columns="1" id="gridPanel6" style="height: 100%; width: 100%">
+                            <h:panelGrid id="naviGationGridPanel1" style="height: 100%; width: 100%">
+                                <h:outputText id="outputText1" style="font-size: 16px; font-weight: bold" value="#{characterSheetPerLevelController.characterData.characterName} の キャラクターレベル #{characterSheetPerLevelController.characterGrowthRecord.characterGrowthRecordPK.characterLevel} の成長記録"/>
+                                <h:panelGrid columns="2" id="gridPanel5" style="height: 100%; text-align: left; width: 100%">
+                                    <h:panelGrid id="gridPanel3" style="height: 100%; text-align: left; width: 100%">
+                                        <h:commandButton action="#{characterSheetPerLevelController.saveButton_action}" id="saveButton1" value="保存"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="gridPanel4" style="height: 100%; text-align: right; width: 100%">
+                                        <h:commandButton action="#{characterSheetPerLevelController.returnCharacterRecordPageButton_action()}"
+                                                         id="returnCharacterRecordPageButton1" value="キャラクター修正画面へ戻る"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" id="gridPanel2" style="width: 100%; height: 100%;">
+                                    <h:commandButton action="#{characterSheetPerLevelController.previousLevelButton_action}"
+                                                     disabled="#{characterSheetPerLevelController.previousButtonDisabled}" id="previousLevelButton1" value="前のレベルへ"/>
+                                    <h:commandButton action="#{characterSheetPerLevelController.nextLevelButton_action}"
+                                                     disabled="#{characterSheetPerLevelController.nextButtonDisabled}" id="nextLevelButton1" value="次のレベルへ"/>
+                                    <h:selectOneMenu id="levelDropdown1"
+                                                     onchange="webui.suntheme.common.timeoutSubmitForm(this.form, 'gridPanel2:gridPanel16:gridPanel1:naviGationGridPanel:levelDropdown');"
+                                                     rendered="false" value="#{characterSheetPerLevelController.selectedLevel}" valueChangeListener="#{characterSheetPerLevelController.levelDropdown_processValueChange(vce)}">
+                                        <f:selectItems id="dropdown1SelectItems1" value="#{characterSheetPerLevelController.levelArray}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" id="classGridPanel1" style="width: 100%; height: 100%;" styleClass="tableGrid">
+                                <h:panelGrid columns="3" id="gridPanel7" style="width: 100%; height: 100%;" styleClass="tableTitleBlack">
+                                    <h:outputText id="outputText2" value="クラス名"/>
+                                    <h:outputText id="outputText3" value="クラスレベル"/>
+                                    <h:outputText id="outputText4" value="HDの種類"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="3" id="gridPanel8" style="height: 100%; text-align: left; width: 100%" styleClass="left">
+                                    <h:panelGrid id="gridPanel9" style="width: 200px">
+                                        <h:selectOneMenu id="classdropdown1" onchange="" value="#{characterSheetPerLevelController.selectedClass}">
+                                            <f:selectItems id="dropdown1SelectItems2" value="#{applicationBean.classArray}"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="gridPanel10" style="font-size: 14px; width: 150px">
+                                        <h:outputText escape="false" id="outputText5" style="font-size: 18px" value="#{characterSheetPerLevelController.classLevel}"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="gridPanel11" style="width: 150px">
+                                        <h:outputText id="outputText6" style="font-size: 18px" value="#{characterSheetPerLevelController.hitDiceType} "/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" id="gridPanel12" style="height: 100%; width: 100%" styleClass="tableGrid">
+                                <h:panelGrid columns="2" id="gridPanel13" style="border: 1px solid #cccccc; width: 100%" styleClass="tableTitleBlackMiddle">
+                                    <h:outputText id="outputText7" style="" value="現在の合計HP"/>
+                                    <h:panelGrid id="gridPanel14" style="border: 1px solid rgb(204, 204, 204); ">
+                                        <h:outputText id="outputText8" style=" font-size: 20px" value="#{characterSheetPerLevelController.characterData.hitPoint}"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <h:panelGrid columns="9" id="gridPanel15"
+                                             style="border: 1px solid #cccccc; height: 100%; vertical-align: middle; width: 100%" styleClass="tableTitleBlackMiddle">
+                                    <h:outputText id="outputText9" value="増分HP"/>
+                                    <h:panelGrid id="gridPanel16" style="border: 1px solid #cccccc; ">
+                                        <h:outputText id="outputText10" style=" font-size: 18px" value="#{characterSheetPerLevelController.totalHpThisLevel}"/>
+                                    </h:panelGrid>
+                                    <h:outputLabel value="(内訳:" style="font-size: 13px"/>                                                                            
+                                    <h:outputText id="outputText12" value="#{characterSheetPerLevelController.hitPointAbilityModifier} (耐)"/>
+                                    <h:outputText id="outputText14" value="+"/>
+                                    <h:inputText id="textField1" style="text-align: right; width: 30px" value="#{characterSheetPerLevelController.characterGrowthRecord.hitPoint}"/>
+                                    <h:outputLabel value="(ダイス出目)"/>
+                                    <h:outputLabel value=")" style="font-size: 13px"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" id="gridPanel17" style="height: 100%; width: 100%" styleClass="tableGrid">
+                                <h:panelGrid columns="2" id="gridPanel18" style="border: 1px solid #cccccc; width: 100%" styleClass="tableTitleBlackMiddle">
+                                    <h:outputText id="outputText30" style="" value="技能ポイント合計"/>
+                                    <h:panelGrid id="gridPanel19" style="border: 1px solid rgb(204, 204, 204); ">
+                                        <h:outputText id="outputText31" style=" font-size: 20px" value="#{characterSheetPerLevelController.skillPointUsedTotal}"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <h:panelGrid columns="10" id="gridPanel20"
+                                             style="border: 1px solid #cccccc; height: 100%; vertical-align: middle; width: 100%" styleClass="tableTitleBlackMiddle">
+                                    <h:outputText id="outputText33"  value="増分技能ポイント"/>
+                                    <h:panelGrid columns="1" style="border: 1px solid #cccccc; ">
+                                        <h:outputText style=" font-size: 18px" value="#{characterSheetPerLevelController.skillPointsAvailable}"/>
+                                    </h:panelGrid>
+                                    <h:outputText id="outputText44" style="text-align: left; color: red" rendered="#{characterSheetPerLevelController.isSkillPointRemaind()}" value="未使用: #{characterSheetPerLevelController.skillPointUnused}"/>
+                                    <h:outputLabel value="(内訳:" style="font-size: 13px"/>
+                                    <h:outputText id="outputText35" value="#{characterSheetPerLevelController.skillPointAbilityModifier} (知)"/>
+                                    <h:outputText id="outputText37" value="+"/>
+                                    <h:outputText id="outputText39" value="#{characterSheetPerLevelController.skillPointPerLevel} (クラス)"/>
+                                    <h:outputText id="outputText42" value="+"/>
+                                    <h:outputText id="outputText40" value="#{characterSheetPerLevelController.skillPointRaceBonus} (種族)"/>
+                                    <h:outputLabel value=")" style="font-size: 13px"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+
+
+                            <h:panelGrid id="skillTableGridPanel1" style="background-color: #000000; height: 100%; width: 100%">
+                                <h:dataTable binding="#{characterSheetPerLevelController.skillTable}" headerClass="tableTitleBlackNopad"
+                                             id="skillTable" rowClasses="skill-row-even,skill-row-odd" styleClass="waku"
+                                             value="#{applicationBean.skillList}" var="currentRow">
+                                    <h:column id="column1">
+                                        <h:outputText id="outputText16" style="font-size: 14px; font-weight: bold" value="#{characterSheetPerLevelController.classSkill}"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText17" value="クラス技能"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column2">
+                                        <h:outputText id="outputText18" style="font-size: 14px; font-weight: bold" value="&lt;#{currentRow.skillName}&gt; #{characterSheetPerLevelController.skillCheckAcceptNoRank}"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText19" value="技能名"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column3">
+                                        <h:outputText id="outputText20" rendered="#{characterSheetPerLevelController.isTriableSkill()}"  value="#{characterSheetPerLevelController.skillAbilityModifier} 【#{characterSheetPerLevelController.skillAbilityShortName}】"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText21" value="能力"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column7">
+                                        <h:inputText id="textField2" rendered="#{characterSheetPerLevelController.isTriableSkill()}" style="font-size: 18px; text-align: right; width: 30px" value="#{characterSheetPerLevelController.skillPoint}"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText28" value="使用ポイント"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column5">
+                                        <h:outputText style="#{editCharacterPerLevel.skillTotalPointColor}" rendered="#{characterSheetPerLevelController.isTriableSkill()}" value="#{characterSheetPerLevelController.skillTotalPoint}"/>
+                                        <f:facet name="header">
+                                            <h:outputText value="合計ポイント"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column6">
+                                        <h:outputText id="outputText26" style="text-align: right" rendered="#{characterSheetPerLevelController.isTriableSkill()}" value="#{characterSheetPerLevelController.skillRank}"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText27" value="ランク"/>
+                                        </f:facet>
+                                    </h:column>
+                                    <h:column id="column4">
+                                        <h:outputText escape="false" id="outputText22" rendered="#{characterSheetPerLevelController.isTriableSkill()}" style="font-size: 18px; font-weight: bolder" value="#{characterSheetPerLevelController.skillTotalRank}"/>
+                                        <f:facet name="header">
+                                            <h:outputText id="outputText23" value="合計ランク"/>
+                                        </f:facet>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:outputText id="outputText29" style="font-size: 8px" value="#{characterSheetPerLevelController.characterData.id}"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>            
+    </ui:composition>
+</html> 
