@@ -87,4 +87,30 @@ public class SessionController {
     public void setCharacterGrowthRecord(CharacterGrowthRecord characterGrowthRecord) {
         this.characterGrowthRecord = characterGrowthRecord;
     }    
+    
+    /*
+     * 選択されたキャンペーン
+     */
+    private Integer characterListSelectedCampaign = null;
+
+    public Integer getCharacterListSelectedCampaign() {
+        return characterListSelectedCampaign;
+    }
+
+    public void setCharacterListSelectedCampaign(Integer selectedCampaign) {
+        this.characterListSelectedCampaign = selectedCampaign;
+    }
+    
+    /*
+     * チェックボックスで選択されたキャラクターのセット
+     */
+    private Set checkedCharacerSet = new LinkedHashSet();
+
+    public Set getCheckedCharacterSet() {
+        return checkedCharacerSet;
+    }
+
+    public void setCheckedCharacterSet(Set selectedCharas) {
+        this.checkedCharacerSet = selectedCharas;
+    }
 }    

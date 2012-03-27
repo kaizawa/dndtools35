@@ -31,7 +31,6 @@ public class CharacterSheetController implements Serializable {
 
     @EJB
     private CharacterRecordFacade characterRecordFacade;
-    private Set selectedCharas = new LinkedHashSet();
     @EJB
     private BonusRankMasterFacade bonusRankMasterFacade;
     @EJB
@@ -122,19 +121,21 @@ public class CharacterSheetController implements Serializable {
     protected ApplicationBean getApplicationBean() {
         return getApplicationBean();
     }
-    // 選択されたキャンペーン
-    private Integer characterListSelectedCampaign = null;
-
+   
+    /*
+     * 選択されたキャンペーン
+     */
     public Integer getCharacterListSelectedCampaign() {
-        return characterListSelectedCampaign;
+        return getSessionController().getCharacterListSelectedCampaign();
     }
 
     public void setCharacterListSelectedCampaign(Integer selectedCampaign) {
-        this.characterListSelectedCampaign = selectedCampaign;
+        getSessionController().setCharacterListSelectedCampaign(selectedCampaign);
     }
-    ///////////////////////////////
-    // キャラクターデータのリスト
-    //////////////////////////////////
+    
+    /*
+     * キャラクターデータのリスト
+     */
     public List<CharacterData> getCharacterDataList() {
 
         List<CharacterData> charaDataList = new ArrayList<CharacterData>();
@@ -308,7 +309,6 @@ public class CharacterSheetController implements Serializable {
     public void setLevelArray(SelectItem[] levelArray) {
         this.levelArray = levelArray;
     }
- 
 
     /*
      * この valueChangeListener は CharacterListPage の PostConstract の init
@@ -318,14 +318,18 @@ public class CharacterSheetController implements Serializable {
         Integer campaign = (Integer) vce.getNewValue();
         setCharacterListSelectedCampaign(campaign);
     }
-
-    public Set getSelectedCharas() {
-        return selectedCharas;
+    
+    /*
+     * チェックボックスで選択されたキャラクターのセット
+     */
+    public Set getCheckedCharacterSet() {
+        return getSessionController().getCheckedCharacterSet();
     }
 
-    public void setSelectedCharas(Set selectedCharas) {
-        this.selectedCharas = selectedCharas;
+    public void setCheckedCharacterSet(Set checkedCharas) {
+        getSessionController().setCheckedCharacterSet(checkedCharas);
     }
+    
     private HtmlDataTable characterListDataTable = new HtmlDataTable();
 
     public HtmlDataTable getCharacterListDataTable() {
@@ -524,26 +528,23 @@ public class CharacterSheetController implements Serializable {
     }
 
     /**
-     * @return the charaSelected
+     * チェックボックが選択されているか?
      */
-    public boolean isCharaSelected() {
+    public boolean isCharacterChecked() {
 
         CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
 
-        return getSelectedCharas() != null && getSelectedCharas().contains(charaData);
+        return getCheckedCharacterSet() != null && getCheckedCharacterSet().contains(charaData);
     }
 
-    /**
-     * @param charaSelected the charaSelected to set
-     */
-    public void setCharaSelected(boolean charaSelected) {
+    public void setCharacterChecked(boolean charaChecked) {
 
         CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
         if (charaData != null) {
-            if (charaSelected) {
-                getSelectedCharas().add(charaData);
+            if (charaChecked) {
+                getCheckedCharacterSet().add(charaData);
             } else {
-                getSelectedCharas().remove(charaData);
+                getCheckedCharacterSet().remove(charaData);
             }
         }
     }
@@ -551,7 +552,7 @@ public class CharacterSheetController implements Serializable {
     public String selectAllButton_action() {
         // TODO: Process the button click action. Return value is a navigation
         // case name where null will return to the same page.
-        Set<CharacterData> charaSet = getSelectedCharas();
+        Set<CharacterData> charaSet = getCheckedCharacterSet();
         //Clear first, just in case.
         charaSet.clear();
         for (CharacterData charaData : getCharacterDataList()) {
@@ -561,7 +562,7 @@ public class CharacterSheetController implements Serializable {
     }
 
     public String releaseAllButton_action() {
-        Set charaSet = getSelectedCharas();
+        Set charaSet = getCheckedCharacterSet();
         charaSet.clear();
         return null;
     }
@@ -1079,4 +1080,9 @@ public class CharacterSheetController implements Serializable {
         }
         return sb.toString();
     }
+    
+    public static String getAbilityShortName(AbilityMaster ability){
+        String name = ability.getAbilityName();
+        return (new StringBuilder()).append("\u3010").append(name.substring(0, 1)).append("\u3011").toString();
+    }  
 }

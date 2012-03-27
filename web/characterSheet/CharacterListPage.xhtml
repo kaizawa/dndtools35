@@ -28,7 +28,7 @@
                             <h:dataTable binding="#{characterSheetController.characterListDataTable}"
                                          id="characterListDataTable" style="" styleClass="w" value="#{characterSheetController.characterDataList}" var="currentRow">
                                 <h:column id="check">
-                                    <h:selectBooleanCheckbox id="checkbox1" value="#{characterSheetController.charaSelected}"/>
+                                    <h:selectBooleanCheckbox id="checkbox1" value="#{characterSheetController.characterChecked}"/>
                                 </h:column>
                                 <h:column id="column1">
                                     <h:outputText id="outputText2" style="font-size: 14px; font-weight: bold;"  value="#{currentRow.characterName}"/>

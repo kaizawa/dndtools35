@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>キャラクターサマリー</title>
+        <h:outputStylesheet name="css/stylesheet.css"/>     
+    </h:head>
+
+    <h:body>    
+        <h:form>
+            <h:panelGrid columns="1" id="gridPanel34" styleClass="topLevelGrid topLevelGridPrint">
+                <h:panelGrid id="charaListGridPanel" style="width: 100%; height: 100%;">
+                    <h:dataTable binding="#{printableCharacterSummaryListController.characterSummaryTable}"
+                                 id="characterSummaryTable" style="" styleClass="gPrintSummaryList" value="#{printableCharacterSummaryListController.checkedCharacterList}" var="currentRow">
+                        <h:column id="nameColumn1">
+                            <h:panelGrid columns="1" id="gridPanel36" style="width: 150px" styleClass="qPrint">
+                                <h:outputText id="charaEditLinkText1" style="font-size: 12px;" value="#{currentRow.characterName} Lv #{printableCharacterSummaryListController.characterLevel}"/>
+                                <h:outputText id="playerName" value="#{currentRow.playerName}"/>
+                                <h:outputText id="classList" value="#{printableCharacterSummaryListController.classList}"/>
+                            </h:panelGrid>
+                            <f:facet name="header"/>
+                        </h:column>
+                        <h:column id="attack_column">
+                            <h:panelGrid id="gridPanel1" styleClass="qPrint">
+                                <h:outputText escape="false" id="outputText2" value="#{printableCharacterSummaryListController.attackDescriptionWithBR}"/>
+                            </h:panelGrid>
+                            <f:facet name="header"/>
+                            <f:facet name="header"/>
+                        </h:column>
+                        <h:column id="acColumn">
+                            <f:facet name="header"/>
+                            <h:panelGrid id="acGrid" style="width: 85px" styleClass="qPrint">
+                                <h:outputText id="HP" style="font-size: 12px;" value="HP: #{printableCharacterSummaryListController.hitPoint}"/>
+                                <h:outputText id="initiative" value="イニシアチブ: #{printableCharacterSummaryListController.initiative}"/>
+                                <h:outputText id="outputText3" value="通常/接触/立ち"/>
+                                <h:outputText id="AC" value="AC: #{printableCharacterSummaryListController.acNormal} / #{printableCharacterSummaryListController.acTouch} / #{printableCharacterSummaryListController.acFlatFooted}"/>
+                            </h:panelGrid>
+                        </h:column>
+                        <h:column id="skillColumn">
+                            <h:panelGrid id="gridPanel2" style="width: 70px" styleClass="qPrint">
+                                <h:outputText escape="false" id="skills" value="#{printableCharacterSummaryListController.commonSkills}"/>
+                            </h:panelGrid>
+                        </h:column>
+                        <h:column id="saveColumn16">
+                            <h:panelGrid id="gridPanel37" styleClass="qPrint">
+                                <h:panelGrid columns="2" id="saveAndAbility">
+                                    <h:panelGrid id="ability">
+                                        <h:dataTable binding="#{printableCharacterSummaryListController.abilityTable}" headerClass="list-header"
+                                                     id="abilityTable" rowClasses="list-row-even,list-row-odd" value="#{applicationBean.abilityList}" var="abilityCurrentRow">
+                                            <h:column id="column6">
+                                                <h:outputText id="outputText29" value="#{printableCharacterSummaryListController.abilityShortName}"/>
+                                            </h:column>
+                                            <h:column id="column7">
+                                                <h:outputText id="outputText31" value="#{printableCharacterSummaryListController.abilityTotal}"/>
+                                            </h:column>
+                                            <h:column id="column8">
+                                                <h:outputText id="outputText33" value="(#{printableCharacterSummaryListController.abilityModifier})"/>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="save">
+                                        <h:dataTable binding="#{printableCharacterSummaryListController.saveTable}" headerClass="list-header"
+                                                     id="saveTable" rowClasses="list-row-even,list-row-odd" value="#{applicationBean.saveList}" var="saveCurrentRow">
+                                            <h:column id="column2">
+                                                <h:outputText id="outputText1" value="#{savecurrentRow.saveName}"/>
+                                                <f:facet name="header"/>
+                                            </h:column>
+                                            <h:column id="column3">
+                                                <h:outputText id="outputText4" value="#{printableCharacterSummaryListController.saveTotal}"/>
+                                                <f:facet name="header"/>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <f:facet name="header"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGrid>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>

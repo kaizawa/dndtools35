@@ -1,0 +1,583 @@
+/*
+* After modifying this style sheet, refresh the page being designed to see the effect of the modification.
+* Click the Refresh button in the Visual Designer toolbar to refresh the page.
+*/ 
+
+/* Style rules to make Java Server faces Standarad data tables look better */
+
+.topLevelGrid{
+/*
+    left: 24px;
+    top: 5px;
+    position: absolute;
+
+*/
+    width: 100%;
+}
+
+td {
+    /* これってすべての表に適用されてしまう。
+    * top 以外にしたいときは以下のようなものをつくってそこで宣言し、中央に表示させたい
+    コンポーネントの上のコンポーネント（GridPanelとか）で、 .hoge というクラスで の
+    StyleClass としてセットして、その上で以下の .hoge 配下の td として指定してやる。
+    td は明示的に指定できるコンポーネントがないので、上位のコンポーネントで td をしていする
+    .hoge td {
+    vertical-align: center;
+    }
+    */
+    vertical-align: top;
+}
+
+table.midde {
+    vertical-align: middle;
+}
+table.middle td {
+    vertical-align: middle;
+}
+
+table.left {
+    border-collapse: collapse;
+    width: 100%;
+}
+table.left th{
+    background-color:#000000;
+    font-size:14px;
+    color:white;
+    padding:2px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+table.left td {
+    background-image:url(../resources/dndback01.jpg);
+    font-size:12px;
+    text-align:left;
+    padding:2px;
+    vertical-align:middle;
+}
+
+table.w{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.w th{
+    background-color:#000000;
+    font-size:14px;
+    color:white;
+    padding:2px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+table.w td{
+    background-image:url(../resources/dndback01.jpg);
+    font-size:12px;
+    text-align:center;
+    padding:2px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    vertical-align:middle;
+}
+
+table.g{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.g th{
+    background-color:#000000;
+    font-size:16px;
+    color:white;
+    padding:4px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+}
+
+table.g td{
+    background-image:url(../resources/dndback01.jpg);
+    font-size:18px;
+    text-align:center;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+table.p{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.p th{
+    background-color:#000000;
+    font-size:16px;
+    color:white;
+    padding:4px;
+    text-align: center;
+}
+
+table.p td{
+    background-image:url(../resources/dndback02.jpg);
+    font-size:18px;
+    text-align:center;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+table.b td{
+    background-color:black;
+    font-size:18px;
+    text-align:center;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: #ffffff;
+}
+
+
+table.waku{
+    border-collapse: collapse;
+    padding:2px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-color: #000000;
+    border-bottom-color: #000000;
+    border-left-color: #000000;
+    border-right-color: #000000;
+    width: 100%;
+}
+
+table.waku th{
+
+}
+
+table.waku td{
+
+}
+
+.skill-row-even {
+    background-image:url(../resources/dndback01.jpg);
+    font-size:12px;
+    padding:2px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    vertical-align:middle;
+    text-align: center;
+}
+
+.skill-row-odd {
+    background-image:url(../resources/dndback02.jpg);
+    font-size:12px;
+    padding:2px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    vertical-align:middle;
+    text-align: center;
+}
+
+
+.p{
+    background-image:url(../resources/dndback02.jpg);
+    font-size:18px;
+    text-align:center;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 100%;
+    height: 100%;
+}
+
+.blackback{
+    background-color:black;
+    font-size:18px;
+    text-align:center;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+}
+
+
+
+.nomalColumn{
+    background-image:url(../resources/dndback01.jpg);
+    font-size:12px;
+    text-align:center;
+    padding:2px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    vertical-align:middle;
+}
+
+.black {
+    font-size:18px;
+    font-weight: bold;
+}
+
+/* 表の上につけるタイトル用 文字は白*/
+.tableTitleBlack {
+    color:#FFFFFF;
+    text-align:center;
+    line-height:17px;
+    padding:5px;
+    font-weight:bold;
+    font-size:17px;
+}
+
+/* 表の上につけるタイトル用 文字は白*/
+.tableTitleBlackMiddle {
+    color:#FFFFFF;
+    text-align:center;
+    font-weight:bold;
+    font-size:12px;
+    vertical-align: middle;
+}
+
+.tableTitleBlackMiddle td {
+    vertical-align: middle;
+}
+
+/* 表の上につけるタイトル用 文字は白 パディングとかなし*/
+.tableTitleBlackNopad {
+    background-color: black;
+    color:#FFFFFF;
+    text-align:center;
+    font-weight:bold;
+    vertical-align: middle;
+}
+
+.tableGrid{
+    background-color: #000000;
+    text-align: center;
+    width:100%;
+}
+
+.tableGridTitle{
+    background-color: #000000;
+    text-align: center;
+    color: #ffffff;
+    font-weight:bold;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.t{
+
+    font-size:16px;
+    padding:5px;
+    background-color: #CCCC99;
+}
+.n{
+    font-size:12px;
+    font-weight:normal;
+}
+.s{
+    font-size:10px;
+    font-weight:normal;
+}
+.si{
+    font-style: italic;
+    font-weight: bold;
+    font-size: 10px;
+}
+.sl{
+    font-size:10px;
+    font-weight:normal;
+    text-align:left;
+    padding-left:5px;
+}
+.sr{
+    font-size:10px;
+    font-weight:normal;
+    text-align:right;
+}
+.r{
+    text-align:right;
+}
+.l{
+    text-align:left;
+}
+
+.a{
+    text-align:left;
+    line-height:17px;
+    padding:5px;
+}
+
+/*bold */
+.b{
+    text-align:center;
+    font-weight:bold;
+    font-size:24px;
+}
+
+/* Font 17px */
+.c{
+    text-align:center;
+    line-height:17px;
+    padding:5px;
+    font-weight:bold;
+    font-size:17px;
+}
+
+
+
+
+/*
+.list-paging-header {
+background-color: white;
+}
+
+.list-paging-footer {
+background-color: white;
+}
+
+.list-row-even { 
+}
+
+.list-row-odd { 
+background-color: #eeeeee;
+}
+*/
+
+/* Style rules for message severity levels */
+
+.infoMessage {
+    color: black;
+}
+
+.warnMessage {
+    color: orange;
+    font-weight: bold;
+}
+
+.errorMessage {
+    color: red;
+    font-weight: bold;
+}
+
+.fatalMessage {
+    color: red;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.topLevelGridPrint{
+    font-size: 9px;
+    color: #666666;
+
+}
+
+.tableGridPrint{
+    text-align: center;
+    width:100%;
+}
+
+/* 表の上につけるタイトル用 文字は白*/
+.tableTitleBlackMiddlePrint {
+    text-align:center;
+
+
+    vertical-align: middle;
+}
+
+.tableTitleBlackMiddlePrint td {
+    vertical-align: middle;
+}
+
+/* 表の上につけるタイトル用 文字は白*/
+.tableTitleBlackMiddlePrint {
+    text-align:center;
+
+
+    vertical-align: middle;
+}
+
+.tableTitleBlackMiddlePrint td {
+    vertical-align: middle;
+}
+
+table.gPrint{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.gPrint th{
+
+    padding:4px;
+/*    border-bottom: 1px solid black; */
+    border-top: 1px solid black;
+    text-align: center;
+}
+
+table.gPrint td{
+
+    text-align:center;
+    border-bottom: 1px solid black;
+    vertical-align:middle;
+    padding-top: 2px; 
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+table.gPrintSummaryList{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.gPrintSummaryList th{
+
+    padding:4px;
+/*    border-bottom: 1px solid black; */
+/*    border-top: 1px solid black; */
+    text-align: center;
+}
+table.gPrintSummaryList td {
+    text-align:center;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: #333333;
+}
+
+table.noborder td {
+    color: #333333;
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    text-align:center;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+table.pPrint{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.pPrint th{
+
+    padding:4px;
+    text-align: center;
+}
+
+table.pPrint td{
+
+    text-align:center;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.bPrint {
+    font-size: 12px;
+    color:black;
+    font-weight:bold;
+}
+
+
+table.aPrint{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.aPrint th{
+    color: black;
+    font-size: 12px;
+    font-weight:bold;
+    padding:4px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    text-align: left;
+    vertical-align: top;
+}
+
+table.aPrint td{
+    color: black;
+    font-size: 12px;
+    font-weight:bold;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    vertical-align: top;
+    text-align: left;
+
+}
+
+table.acPrint {
+        height: 85px;
+        vertical-align: middle;
+        width: 30px
+}
+table.acPrint td {
+        vertical-align: middle;
+}
+
+
+table.qPrint{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.qPrint th{
+
+    padding:4px;
+    text-align: center;
+}
+
+table.qPrint td{
+
+    text-align:center;
+    vertical-align:middle;
+    text-align: left;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
