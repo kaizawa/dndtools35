@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -33,10 +34,6 @@ import javax.faces.model.SelectItem;
 public class SessionController {
     @EJB
     private CharacterRecordFacade characterRecordFacade;
-    
-    private Set selectedCharas = new LinkedHashSet();
-
-
     @EJB
     private BonusRankMasterFacade bonusRankMasterFacade;
     @EJB
@@ -63,5 +60,31 @@ public class SessionController {
 
     public boolean isNotLoggedIn(){
         return !loggedIn;
+    } 
+    
+    /*
+     * キャラクターデータ
+     */
+    private CharacterData characterData;
+
+    public CharacterData getCharacterData() {
+        return characterData;
     }
+
+    public void setCharacterData(CharacterData characterData) {
+        this.characterData = characterData;
+    }
+    
+    /*
+     * キャラクタ成長レコード
+     */
+    protected CharacterGrowthRecord characterGrowthRecord;
+
+    public CharacterGrowthRecord getCharacterGrowthRecord() {
+        return characterGrowthRecord;
+    }
+
+    public void setCharacterGrowthRecord(CharacterGrowthRecord characterGrowthRecord) {
+        this.characterGrowthRecord = characterGrowthRecord;
+    }    
 }    

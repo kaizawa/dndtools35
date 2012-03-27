@@ -64,6 +64,17 @@ public class CharacterSheetController implements Serializable {
     @EJB
     protected ClassMasterFacade classMasterFacade;
     
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
+    
     public static final int STR = 1;
     public static final int DEX = 2;
     public static final int CON = 3;
@@ -138,21 +149,19 @@ public class CharacterSheetController implements Serializable {
         }
         return charaDataList;
     }
-    // キャラクターデータ
-    private CharacterData characterData;
 
     public CharacterData getCharacterData() {
-        return characterData;
+        return sessionController.getCharacterData();
     }
 
     public void setCharacterData(CharacterData characterData) {
-        this.characterData = characterData;
+        sessionController.setCharacterData(characterData);
     }
     // キャラクタの削除ボタンを有効比するかどうかの判定。使ってないか？
     private boolean deleteButtonDisabled;
 
     public boolean isDeleteButtonDisabled() {
-        if (this.characterData.getId() == null) {
+        if (getCharacterData().getId() == null) {
             return true;
         } else {
             return false;
@@ -181,19 +190,19 @@ public class CharacterSheetController implements Serializable {
     Integer selectedCampaign;
 
     public Integer getSelectedCampaign() {
-        if (this.characterData.getCampaignId() == null) {
+        if (getCharacterData().getCampaignId() == null) {
             return null;
         }
-        return this.characterData.getCampaignId().getId();
+        return getCharacterData().getCampaignId().getId();
     }
 
     public void setSelectedCampaign(Integer campaignId) {
         if (campaignId == null) {
-            this.characterData.setCampaignId(null);
+            getCharacterData().setCampaignId(null);
             return;
         }
         CampaignMaster campaign = campaignMasterFacade.find(campaignId);
-        this.characterData.setCampaignId(campaign);
+        getCharacterData().setCampaignId(campaign);
     }
     /*
      * 選択された属性
@@ -201,38 +210,38 @@ public class CharacterSheetController implements Serializable {
     Integer selectedAlignment;
 
     public Integer getSelectedAlignment() {
-        if (this.characterData.getAlignmentId() == null) {
+        if (getCharacterData().getAlignmentId() == null) {
             return null;
         }
-        return this.characterData.getAlignmentId().getId();
+        return getCharacterData().getAlignmentId().getId();
     }
 
     public void setSelectedAlignment(Integer selectedAlignment) {
         if (selectedAlignment == null) {
-            this.characterData.setAlignmentId(null);
+            getCharacterData().setAlignmentId(null);
             return;
         }
         AlignmentMaster alignment = alignmentMasterFacade.find(selectedAlignment);
-        this.characterData.setAlignmentId(alignment);
+        getCharacterData().setAlignmentId(alignment);
     }
     /*
      * 選択された種族  
      */
     Integer selectedRace;
     public Integer getSelectedRace() {
-        if (this.characterData.getRaceId() == null) {
+        if (getCharacterData().getRaceId() == null) {
             return null;
         }
-        return this.characterData.getRaceId().getId();
+        return getCharacterData().getRaceId().getId();
     }
 
     public void setSelectedRace(Integer selectedRace) {
         if (selectedRace == null) {
-            this.characterData.setRaceId(null);
+            getCharacterData().setRaceId(null);
             return;
         }
         RaceMaster race = raceMasterFacade.find(selectedRace);
-        this.characterData.setRaceId(race);
+        getCharacterData().setRaceId(race);
     }
 
     /*
@@ -240,19 +249,19 @@ public class CharacterSheetController implements Serializable {
      */
     Integer selectedGender;
     public Integer getSelectedGender() {
-        if (this.characterData.getGenderId() == null) {
+        if (getCharacterData().getGenderId() == null) {
             return null;
         }
-        return this.characterData.getGenderId().getId();
+        return getCharacterData().getGenderId().getId();
     }
 
     public void setSelectedGender(Integer selectedGender) {
         if (selectedGender == null) {
-            this.characterData.setGenderId(null);
+            getCharacterData().setGenderId(null);
             return;
         }
         GenderMaster gender = genderMasterFacade.find(selectedGender);
-        this.characterData.setGenderId(gender);
+        getCharacterData().setGenderId(gender);
     }
     /*
      * 選択された神格
@@ -260,19 +269,19 @@ public class CharacterSheetController implements Serializable {
     Integer selectedReligion;
 
     public Integer getSelectedReligion() {
-        if (this.characterData.getReligionId() == null) {
+        if (getCharacterData().getReligionId() == null) {
             return null;
         }
-        return this.characterData.getReligionId().getId();
+        return getCharacterData().getReligionId().getId();
     }
 
     public void setSelectedReligion(Integer selectedReligion) {
         if (selectedReligion == null) {
-            this.characterData.setReligionId(null);
+            getCharacterData().setReligionId(null);
             return;
         }
         ReligionMaster religion = religionMasterFacade.find(selectedReligion);
-        this.characterData.setReligionId(religion);
+        getCharacterData().setReligionId(religion);
     }
     
     // キャラクタ編集画面で選択されたレベル値
