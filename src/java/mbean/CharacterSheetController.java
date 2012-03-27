@@ -7,6 +7,7 @@ package mbean;
 import ejb.*;
 import entity.*;
 import java.io.Serializable;
+import java.text.StringCharacterIterator;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -1056,5 +1057,26 @@ public class CharacterSheetController implements Serializable {
         SkillMaster skill = (SkillMaster) skillTable.getRowData();
         return getCharacterData().isSkillAcceptoRankBySkillId(skill.getId())
                 || getCharacterData().hasSkillRankBySkill(skill);
+    }
+    
+    /**
+     * 改行を<br>に変換し、半角スペースを &nbsp に変換
+     */
+    public static String textToHtml(String str) {
+        if (str == null) {
+            return null;
+        }
+        StringBuffer sb = new StringBuffer();
+        StringCharacterIterator sci = new StringCharacterIterator(str);
+        for (char c = sci.current(); c != StringCharacterIterator.DONE; c = sci.next()) {
+            if (c == '\n') {
+                sb.append("<br>");
+            } else if(c == ' ') {
+                sb.append("&nbsp;");
+            } else {                
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 }
