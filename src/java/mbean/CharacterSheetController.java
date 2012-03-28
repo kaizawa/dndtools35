@@ -8,10 +8,12 @@ import ejb.*;
 import entity.*;
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -541,9 +543,9 @@ public class CharacterSheetController implements Serializable {
 
         CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
         if (charaData != null) {
-            if (charaChecked) {
+            if (charaChecked && !getCheckedCharacterSet().contains(charaData)) {
                 getCheckedCharacterSet().add(charaData);
-            } else {
+            } else if (!charaChecked && getCheckedCharacterSet().contains(charaData)){
                 getCheckedCharacterSet().remove(charaData);
             }
         }
@@ -1067,7 +1069,7 @@ public class CharacterSheetController implements Serializable {
         if (str == null) {
             return null;
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         StringCharacterIterator sci = new StringCharacterIterator(str);
         for (char c = sci.current(); c != StringCharacterIterator.DONE; c = sci.next()) {
             if (c == '\n') {

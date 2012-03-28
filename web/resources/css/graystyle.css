@@ -20,7 +20,7 @@
 }
 
 .appname {
-   font-size: 24px;
+   font-size: 18px;
    text-transform: uppercase;
    color: white
 }
@@ -46,11 +46,45 @@
    background-color: #666666;
 }
 
+/* Left Pane */
+.leftpane {
+    background-color: #E9E9D1;
+   height: 100%;
+   border: 1px dotted #CEC0C0;
+    text-align: left;
+    vertical-align: text-top;
+}
+
+.leftpanetext {
+   color: #FFFFFF !important;
+   font-size: 10px!important;
+   font-weight: bold !important;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+.leftpanelink {
+   background-color: #666666;
+}
+
+/* Right Pane */
+.rightpane {
+    width: 100%;
+    height: 100%;
+}
+
+.body {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+}
+
 .contents {
    background-color: #E9E9D1;
    border: 1px dotted #CEC0C0;
    width: 100%;
    vertical-align: top;
+    text-align: left;
 }
 
 /* footer */

@@ -113,4 +113,42 @@ public class SessionController {
     public void setCheckedCharacterSet(Set selectedCharas) {
         this.checkedCharacerSet = selectedCharas;
     }
+    
+
+    /*
+     * プレイヤー(ログインユーザ)
+     */
+    protected PlayerMaster playerMaster;
+
+    public PlayerMaster getPlayerMaster() {
+        return playerMaster;
+    }
+
+    public void setPlayerMaster(PlayerMaster playerMaster) {
+        this.playerMaster = playerMaster;
+    }
+    
+    /*
+     * クラス設定ページ用。編集しているクラス
+     */
+    private ClassMaster classMaster;
+    public ClassMaster getClassMaster() {
+        return classMaster;
+    }
+    public void setClassMaster(ClassMaster classMaster) {
+        this.classMaster = classMaster;
+    }
+ 
+    /*
+     * 種族設定ページ用。
+     */
+    protected RaceMaster raceMaster;
+
+    public RaceMaster getRaceMaster() {
+        return raceMaster;
+    }
+
+    public void setRaceMaster(RaceMaster raceMaster) {
+        this.raceMaster = raceMaster;
+    }
 }    
