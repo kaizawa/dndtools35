@@ -13,7 +13,6 @@
         </ui:define>
         <ui:define name="body">
             <h:form id="form1">
-                <h:panelGrid id="contents" style="width: 100%" styleClass="contents">
                     <h:panelGroup id="messagePanel" layout="block">
                         <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                     </h:panelGroup> 
@@ -96,9 +95,6 @@
                             <h:commandButton action="#{characterSheetController.releaseAllButton_action}" id="releaseAllButton" value="全て解除"/>
                         </h:panelGrid>    
                     </h:panelGrid>
-                </h:panelGrid>
-
-
             </h:form>
         </ui:define>            
     </ui:composition>
