@@ -28,16 +28,16 @@
                 <h:panelGrid id="profileCell" rendered="false" style="width: 100%; height: 100%;" styleClass="subheaderlink">
                     <h:commandLink action="#{pageHeader.profileLink_action}" id="profileLink2" styleClass="subheadertext" value="プレイヤー設定"/>
                 </h:panelGrid>
-                <h:panelGrid id="logoutCell" rendered="#{sessionBean.loggedIn}" style="width: 100%; height: 100%;" styleClass="subheaderlink">
-                    <h:commandLink action="#{pageHeader.logoutLink_action}" id="logoutLink" styleClass="subheadertext" value="ログアウト"/>
+                <h:panelGrid id="logoutCell" rendered="#{loginController.loggedIn}" style="width: 100%; height: 100%;" styleClass="subheaderlink">
+                    <h:commandLink action="#{loginController.logout_action()}" id="logoutLink" styleClass="subheadertext" value="ログアウト"/>
                 </h:panelGrid>
-                <h:panelGrid id="loginCell" rendered="false" style="width: 100%; height: 100%;" styleClass="subheaderlink">
-                    <h:commandLink action="#{pageHeader.loginLink_action}" id="loginLink" styleClass="subheadertext" value="ログイン"/>
+                <h:panelGrid id="loginCell" rendered="#{loginController.notLoggedIn}" style="width: 100%; height: 100%;" styleClass="subheaderlink">
+                    <h:commandLink action="/login/LoginPage" id="loginLink" styleClass="subheadertext" value="ログイン"/>
                 </h:panelGrid>
                 <h:panelGrid id="newCharaCell" rendered="false" style="width: 100%; height: 100%;" styleClass="subheaderlink">
                     <h:commandLink action="#{pageHeader.newCharaLink_action}" id="newCharaLink" styleClass="subheadertext" value="新規キャラクター作成"/>
                 </h:panelGrid>
-                <h:panelGrid id="charaListCell" style="width: 100%; height: 100%;" styleClass="subheaderlink">
+                <h:panelGrid id="charaListCell" style="width: 100%; height: 100%;" rendered="false" styleClass="subheaderlink">
                     <h:commandLink action="#{pageHeader.charaListLink_action}" id="charaListLink" styleClass="subheadertext" value="キャラクター一覧"/>                        
                 </h:panelGrid>                   
             </h:panelGrid>
@@ -77,6 +77,9 @@
             </h:panelGrid>  
             <h:panelGrid styleClass="rightpane">
                 <h:panelGrid id="topcontents" style="width: 100%" styleClass="contents">
+                    <h:panelGroup layout="block">
+                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                    </h:panelGroup> 
                     <ui:insert name="body">Default Body</ui:insert>
                 </h:panelGrid>
             </h:panelGrid>
