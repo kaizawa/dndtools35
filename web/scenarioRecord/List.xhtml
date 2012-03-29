@@ -10,51 +10,51 @@
             <h:outputText value="シナリオ一覧"></h:outputText>
         </ui:define>
         <ui:define name="body">
-        <h:form styleClass="jsfcrud_list_form">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
                 <h:outputText escape="false" value="シナリオが有りません" rendered="#{scenarioRecordController.items.rowCount == 0}"/>
-            <h:panelGroup rendered="#{scenarioRecordController.items.rowCount > 0}">
-                <h:outputText value="#{scenarioRecordController.pagination.pageFirstItem + 1}..#{scenarioRecordController.pagination.pageLastItem + 1}/#{scenarioRecordController.pagination.itemsCount}"/>&nbsp;
-                <h:commandLink action="#{scenarioRecordController.previous}" value="#{bundle.Previous} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasPreviousPage}"/>&nbsp;
-                <h:commandLink action="#{scenarioRecordController.next}" value="#{bundle.Next} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasNextPage}"/>&nbsp;
-                <h:dataTable value="#{scenarioRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px; width: 100%">
-                    <h:column>
-                        <f:facet name="header">
-                                <h:outputText value="シナリオ"/>
-                        </f:facet>
-                        <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{item.name}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                                <h:outputText value="キャンペーン"/>
-                        </f:facet>
-                            <h:outputText value="#{item.campaign.campaignName}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                                <h:outputText value="備考"/>
-                        </f:facet>
-                        <h:outputText value="#{item.description}"/>
-                    </h:column>
-                   
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="&nbsp;"/>
-                        </f:facet>
-                            <h:commandLink action="#{scenarioRecordController.destroy}" value="削除"/>
-                    </h:column>
-                </h:dataTable>
-            </h:panelGroup>
-            <br />
-            <br />
-        </h:form>
+                <h:panelGroup rendered="#{scenarioRecordController.items.rowCount > 0}">
+                    <h:outputText value="#{scenarioRecordController.pagination.pageFirstItem + 1}..#{scenarioRecordController.pagination.pageLastItem + 1}/#{scenarioRecordController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{scenarioRecordController.previous}" value="#{bundle.Previous} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{scenarioRecordController.next}" value="#{bundle.Next} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasNextPage}"/>&nbsp;
+                    <h:panelGrid styleClass="tableGrid">
+                        <h:dataTable value="#{scenarioRecordController.items}" var="item" rules="all" styleClass="w" >
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="シナリオ"/>
+                                </f:facet>
+                                <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{item.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="キャンペーン"/>
+                                </f:facet>
+                                <h:outputText value="#{item.campaign.campaignName}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="備考"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="&nbsp;"/>
+                                </f:facet>
+                                <h:commandButton action="#{scenarioRecordController.destroy}" value="削除"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGrid>                    
+                </h:panelGroup>
+                <br />
+                <br />
+            </h:form>
 
             <h:outputLabel styleClass="middleBold">新しいシナリオを作成</h:outputLabel>
-            <br/>
-            <br/>
-           <h:form>
+            <h:form>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="キャンペーン:" for="campaign" />
                     <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >

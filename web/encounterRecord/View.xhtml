@@ -32,88 +32,88 @@
                     <h:commandLink value="戦闘の最初に戻る" action="#{encounterMemberController.resetBattle}"/>                    
                 </h:panelGrid>                
                 <h:panelGroup rendered="#{encounterMemberController.encounterMemberList.size() > 0}">
+                    <h:panelGrid styleClass="tableGrid">
 
-                    <h:dataTable value="#{encounterMemberController.encounterMemberList}" var="member" border="0" 
-                                 cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
-                                 rules="all" style="border:solid 1px" binding="#{encounterMemberController.encounterMemberTable}">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="ターン"/>
-                            </f:facet>
-                            <h:outputText value="●" style="font-size: 17px; color: red" rendered="#{member.myTurn}"/>
-                        </h:column>                        
-                        <h:column >
-                            <f:facet name="header">
-                                <h:outputText value="名前" />
-                            </f:facet>
-                            <h:outputText value="#{member.scenarioCharacterRecord.name}" style="color: #{encounterMemberController.hpColor}" styleClass="smallText"/>
-                        </h:column>  
-                         <h:column >
-                            <f:facet name="header">
-                                <h:outputText value="クラス"/>
-                            </f:facet>
-                             <h:commandLink onclick="alert('#{member.scenarioCharacterRecord.klass}')" value="有り" rendered="#{member.scenarioCharacterRecord.hasKlass()}" title="#{member.scenarioCharacterRecord.klass}"  styleClass="smallText"/>                            
-                        </h:column>                         
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="攻撃・特殊能力" />
-                            </f:facet>
-                            <h:commandLink value="通常" onclick="alert('#{member.scenarioCharacterRecord.attack}')" title="#{member.scenarioCharacterRecord.attack}" styleClass="smallText" />
-                            <h:outputLabel value=" "/>
-                            <h:commandLink value="全力" onclick="alert('#{member.scenarioCharacterRecord.fullAttack}')" title="#{member.scenarioCharacterRecord.fullAttack}" styleClass="smallText"/>                            
-                            <h:outputLabel value=" "/>                            
-                            <h:commandLink value="特殊攻撃" onclick="alert('#{member.scenarioCharacterRecord.specialAttacks}')" title="#{member.scenarioCharacterRecord.specialAttacks}" styleClass="smallText"/>
-                            <h:outputLabel value=" "/>                            
-                            <h:commandLink value="特殊能力" onclick="alert('#{member.scenarioCharacterRecord.specialQualities}')" title="#{member.scenarioCharacterRecord.specialQualities}" styleClass="smallText"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="AC"/>
-                            </f:facet>
-                            <h:outputText value="#{member.scenarioCharacterRecord.armorClass}" styleClass="smallText"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="ヒットダイス" />
-                            </f:facet>
-                            <h:outputText value="#{member.scenarioCharacterRecord.hitDice}" styleClass="smallText"/>
-                        </h:column>  
+                        <h:dataTable value="#{encounterMemberController.encounterMemberList}" rules="all" styleClass="w" binding="#{encounterMemberController.encounterMemberTable}">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="ターン"/>
+                                </f:facet>
+                                <h:outputText value="●" style="font-size: 17px; color: red" rendered="#{member.myTurn}"/>
+                            </h:column>                        
+                            <h:column >
+                                <f:facet name="header">
+                                    <h:outputText value="名前" />
+                                </f:facet>
+                                <h:outputText value="#{member.scenarioCharacterRecord.name}" style="color: #{encounterMemberController.hpColor}" styleClass="smallText"/>
+                            </h:column>  
+                            <h:column >
+                                <f:facet name="header">
+                                    <h:outputText value="クラス"/>
+                                </f:facet>
+                                <h:commandLink onclick="alert('#{member.scenarioCharacterRecord.klass}')" value="有り" rendered="#{member.scenarioCharacterRecord.hasKlass()}" title="#{member.scenarioCharacterRecord.klass}"  styleClass="smallText"/>                            
+                            </h:column>                         
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="攻撃・特殊能力" />
+                                </f:facet>
+                                <h:commandLink value="通常" onclick="alert('#{member.scenarioCharacterRecord.attack}')" title="#{member.scenarioCharacterRecord.attack}" styleClass="smallText" />
+                                <h:outputLabel value=" "/>
+                                <h:commandLink value="全力" onclick="alert('#{member.scenarioCharacterRecord.fullAttack}')" title="#{member.scenarioCharacterRecord.fullAttack}" styleClass="smallText"/>                            
+                                <h:outputLabel value=" "/>                            
+                                <h:commandLink value="特殊攻撃" onclick="alert('#{member.scenarioCharacterRecord.specialAttacks}')" title="#{member.scenarioCharacterRecord.specialAttacks}" styleClass="smallText"/>
+                                <h:outputLabel value=" "/>                            
+                                <h:commandLink value="特殊能力" onclick="alert('#{member.scenarioCharacterRecord.specialQualities}')" title="#{member.scenarioCharacterRecord.specialQualities}" styleClass="smallText"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="AC"/>
+                                </f:facet>
+                                <h:outputText value="#{member.scenarioCharacterRecord.armorClass}" styleClass="smallText"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="ヒットダイス" />
+                                </f:facet>
+                                <h:outputText value="#{member.scenarioCharacterRecord.hitDice}" styleClass="smallText"/>
+                            </h:column>  
 
-                        <h:column>
-                            <f:facet name="header" >
-                                <h:outputText value="HP"/>
-                            </f:facet>
-                            <h:inputText value="#{member.scenarioCharacterRecord.hitPoint}" style="width: 30px; color: #{encounterMemberController.hpColor}" styleClass="smallText"/>
-                        </h:column>
+                            <h:column>
+                                <f:facet name="header" >
+                                    <h:outputText value="HP"/>
+                                </f:facet>
+                                <h:inputText value="#{member.scenarioCharacterRecord.hitPoint}" style="width: 30px; color: #{encounterMemberController.hpColor}" styleClass="smallText"/>
+                            </h:column>
 
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="ダメージ"/>
-                            </f:facet>
-                            <h:inputText value="#{encounterMemberController.hpModifier}" style="width: 30px"/>
-                        </h:column>                    
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="ダメージ"/>
+                                </f:facet>
+                                <h:inputText value="#{encounterMemberController.hpModifier}" style="width: 30px"/>
+                            </h:column>                    
 
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="イニシアチブ"/>
-                            </f:facet>
-                            <h:inputText value="#{member.initiative}" style="width: 30px"/>
-                        </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="イニシアチブ"/>
+                                </f:facet>
+                                <h:inputText value="#{member.initiative}" style="width: 30px"/>
+                            </h:column>
 
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="コメント"/>
-                            </f:facet>
-                            <h:inputText value="#{member.comments}" styleClass="smallText"/>
-                        </h:column>
-                        
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value=""/>
-                            </f:facet>
-                            <h:commandLink action="#{encounterMemberController.decommission}" value="はずす" styleClass="smallText"/>
-                        </h:column>
-                    </h:dataTable>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="コメント"/>
+                                </f:facet>
+                                <h:inputText value="#{member.comments}" styleClass="smallText"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandLink action="#{encounterMemberController.decommission}" value="はずす" styleClass="smallText"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGrid>                        
                 </h:panelGroup>              
 
 
@@ -122,9 +122,9 @@
                     <h:commandButton value="HPをリセット" action="#{encounterMemberController.setInitialHitPoint()}"/>                                                            
                 </h:panelGrid>
                 <h:panelGrid columns="3">
-                <h:commandLink value="モンスターを追加" action="#{monsterSelectionController.prepareList}" styleClass="smallBold" immediate="true"/>                
-                <h:outputLabel value="   "/> 
-                <h:commandLink value="PC を再読み込み" action="#{encounterRecordController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
+                    <h:commandLink value="モンスターを追加" action="#{monsterSelectionController.prepareList}" styleClass="smallBold" immediate="true"/>                
+                    <h:outputLabel value="   "/> 
+                    <h:commandLink value="PC を再読み込み" action="#{encounterRecordController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
                 </h:panelGrid>                
                 <br />
                 <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオ『#{scenarioRecordController.selected.name}』の編集に戻る"/>
