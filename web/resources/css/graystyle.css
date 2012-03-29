@@ -67,6 +67,15 @@
    width: 100%;
 }
 
+.leftpanetextAdmin {
+   color: #FFFFFF !important;
+   font-size: 10px!important;
+   font-weight: bold !important;
+   padding-left: 23px;
+   padding-right: 10px;
+   width: 100%;
+}
+
 .leftpanelink {
    background-color: #666666;
 }
