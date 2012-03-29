@@ -9,92 +9,96 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
             <h:outputText value="キャラクターリスト"></h:outputText>
-
         </ui:define>
         <ui:define name="body">
             <h:form id="form1">
-                    <h:panelGroup id="messagePanel" layout="block">
-                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                    </h:panelGroup> 
-                    <h:panelGrid id="contentsGrid" style="width: 100%">
-                        <h:panelGrid columns="3" id="campFilterGridPanel" style="width: 100%; height: 100%;">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup> 
+                <h:panelGrid id="contentsGrid" style="width: 100%">
+                    <h:panelGrid columns="2" id="campFilterGridPanel" style="width: 100%; height: 100%;">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="キャンペーン"/>
                             <h:selectOneMenu id="dropdown1" onchange="submit()" style="width: 240px" value="#{characterSheetController.characterListSelectedCampaign}" >
                                 <f:selectItems id="dropdown1SelectItems" value="#{applicationBean.campaignArray}"/>
                             </h:selectOneMenu>
+                        </h:panelGrid>                            
+                        <h:panelGrid style="width: 100%; text-align: right">
                             <h:commandButton action="#{characterSheetController.newCharaButton_action}" id="newCharaButton" style="font-size: 12px" value="新キャラクター作成"/>
                         </h:panelGrid>
-                        <h:panelGrid id="charaListGridPanel" style="width: 100%; height: 100%;" styleClass="tableGrid">
-                            <h:dataTable binding="#{characterSheetController.characterListDataTable}"
-                                         id="characterListDataTable" style="" styleClass="w" value="#{characterSheetController.characterDataList}" var="currentRow">
-                                <h:column id="check">
-                                    <h:selectBooleanCheckbox id="checkbox1" value="#{characterSheetController.characterChecked}"/>
-                                </h:column>
-                                <h:column id="column1">
-                                    <h:outputText id="outputText2" style="font-size: 14px; font-weight: bold;"  value="#{currentRow.characterName}"/>
-                                    <f:facet name="header">
-                                        <h:outputText id="outputText3" value="キャラクター名"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column id="column3">
-                                    <h:outputText id="outputText6" style="font-size: 14px; font-weight: bold;" value="#{currentRow.playerName}"/>
-                                    <f:facet name="header">
-                                        <h:outputText id="outputText7" value="プレイヤー"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column id="column5">
-                                    <h:commandLink action="#{characterSheetController.charaEditLink_action}" id="charaEditLink"
-                                                   style="font-size: 12px; " >
-                                        <h:outputText id="charaEditLinkText" value="修正"/>
-                                    </h:commandLink>
-                                    <f:facet name="header">
-                                        <h:outputText id="outputText9"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column id="column4">
-                                    <h:outputText id="outputText8" style="font-size: 14px" value="#{currentRow.level}"/>
-                                    <f:facet name="header">
-                                        <h:outputText id="outputText10"  value="Lv"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column id="column7">
-                                    <h:panelGrid id="gridPanel2" style="max-width: 360px" styleClass="qPrint">
-                                        <h:outputText id="outputText13" value="#{currentRow.classList}"/>
-                                    </h:panelGrid>
-                                    <f:facet name="header">
-                                        <h:outputText id="outputText14" value="クラスリスト"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column id="column2">
-                                    <h:outputText id="outputText4" value="#{currentRow.campaignId.campaignName}"/>
-                                    <f:facet name="header">
-                                        <h:outputText id="outputText5" value="キャンペーン"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column id="column8">
-                                    <h:outputText id="outputText15" value="#{currentRow.lastChange}"/>
-                                    <f:facet name="header">
-                                        <h:outputText id="outputText16" value="更新日"/>
-                                    </f:facet>
-                                </h:column>
-                                <h:column id="column6">
-                                    <h:commandLink action="#{characterSheetController.charaViewButton_action}" id="linkAction1"
-                                                   style="font-size: 12px;" target="_blank">
-                                        <h:outputText id="linkAction1Text" value="印刷用"/>
-                                    </h:commandLink>
-                                    <f:facet name="header">
-                                        <h:outputText id="outputText11" style="border: 1px solid #000000; "/>
-                                    </f:facet>
-                                </h:column>
-                            </h:dataTable>
-                        </h:panelGrid>
-                        <h:panelGrid columns="3" id="gridPanel1" style="height: 100%; width: 100%">
-                            <h:commandLink action="#{characterSheetController.listSummaryButton_action}" target="blank" id="listSummaryButton">
-                                <h:outputText style="size: 10px" value="選択したキャラを一覧表示" />                                
-                            </h:commandLink> 
-                            <h:commandButton action="#{characterSheetController.selectAllButton_action}" id="selectAllButton" value="全て選択"/>
-                            <h:commandButton action="#{characterSheetController.releaseAllButton_action}" id="releaseAllButton" value="全て解除"/>
-                        </h:panelGrid>    
                     </h:panelGrid>
+                    <h:panelGrid id="charaListGridPanel" style="width: 100%; height: 100%;" styleClass="tableGrid">
+                        <h:dataTable binding="#{characterSheetController.characterListDataTable}"
+                                     id="characterListDataTable" style="" styleClass="w" value="#{characterSheetController.characterDataList}" var="currentRow">
+                            <h:column id="check">
+                                <h:selectBooleanCheckbox id="checkbox1" value="#{characterSheetController.characterChecked}"/>
+                            </h:column>
+                            <h:column id="column1">
+                                <h:outputText id="outputText2" style="font-size: 14px; font-weight: bold;"  value="#{currentRow.characterName}"/>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText3" value="キャラクター名"/>
+                                </f:facet>
+                            </h:column>
+                            <h:column id="column3">
+                                <h:outputText id="outputText6" style="font-size: 14px; font-weight: bold;" value="#{currentRow.playerName}"/>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText7" value="プレイヤー"/>
+                                </f:facet>
+                            </h:column>
+                            <h:column id="column5">
+                                <h:commandLink action="#{characterSheetController.charaEditLink_action}" id="charaEditLink"
+                                               style="font-size: 12px; " >
+                                    <h:outputText id="charaEditLinkText" value="修正"/>
+                                </h:commandLink>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText9"/>
+                                </f:facet>
+                            </h:column>
+                            <h:column id="column4">
+                                <h:outputText id="outputText8" style="font-size: 14px" value="#{currentRow.level}"/>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText10"  value="Lv"/>
+                                </f:facet>
+                            </h:column>
+                            <h:column id="column7">
+                                <h:panelGrid id="gridPanel2" style="max-width: 360px" styleClass="qPrint">
+                                    <h:outputText id="outputText13" value="#{currentRow.classList}"/>
+                                </h:panelGrid>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText14" value="クラスリスト"/>
+                                </f:facet>
+                            </h:column>
+                            <h:column id="column2">
+                                <h:outputText id="outputText4" value="#{currentRow.campaignId.campaignName}"/>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText5" value="キャンペーン"/>
+                                </f:facet>
+                            </h:column>
+                            <h:column id="column8">
+                                <h:outputText id="outputText15" value="#{currentRow.lastChange}"/>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText16" value="更新日"/>
+                                </f:facet>
+                            </h:column>
+                            <h:column id="column6">
+                                <h:commandLink action="#{characterSheetController.charaViewButton_action}" id="linkAction1"
+                                               style="font-size: 12px;" target="_blank">
+                                    <h:outputText id="linkAction1Text" value="印刷用"/>
+                                </h:commandLink>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText11" style="border: 1px solid #000000; "/>
+                                </f:facet>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" id="gridPanel1" style="height: 100%; width: 100%">
+                        <h:commandLink action="#{characterSheetController.listSummaryButton_action}" target="blank" id="listSummaryButton">
+                            <h:outputText style="size: 10px" value="選択したキャラを一覧表示" />                                
+                        </h:commandLink> 
+                        <h:commandButton action="#{characterSheetController.selectAllButton_action}" id="selectAllButton" value="全て選択"/>
+                        <h:commandButton action="#{characterSheetController.releaseAllButton_action}" id="releaseAllButton" value="全て解除"/>
+                    </h:panelGrid>    
+                </h:panelGrid>
             </h:form>
         </ui:define>            
     </ui:composition>

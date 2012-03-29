@@ -10,7 +10,10 @@
             <h:outputText value="モンスター一覧"></h:outputText>
         </ui:define>
         <ui:define name="body">
-        <h:form styleClass="jsfcrud_list_form">
+        <h:form>
+            <h:panelGrid style="width: 100%; text-align: right">
+                <h:commandButton action="#{monsterMasterController.prepareCreate}" value="新モンスター登録"/>
+            </h:panelGrid>
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
@@ -19,7 +22,10 @@
                 <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}..#{monsterMasterController.pagination.pageLastItem + 1}/#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
                 <h:commandLink action="#{monsterMasterController.previous}" value="#{bundle.Previous} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasPreviousPage}"/>&nbsp;
                 <h:commandLink action="#{monsterMasterController.next}" value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
-                <h:dataTable value="#{monsterMasterController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                <h:panelGrid styleClass="tableGrid">
+                    
+
+                <h:dataTable value="#{monsterMasterController.items}" styleClass="w" var="item" rules="all" >
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="id"/>
@@ -41,9 +47,9 @@
                         <h:commandLink action="#{monsterMasterController.destroy}" onclick="return confirm('削除しますか?')" value="削除"/>
                     </h:column>
                 </h:dataTable>
+                </h:panelGrid>                    
             </h:panelGroup>
             <br />
-            <h:commandLink action="#{monsterMasterController.prepareCreate}" value="新しいモンスターを登録する"/>
         </h:form>
         </ui:define>
     </ui:composition>

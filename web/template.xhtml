@@ -16,8 +16,8 @@
                 <h:panelGrid id="imageGrid" >
                     <h:graphicImage id="image1" value="/resources/dndlogo.gif" width="96"/>
                 </h:panelGrid>
-                <h:panelGrid id="appnameGrid">
-                    <h:outputText id="outputText1" styleClass="appname" value="D&amp;D 3.5 キャラクター・シート"/>
+                <h:panelGrid id="appnameGrid" styleClass="appname">
+                    <ui:insert name="title">Default Title</ui:insert>
                 </h:panelGrid>
             </h:panelGrid>
         </h:panelGrid>

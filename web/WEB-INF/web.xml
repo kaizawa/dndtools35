@@ -14,13 +14,13 @@
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>120</session-timeout>
+        <session-timeout>12000</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>faces/characterSheet/CharacterListPage.xhtml</welcome-file>
     </welcome-file-list>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/faces/index.xhtml</location>
+        <location>/faces/characterSheet/CharacterListPage.xhtml</location>
     </error-page>
 </web-app>
