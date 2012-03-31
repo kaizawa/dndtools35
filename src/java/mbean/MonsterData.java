@@ -1,10 +1,15 @@
 package mbean;
 
-import com.sun.j3d.loaders.ParsingErrorException;
+import ejb.AbilityMasterFacade;
+import ejb.MonsterAbilityRecordFacade;
 import entity.MonsterMaster;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -15,6 +20,9 @@ import java.util.Random;
  */
 public class MonsterData implements CharacterSummary {
 
+    InitialContext ctx;
+    protected MonsterAbilityRecordFacade monsterAbilityRecordFacade;
+        
     private MonsterMaster monster;
     int hitpoint = 0;
     boolean randomHitPoint;
@@ -22,10 +30,16 @@ public class MonsterData implements CharacterSummary {
     public MonsterData(MonsterMaster monsterMaster) {
         this(monsterMaster, false);
     }
-
+    
     public MonsterData(MonsterMaster monsterMaster, boolean randomHitPoint) {
         this.monster = monsterMaster;
         this.randomHitPoint = randomHitPoint;
+        try {
+            ctx = new InitialContext();
+            monsterAbilityRecordFacade = (MonsterAbilityRecordFacade) ctx.lookup("java:module/MonsterAbilityRecordFacade");
+        } catch (NamingException ex) {
+            Logger.getLogger(CharacterData.class.getName()).log(Level.SEVERE, null, ex);
+        }    
     }
     
     /**
@@ -108,12 +122,12 @@ public class MonsterData implements CharacterSummary {
     public void setAverageHitPoint() {
         Integer hitdice = monster.getHitDiceType().getType();
         Integer diceNum = monster.getHitDiceNum();
-                
+        
         Float tempNum = 0.0F;
         for (int i = 1 ; i < hitdice + 1 ; i++) {
             tempNum += i;
         }
-        hitpoint= (int )((tempNum / hitdice.floatValue()) * diceNum.floatValue())
+        hitpoint= (int )(((tempNum / hitdice.floatValue()) + getAbilityModifierById(DnDUtil.CON))* diceNum.floatValue())
                 + monster.getHitPointModifier();
     }
 
@@ -227,5 +241,14 @@ public class MonsterData implements CharacterSummary {
     @Override
     public Integer getLevelAdjustment() {
         return monster.getLevelAdjustment();
+    }
+    
+    /*
+     * 能力値 修正値
+     */
+    public Integer getAbilityModifierById(int abilityId) {
+        Integer ability = monsterAbilityRecordFacade.findAll().get(abilityId -1).getBase();
+
+        return (ability / 2) - 5;
     }
 }
