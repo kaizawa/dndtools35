@@ -162,14 +162,14 @@ public class PrintableCharacterSummaryListController extends CharacterSheetContr
         return characterData.getClassList();
     }  
       
-          /*
+    /*
      * キャラクターデータのリスト
      */
     public List<CharacterData> getCheckedCharacterList() {
 
         List<CharacterData> charaDataList = new ArrayList<CharacterData>();
         
-        for(Object obj: getSessionController().getCheckedCharacterSet()){
+        for(Object obj: getSessionController().getCheckedCharacterMap().values()){
             CharacterData charaData = (CharacterData)obj;
             charaDataList.add(charaData);
         }

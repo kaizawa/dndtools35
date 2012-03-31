@@ -8,10 +8,7 @@ import ejb.*;
 import entity.*;
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -316,17 +313,6 @@ public class CharacterSheetController implements Serializable {
         setCharacterListSelectedCampaign(campaign);
     }
     
-    /*
-     * チェックボックスで選択されたキャラクターのセット
-     */
-    public Set getCheckedCharacterSet() {
-        return getSessionController().getCheckedCharacterSet();
-    }
-
-    public void setCheckedCharacterSet(Set checkedCharas) {
-        getSessionController().setCheckedCharacterSet(checkedCharas);
-    }
-    
     private HtmlDataTable characterListDataTable = new HtmlDataTable();
 
     public HtmlDataTable getCharacterListDataTable() {
@@ -523,6 +509,18 @@ public class CharacterSheetController implements Serializable {
         return "PrintableCharacterSummaryListPage";
 
     }
+    
+    /*
+     * チェックボックスで選択されたキャラクターのセット
+     */
+    public Map getCheckedCharacterMap() {
+        return getSessionController().getCheckedCharacterMap();
+    }
+
+    public void setCheckedCharacterMap(Map checkedCharas) {
+        getSessionController().setCheckedCharacterMap(checkedCharas);
+    }    
+    
 
     /**
      * チェックボックが選択されているか?
@@ -531,36 +529,34 @@ public class CharacterSheetController implements Serializable {
 
         CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
 
-        return getCheckedCharacterSet() != null && getCheckedCharacterSet().contains(charaData);
+        return getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId());
     }
 
     public void setCharacterChecked(boolean charaChecked) {
 
         CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
         if (charaData != null) {
-            if (charaChecked && !getCheckedCharacterSet().contains(charaData)) {
-                getCheckedCharacterSet().add(charaData);
-            } else if (!charaChecked && getCheckedCharacterSet().contains(charaData)){
-                getCheckedCharacterSet().remove(charaData);
+            if (charaChecked && !getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId())) {
+                getCheckedCharacterMap().put(charaData.getCharacterRecord().getId().intValue(),charaData);
+            } else if (!charaChecked && getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId())){
+                getCheckedCharacterMap().remove(charaData.getCharacterRecord().getId());
             }
         }
     }
 
     public String selectAllButton_action() {
-        // TODO: Process the button click action. Return value is a navigation
-        // case name where null will return to the same page.
-        Set<CharacterData> charaSet = getCheckedCharacterSet();
+        Map<Integer, CharacterData> charaMap = getCheckedCharacterMap();
         //Clear first, just in case.
-        charaSet.clear();
+        charaMap.clear();
         for (CharacterData charaData : getCharacterDataList()) {
-            charaSet.add(charaData);
+            charaMap.put(charaData.getCharacterRecord().getId().intValue(),charaData);
         }
         return null;
     }
 
     public String releaseAllButton_action() {
-        Set charaSet = getCheckedCharacterSet();
-        charaSet.clear();
+        Map charaMap = getCheckedCharacterMap();
+        charaMap.clear();
         return null;
     }
     protected HtmlDataTable abilityTable = new HtmlDataTable();

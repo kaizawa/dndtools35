@@ -10,7 +10,9 @@ import entity.CharacterGrowthRecord;
 import entity.ClassMaster;
 import entity.PlayerMaster;
 import entity.RaceMaster;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -51,7 +53,7 @@ public class SessionController {
     
     @PostConstruct
     public void init() {
-        setCheckedCharacterSet(new LinkedHashSet());   
+        setCheckedCharacterMap(new HashMap());   
         setLoggedIn(false);
     }    
 
@@ -110,15 +112,15 @@ public class SessionController {
     /*
      * チェックボックスで選択されたキャラクターのセット
      */
-    private Set checkedCharacterSet;
+    private Map checkedCharacterMap;
 
 
-    public Set getCheckedCharacterSet() {
-        return checkedCharacterSet;
+    public Map getCheckedCharacterMap() {
+        return checkedCharacterMap;
     }
 
-    public void setCheckedCharacterSet(Set selectedCharas) {
-        this.checkedCharacterSet = selectedCharas;
+    public void setCheckedCharacterMap(Map selectedCharas) {
+        this.checkedCharacterMap = selectedCharas;
     }
 
     /*
