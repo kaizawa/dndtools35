@@ -10,45 +10,30 @@
             <h:outputText value="モンスター一覧"></h:outputText>
         </ui:define>
         <ui:define name="body">
-        <h:form>
-            <h:panelGrid style="width: 100%; text-align: right">
-                <h:commandButton action="#{monsterMasterController.prepareCreate}" value="新モンスター登録"/>
-            </h:panelGrid>
+            <h:form>
+                <h:panelGrid style="width: 100%; text-align: right">
+                    <h:commandButton action="#{monsterMasterController.prepareCreate}" value="新モンスター登録"/>
+                </h:panelGrid>
 
-            <h:outputText escape="false" value="モンスターは登録されていません。" rendered="#{monsterMasterController.items.rowCount == 0}"/>
-            <h:panelGroup rendered="#{monsterMasterController.items.rowCount > 0}">
-                <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}..#{monsterMasterController.pagination.pageLastItem + 1}/#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
-                <h:commandLink action="#{monsterMasterController.previous}" value="#{bundle.Previous} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasPreviousPage}"/>&nbsp;
-                <h:commandLink action="#{monsterMasterController.next}" value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
-                <h:panelGrid styleClass="tableGrid">
-                    
+                <h:outputText escape="false" value="モンスターは登録されていません。" rendered="#{monsterMasterController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{monsterMasterController.items.rowCount > 0}">
+                    <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}..#{monsterMasterController.pagination.pageLastItem + 1}/#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{monsterMasterController.previous}" value="#{bundle.Previous} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{monsterMasterController.next}" value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
+                    <h:panelGrid styleClass="tableGrid">
 
-                <h:dataTable value="#{monsterMasterController.items}" styleClass="w" var="item" rules="all" >
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="id"/>
-                        </f:facet>
-                        <h:outputText value="#{item.id}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="name"/>
-                        </f:facet>
-                        <h:outputText value="#{item.name}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="&nbsp;"/>
-                        </f:facet>
-                        <h:commandLink action="#{monsterMasterController.prepareEdit}" value="編集"/>
-                        <h:outputText value=" "/>
-                        <h:commandLink action="#{monsterMasterController.destroy}" onclick="return confirm('削除しますか?')" value="削除"/>
-                    </h:column>
-                </h:dataTable>
-                </h:panelGrid>                    
-            </h:panelGroup>
-            <br />
-        </h:form>
+                        <h:dataTable value="#{monsterMasterController.items}" styleClass="w" var="item" rules="all" >
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="モンスター名"/>
+                                </f:facet>
+                                <h:commandLink action="#{monsterMasterController.prepareEdit}" value="#{item.name}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGrid>                    
+                </h:panelGroup>
+                <br />
+            </h:form>
         </ui:define>
     </ui:composition>
 

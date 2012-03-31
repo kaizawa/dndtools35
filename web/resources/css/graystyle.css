@@ -469,6 +469,7 @@ table.noborder td{
     background-color: #333333;
     text-align: center;
     width:100%;
+    font-size: 12px;
 }
 
 .tableGridTitle{

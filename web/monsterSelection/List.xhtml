@@ -10,146 +10,146 @@
             <h:outputText value="モンスターの選択"></h:outputText>
         </ui:define>
         <ui:define name="body">
-        <h:form styleClass="jsfcrud_list_form">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:outputLabel value="一度に追加するモンスターの数: "/> <h:inputText value="#{monsterSelectionController.numberOfMonsters}" />
-            <br/>
-            <h:outputText escape="false" value="#{bundle.ListMonsterMasterEmpty}" rendered="#{monsterSelectionController.items.rowCount == 0}"/>
-            <h:panelGroup rendered="#{monsterSelectionController.items.rowCount > 0}">
-                <h:outputText value="#{monsterSelectionController.pagination.pageFirstItem + 1}..#{monsterSelectionController.pagination.pageLastItem + 1}/#{monsterSelectionController.pagination.itemsCount}"/>&nbsp;
-                <h:commandLink action="#{monsterSelectionController.previous}" value="#{bundle.Previous} #{monsterSelectionController.pagination.pageSize}" rendered="#{monsterSelectionController.pagination.hasPreviousPage}"/>&nbsp;
-                <h:commandLink action="#{monsterSelectionController.next}" value="#{bundle.Next} #{monsterSelectionController.pagination.pageSize}" rendered="#{monsterSelectionController.pagination.hasNextPage}"/>&nbsp;
-                <h:dataTable value="#{monsterSelectionController.items}" var="item" border="0" cellpadding="2" 
-                             cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px" >
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputLabel value="一度に追加するモンスターの数: "/> <h:inputText value="#{monsterSelectionController.numberOfMonsters}" />
+                <br/>
+                <h:outputText escape="false" value="#{bundle.ListMonsterMasterEmpty}" rendered="#{monsterSelectionController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{monsterSelectionController.items.rowCount > 0}" >
+                    <h:outputText value="#{monsterSelectionController.pagination.pageFirstItem + 1}..#{monsterSelectionController.pagination.pageLastItem + 1}/#{monsterSelectionController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{monsterSelectionController.previous}" value="#{bundle.Previous} #{monsterSelectionController.pagination.pageSize}" rendered="#{monsterSelectionController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{monsterSelectionController.next}" value="#{bundle.Next} #{monsterSelectionController.pagination.pageSize}" rendered="#{monsterSelectionController.pagination.hasNextPage}"/>&nbsp;
+                    <h:panelGrid styleClass="tableGrid">                        
+                        <h:dataTable value="#{monsterSelectionController.items}" var="item" rules="all" styleClass="w" >
 
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="選択"/>
-                        </f:facet>  
-                        <h:commandButton action="#{monsterSelectionController.add()}" value="追加"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="名前"/>
-                        </f:facet>
-                        <h:outputText value="#{item.name}" style="width: 100%"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="サイズと種別"/>
-                        </f:facet>
-                        <h:outputText value="#{item.sizeAndType}"/>
-                    </h:column>                    
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="能力値"/>
-                        </f:facet>
-                        <h:outputText value="#{item.abilities}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="AC"/>
-                        </f:facet>
-                        <h:outputText value="#{item.armorClass}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="攻撃"/>
-                        </f:facet>
-                        <h:outputText value="#{item.attack}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="遭遇難易度"/>
-                        </f:facet>
-                        <h:outputText value="#{item.challengeRating}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="環境"/>
-                        </f:facet>
-                        <h:outputText value="#{item.environment}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="特技"/>
-                        </f:facet>
-                        <h:outputText value="#{item.feats}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="全力攻撃"/>
-                        </f:facet>
-                        <h:outputText value="#{item.fullAttack}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="ヒットダイス"/>
-                        </f:facet>
-                        <h:outputText value="#{item.hitDice}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="イニシアチブ"/>
-                        </f:facet>
-                        <h:outputText value="#{item.initiative}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="組織"/>
-                        </f:facet>
-                        <h:outputText value="#{item.organization}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="セーブ"/>
-                        </f:facet>
-                        <h:outputText value="#{item.save}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="技能"/>
-                        </f:facet>
-                        <h:outputText value="#{item.skills}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="特殊攻撃"/>
-                        </f:facet>
-                        <h:outputText value="#{item.specialAttack}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="その他の特殊能力"/>
-                        </f:facet>
-                        <h:outputText value="#{item.specialQualities}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="移動速度"/>
-                        </f:facet>
-                        <h:outputText value="#{item.speed}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="基本攻撃/組み付き"/>
-                        </f:facet>
-                        <h:outputText value="#{item.baseAttackGrapple}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="接敵面/間合い"/>
-                        </f:facet>
-                        <h:outputText value="#{item.spaceAndReach}"/>
-                    </h:column>
-
-                </h:dataTable>
-            </h:panelGroup>
-            <br />
-            <h:commandButton action="#{monsterSelectionController.cancel}" value="キャンセル"/>            
-        </h:form>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="選択"/>
+                                </f:facet>  
+                                <h:commandButton action="#{monsterSelectionController.add()}" value="追加"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="名前"/>
+                                </f:facet>
+                                <h:outputText value="#{item.name}" style="width: 100%"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="サイズと種別"/>
+                                </f:facet>
+                                <h:outputText value="#{item.sizeAndType}"/>
+                            </h:column>                    
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="能力値"/>
+                                </f:facet>
+                                <h:outputText value="#{item.abilities}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="AC"/>
+                                </f:facet>
+                                <h:outputText value="#{item.armorClass}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="攻撃"/>
+                                </f:facet>
+                                <h:outputText value="#{item.attack}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="遭遇難易度"/>
+                                </f:facet>
+                                <h:outputText value="#{item.challengeRating}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="環境"/>
+                                </f:facet>
+                                <h:outputText value="#{item.environment}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="特技"/>
+                                </f:facet>
+                                <h:outputText value="#{item.feats}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="全力攻撃"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fullAttack}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="ヒットダイス"/>
+                                </f:facet>
+                                <h:outputText value="#{item.hitDice}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="イニシアチブ"/>
+                                </f:facet>
+                                <h:outputText value="#{item.initiative}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="組織"/>
+                                </f:facet>
+                                <h:outputText value="#{item.organization}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="セーブ"/>
+                                </f:facet>
+                                <h:outputText value="#{item.save}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="技能"/>
+                                </f:facet>
+                                <h:outputText value="#{item.skills}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="特殊攻撃"/>
+                                </f:facet>
+                                <h:outputText value="#{item.specialAttack}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="その他の特殊能力"/>
+                                </f:facet>
+                                <h:outputText value="#{item.specialQualities}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="移動速度"/>
+                                </f:facet>
+                                <h:outputText value="#{item.speed}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="基本攻撃/組み付き"/>
+                                </f:facet>
+                                <h:outputText value="#{item.baseAttackGrapple}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="接敵面/間合い"/>
+                                </f:facet>
+                                <h:outputText value="#{item.spaceAndReach}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGrid>
+                </h:panelGroup>
+                <br />
+                <h:commandButton action="#{monsterSelectionController.cancel}" value="キャンセル"/>            
+            </h:form>
         </ui:define>
     </ui:composition>
 

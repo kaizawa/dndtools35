@@ -19,17 +19,21 @@
                 <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}" style="font-size: 20px"/>
                 -->
                 <h:outputText value="#{encounterRecordController.selected.comments}" />
-                <h:commandButton action="#{encounterMemberController.nextTurn()}" value="次のターン" styleClass="smallBold" />
-                <h:outputLabel value=" "/>                
-                <h:commandButton action="#{encounterMemberController.previousTurn()}" value="前のターン"/>                                
-                <h:outputLabel value=" "/>
-                <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="保存" styleClass="smallBold"/>  
-                <h:panelGrid columns="3">
-                    <h:commandLink value="ラウンドの最初へ" action="#{encounterMemberController.resetRound}"/>
-                    <h:outputLabel value="  "/>                     
-                    <h:commandLink value="戦闘の最初に戻る" action="#{encounterMemberController.resetBattle}"/>                    
-                </h:panelGrid>                
-                <h:panelGroup rendered="#{encounterMemberController.encounterMemberList.size() > 0}">
+
+                <h:outputText escape="false" style="font-weight: bold" value="エンカウンターメンバーがいません" rendered="#{encounterMemberController.encounterMemberList.size() == 0}"/>
+
+                <h:panelGroup rendered="#{encounterMemberController.encounterMemberList.size() > 0}">                
+                    <h:commandButton action="#{encounterMemberController.nextTurn()}" value="次のターン" styleClass="smallBold" />
+                    <h:outputLabel value=" "/>                
+                    <h:commandButton action="#{encounterMemberController.previousTurn()}" value="前のターン"/>                                
+                    <h:outputLabel value=" "/>
+                    <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="保存" styleClass="smallBold"/>  
+                    <h:panelGrid columns="3">
+                        <h:commandLink value="ラウンドの最初へ" action="#{encounterMemberController.resetRound}"/>
+                        <h:outputLabel value="  "/>                     
+                        <h:commandLink value="戦闘の最初に戻る" action="#{encounterMemberController.resetBattle}"/>                    
+                    </h:panelGrid>                
+
                     <h:panelGrid styleClass="tableGrid">
 
                         <h:dataTable value="#{encounterMemberController.encounterMemberList}" rules="all" styleClass="w" var="member" binding="#{encounterMemberController.encounterMemberTable}">
@@ -112,19 +116,21 @@
                             </h:column>
                         </h:dataTable>
                     </h:panelGrid>                        
-                </h:panelGroup>              
 
-
-                <h:panelGrid columns="2">
-                    <h:commandButton value="イニシアチブランダム入力" action="#{encounterMemberController.setInitiativeByRandom}"/>                                        
-                    <h:commandButton value="HPをリセット" action="#{encounterMemberController.setInitialHitPoint()}"/>                                                            
-                </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <h:commandButton value="イニシアチブランダム入力" action="#{encounterMemberController.setInitiativeByRandom}"/>                                        
+                        <h:commandButton value="HPをリセット" action="#{encounterMemberController.setInitialHitPoint()}"/>                                                            
+                    </h:panelGrid>
+                </h:panelGroup>
+                    
                 <h:panelGrid columns="3">
-                    <h:commandLink value="モンスターを追加" action="#{monsterSelectionController.prepareList}" styleClass="smallBold" immediate="true"/>                
-                    <h:outputLabel value="   "/> 
-                    <h:commandLink value="PC を再読み込み" action="#{encounterRecordController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
-                </h:panelGrid>                
+                        
                 
+                <h:commandLink value="モンスターを追加" action="#{monsterSelectionController.prepareList}" styleClass="smallBold" immediate="true"/>                
+                <h:outputLabel value="   "/> 
+                <h:commandLink value="プレイヤーキャラクターを読み込み" action="#{encounterRecordController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
+                </h:panelGrid>                
+
                 <h:panelGrid columns="2"> 
                     <h:outputLabel value="メモ " for="description" />
                     <h:inputTextarea id="comments" styleClass="middleTextArea" value="#{encounterRecordController.selected.comments}" />
