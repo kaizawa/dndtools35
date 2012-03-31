@@ -10,14 +10,10 @@ import ejb.*;
 import entity.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.component.html.HtmlCommandButton;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -33,7 +29,7 @@ import mbean.util.JsfUtil;
  * @author ka78231
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ClassMasterController  {
    
     
@@ -48,15 +44,15 @@ public class ClassMasterController  {
         this.sessionController = sessionController;
     }
     
-    @ManagedProperty(value = "#{applicationBean}")
-    private ApplicationController applicationBean;
+    @ManagedProperty(value = "#{applicationController}")
+    private ApplicationController applicationController;
 
-    public ApplicationController getApplicationBean() {
-        return applicationBean;
+    public ApplicationController getApplicationController() {
+        return applicationController;
     }
 
-    public void setApplicationBean(ApplicationController applicationBean) {
-        this.applicationBean = applicationBean;
+    public void setApplicationController(ApplicationController applicationController) {
+        this.applicationController = applicationController;
     }
     
     @EJB
@@ -189,7 +185,7 @@ public class ClassMasterController  {
                     classSkill.getClassSkillMasterPK().setClassId(klass.getId());
                     classSkillMasterFacade.create(classSkill);
                 }
-                JsfUtil.addErrorMessage("作成しました");
+                JsfUtil.addSuccessMessage("作成しました");
             } else {
                 if (getClassSaveFortitute() != null) {
                     classSaveMasterFacade.edit(getClassSaveFortitute());
@@ -218,7 +214,7 @@ public class ClassMasterController  {
                 }
                 //更新
                 classMasterFacade.edit(klass);
-                JsfUtil.addErrorMessage("保存しました");
+                JsfUtil.addSuccessMessage("保存しました");
             }
 
         } catch (Exception ex) {
@@ -228,7 +224,7 @@ public class ClassMasterController  {
         }
 
         /*
-         * 選択メニュー用クラスの配列とリストを再作成し、ApplicationBean のプロパティにセット
+         * 選択メニュー用クラスの配列とリストを再作成し、ApplicationController のプロパティにセット
          */
 
         List<ClassMaster> classFindAll = classMasterFacade.findAll();
@@ -244,7 +240,7 @@ public class ClassMasterController  {
         //リストから配列への変換
         SelectItem[] tempClassArray = classList.toArray(new SelectItem[0]);
         //セッションBEANへのセット
-        getApplicationBean().setClassArray(tempClassArray);
+        getApplicationController().setClassArray(tempClassArray);
         return null;
     }
     /*
@@ -319,7 +315,6 @@ public class ClassMasterController  {
     /*
      * 表からの技能対応能力値
      */
-    private String abilityNameBySkillId;
 
     public String getAbilityNameBySkillId() {
         SkillMaster skill = (SkillMaster) classSkillTable.getRowData();

@@ -120,8 +120,8 @@ public class CharacterSheetController implements Serializable {
         this.playerMaster = playerMaster;
     }
 
-    protected ApplicationController getApplicationBean() {
-        return getApplicationBean();
+    protected ApplicationController getApplicationController() {
+        return getApplicationController();
     }
    
     /*

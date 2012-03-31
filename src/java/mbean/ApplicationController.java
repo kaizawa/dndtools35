@@ -1,5 +1,5 @@
 /*
- * ApplicationBean1.java
+ * ApplicationController1.java
  *
  * Created on 2008/12/23, 23:35:51
  */

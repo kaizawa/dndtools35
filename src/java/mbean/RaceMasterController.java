@@ -5,11 +5,7 @@
  */
 package mbean;
 
-import ejb.RaceMasterFacade;
-import ejb.SizeMasterFacade;
-import ejb.SaveMasterFacade;
-import ejb.RaceAbilityMasterFacade;
-import ejb.RaceSaveMasterFacade;
+import ejb.*;
 import entity.RaceAbilityMaster;
 import entity.RaceMaster;
 import entity.RaceSaveMaster;
@@ -18,10 +14,9 @@ import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -36,7 +31,7 @@ import mbean.util.JsfUtil;
  * @author ka78231
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class RaceMasterController {
 
     @ManagedProperty(value = "#{sessionController}")
@@ -49,15 +44,15 @@ public class RaceMasterController {
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
     }
-    @ManagedProperty(value = "#{applicationBean}")
-    private ApplicationController applicationBean;
+    @ManagedProperty(value = "#{applicationController}")
+    private ApplicationController applicationController;
 
-    public ApplicationController getApplicationBean() {
-        return applicationBean;
+    public ApplicationController getApplicationController() {
+        return applicationController;
     }
 
-    public void setApplicationBean(ApplicationController applicationBean) {
-        this.applicationBean = applicationBean;
+    public void setApplicationController(ApplicationController applicationController) {
+        this.applicationController = applicationController;
     }
     @EJB
     private SizeMasterFacade sizeMasterFacade;
@@ -280,7 +275,7 @@ public class RaceMasterController {
         }
 
         /*
-         * 選択メニュー用クラスの配列とリストを再作成し、ApplicationBean のプロパティにセット
+         * 選択メニュー用クラスの配列とリストを再作成し、ApplicationController のプロパティにセット
          */
         List<RaceMaster> raceFindAll = raceMasterFacade.findAll();
         List<SelectItem> raceList = new ArrayList<SelectItem>();
@@ -295,8 +290,8 @@ public class RaceMasterController {
         //リストから配列への変換
         SelectItem[] tempRaceArray = raceList.toArray(new SelectItem[0]);
         //セッションBEANへのセット
-        getApplicationBean().setRaceArray(tempRaceArray);
-        getApplicationBean().setRaceMasterList(raceFindAll);
+        getApplicationController().setRaceArray(tempRaceArray);
+        getApplicationController().setRaceMasterList(raceFindAll);
 
         return null;
     }
