@@ -20,7 +20,7 @@
                     <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}..#{monsterMasterController.pagination.pageLastItem + 1}/#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{monsterMasterController.previous}" value="#{bundle.Previous} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{monsterMasterController.next}" value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
-                    <h:panelGrid styleClass="tableGrid">
+                    <h:panelGrid styleClass="tableGrid" style="width: 400px">
 
                         <h:dataTable value="#{monsterMasterController.items}" styleClass="w" var="item" rules="all" >
                             <h:column>
