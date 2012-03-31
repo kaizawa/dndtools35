@@ -51,7 +51,7 @@
                                 <h:panelGrid columns="2" id="saveAndAbility">
                                     <h:panelGrid id="ability">
                                         <h:dataTable binding="#{printableCharacterSummaryListController.abilityTable}" headerClass="list-header"
-                                                     id="abilityTable" rowClasses="list-row-even,list-row-odd" value="#{applicationBean.abilityList}" var="abilityCurrentRow">
+                                                     id="abilityTable" rowClasses="list-row-even,list-row-odd" value="#{applicationController.abilityList}" var="abilityCurrentRow">
                                             <h:column id="column6">
                                                 <h:outputText id="outputText29" value="#{printableCharacterSummaryListController.abilityShortName}"/>
                                             </h:column>
@@ -65,7 +65,7 @@
                                     </h:panelGrid>
                                     <h:panelGrid id="save">
                                         <h:dataTable binding="#{printableCharacterSummaryListController.saveTable}" headerClass="list-header"
-                                                     id="saveTable" rowClasses="list-row-even,list-row-odd" value="#{applicationBean.saveList}" var="saveCurrentRow">
+                                                     id="saveTable" rowClasses="list-row-even,list-row-odd" value="#{applicationController.saveList}" var="saveCurrentRow">
                                             <h:column id="column2">
                                                 <h:outputText id="outputText1" value="#{savecurrentRow.saveName}"/>
                                                 <f:facet name="header"/>

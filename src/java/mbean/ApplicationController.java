@@ -30,7 +30,7 @@ import javax.faces.model.SelectItem;
  */
 @ManagedBean
 @ApplicationScoped
-public class ApplicationBean {
+public class ApplicationController {
 
     @EJB
     private SizeMasterFacade sizeMasterFacade;
@@ -60,7 +60,7 @@ public class ApplicationBean {
     /**
      * <p>Construct a new application data bean instance.</p>
      */
-    public ApplicationBean() {
+    public ApplicationController() {
     }
 
     @PostConstruct

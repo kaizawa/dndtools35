@@ -36,7 +36,7 @@
                                              rowClasses="tableTitleBlackMiddle" style="height: 100%; width: 100%" styleClass="tableGrid">
                                     <h:outputText id="outputText15" value="サイズ"/>
                                     <h:selectOneMenu id="dropdown1" required="true" requiredMessage="サイズを指定してください。" value="#{raceMasterControllerselectedSize}">
-                                        <f:selectItems id="dropdown1SelectItems" value="#{applicationBean.sizeArray}"/>
+                                        <f:selectItems id="dropdown1SelectItems" value="#{applicationController.sizeArray}"/>
                                     </h:selectOneMenu>
                                     <h:outputText id="outputText16" value="移動速度"/>
                                     <h:inputText id="textField11" required="true" requiredMessage="移動速度を入力して下さい。" style="width: 30px" value="#{raceMasterControllerspeed}"/>

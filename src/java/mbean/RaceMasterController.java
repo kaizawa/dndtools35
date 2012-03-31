@@ -50,13 +50,13 @@ public class RaceMasterController {
         this.sessionController = sessionController;
     }
     @ManagedProperty(value = "#{applicationBean}")
-    private ApplicationBean applicationBean;
+    private ApplicationController applicationBean;
 
-    public ApplicationBean getApplicationBean() {
+    public ApplicationController getApplicationBean() {
         return applicationBean;
     }
 
-    public void setApplicationBean(ApplicationBean applicationBean) {
+    public void setApplicationBean(ApplicationController applicationBean) {
         this.applicationBean = applicationBean;
     }
     @EJB

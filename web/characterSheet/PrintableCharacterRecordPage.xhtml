@@ -78,7 +78,7 @@
                         <h:panelGrid id="abilityGridPanel" style="" styleClass="tableGridPrint">
                             <h:outputText id="outputText58" value="能力値"/>
                             <h:dataTable binding="#{printableCharacterSheetController.abilityTable}" id="abilityTable" styleClass="gPrint"
-                                         value="#{applicationBean.abilityList}" var="currentRow">
+                                         value="#{applicationController.abilityList}" var="currentRow">
                                 <h:column id="column4">
                                     <h:outputText id="outputText22" styleClass="bPrint" value="#{currentRow.abilityName}"/>
                                     <f:facet name="header">
@@ -132,7 +132,7 @@
                         <h:panelGrid id="saveGridPanel" style="" styleClass="tableGridPrint">
                             <h:outputText id="outputText57" styleClass="tableTitleBlackPrint" value="セーヴィングスロー"/>
                             <h:dataTable binding="#{printableCharacterSheetController.saveTable}" cellpadding="1" cellspacing="0" id="saveTable" style=""
-                                         styleClass="gPrint" value="#{applicationBean.saveList}" var="currentRow">
+                                         styleClass="gPrint" value="#{applicationController.saveList}" var="currentRow">
                                 <h:column id="column19">
                                     <h:outputText id="outputText47" styleClass="bPrint" value="#{currentRow.saveName}"/>
                                     <f:facet name="header">
@@ -404,7 +404,7 @@
                         <h:panelGrid id="skillGridPanel" style="" styleClass="tableGridPrint">
                             <h:outputText id="outputText56" style="" styleClass="tableTitleBlackPrint" value="技能"/>
                             <h:dataTable binding="#{printableCharacterSheetController.skillTable}" id="skillTable" style="" styleClass="gPrint"
-                                         value="#{applicationBean.skillList}" var="currentRow">
+                                         value="#{applicationController.skillList}" var="currentRow">
                                 <h:column id="column27">
                                     <h:outputText id="outputText112" value="#{printableCharacterSheetController.skillRankCheck}"/>
                                     <f:facet name="header">

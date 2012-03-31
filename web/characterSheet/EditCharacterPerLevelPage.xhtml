@@ -46,7 +46,7 @@
                                 <h:panelGrid columns="3" id="gridPanel8" style="height: 100%; text-align: left; width: 100%" styleClass="left">
                                     <h:panelGrid id="gridPanel9" style="width: 200px">
                                         <h:selectOneMenu id="classdropdown1" onchange="" value="#{characterSheetPerLevelController.selectedClass}">
-                                            <f:selectItems id="dropdown1SelectItems2" value="#{applicationBean.classArray}"/>
+                                            <f:selectItems id="dropdown1SelectItems2" value="#{applicationController.classArray}"/>
                                         </h:selectOneMenu>
                                     </h:panelGrid>
                                     <h:panelGrid id="gridPanel10" style="font-size: 14px; width: 150px">
@@ -106,7 +106,7 @@
                             <h:panelGrid id="skillTableGridPanel1" style="background-color: #000000; height: 100%; width: 100%">
                                 <h:dataTable binding="#{characterSheetPerLevelController.skillTable}" headerClass="tableTitleBlackNopad"
                                              id="skillTable" rowClasses="skill-row-even,skill-row-odd" styleClass="waku"
-                                             value="#{applicationBean.skillList}" var="currentRow">
+                                             value="#{applicationController.skillList}" var="currentRow">
                                     <h:column id="column1">
                                         <h:outputText id="outputText16" style="font-size: 14px; font-weight: bold" value="#{characterSheetPerLevelController.classSkill}"/>
                                         <f:facet name="header">

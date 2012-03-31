@@ -40,7 +40,7 @@
                                     <h:inputText id="textField1" onchange="" requiredMessage="キャラクター名を入力して下さい" style="width: 180px" value="#{characterSheetController.characterData.characterName}"/>
                                     <h:inputText id="textField2" onchange="" requiredMessage="プレイヤー名を入力して下さい" style="width: 181px" value="#{characterSheetController.characterData.playerName}"/>
                                     <h:selectOneMenu id="dropdown1" onchange="" requiredMessage="キャンペーンを選択して下さい" value="#{characterSheetController.selectedCampaign}">
-                                        <f:selectItems id="dropdown1SelectItems1" value="#{applicationBean.campaignArray}"/>
+                                        <f:selectItems id="dropdown1SelectItems1" value="#{applicationController.campaignArray}"/>
                                     </h:selectOneMenu>
                                 </h:panelGrid>
                                 <h:panelGrid columns="4" id="gridPanel7" style="background-color: rgb(51, 51, 51); color: rgb(255, 255, 255); height: 100%; text-align: center; width: 100%">
@@ -62,10 +62,10 @@
                                 </h:panelGrid>
                                 <h:panelGrid columns="2" id="aligngridPanel1" style="text-align: left" styleClass="g">
                                     <h:selectOneMenu id="dropdown2" onchange="" style="" value="#{characterSheetController.selectedAlignment}" valueChangeListener="#{characterSheetController.dropdown2_processValueChange(vce)}">
-                                        <f:selectItems id="dropdown2SelectItems1" value="#{applicationBean.alignmentArray}"/>
+                                        <f:selectItems id="dropdown2SelectItems1" value="#{applicationController.alignmentArray}"/>
                                     </h:selectOneMenu>
                                     <h:selectOneMenu id="dropdown3" onchange="" value="#{characterSheetController.selectedReligion}">
-                                        <f:selectItems id="dropdown3SelectItems1" value="#{applicationBean.religionArray}"/>
+                                        <f:selectItems id="dropdown3SelectItems1" value="#{applicationController.religionArray}"/>
                                     </h:selectOneMenu>
                                 </h:panelGrid>
                                 <h:panelGrid columns="5" id="gridPanel10" style="height: 100%; width: 100%">
@@ -77,11 +77,11 @@
                                 </h:panelGrid>
                                 <h:panelGrid columns="7" id="racegridPanel1" styleClass="g">
                                     <h:selectOneMenu id="dropdown4" onchange="" value="#{characterSheetController.selectedRace}">
-                                        <f:selectItems id="dropdown4SelectItems1" value="#{applicationBean.raceArray}"/>
+                                        <f:selectItems id="dropdown4SelectItems1" value="#{applicationController.raceArray}"/>
                                     </h:selectOneMenu>
                                     <h:inputText id="textField4" onchange="" style="left: 10px; position: relative; text-align: right; width: 30px" value="#{characterSheetController.characterData.age}"/>
                                     <h:selectOneMenu id="dropdown5" onchange="" value="#{characterSheetController.selectedGender}">
-                                        <f:selectItems id="dropdown5SelectItems1" value="#{applicationBean.genderArray}"/>
+                                        <f:selectItems id="dropdown5SelectItems1" value="#{applicationController.genderArray}"/>
                                     </h:selectOneMenu>
                                     <h:inputText id="textField5" onchange="" style="text-align: right; width: 40px" value="#{characterSheetController.characterData.height}"/>
                                     <h:outputText id="outputText15" style="color: #000000; font-size: 10px; text-align: left" value="cm"/>
@@ -124,7 +124,7 @@
                                     </h:column>
                                     <h:column id="column2">
                                         <h:selectOneMenu id="classDropDown1" value="#{characterSheetController.selectedClassByRow}">
-                                            <f:selectItems id="dropdown6SelectItems1" value="#{applicationBean.classArray}"/>
+                                            <f:selectItems id="dropdown6SelectItems1" value="#{applicationController.classArray}"/>
                                         </h:selectOneMenu>
                                         <f:facet name="header">
                                             <h:outputText id="outputText24" value="クラス"/>
@@ -139,7 +139,7 @@
                                     <h:column id="column4">
                                         <h:selectOneMenu disabled="#{characterSheetController.abilityEnhancementDisabled}" id="dropdown6"
                                                          onchange="" value="#{characterSheetController.selectedAbilityEnhancementByRow}">
-                                            <f:selectItems id="dropdown6SelectItems2" value="#{applicationBean.abilityArray}"/>
+                                            <f:selectItems id="dropdown6SelectItems2" value="#{applicationController.abilityArray}"/>
                                         </h:selectOneMenu>
                                         <f:facet name="header">
                                             <h:outputText id="outputText26" style="font-size: 12px" value="能力値上昇"/>
@@ -162,7 +162,7 @@
                                 <h:panelGrid id="abilityGridPanel1" style="" styleClass="tableGrid">
                                     <h:outputText id="outputText28" styleClass="tableTitleBlack" value="能力値"/>
                                     <h:dataTable binding="#{characterSheetController.abilityTable}" id="abilityTable" styleClass="w"
-                                                 value="#{applicationBean.abilityList}" var="currentRow">
+                                                 value="#{applicationController.abilityList}" var="currentRow">
                                         <h:column id="column6">
                                             <h:outputText id="outputText29" style="font-size: 12px; font-weight: bold" value="#{currentRow.abilityName}"/>
                                             <f:facet name="header">
@@ -219,7 +219,7 @@
                                 <h:panelGrid id="saveGridPanel1" style="" styleClass="tableGrid">
                                     <h:outputText id="outputText42" styleClass="tableTitleBlack" value="セーヴィングスロー"/>
                                     <h:dataTable binding="#{characterSheetController.saveTable}" cellpadding="1" cellspacing="0"
-                                                 id="saveTable" style="" styleClass="w" value="#{applicationBean.saveList}" var="currentRow">
+                                                 id="saveTable" style="" styleClass="w" value="#{applicationController.saveList}" var="currentRow">
                                         <h:column id="column14">
                                             <h:outputText id="outputText43" style="font-size: 12px; font-weight: bold" value="#{currentRow.saveName}"/>
                                             <f:facet name="header">
@@ -540,7 +540,7 @@
                                 <h:panelGrid id="skillGridPanel1" style="" styleClass="tableGrid">
                                     <h:outputText id="outputText144" style="" styleClass="tableTitleBlack" value="技能"/>
                                     <h:dataTable binding="#{characterSheetController.skillTable}" id="skillTable" style="" styleClass="w"
-                                                 value="#{applicationBean.skillList}" var="currentRow">
+                                                 value="#{applicationController.skillList}" var="currentRow">
                                         <h:column id="column19">
                                             <h:outputText id="outputText145" value="#{characterSheetController.skillRankCheck}"/>
                                             <f:facet name="header">

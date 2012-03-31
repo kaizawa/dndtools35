@@ -39,13 +39,13 @@
                                     <h:outputText id="outputText4" value="反応セーブランク"/>
                                     <h:outputText id="outputText5" value="意思セーブランク"/>
                                     <h:selectOneMenu id="dropdown1" required="true" requiredMessage="頑健セーブランクを選択してください" value="#{classMasterController.classEditSelectedFortituteRank}">
-                                        <f:selectItems id="dropdown2SelectItems1" value="#{applicationBean.rankArray}"/>
+                                        <f:selectItems id="dropdown2SelectItems1" value="#{applicationController.rankArray}"/>
                                     </h:selectOneMenu>
                                     <h:selectOneMenu id="dropdown2" required="true" requiredMessage="反応セーブランクを選択してください" value="#{classMasterController.classEditSelectedReflexRank}">
-                                        <f:selectItems id="dropdown3SelectItems1" value="#{applicationBean.rankArray}"/>
+                                        <f:selectItems id="dropdown3SelectItems1" value="#{applicationController.rankArray}"/>
                                     </h:selectOneMenu>
                                     <h:selectOneMenu id="dropdown3" required="true" requiredMessage="意思セーブランクを選択してください" value="#{classMasterController.classEditSelectedWillRank}">
-                                        <f:selectItems id="dropdown4SelectItems1" value="#{applicationBean.rankArray}"/>
+                                        <f:selectItems id="dropdown4SelectItems1" value="#{applicationController.rankArray}"/>
                                     </h:selectOneMenu>
                                 </h:panelGrid>
                                 <h:panelGrid columns="3" headerClass="tableTitleBlackMiddle" id="gridPanel10" rowClasses="tableTitleBlackMiddle"
@@ -54,10 +54,10 @@
                                     <h:outputText id="outputText7" value="HDの種類"/>
                                     <h:outputText id="outputText107" value="レベル毎の技能ポイント"/>
                                     <h:selectOneMenu id="dropdown4" required="true" requiredMessage="基本攻撃ボーナスランクを選択してください" value="#{classMasterController.classEditSelectedBabRank}">
-                                        <f:selectItems id="dropdown1SelectItems1" value="#{applicationBean.rankArray}"/>
+                                        <f:selectItems id="dropdown1SelectItems1" value="#{applicationController.rankArray}"/>
                                     </h:selectOneMenu>
                                     <h:selectOneMenu id="dropdown5" onchange="" required="true" requiredMessage="HDの種類を選択してください" value="#{classMasterController.classEditSelectedHitDiceType}">
-                                        <f:selectItems id="dropdown2SelectItems2" value="#{applicationBean.diceArray}"/>
+                                        <f:selectItems id="dropdown2SelectItems2" value="#{applicationController.diceArray}"/>
                                     </h:selectOneMenu>
                                     <h:inputText id="textField109" required="true" requiredMessage="レベル毎の技能ポイントを指定してください" style="font-size: 14px; width: 30px" value="#{classMasterController.classMaster.skillPoint}"/>
                                 </h:panelGrid>
@@ -70,7 +70,7 @@
                                 <h:panelGrid id="gridPanel11" style="width: 250px" styleClass="tableGrid">
                                     <h:outputText id="outputText9" styleClass="tableTitleBlackMiddle" value="クラス技能"/>
                                     <h:dataTable binding="#{classMasterController.classSkillTable}" id="classSkillTable" styleClass="w"
-                                                 value="#{applicationBean.skillList}" var="currentRow">
+                                                 value="#{applicationController.skillList}" var="currentRow">
                                         <h:column id="column1">
                                             <h:selectBooleanCheckbox id="checkbox1" value="#{classMasterController.selectedClassSkill}"/>
                                             <f:facet name="header">
