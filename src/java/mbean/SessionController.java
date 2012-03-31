@@ -6,16 +6,16 @@
 package mbean;
 
 import ejb.*;
-import entity.*;
+import entity.CharacterGrowthRecord;
+import entity.ClassMaster;
+import entity.PlayerMaster;
+import entity.RaceMaster;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
 
 /**
  * <p>Session scope data bean for your application.  Create properties
@@ -48,6 +48,12 @@ public class SessionController {
     private RaceMasterFacade raceMasterFacade;
     @EJB
     private CampaignMasterFacade campaignMasterFacade; 
+    
+    @PostConstruct
+    public void init() {
+        setCheckedCharacterSet(new LinkedHashSet());   
+        setLoggedIn(false);
+    }    
 
     boolean loggedIn = false;
     
@@ -104,16 +110,16 @@ public class SessionController {
     /*
      * チェックボックスで選択されたキャラクターのセット
      */
-    private Set checkedCharacerSet = new LinkedHashSet();
+    private Set checkedCharacterSet;
+
 
     public Set getCheckedCharacterSet() {
-        return checkedCharacerSet;
+        return checkedCharacterSet;
     }
 
     public void setCheckedCharacterSet(Set selectedCharas) {
-        this.checkedCharacerSet = selectedCharas;
+        this.checkedCharacterSet = selectedCharas;
     }
-    
 
     /*
      * プレイヤー(ログインユーザ)
