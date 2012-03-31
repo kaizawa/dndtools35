@@ -345,10 +345,6 @@ public class CharacterSheetController implements Serializable {
         return "EditClassPage";
     }
 
-    public String saveButton_action() {
-        return null;
-    }
-
     public String classListButton_action() {
         return null;
     }
@@ -612,7 +608,7 @@ public class CharacterSheetController implements Serializable {
         return "CharacterListPage";
     }
 
-    public String editCharaSaveButton_action() {
+    public String saveButton_action() {
 
         CharacterData charaData = getCharacterData();
         CharacterEquipment equip = getCharacterData().getCharacterEquipment();
