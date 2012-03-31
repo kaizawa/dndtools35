@@ -230,6 +230,7 @@ public class ClassMasterController  {
 
         /*
          * 選択メニュー用クラスの配列とリストを再作成し、ApplicationBean のプロパティにセット
+         */
 
         List<ClassMaster> classFindAll = classMasterFacade.findAll();
         List<SelectItem> classList = new ArrayList<SelectItem>();
@@ -245,8 +246,6 @@ public class ClassMasterController  {
         SelectItem[] tempClassArray = classList.toArray(new SelectItem[0]);
         //セッションBEANへのセット
         getApplicationBean().setClassArray(tempClassArray);
-        return null;
-        */
         return null;
     }
     /*
