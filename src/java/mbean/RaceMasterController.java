@@ -84,7 +84,11 @@ public class RaceMasterController {
     }
 
     @PostConstruct
-    public void init() {
+    public void init(){
+        
+    }
+    
+    public void initProperty() {
         RaceMaster race = getRaceMaster();
 
         setAbilityCollection(race.getRaceAbilityMasterList());
@@ -301,25 +305,23 @@ public class RaceMasterController {
     }
 
     public String deleteButton_action() {
-        RaceMaster raceMaster = getRaceMaster();
-
         try {
-            raceMasterFacade.remove(raceMaster);
+            raceMasterFacade.remove(getRaceMaster());
         } catch (Exception ex) {
             ex.printStackTrace();
             JsfUtil.addErrorMessage("種族の削除に失敗しました。利用中の可能性があります。");
             return null;
         }
-        return "RaceListPage";
+        return "/raceMaster/RaceListPage";
     }
 
     // 削除ボタンの表示
     public boolean isDeleteButtonDisabled() {
-        return (getRaceMaster().getId() == null);
+        return (getRaceMaster() == null || getRaceMaster().getId() == null);
     }
 
     public String cancelButton_action() {
-        return "RaceListPage";
+        return "/raceMaster/RaceListPage";
     }
 
     public Integer getCharismaModifier() {
@@ -469,20 +471,24 @@ public class RaceMasterController {
 
     public String editRaceLink_action() {
         int raceid = raceTable.getRowIndex();
-
         RaceMaster racemaster = getRaceMasterList().get(raceid);
-
         setRaceMaster(racemaster);
-        return "EditRacePage";
+        return prepareEdit();
     }
 
     public String newRaceButton_action() {
-        if (getSessionController().loggedIn) {
-            RaceMaster newRaceMaster = new RaceMaster();
-            setRaceMaster(newRaceMaster);
-            return "/raceMaster/EditRacePage";
-        } else {
+        RaceMaster newRaceMaster = new RaceMaster();
+        setRaceMaster(newRaceMaster);
+        return prepareEdit();
+    }
+    
+    public String prepareEdit(){
+        initProperty();
+        
+        if (getSessionController().loggedIn == false) {
+            getSessionController().setTargetPage("/raceMaster/EditRacePage");
             return "/login/LoginPage";
         }
+        return "/raceMaster/EditRacePage";       
     }
 }

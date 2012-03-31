@@ -11,21 +11,17 @@
         </ui:define>
         <ui:define name="body">
             <h:form>
-                <h:panelGrid id="contents" style="width: 100%" styleClass="contents">
-                    <h:panelGroup id="messagePanel" layout="block">
-                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                    </h:panelGroup> 
                     <h:panelGrid columns="2" id="gridPanel1" style="height: 100%; width: 100%">
                         <h:panelGrid id="gridPanel2" style="width: 100%; height: 100%;">
                             <h:outputText id="outputText5" style="font-size: 18px; font-weight: bold" value="種族一覧"/>
                         </h:panelGrid>
                         <h:panelGrid id="gridPanel3" style="height: 100%; text-align: right; width: 100%">
-                            <h:commandButton action="#{receMasterController.newRaceButton_action}" id="newRaceButton" value="新しい種族作成"/>
+                            <h:commandButton action="#{raceMasterController.newRaceButton_action}" id="newRaceButton" value="新しい種族作成"/>
                         </h:panelGrid>
                     </h:panelGrid>
                     <h:panelGrid id="contentsGrid" style="width: 400px; height: 100%;" styleClass="tableGrid">
-                        <h:dataTable binding="#{receMasterController.raceTable}" id="raceTable" styleClass="w"
-                                     value="#{receMasterController.raceMasterList}" var="currentRow">
+                        <h:dataTable binding="#{raceMasterController.raceTable}" id="raceTable" styleClass="w"
+                                     value="#{raceMasterController.raceMasterList}" var="currentRow">
                             <h:column id="column1">
                                 <h:outputText id="outputText1" value="#{currentRow.raceName}"/>
                                 <f:facet name="header">
@@ -33,7 +29,7 @@
                                 </f:facet>
                             </h:column>
                             <h:column id="column2">
-                                <h:commandLink action="#{receMasterController.editRaceLink_action}" id="editRaceLink">
+                                <h:commandLink action="#{raceMasterController.editRaceLink_action}" id="editRaceLink">
                                     <h:outputText id="linkAction1Text" value="修正"/>
                                 </h:commandLink>
                                 <f:facet name="header">
@@ -42,7 +38,6 @@
                             </h:column>
                         </h:dataTable>
                     </h:panelGrid>
-                </h:panelGrid>
             </h:form>
         </ui:define>            
     </ui:composition>

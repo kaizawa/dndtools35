@@ -12,17 +12,13 @@
         </ui:define>
         <ui:define name="body">
             <h:form>
-                <h:panelGrid id="contents" style="width: 100%" styleClass="contents">
-                    <h:panelGroup id="messagePanel" layout="block">
-                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                    </h:panelGroup> 
                     <h:panelGrid id="contentsGrid" style="width: 100%">
                         <h:panelGrid columns="2" id="buttonGrid1" style="height: 100%; width: 100%">
                             <h:panelGrid id="gridPanel2" style="height: 100%; text-align: left; width: 100%">
-                                <h:commandButton action="#{raceMasterControllersaveButton_action}" id="saveButton" value="保存"/>
+                                <h:commandButton action="#{raceMasterController.saveButton_action}" id="saveButton" value="保存"/>
                             </h:panelGrid>
                             <h:panelGrid id="gridPanel3" style="height: 100%; text-align: right; width: 100%">
-                                <h:commandButton action="#{raceMasterControllercancelButton_action}" id="cancelButton" value="キャンセル" immediate="true"/>
+                                <h:commandButton action="#{raceMasterController.cancelButton_action}" id="cancelButton" value="キャンセル" immediate="true"/>
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="2" id="gridPanel8" style="height: 100%; width: 100%">
@@ -35,20 +31,20 @@
                                 <h:panelGrid columns="4" headerClass="tableTitleBlackMiddle" id="sizeAndSpeedGrid"
                                              rowClasses="tableTitleBlackMiddle" style="height: 100%; width: 100%" styleClass="tableGrid">
                                     <h:outputText id="outputText15" value="サイズ"/>
-                                    <h:selectOneMenu id="dropdown1" required="true" requiredMessage="サイズを指定してください。" value="#{raceMasterControllerselectedSize}">
+                                    <h:selectOneMenu id="dropdown1" required="true" requiredMessage="サイズを指定してください。" value="#{raceMasterController.selectedSize}">
                                         <f:selectItems id="dropdown1SelectItems" value="#{applicationController.sizeArray}"/>
                                     </h:selectOneMenu>
                                     <h:outputText id="outputText16" value="移動速度"/>
-                                    <h:inputText id="textField11" required="true" requiredMessage="移動速度を入力して下さい。" style="width: 30px" value="#{raceMasterControllerspeed}"/>
+                                    <h:inputText id="textField11" required="true" requiredMessage="移動速度を入力して下さい。" style="width: 30px" value="#{raceMasterController.speed}"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="3" headerClass="tableTitleBlackMiddle" id="saveGrid" rowClasses="tableTitleBlackMiddle"
                                              style="height: 100%; width: 100%" styleClass="tableGrid">
                                     <h:outputText id="outputText3" value="頑健セーブ調整値"/>
                                     <h:outputText id="outputText4" value="反応セーブ調整値"/>
                                     <h:outputText id="outputText5" value="意思セーブ調整値"/>
-                                    <h:inputText id="textField2" style="width: 30px" value="#{raceMasterControllerfortitudeModifier}"/>
-                                    <h:inputText id="textField3" style="width: 30px" value="#{raceMasterControllerreflexModifier}"/>
-                                    <h:inputText id="textField4" style="width: 30px" value="#{raceMasterControllerwillModifier}"/>
+                                    <h:inputText id="textField2" style="width: 30px" value="#{raceMasterController.fortitudeModifier}"/>
+                                    <h:inputText id="textField3" style="width: 30px" value="#{raceMasterController.reflexModifier}"/>
+                                    <h:inputText id="textField4" style="width: 30px" value="#{raceMasterController.willModifier}"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="6" headerClass="tableTitleBlackMiddle" id="abilityGrid" rowClasses="tableTitleBlackMiddle"
                                              style="height: 100%; width: 100%" styleClass="tableGrid">
@@ -58,12 +54,12 @@
                                     <h:outputText id="outputText9" value="知力調整値"/>
                                     <h:outputText id="outputText11" value="判断力調整値"/>
                                     <h:outputText id="outputText10" value="魅力調整値"/>
-                                    <h:inputText id="textField6" style="width: 30px" value="#{raceMasterControllerstrengthModifier}"/>
-                                    <h:inputText id="textField5" style="width: 30px" value="#{raceMasterControllerdexterityModifier}"/>
-                                    <h:inputText id="textField7" style="width: 30px" value="#{raceMasterControllerconstitutionModifier}"/>
-                                    <h:inputText id="textField8" style="width: 30px" value="#{raceMasterControllerintelligenceModifier}"/>
-                                    <h:inputText id="textField9" style="width: 30px" value="#{raceMasterControllerwisdomModifier}"/>
-                                    <h:inputText id="textField10" style="width: 30px" value="#{raceMasterControllercharismaModifier}"/>
+                                    <h:inputText id="textField6" style="width: 30px" value="#{raceMasterController.strengthModifier}"/>
+                                    <h:inputText id="textField5" style="width: 30px" value="#{raceMasterController.dexterityModifier}"/>
+                                    <h:inputText id="textField7" style="width: 30px" value="#{raceMasterController.constitutionModifier}"/>
+                                    <h:inputText id="textField8" style="width: 30px" value="#{raceMasterController.intelligenceModifier}"/>
+                                    <h:inputText id="textField9" style="width: 30px" value="#{raceMasterController.wisdomModifier}"/>
+                                    <h:inputText id="textField10" style="width: 30px" value="#{raceMasterController.charismaModifier}"/>
                                 </h:panelGrid>
                                 <h:panelGrid id="descriptionGrid" style="height: 100%; width: 100%" styleClass="tableGrid">
                                     <h:outputText id="outputText8" styleClass="tableTitleBlack" value="説明・特徴"/>
@@ -72,11 +68,10 @@
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
-                            <h:commandButton action="#{raceMasterControllerdeleteButton_action}"
-                                             disabled="#{raceMasterControllerdeleteButtonDisabled}" id="deleteButton" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="種族の削除"/>
+                            <h:commandButton action="#{raceMasterController.deleteButton_action}"
+                                             disabled="#{raceMasterController.deleteButtonDisabled}" id="deleteButton" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="種族の削除"/>
                         </h:panelGrid>
                     </h:panelGrid>
-                </h:panelGrid>
             </h:form>
         </ui:define>     
     </ui:composition>
