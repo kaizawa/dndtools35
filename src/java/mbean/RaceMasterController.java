@@ -1,227 +1,488 @@
+/*
+ * EditClassPage.java
+ *
+ * Created on 2009/01/06, 0:04:02
+ */
 package mbean;
 
-import entity.RaceMaster;
-import mbean.util.JsfUtil;
-import mbean.util.PaginationHelper;
 import ejb.RaceMasterFacade;
-
-import java.io.Serializable;
-import java.util.ResourceBundle;
+import ejb.SizeMasterFacade;
+import ejb.SaveMasterFacade;
+import ejb.RaceAbilityMasterFacade;
+import ejb.RaceSaveMasterFacade;
+import entity.RaceAbilityMaster;
+import entity.RaceMaster;
+import entity.RaceSaveMaster;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.component.html.HtmlDataTable;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import mbean.util.JsfUtil;
 
-@ManagedBean(name = "raceMasterController")
-@SessionScoped
-public class RaceMasterController implements Serializable {
+/**
+ * <p>Page bean that corresponds to a similarly named JSP page. This class
+ * contains component definitions (and initialization code) for all components
+ * that you have defined on this page, as well as lifecycle methods and event
+ * handlers where you may add behavior to respond to incoming events.</p>
+ *
+ * @author ka78231
+ */
+@ManagedBean
+@RequestScoped
+public class RaceMasterController {
 
-    private RaceMaster current;
-    private DataModel items = null;
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
+    @ManagedProperty(value = "#{applicationBean}")
+    private ApplicationBean applicationBean;
+
+    public ApplicationBean getApplicationBean() {
+        return applicationBean;
+    }
+
+    public void setApplicationBean(ApplicationBean applicationBean) {
+        this.applicationBean = applicationBean;
+    }
     @EJB
-    private ejb.RaceMasterFacade ejbFacade;
-    private PaginationHelper pagination;
-    private int selectedItemIndex;
+    private SizeMasterFacade sizeMasterFacade;
+    @EJB
+    private RaceSaveMasterFacade raceSaveMasterFacade;
+    @EJB
+    private RaceAbilityMasterFacade raceAbilityMasterFacade;
+    @EJB
+    private RaceMasterFacade raceMasterFacade;
+    @EJB
+    private SaveMasterFacade saveMasterFacade;
+    private RaceMaster raceMaster;
 
-    public RaceMasterController() {
+    public RaceMaster getRaceMaster() {
+        return raceMaster;
+    }
+    
+    public List<RaceMaster> getRaceMasterList() {
+        return raceMasterFacade.findAll();
     }
 
-    public RaceMaster getSelected() {
-        if (current == null) {
-            current = new RaceMaster();
-            selectedItemIndex = -1;
-        }
-        return current;
+    public void setRaceMaster(RaceMaster raceMaster) {
+        this.raceMaster = raceMaster;
     }
 
-    private RaceMasterFacade getFacade() {
-        return ejbFacade;
-    }
+    @PostConstruct
+    public void init() {
+        RaceMaster race = getRaceMaster();
 
-    public PaginationHelper getPagination() {
-        if (pagination == null) {
-            pagination = new PaginationHelper(10) {
+        setAbilityCollection(race.getRaceAbilityMasterList());
+        setSaveCollection(race.getRaceSaveMasterCollection());
 
-                @Override
-                public int getItemsCount() {
-                    return getFacade().count();
-                }
+        if (race.getId() != null) {
+            // すでに存在するクラスの場合
+            /*
+             * この種族のセーブ調整値一覧の取得
+             */
+            List<RaceSaveMaster> tempRaceSaveList = raceSaveMasterFacade.findByRace(race);
+            setRaceSaveList(tempRaceSaveList);
 
-                @Override
-                public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                }
-            };
-        }
-        return pagination;
-    }
-
-    public String prepareList() {
-        recreateModel();
-        return "List";
-    }
-
-    public String prepareView() {
-        current = (RaceMaster) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
-    public String prepareCreate() {
-        current = new RaceMaster();
-        selectedItemIndex = -1;
-        return "Create";
-    }
-
-    public String create() {
-        try {
-            getFacade().create(current);
-            JsfUtil.addSuccessMessage("RaceMasterCreated");
-            return prepareCreate();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
-            return null;
-        }
-    }
-
-    public String prepareEdit() {
-        current = (RaceMaster) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
-    }
-
-    public String update() {
-        try {
-            getFacade().edit(current);
-            JsfUtil.addSuccessMessage("RaceMasterUpdated");
-            return "View";
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
-            return null;
-        }
-    }
-
-    public String destroy() {
-        current = (RaceMaster) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyAndView() {
-        performDestroy();
-        recreateModel();
-        updateCurrentItem();
-        if (selectedItemIndex >= 0) {
-            return "View";
+            /*
+             * この種族の能力値調整値の取得
+             */
+            List<RaceAbilityMaster> tempRaceAbilityList = raceAbilityMasterFacade.findByRace(race);
+            setRaceAbilityList(tempRaceAbilityList);
         } else {
-            // all items were removed - go back to list
-            recreateModel();
-            return "List";
+            // 新しいクラス
+            setRaceSaveList(new ArrayList<RaceSaveMaster>());
+            setRaceAbilityList(new ArrayList<RaceAbilityMaster>());
         }
+
+        /*
+         * この種族のサイズの取得
+         */
+        if (race.getSizeId() != null) {
+            Integer sizeid = race.getSizeId().getId();
+            setSelectedSize(sizeid);
+        } else {
+            setSelectedSize(null);
+        }
+        /*
+         * 能力値をセット
+         */
+        if (getAbilityCollection() != null) {
+            for (RaceAbilityMaster ability : getAbilityCollection()) {
+                int abId = ability.getAbilityMaster().getId();
+                switch (abId) {
+                    case DnDUtil.STR:
+                        setStrengthModifier(ability.getModifier());
+                        break;
+                    case DnDUtil.DEX:
+                        setDexterityModifier(ability.getModifier());
+                        break;
+                    case DnDUtil.CON:
+                        setConstitutionModifier(ability.getModifier());
+                        break;
+                    case DnDUtil.WIS:
+                        setWisdomModifier(ability.getModifier());
+                        break;
+                    case DnDUtil.INT:
+                        setIntelligenceModifier(ability.getModifier());
+                        break;
+                    case DnDUtil.CHA:
+                        setCharismaModifier(ability.getModifier());
+                        break;
+                }
+            }
+        }
+        /*
+         * セーブをセット
+         */
+        if (getSaveCollection() != null) {
+            for (RaceSaveMaster save : getSaveCollection()) {
+                int saveId = save.getSaveMaster().getId();
+                switch (saveId) {
+                    case DnDUtil.FORTITUTE:
+                        setFortitudeModifier(save.getModifier());
+                        break;
+                    case DnDUtil.REFLEX:
+                        setReflexModifier(save.getModifier());
+                        break;
+                    case DnDUtil.WILL:
+                        setWillModifier(save.getModifier());
+                        break;
+                }
+            }
+        }
+
+        /*
+         * 移動速度をセット
+         */
+        setSpeed(race.getSpeed());
     }
 
-    private void performDestroy() {
+    public String saveButton_action() {
+        RaceMaster race = getRaceMaster();
+        Integer sizeid = getSelectedSize();
+
         try {
-            getFacade().remove(current);
-            JsfUtil.addSuccessMessage("RaceMasterDeleted");
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
-        }
-    }
+            if (race.getId() == null) {
+                //新規 種族マスターを作成
+                race.setSizeId(sizeMasterFacade.find(sizeid));
+                race.setSpeed(getSpeed());
+                raceMasterFacade.create(race);
 
-    private void updateCurrentItem() {
-        int count = getFacade().count();
-        if (selectedItemIndex >= count) {
-            // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
-            // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
-            }
-        }
-        if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-        }
-    }
+                //種族のセーヴマスター作成
+                RaceSaveMaster fortitute = new RaceSaveMaster(race.getId(), DnDUtil.FORTITUTE);
+                RaceSaveMaster refrex = new RaceSaveMaster(race.getId(), DnDUtil.REFLEX);
+                RaceSaveMaster will = new RaceSaveMaster(race.getId(), DnDUtil.WILL);
+                fortitute.setModifier(getFortitudeModifier());
+                refrex.setModifier(getReflexModifier());
+                will.setModifier(getWillModifier());
+                raceSaveMasterFacade.create(fortitute);
+                raceSaveMasterFacade.create(refrex);
+                raceSaveMasterFacade.create(will);
 
-    public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
-        return items;
-    }
+                //種族の能力値マスター作成
+                RaceAbilityMaster str = new RaceAbilityMaster(race.getId(), DnDUtil.STR);
+                RaceAbilityMaster dex = new RaceAbilityMaster(race.getId(), DnDUtil.DEX);
+                RaceAbilityMaster con = new RaceAbilityMaster(race.getId(), DnDUtil.CON);
+                RaceAbilityMaster inte = new RaceAbilityMaster(race.getId(), DnDUtil.INT);
+                RaceAbilityMaster wis = new RaceAbilityMaster(race.getId(), DnDUtil.WIS);
+                RaceAbilityMaster charisma = new RaceAbilityMaster(race.getId(), DnDUtil.CHA);
+                str.setModifier(getStrengthModifier());
+                dex.setModifier(getDexterityModifier());
+                con.setModifier(getConstitutionModifier());
+                inte.setModifier(getIntelligenceModifier());
+                wis.setModifier(getWisdomModifier());
+                charisma.setModifier(getCharismaModifier());
+                raceAbilityMasterFacade.create(str);
+                raceAbilityMasterFacade.create(dex);
+                raceAbilityMasterFacade.create(con);
+                raceAbilityMasterFacade.create(inte);
+                raceAbilityMasterFacade.create(wis);
+                raceAbilityMasterFacade.create(charisma);
 
-    private void recreateModel() {
-        items = null;
-    }
-
-    private void recreatePagination() {
-        pagination = null;
-    }
-
-    public String next() {
-        getPagination().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previous() {
-        getPagination().previousPage();
-        recreateModel();
-        return "List";
-    }
-
-    public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
-    }
-
-    public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
-    }
-
-    @FacesConverter(forClass = RaceMaster.class)
-    public static class RaceMasterControllerConverter implements Converter {
-
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            RaceMasterController controller = (RaceMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "raceMasterController");
-            return controller.ejbFacade.find(getKey(value));
-        }
-
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
-            return key;
-        }
-
-        String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
-            sb.append(value);
-            return sb.toString();
-        }
-
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof RaceMaster) {
-                RaceMaster o = (RaceMaster) object;
-                return getStringKey(o.getId());
+                JsfUtil.addErrorMessage("作成しました");
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + RaceMasterController.class.getName());
+                //更新
+                for (RaceSaveMaster saveMaster : getSaveCollection()) {
+                    int saveId = saveMaster.getRaceSaveMasterPK().getSaveId();
+                    switch (saveId) {
+                        case DnDUtil.FORTITUTE:
+                            saveMaster.setModifier(getFortitudeModifier());
+                            raceSaveMasterFacade.edit(saveMaster);
+                            break;
+                        case DnDUtil.REFLEX:
+                            saveMaster.setModifier(getReflexModifier());
+                            raceSaveMasterFacade.edit(saveMaster);
+                            break;
+                        case DnDUtil.WILL:
+                            saveMaster.setModifier(getWillModifier());
+                            raceSaveMasterFacade.edit(saveMaster);
+                            break;
+                    }
+                }
+                for (RaceAbilityMaster abilityMaster : getAbilityCollection()) {
+                    int abId = abilityMaster.getRaceAbilityMasterPK().getAbilityId();
+                    switch (abId) {
+                        case DnDUtil.STR:
+                            abilityMaster.setModifier(getStrengthModifier());
+                            raceAbilityMasterFacade.edit(abilityMaster);
+                            break;
+                        case DnDUtil.DEX:
+                            abilityMaster.setModifier(getDexterityModifier());
+                            raceAbilityMasterFacade.edit(abilityMaster);
+                            break;
+                        case DnDUtil.CON:
+                            abilityMaster.setModifier(getConstitutionModifier());
+                            raceAbilityMasterFacade.edit(abilityMaster);
+                            break;
+                        case DnDUtil.INT:
+                            abilityMaster.setModifier(getIntelligenceModifier());
+                            raceAbilityMasterFacade.edit(abilityMaster);
+                            break;
+                        case DnDUtil.WIS:
+                            abilityMaster.setModifier(getWisdomModifier());
+                            raceAbilityMasterFacade.edit(abilityMaster);
+                            break;
+                        case DnDUtil.CHA:
+                            abilityMaster.setModifier(getCharismaModifier());
+                            raceAbilityMasterFacade.edit(abilityMaster);
+                            break;
+                    }
+                }
+                race.setSizeId(sizeMasterFacade.find(sizeid));
+                race.setSpeed(getSpeed());
+                raceMasterFacade.edit(race);
+                JsfUtil.addSuccessMessage("保存しました");
             }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JsfUtil.addErrorMessage("種族の保存に失敗しました");
+            return null;
+        }
+
+        /*
+         * 選択メニュー用クラスの配列とリストを再作成し、ApplicationBean のプロパティにセット
+         */
+        List<RaceMaster> raceFindAll = raceMasterFacade.findAll();
+        List<SelectItem> raceList = new ArrayList<SelectItem>();
+        //未選択状態
+        raceList.add(new SelectItem(null, "未選択"));
+        for (RaceMaster tempRace : raceFindAll) {
+            SelectItem selectItem = new SelectItem();
+            selectItem.setValue(tempRace.getId());
+            selectItem.setLabel(tempRace.getRaceName());
+            raceList.add(selectItem);
+        }
+        //リストから配列への変換
+        SelectItem[] tempRaceArray = raceList.toArray(new SelectItem[0]);
+        //セッションBEANへのセット
+        getApplicationBean().setRaceArray(tempRaceArray);
+        getApplicationBean().setRaceMasterList(raceFindAll);
+
+        return null;
+    }
+
+    public void dropdown2_processValueChange(ValueChangeEvent vce) {
+    }
+
+    public String deleteButton_action() {
+        RaceMaster raceMaster = getRaceMaster();
+
+        try {
+            raceMasterFacade.remove(raceMaster);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JsfUtil.addErrorMessage("種族の削除に失敗しました。利用中の可能性があります。");
+            return null;
+        }
+        return "RaceListPage";
+    }
+
+    // 削除ボタンの表示
+    public boolean isDeleteButtonDisabled() {
+        return (getRaceMaster().getId() == null);
+    }
+
+    public String cancelButton_action() {
+        return "RaceListPage";
+    }
+
+    public Integer getCharismaModifier() {
+        return CharismaModifier;
+    }
+
+    public void setCharismaModifier(Integer CharismaModifier) {
+        this.CharismaModifier = CharismaModifier;
+    }
+
+    public Integer getConstitutionModifier() {
+        return ConstitutionModifier;
+    }
+
+    public void setConstitutionModifier(Integer ConstitutionModifier) {
+        this.ConstitutionModifier = ConstitutionModifier;
+    }
+
+    public Integer getIntelligenceModifier() {
+        return IntelligenceModifier;
+    }
+
+    public void setIntelligenceModifier(Integer IntelligenceModifier) {
+        this.IntelligenceModifier = IntelligenceModifier;
+    }
+
+    public Integer getStrengthModifier() {
+        return StrengthModifier;
+    }
+
+    public void setStrengthModifier(Integer StrengthModifier) {
+        this.StrengthModifier = StrengthModifier;
+    }
+
+    public Integer getWisdomModifier() {
+        return WisdomModifier;
+    }
+
+    public void setWisdomModifier(Integer WisdomModifier) {
+        this.WisdomModifier = WisdomModifier;
+    }
+
+    public Integer getReflexModifier() {
+        return reflexModifier;
+    }
+
+    public void setReflexModifier(Integer reflexModifier) {
+        this.reflexModifier = reflexModifier;
+    }
+
+    public Integer getWillModifier() {
+        return willModifier;
+    }
+
+    public void setWillModifier(Integer willModifier) {
+        this.willModifier = willModifier;
+    }
+
+    public Integer getDexterityModifier() {
+        return DexterityModifier;
+    }
+
+    public void setDexterityModifier(Integer DexterityModifier) {
+        this.DexterityModifier = DexterityModifier;
+    }
+
+    public Integer getFortitudeModifier() {
+        return fortitudeModifier;
+    }
+
+    public void setFortitudeModifier(Integer fortitudeModifier) {
+        this.fortitudeModifier = fortitudeModifier;
+    }
+    protected Integer fortitudeModifier;
+    protected Integer reflexModifier;
+    protected Integer willModifier;
+    protected Integer StrengthModifier;
+    protected Integer DexterityModifier;
+    protected Integer ConstitutionModifier;
+    protected Integer IntelligenceModifier;
+    protected Integer WisdomModifier;
+    protected Integer CharismaModifier;
+    protected List<RaceSaveMaster> raceSaveList;
+
+    public List<RaceSaveMaster> getRaceSaveList() {
+        return raceSaveList;
+    }
+
+    public void setRaceSaveList(List<RaceSaveMaster> raceSaveList) {
+        this.raceSaveList = raceSaveList;
+    }
+    protected List<RaceAbilityMaster> raceAbilityList;
+
+    public List<RaceAbilityMaster> getRaceAbilityList() {
+        return raceAbilityList;
+    }
+
+    public void setRaceAbilityList(List<RaceAbilityMaster> raceAbilityList) {
+        this.raceAbilityList = raceAbilityList;
+    }
+    protected Integer selectedSize;
+
+    public Integer getSelectedSize() {
+        return selectedSize;
+    }
+
+    public void setSelectedSize(Integer selectedSize) {
+        this.selectedSize = selectedSize;
+    }
+    protected Integer speed;
+
+    public Integer getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
+    }
+    Collection<RaceAbilityMaster> abilityCollection;
+
+    public Collection<RaceAbilityMaster> getAbilityCollection() {
+        return abilityCollection;
+    }
+
+    public void setAbilityCollection(Collection<RaceAbilityMaster> abilityCollection) {
+        this.abilityCollection = abilityCollection;
+    }
+
+    public Collection<RaceSaveMaster> getSaveCollection() {
+        return saveCollection;
+    }
+
+    public void setSaveCollection(Collection<RaceSaveMaster> saveCollection) {
+        this.saveCollection = saveCollection;
+    }
+    Collection<RaceSaveMaster> saveCollection;
+
+    private HtmlDataTable raceTable = new HtmlDataTable();
+
+    public HtmlDataTable getRaceTable() {
+        return raceTable;
+    }
+
+    public void setRaceTable(HtmlDataTable hdt) {
+        this.raceTable = hdt;
+    }
+
+    public String editRaceLink_action() {
+        int raceid = raceTable.getRowIndex();
+
+        RaceMaster racemaster = getRaceMasterList().get(raceid);
+
+        setRaceMaster(racemaster);
+        return "EditRacePage";
+    }
+
+    public String newRaceButton_action() {
+        if (getSessionController().loggedIn) {
+            RaceMaster newRaceMaster = new RaceMaster();
+            setRaceMaster(newRaceMaster);
+            return "/raceMaster/EditRacePage";
+        } else {
+            return "/login/LoginPage";
         }
     }
 }
