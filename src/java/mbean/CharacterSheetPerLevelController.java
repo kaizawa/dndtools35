@@ -185,15 +185,13 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     protected boolean nextButtonDisabled;
 
     public boolean isNextButtonDisabled() {
-        return false;
-//        return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() >=  getCharacterData().getCharacterLevel());
+        return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() >=  getCharacterData().getCharacterLevel());
     }
     // ボタンを非表示にするかどうかを決める
     protected boolean nextPreviousDisabled;
 
     public boolean isPreviousButtonDisabled() {
-        return false;
-        //return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() <= 1);
+        return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() <= 1);
     }    
     
     /*
