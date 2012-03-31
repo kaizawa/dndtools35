@@ -629,6 +629,7 @@ public class CharacterSheetController implements Serializable {
         try {
             // CharacterRecord(CHARACTER_RECORD)の更新
             characterRecordFacade.edit(charaData.getCharacterRecord());
+            charaData.updateGrowthRecord();
             characterEquipmentFacade.edit(equip);
             for (CharacterGrowthRecord growth : growthList) {
                 characterGrowthRecordFacade.edit(growth);

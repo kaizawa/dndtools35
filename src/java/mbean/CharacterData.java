@@ -121,7 +121,7 @@ public class CharacterData implements CharacterSummary {
      * TODO: 経験値が変わったときにこのメソッドを読んで成長記録を追加しなければならないのだが。 どうやって、どういうタイミングで呼ぼうか?
      *
      */
-    public void init() {
+    public void updateGrowthRecord() {
 
         /*
          * キャラクター成長レコードのリストの作成
@@ -130,7 +130,7 @@ public class CharacterData implements CharacterSummary {
         List<CharacterGrowthRecord> searchedCharaGrowthList =
                 characterGrowthRecordFacade.findByCharacter(characterRecord);
         List<CharacterGrowthRecord> characterGrowthList = new ArrayList<CharacterGrowthRecord>();
-        // 足りないレベルのレコードを探す。もし無ければ作成。リストは必ずレベルごとにソートされている
+        // 足りないレベルのレコードをす。もし無ければ作成。リストは必ずレベルごとにソートされている
         OUTER:
         for (int i = 1; i < getLevel() + 1; i++) {
             for (CharacterGrowthRecord growth : searchedCharaGrowthList) {
