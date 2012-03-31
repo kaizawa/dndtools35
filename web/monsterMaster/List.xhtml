@@ -14,9 +14,7 @@
             <h:panelGrid style="width: 100%; text-align: right">
                 <h:commandButton action="#{monsterMasterController.prepareCreate}" value="新モンスター登録"/>
             </h:panelGrid>
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
+
             <h:outputText escape="false" value="モンスターは登録されていません。" rendered="#{monsterMasterController.items.rowCount == 0}"/>
             <h:panelGroup rendered="#{monsterMasterController.items.rowCount > 0}">
                 <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}..#{monsterMasterController.pagination.pageLastItem + 1}/#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
