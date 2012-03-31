@@ -10,22 +10,20 @@
             <h:outputText value="#{encounterRecordController.selected.name} - ラウンド: #{encounterRecordController.selected.round}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>   
-                <!--
+            <h:form>               
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="エンカウンター名: " for="name" />
+                    <h:inputText id="name" value="#{encounterRecordController.selected.name}" title="#{bundle.EditEncounterRecordTitle_name}" />
+                </h:panelGrid>                <!--
                 <h:outputText value="#{bundle.ViewEncounterRecordLabel_round}" style="font-size: 20px"/>
                 <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}" style="font-size: 20px"/>
                 -->
                 <h:outputText value="#{encounterRecordController.selected.comments}" />
-                <h:commandButton action="#{encounterRecordController.editCurrentEncounter}" value="編集"/>
-                <br/><br/>
                 <h:commandButton action="#{encounterMemberController.nextTurn()}" value="次のターン" styleClass="smallBold" />
                 <h:outputLabel value=" "/>                
                 <h:commandButton action="#{encounterMemberController.previousTurn()}" value="前のターン"/>                                
                 <h:outputLabel value=" "/>
-                <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="セーブ" styleClass="smallBold"/>  
+                <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="保存" styleClass="smallBold"/>  
                 <h:panelGrid columns="3">
                     <h:commandLink value="ラウンドの最初へ" action="#{encounterMemberController.resetRound}"/>
                     <h:outputLabel value="  "/>                     
@@ -126,6 +124,11 @@
                     <h:outputLabel value="   "/> 
                     <h:commandLink value="PC を再読み込み" action="#{encounterRecordController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
                 </h:panelGrid>                
+                
+                <h:panelGrid columns="2"> 
+                    <h:outputLabel value="メモ " for="description" />
+                    <h:inputTextarea id="comments" styleClass="middleTextArea" value="#{encounterRecordController.selected.comments}" />
+                </h:panelGrid>
                 <br />
                 <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオ『#{scenarioRecordController.selected.name}』の編集に戻る"/>
                 <br />
