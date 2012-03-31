@@ -34,7 +34,7 @@
                 <h:panelGroup rendered="#{encounterMemberController.encounterMemberList.size() > 0}">
                     <h:panelGrid styleClass="tableGrid">
 
-                        <h:dataTable value="#{encounterMemberController.encounterMemberList}" rules="all" styleClass="w" binding="#{encounterMemberController.encounterMemberTable}">
+                        <h:dataTable value="#{encounterMemberController.encounterMemberList}" rules="all" styleClass="w" var="member" binding="#{encounterMemberController.encounterMemberTable}">
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="ターン"/>

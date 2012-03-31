@@ -202,7 +202,7 @@ public class MonsterSelectionController implements Serializable {
         for(int i = 0 ; i < numberOfMonsters ; i ++){
             addOne();
         }            
-        return "/encounterRecord/View";                    
+        return "/encounterRecord/Battle";                    
     }    
 
     /*
@@ -252,6 +252,6 @@ public class MonsterSelectionController implements Serializable {
     }
 
     public String cancel() {
-        return "/encounterRecord/View";
+        return "/encounterRecord/Battle";
     }
 }

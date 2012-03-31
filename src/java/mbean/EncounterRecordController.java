@@ -127,7 +127,7 @@ public class EncounterRecordController implements Serializable {
     public String prepareView() {
         current = (EncounterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "/encounterRecord/View";
+        return "/encounterRecord/Battle";
     }
 
     public String prepareCreate() {
@@ -346,7 +346,7 @@ public class EncounterRecordController implements Serializable {
             charaRecordList = characterRecordFacade.findByCampaignId(campaignId);
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "プレイヤーキャラクターの取得時に永続性エラーが発生しました");
-            return "/encounterRecord/View";
+            return "/encounterRecord/Battle";
         }
 
         /*
@@ -365,10 +365,10 @@ public class EncounterRecordController implements Serializable {
                 encounterMemberFacade.edit(member);
             } catch (Exception e) {
                 JsfUtil.addErrorMessage(e, "プレイヤーキャラクターの追加時に永続性エラーが発生しました");
-                return "/encounterRecord/View";
+                return "/encounterRecord/Battle";
             }
         }
-        return "/encounterRecord/View";
+        return "/encounterRecord/Battle";
     }
 
     /**
