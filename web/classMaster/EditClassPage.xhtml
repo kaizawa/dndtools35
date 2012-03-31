@@ -12,7 +12,6 @@
         </ui:define>
         <ui:define name="body">
             <h:form>
-                <h:panelGrid id="contents" style="width: 100%" styleClass="contents">
                     <h:panelGroup id="messagePanel" layout="block">
                         <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                     </h:panelGroup> 
@@ -98,8 +97,6 @@
                                              disabled="#{classMasterController.deleteButtonDisabled}" id="deleteButton1" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="クラスの削除"/>
                         </h:panelGrid>
                     </h:panelGrid>
-                </h:panelGrid>
-
             </h:form>
         </ui:define>            
     </ui:composition>

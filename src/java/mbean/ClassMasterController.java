@@ -104,8 +104,8 @@ public class ClassMasterController  {
     }
 
 
-    public String prepareEdit() {
-
+    public void prepareEdit() {
+        
         ClassMaster klass =  getClassMaster();
 
         if (klass.getId() != null) {
@@ -154,7 +154,6 @@ public class ClassMasterController  {
         } else {
             setClassEditSelectedHitDiceType(null);
         }
-        return "/classMaster/EditClassPage";
     }
 
     public String classListButton_action() {
@@ -483,21 +482,28 @@ public class ClassMasterController  {
     }
 
     public String editClassLink_action() {
+        
+
         int classid = classTable.getRowIndex();
-
         ClassMaster classmaser = getClassMasterList().get(classid);
-
         setClassMaster(classmaser);
-        return prepareEdit();
+        prepareEdit();
+        
+        if(!getSessionController().loggedIn){            
+            return "/login/LoginPage";
+        }        
+        return "/classMaster/EditClassPage";
     }
 
     public String newClassButton_action() {
-        if(getSessionController().loggedIn){
-            ClassMaster newClassMaster = new ClassMaster();
-            setClassMaster(newClassMaster);
-            return prepareEdit();
-        } else {
+
+        ClassMaster newClassMaster = new ClassMaster();
+        setClassMaster(newClassMaster);
+        prepareEdit();
+        if(getSessionController().loggedIn == false){
+            getSessionController().setTargetPage("/classMaster/EditClassPage");
             return "/login/LoginPage";
         }
+        return "/classMaster/EditClassPage";
     }
 }

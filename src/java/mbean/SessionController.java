@@ -151,4 +151,16 @@ public class SessionController {
     public void setRaceMaster(RaceMaster raceMaster) {
         this.raceMaster = raceMaster;
     }
+
+    private String targetPage; 
+    
+    public void setTargetPage(String targetPage) {
+        this.targetPage = targetPage;
+    }
+    
+    public String getTargetPage(){
+        return this.targetPage;
+    }
+    
+
 }    

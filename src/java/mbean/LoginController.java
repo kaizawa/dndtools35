@@ -90,8 +90,8 @@ public class LoginController  {
 
          setLoggedIn(true);
          setPlayerMaster(player);
-
-        return null;
+         
+        return getSessionController().getTargetPage();
     }
 
     public String register_action() {
