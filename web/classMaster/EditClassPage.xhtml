@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="クラス編集"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <h:panelGrid id="contents" style="width: 100%" styleClass="contents">
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                    </h:panelGroup> 
+                    <h:panelGrid id="gridPanel1" styleClass="topLevelGdid">
+                        <h:panelGrid columns="2" id="buttonGrid" style="height: 100%; width: 100%">
+                            <h:panelGrid id="gridPanel5" style="height: 100%; text-align: left; width: 100%">
+                                <h:commandButton action="#{classMasterController.saveButton_action}" id="saveButton" value="保存"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="gridPanel3" style="height: 100%; text-align: right; width: 100%">
+                                <h:commandButton action="#{classMasterController.cancelButton_action}" id="cancelButton" value="キャンセル" immediate="true"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" id="gridPanel6" style="background-color: rgb(0, 0, 0); height: 100%; text-align: left; vertical-align: middle; width: 100%">
+                            <h:panelGrid columns="2" id="gridPanel7" style="text-align: left; vertical-align: middle">
+                                <h:outputText id="outputText2" style="color: rgb(255, 255, 255); font-size: 18px" value="クラス名"/>
+                                <h:inputText id="textField1" required="true" requiredMessage="クラス名を入力して下さい" style="font-size: 18px; width: 600px" value="#{classMasterController.classMaster.className}"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" id="gridPanel8" style="height: 100%; width: 100%">
+                            <h:panelGrid id="leftGridPanel1" style=" width: 500px">
+                                <h:panelGrid columns="3" headerClass="tableTitleBlackMiddle" id="gridPanel9" rowClasses="tableTitleBlackMiddle"
+                                             style="height: 100%; width: 100%" styleClass="tableGrid">
+                                    <h:outputText id="outputText3" value="頑健セーブランク"/>
+                                    <h:outputText id="outputText4" value="反応セーブランク"/>
+                                    <h:outputText id="outputText5" value="意思セーブランク"/>
+                                    <h:selectOneMenu id="dropdown1" required="true" requiredMessage="頑健セーブランクを選択してください" value="#{classMasterController.classEditSelectedFortituteRank}">
+                                        <f:selectItems id="dropdown2SelectItems1" value="#{applicationBean.rankArray}"/>
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu id="dropdown2" required="true" requiredMessage="反応セーブランクを選択してください" value="#{classMasterController.classEditSelectedReflexRank}">
+                                        <f:selectItems id="dropdown3SelectItems1" value="#{applicationBean.rankArray}"/>
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu id="dropdown3" required="true" requiredMessage="意思セーブランクを選択してください" value="#{classMasterController.classEditSelectedWillRank}">
+                                        <f:selectItems id="dropdown4SelectItems1" value="#{applicationBean.rankArray}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                                <h:panelGrid columns="3" headerClass="tableTitleBlackMiddle" id="gridPanel10" rowClasses="tableTitleBlackMiddle"
+                                             style="height: 100%; width: 100%" styleClass="tableGrid">
+                                    <h:outputText id="outputText6" value="基本攻撃ボーナスランク"/>
+                                    <h:outputText id="outputText7" value="HDの種類"/>
+                                    <h:outputText id="outputText107" value="レベル毎の技能ポイント"/>
+                                    <h:selectOneMenu id="dropdown4" required="true" requiredMessage="基本攻撃ボーナスランクを選択してください" value="#{classMasterController.classEditSelectedBabRank}">
+                                        <f:selectItems id="dropdown1SelectItems1" value="#{applicationBean.rankArray}"/>
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu id="dropdown5" onchange="" required="true" requiredMessage="HDの種類を選択してください" value="#{classMasterController.classEditSelectedHitDiceType}">
+                                        <f:selectItems id="dropdown2SelectItems2" value="#{applicationBean.diceArray}"/>
+                                    </h:selectOneMenu>
+                                    <h:inputText id="textField109" required="true" requiredMessage="レベル毎の技能ポイントを指定してください" style="font-size: 14px; width: 30px" value="#{classMasterController.classMaster.skillPoint}"/>
+                                </h:panelGrid>
+                                <h:panelGrid id="spellgridPanel1" style="height: 100%; width: 100%" styleClass="tableGrid">
+                                    <h:outputText id="outputText8" styleClass="tableTitleBlack" value="説明・特徴"/>
+                                    <h:inputTextarea id="textArea1" style="height: 500px; width: 100%" value="#{classMasterController.classMaster.description}"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <h:panelGrid id="rightGridPanel1" style="width: 200px; height: 100%;">
+                                <h:panelGrid id="gridPanel11" style="width: 250px" styleClass="tableGrid">
+                                    <h:outputText id="outputText9" styleClass="tableTitleBlackMiddle" value="クラス技能"/>
+                                    <h:dataTable binding="#{classMasterController.classSkillTable}" id="classSkillTable" styleClass="w"
+                                                 value="#{applicationBean.skillList}" var="currentRow">
+                                        <h:column id="column1">
+                                            <h:selectBooleanCheckbox id="checkbox1" value="#{classMasterController.selectedClassSkill}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText10" value="クラス技能"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column2">
+                                            <h:outputText id="outputText11" value="#{classMasterController.skillNameBySkillId}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText12" value="技能名"/>
+                                            </f:facet>
+                                        </h:column>
+                                        <h:column id="column3">
+                                            <h:outputText id="outputText13" value="#{classMasterController.abilityNameBySkillId}"/>
+                                            <f:facet name="header">
+                                                <h:outputText id="outputText14" value="対応能力"/>
+                                            </f:facet>
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
+                            <h:commandButton action="#{classMasterController.deleteButton_action}"
+                                             disabled="#{classMasterController.deleteButtonDisabled}" id="deleteButton1" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="クラスの削除"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+
+            </h:form>
+        </ui:define>            
+    </ui:composition>
+</html> 
