@@ -140,7 +140,6 @@ public class EncounterRecordController implements Serializable {
         try {
             current.setScenarioRecord(scenarioRecordController.getSelected());
             getFacade().create(current);
-            addPlayerCharacter(false);
             JsfUtil.addSuccessMessage("エンカウンターが追加されました。");
             return prepareList();
         } catch (Exception e) {
