@@ -4,39 +4,14 @@
  */
 package mbean;
 
-import ejb.CharacterEquipmentFacade;
-import ejb.RaceMasterFacade;
-import ejb.AbilityMasterFacade;
-import ejb.CharacterGrowthRecordFacade;
-import ejb.CharacterAbilityRecordFacade;
-import ejb.CharacterSaveRecordFacade;
-import ejb.CharacterRecordFacade;
-import ejb.GenderMasterFacade;
-import ejb.AlignmentMasterFacade;
-import ejb.CharacterSkillRecordFacade;
-import ejb.SkillSynergyMasterFacade;
-import ejb.ClassSaveMasterFacade;
-import ejb.ClassMasterFacade;
-import ejb.ClassSkillMasterFacade;
-import ejb.SaveMasterFacade;
-import ejb.RaceAbilityMasterFacade;
-import ejb.ReligionMasterFacade;
-import ejb.SkillMasterFacade;
-import ejb.CharacterSkillGrowthRecordFacade;
+import ejb.*;
 import entity.*;
 import java.text.SimpleDateFormat;
 import java.text.StringCharacterIterator;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.component.html.HtmlDataTable;
-import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
@@ -259,8 +234,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     public void setAbilityMiscModifierById(int id, Integer newVal) {
-        characterRecord.getCharacterAbilityRecordList().get(id - 1).setMiscModifier(newVal);
-        return;
+        characterRecord.getCharacterAbilityRecordList().get(id - 1).setMiscModifier(newVal);;
     }
 
     /**
