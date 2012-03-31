@@ -104,7 +104,7 @@ public class ClassMasterController  {
     }
 
 
-    public void prepareEdit() {
+    public void initProperty() {
         
         ClassMaster klass =  getClassMaster();
 
@@ -482,24 +482,23 @@ public class ClassMasterController  {
     }
 
     public String editClassLink_action() {
-        
-
         int classid = classTable.getRowIndex();
         ClassMaster classmaser = getClassMasterList().get(classid);
         setClassMaster(classmaser);
-        prepareEdit();
+        initProperty();
         
-        if(!getSessionController().loggedIn){            
-            return "/login/LoginPage";
-        }        
-        return "/classMaster/EditClassPage";
+        return prepareEdit();
     }
 
     public String newClassButton_action() {
-
         ClassMaster newClassMaster = new ClassMaster();
         setClassMaster(newClassMaster);
-        prepareEdit();
+
+        return prepareEdit();
+    }
+     
+    public String prepareEdit() {
+        initProperty();
         if(getSessionController().loggedIn == false){
             getSessionController().setTargetPage("/classMaster/EditClassPage");
             return "/login/LoginPage";
