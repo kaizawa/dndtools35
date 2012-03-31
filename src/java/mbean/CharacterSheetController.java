@@ -933,6 +933,7 @@ public class CharacterSheetController implements Serializable {
     public String editSkillButton_action() {
         int index = growthTable.getRowIndex();
         // Lv とキャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする
+        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterRecord().getCharacterGrowthRecordList().get(index));                 
         return "EditCharacterPerLevelPage";
     }
 
@@ -1011,6 +1012,7 @@ public class CharacterSheetController implements Serializable {
      */
     public String editSkillNomalButton_action() {
         // キャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする。Lv は 1 固定
+        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterRecord().getCharacterGrowthRecordList().get(0));                 
         return "EditCharacterPerLevelPage";
     }
 

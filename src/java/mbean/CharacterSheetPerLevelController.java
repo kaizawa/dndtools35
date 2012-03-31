@@ -6,21 +6,18 @@
 package mbean;
 
 
-import ejb.*;
+import ejb.CharacterGrowthRecordFacade;
+import ejb.CharacterRecordFacade;
+import ejb.CharacterSkillGrowthRecordFacade;
+import ejb.SkillMasterFacade;
 import entity.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.component.html.HtmlDataTable;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
 
 /**
@@ -33,7 +30,7 @@ import mbean.util.JsfUtil;
  * @author ka78231
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class CharacterSheetPerLevelController extends CharacterSheetController { 
     
     @EJB
@@ -74,10 +71,10 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         int point = 0;
         int lv =  getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel();
 
-        List<CharacterSkillGrowthRecord> growthlist = getSessionController().getCharacterData().getCharacterSkillGrowthRecordList();
+        List<CharacterSkillGrowthRecord> growthlist = getCharacterData().getCharacterSkillGrowthRecordList();
         for (CharacterSkillGrowthRecord skillGrowth : growthlist) {
             // 経験値から見たキャラクタレベル以上は考慮しない
-            if(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() >  getSessionController().getCharacterData().getCharacterLevel()) break;
+            if(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() >  getCharacterData().getCharacterLevel()) break;
             if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill &&
                     skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() == lv) {
                 point = skillGrowth.getSkillPoint().intValue();
@@ -94,14 +91,14 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     }
 
     public void setSkillPointById(Integer point, int skill) {
-        List<CharacterSkillGrowthRecord> skillGrowthlist = getSessionController().getCharacterData().getCharacterSkillGrowthRecordList();
+        List<CharacterSkillGrowthRecord> skillGrowthlist = getCharacterData().getCharacterSkillGrowthRecordList();
 
         if (point == null) {
             point = new Integer(0);
         }
         for (CharacterSkillGrowthRecord skillGrowth : skillGrowthlist) {
             // 経験値から見たキャラクタレベル以上は考慮しない
-            if(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() >  getSessionController().getCharacterData().getCharacterLevel()) break;
+            if(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() >  getCharacterData().getCharacterLevel()) break;
             if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill &&
                     skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() ==  getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel()) {
                 skillGrowth.setSkillPoint(point);
@@ -115,7 +112,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         int skillId = skillTable.getRowIndex() + 1;
         SkillMaster skill = skillMasterFacade.find(skillId);
 
-        return getSessionController().getCharacterData().getSkillRankByLevelAndSkill( getCharacterGrowthRecord(), skill).intValue();
+        return getCharacterData().getSkillRankByLevelAndSkill( getCharacterGrowthRecord(), skill).intValue();
     }
 
     @Override
@@ -126,17 +123,17 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
 
     public void doSave() {
         // 全レベルのスキルレコードと、成長レコードも保存する
-        List<CharacterSkillGrowthRecord> skillGrowthList = getSessionController().getCharacterData().getCharacterSkillGrowthRecordList();
-        List<CharacterGrowthRecord> growthList = getSessionController().getCharacterData().getCharacterGrowthRecordList();
+        List<CharacterSkillGrowthRecord> skillGrowthList = getCharacterData().getCharacterSkillGrowthRecordList();
+        List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
         // 更新時刻記録用にキャラクターレコードも保存する。
         // ここで保存するのは、本当は好ましくは無いが。
 
         //更新時間を記録
         Date date = new Date();
-        getSessionController().getCharacterData().setSaveTime(date);
+        getCharacterData().setSaveTime(date);
 
         try {
-            characterRecordFacade.edit(getSessionController().getCharacterData().getCharacterRecord());
+            characterRecordFacade.edit(getCharacterData().getCharacterRecord());
 
             for (CharacterSkillGrowthRecord skillGrowth : skillGrowthList) {
                 characterSkillGrowthRecordFacade.edit(skillGrowth);
@@ -163,7 +160,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         //その上で、表示するレベルを変更
         // Lv は 1 からだが、List の Index は 0 からなので1引く
         int index =  getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() - 1;
-         setCharacterGrowthRecord(getSessionController().getCharacterData().getCharacterGrowthRecordList().get(index - 1));
+         setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(index - 1));
         //仮想フォーム "save" の値を破棄することを指示。これをしないとドロップダウンのレベル値が保持されてしまう。
         //form1 は デザイン画面から form1 の「バインド属性を追加」でアクセスできるようになる。
         //form1.discardSubmittedValues("selectitem");
@@ -177,7 +174,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         //その上で、表示するレベルを変更
         // Lv は 1 からだが、List の Index は 0 からなので1引く
         int index =  getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() - 1;
-         setCharacterGrowthRecord(getSessionController().getCharacterData().getCharacterGrowthRecordList().get(index + 1));
+         setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(index + 1));
         //仮想フォーム "save" の値を破棄することを指示。これをしないとドロップダウンのレベル値が保持されてしまう。
         //form1 は デザイン画面から form1 の「バインド属性を追加」でアクセスできるようになる。
         //form1.discardSubmittedValues("selectitem");
@@ -188,13 +185,15 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     protected boolean nextButtonDisabled;
 
     public boolean isNextButtonDisabled() {
-        return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() >=  getSessionController().getCharacterData().getCharacterLevel());
+        return false;
+//        return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() >=  getCharacterData().getCharacterLevel());
     }
     // ボタンを非表示にするかどうかを決める
     protected boolean nextPreviousDisabled;
 
     public boolean isPreviousButtonDisabled() {
-        return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() <= 1);
+        return false;
+        //return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() <= 1);
     }    
     
     /*
@@ -216,7 +215,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         int classLv = 0;
         List<CharacterGrowthRecord> growthList;
         if (klass != null) {
-            growthList = getSessionController().getCharacterData().getCharacterGrowthRecordList();
+            growthList = getCharacterData().getCharacterGrowthRecordList();
             for (int i = 0; i < charaLv; i++) {
                 CharacterGrowthRecord gr = growthList.get(i);
                 if (gr.getClassId() != null) {
@@ -234,7 +233,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         doSave();
 
          setCharacterGrowthRecord(
-                getSessionController().getCharacterData().getCharacterGrowthRecordList().get((Integer) vce.getNewValue() - 1));
+                getCharacterData().getCharacterGrowthRecordList().get((Integer) vce.getNewValue() - 1));
     //仮想フォーム "save" の値を破棄することを指示。これをしないとドロップダウンのレベル値が保持されてしまう。
     //form1 は デザイン画面から form1 の「バインド属性を追加」でアクセスできるようになる。
     //form1.discardSubmittedValues("save");
@@ -294,7 +293,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         SkillMaster skill = skillMasterFacade.find(skillId);
         CharacterGrowthRecord growth =  getCharacterGrowthRecord();
 
-        if (getSessionController().getCharacterData().isClassSkillByLevelAndSkill(growth, skill)) {
+        if (getCharacterData().isClassSkillByLevelAndSkill(growth, skill)) {
             return "■";
         } else {
             return "□";
@@ -310,7 +309,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     }
 
     public Integer getHitPointAbilityModifier() {
-        return getSessionController().getCharacterData().getHitPointAbilityModifier();
+        return getCharacterData().getHitPointAbilityModifier();
     }
 
     /**
@@ -322,7 +321,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         Integer points = 0;
 
         for(SkillMaster skill: skills){
-            points += getSessionController().getCharacterData().getSkillTotalPointById(skill.getId());
+            points += getCharacterData().getSkillTotalPointById(skill.getId());
         }
         return points;
     }
@@ -381,7 +380,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     }
 
     public Integer getSkillPointAbilityModifier(){
-        int point = getSessionController().getCharacterData().getAbilityModifierById(INT);
+        int point = getCharacterData().getAbilityModifierById(INT);
 
         // レベル1の時は4倍
         if ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() == 1)
@@ -416,7 +415,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
      * @return
      */
     public Integer getSkillPointRaceBonus(){
-        RaceMaster race = getSessionController().getCharacterData().getRaceId();
+        RaceMaster race = getCharacterData().getRaceId();
         if(race != null && "人間".equals(race.getRaceName())){
             if( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() == 1)
                 return 4;
@@ -429,14 +428,12 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     /*
      * キャラクタ成長レコード
      */
-    protected CharacterGrowthRecord characterGrowthRecord;
-
     public CharacterGrowthRecord getCharacterGrowthRecord() {
-        return characterGrowthRecord;
+        return getSessionController().getCharacterGrowthRecord();
     }
 
     public void setCharacterGrowthRecord(CharacterGrowthRecord characterGrowthRecord) {
-        this.characterGrowthRecord = characterGrowthRecord;
+        getSessionController().setCharacterGrowthRecord(characterGrowthRecord);
     }
 }
 
