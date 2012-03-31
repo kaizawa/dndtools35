@@ -100,7 +100,6 @@ public class CharacterData implements CharacterSummary {
             raceMasterFacade = (RaceMasterFacade) ctx.lookup("java:module/RaceMasterFacade");
             characterGrowthRecordFacade = (CharacterGrowthRecordFacade) ctx.lookup("java:module/CharacterGrowthRecordFacade");
             characterRecordFacade = (CharacterRecordFacade) ctx.lookup("java:module/CharacterRecordFacade");
-            characterRecord = (CharacterRecord) ctx.lookup("java:module/CharacterRecord");
         } catch (NamingException ex) {
             Logger.getLogger(CharacterData.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1069,7 +1068,7 @@ public class CharacterData implements CharacterSummary {
         if (str == null) {
             return null;
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         StringCharacterIterator sci = new StringCharacterIterator(str);
         for (char c = sci.current(); c != StringCharacterIterator.DONE; c = sci.next()) {
             if (c == '\n') {
@@ -1104,7 +1103,7 @@ public class CharacterData implements CharacterSummary {
             if (i > getCharacterLevel().intValue()) {
                 break;
             }
-            int newVal = 0;
+            int newVal;
             ClassMaster klass = growth.getClassId();
             if (classMap.get(klass) == null) {
                 newVal = 1;
@@ -1129,6 +1128,7 @@ public class CharacterData implements CharacterSummary {
         return characterRecord.getCampaignId() != null ? characterRecord.getCampaignId().getCampaignName() : "\u672A\u8A2D\u5B9A";
     }
 
+    @Override
     public Integer getInitiative() {
         return Integer.valueOf(getInitiativeAbilityModifier().intValue() + characterRecord.getInitiativeFeatModifier().intValue()
                 + characterRecord.getInitiativeMiscModifier().intValue());
@@ -1210,7 +1210,7 @@ public class CharacterData implements CharacterSummary {
 
     public Float getskillRankByLevelAndSkill(CharacterGrowthRecord growth, SkillMaster skill) {
         int point = 0;
-        float rank = 0.0F;
+        float rank;
         ClassMaster klass = growth.getClassId();
         List skillgrowthlist = characterRecord.getCharacterSkillGrowthRecordList();
         Iterator it = skillgrowthlist.iterator();
