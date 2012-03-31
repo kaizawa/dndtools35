@@ -162,7 +162,6 @@ public class CharacterSheetController implements Serializable {
         sessionController.setCharacterData(characterData);
     }
     // キャラクタの削除ボタンを有効比するかどうかの判定。使ってないか？
-    private boolean deleteButtonDisabled;
 
     public boolean isDeleteButtonDisabled() {
         if (getCharacterData().getId() == null) {
@@ -170,10 +169,6 @@ public class CharacterSheetController implements Serializable {
         } else {
             return false;
         }
-    }
-
-    public void setDeleteButtonDisabled(boolean deleteButtonDisabled) {
-        this.deleteButtonDisabled = deleteButtonDisabled;
     }
     
     /*
