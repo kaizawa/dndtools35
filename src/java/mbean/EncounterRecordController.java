@@ -1,30 +1,25 @@
 package mbean;
 
-import com.google.common.collect.Collections2;
 import ejb.CharacterRecordFacade;
 import ejb.EncounterMemberFacade;
-import entity.EncounterRecord;
-import mbean.util.JsfUtil;
-import mbean.util.PaginationHelper;
 import ejb.EncounterRecordFacade;
 import ejb.ScenarioCharacterRecordFacade;
 import entity.*;
-
 import java.io.Serializable;
-import java.text.StringCharacterIterator;
-import java.util.*;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import mbean.util.JsfUtil;
+import mbean.util.PaginationHelper;
 
 @ManagedBean(name = "encounterRecordController")
 @SessionScoped
@@ -284,11 +279,12 @@ public class EncounterRecordController implements Serializable {
         }
 
         String getStringKey(java.lang.Long value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
