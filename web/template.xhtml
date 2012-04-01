@@ -51,18 +51,20 @@
                         <h:panelGrid id="charaListCell" style="width: 100%; height: 100%;" styleClass="leftpanelink">
                             <h:commandLink action="/characterSheet/CharacterListPage" id="charaListLink" styleClass="leftpaneltext" value="キャラクター"/>                        
                         </h:panelGrid>                     
+                        <h:outputLabel value=""/>
                         <h:panelGrid id="adminCell" style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                            <h:outputLabel styleClass="leftpaneltext" value="管理画面"/>
+                            <h:outputLabel styleClass="leftpaneltext" value="各種管理"/>
                         </h:panelGrid> 
+                        <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                            <h:commandLink action="#{scenarioRecordController.prepareList()}" styleClass="leftpaneltextAdmin" value="シナリオ"/>
+                        </h:panelGrid>                           
                         <h:panelGrid id="classListCell2" style="width: 100%; height: 100%;" styleClass="leftpanelink">
                             <h:commandLink action="/classMaster/ClassListPage" id="classListLink" styleClass="leftpaneltextAdmin" value="クラス"/>
                         </h:panelGrid>
                         <h:panelGrid id="raceListCell2" style="width: 100%; height: 100%;" styleClass="leftpanelink">
                             <h:commandLink action="/raceMaster/RaceListPage" id="raceListLink" styleClass="leftpaneltextAdmin" value="種族"/>
                         </h:panelGrid>       
-                        <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                            <h:commandLink action="/scenarioRecord/List" styleClass="leftpaneltextAdmin" value="シナリオ"/>
-                        </h:panelGrid>   
+
                         <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
                             <h:commandLink action="/monsterMaster/List" styleClass="leftpaneltextAdmin" value="モンスター"/>
                         </h:panelGrid>  
