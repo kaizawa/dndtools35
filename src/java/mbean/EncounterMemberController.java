@@ -1,30 +1,23 @@
 package mbean;
 
-import entity.EncounterMember;
-import mbean.util.JsfUtil;
-import mbean.util.PaginationHelper;
 import ejb.EncounterMemberFacade;
 import ejb.EncounterRecordFacade;
 import ejb.ScenarioCharacterRecordFacade;
-import entity.EncounterRecord;
+import entity.EncounterMember;
 import entity.ScenarioCharacterRecord;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlDataTable;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
-import javax.faces.model.SelectItem;
+import mbean.util.JsfUtil;
 
 @ManagedBean(name = "encounterMemberController")
 @SessionScoped
@@ -137,7 +130,7 @@ public class EncounterMemberController implements Serializable {
                     encounterRecordFacade.edit(encounterRecordController.getCurrent());
                     encounterMemberFacade.edit(first);
                 } catch (Exception e) {
-                    JsfUtil.addErrorMessage("Persistance Error Happened");
+                    JsfUtil.addErrorMessage("永続性エラーが発生しました");
                 }
             }
         } else {
@@ -150,7 +143,7 @@ public class EncounterMemberController implements Serializable {
                 try {
                     encounterMemberFacade.edit(member);
                 } catch (Exception e) {
-                    JsfUtil.addErrorMessage("Persistance Error Happened");
+                    JsfUtil.addErrorMessage("永続性エラーが発生しました");
                 }
             }
             //JsfUtil.addSuccessMessage("TrunCharacter is " + getTrunMember().getEncounterCharacter().getName());
@@ -164,9 +157,9 @@ public class EncounterMemberController implements Serializable {
                 scenarioCharacterRecordFacade.edit(chara);
                 encounterMemberFacade.edit(member);
             }
-            JsfUtil.addSuccessMessage("Member's Poropety Updated");
+            JsfUtil.addSuccessMessage("保存されました");
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("Persistence Error Occured");
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }
         return null;
     }
