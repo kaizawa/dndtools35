@@ -11,9 +11,10 @@
         </ui:define>
         <ui:define name="body">
             <h:form>               
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="3">
                     <h:outputLabel value="エンカウンター名: " for="name" />
                     <h:inputText id="name" value="#{encounterRecordController.selected.name}" title="#{bundle.EditEncounterRecordTitle_name}" />
+                    <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="保存" styleClass="smallBold"/>                      
                 </h:panelGrid>                <!--
                 <h:outputText value="#{bundle.ViewEncounterRecordLabel_round}" style="font-size: 20px"/>
                 <h:outputText value="#{encounterRecordController.selected.round}" title="#{bundle.ViewEncounterRecordTitle_round}" style="font-size: 20px"/>
@@ -27,7 +28,7 @@
                     <h:outputLabel value=" "/>                
                     <h:commandButton action="#{encounterMemberController.previousTurn()}" value="前のターン"/>                                
                     <h:outputLabel value=" "/>
-                    <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="保存" styleClass="smallBold"/>  
+
                     <h:panelGrid columns="3">
                         <h:commandLink value="ラウンドの最初へ" action="#{encounterMemberController.resetRound}"/>
                         <h:outputLabel value="  "/>                     
@@ -41,7 +42,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="ターン"/>
                                 </f:facet>
-                                <h:outputText value="●" style="font-size: 17px; color: red" rendered="#{member.myTurn}"/>
+                                <h:outputText value="⇒" style="font-size: 17px; color: #ff3333; font-weight: bold" rendered="#{member.myTurn}"/>
                             </h:column>                        
                             <h:column >
                                 <f:facet name="header">
@@ -122,13 +123,13 @@
                         <h:commandButton value="HPをリセット" action="#{encounterMemberController.setInitialHitPoint()}"/>                                                            
                     </h:panelGrid>
                 </h:panelGroup>
-                    
+
                 <h:panelGrid columns="3">
-                        
-                
-                <h:commandLink value="モンスターを追加" action="#{monsterSelectionController.prepareList}" styleClass="smallBold" immediate="true"/>                
-                <h:outputLabel value="   "/> 
-                <h:commandLink value="プレイヤーキャラクターを読み込み" action="#{encounterRecordController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
+
+
+                    <h:commandLink value="モンスターを追加" action="#{monsterSelectionController.prepareList}" styleClass="smallBold" immediate="true"/>                
+                    <h:outputLabel value="   "/> 
+                    <h:commandLink value="プレイヤーキャラクターを読み込み" action="#{encounterRecordController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
                 </h:panelGrid>                
 
                 <h:panelGrid columns="2"> 
