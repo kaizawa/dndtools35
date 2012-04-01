@@ -47,7 +47,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="名前" />
                                 </f:facet>
-                                <h:outputText value="#{member.scenarioCharacterRecord.name}" style="color: #{encounterMemberController.hpColor}" styleClass="smallText"/>
+                                <h:commandLink action="#{encounterMemberController.prepareViewMember}" value="#{member.scenarioCharacterRecord.name}" />
                             </h:column>  
                             <h:column >
                                 <f:facet name="header">

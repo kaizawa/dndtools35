@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -21,6 +22,17 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "scenarioCharacterRecordController")
 @SessionScoped
 public class ScenarioCharacterRecordController implements Serializable {
+    
+    @ManagedProperty (value="#{sessionController}")
+    private SessionController sessionController;
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }    
 
     private ScenarioCharacterRecord current;
     private DataModel items = null;
@@ -89,13 +101,16 @@ public class ScenarioCharacterRecordController implements Serializable {
             return null;
         }
     }
+    
+
 
     public String prepareEdit() {
-        current = (ScenarioCharacterRecord) getItems().getRowData();
+        //current = (ScenarioCharacterRecord) getItems().getRowData();
+        current = getSessionController().getScenarioCharacterRecord();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
-
+    
     public String update() {
         try {
             getFacade().edit(current);
@@ -222,6 +237,21 @@ public class ScenarioCharacterRecordController implements Serializable {
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ScenarioCharacterRecordController.class.getName());
             }
+        }
+    }
+    
+    public ScenarioCharacterRecord getScenarioCharacterRecord(){
+        return getSessionController().getScenarioCharacterRecord();
+    }
+    
+    public String save() {
+        try {
+            getFacade().edit(getScenarioCharacterRecord());
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScenarioCharacterRecordUpdated"));
+            return null;
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
         }
     }
 }

@@ -6,10 +6,7 @@
 package mbean;
 
 import ejb.*;
-import entity.CharacterGrowthRecord;
-import entity.ClassMaster;
-import entity.PlayerMaster;
-import entity.RaceMaster;
+import entity.*;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -170,5 +167,14 @@ public class SessionController {
         return this.targetPage;
     }
     
+    private ScenarioCharacterRecord scenarioCharacterRecord;
 
+    public ScenarioCharacterRecord getScenarioCharacterRecord() {
+        return scenarioCharacterRecord;
+    }
+
+    public void setScenarioCharacterRecord(ScenarioCharacterRecord scenarioCharacterRecord) {
+        this.scenarioCharacterRecord = scenarioCharacterRecord;
+    }
+    
 }    

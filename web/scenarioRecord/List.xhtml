@@ -47,20 +47,17 @@
                         </h:dataTable>
                     </h:panelGrid>                    
                 </h:panelGroup>
-                <br />
-                <br />
             </h:form>
-
+            <br/>
             <h:outputLabel styleClass="middleBold">新しいシナリオを作成</h:outputLabel>
             <h:form>
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="5">
                     <h:outputLabel value="キャンペーン:" for="campaign" />
                     <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
                         <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                     <h:outputLabel value="シナリオ名:" for="name" />
                     <h:inputText id="name" value="#{scenarioRecordController.selected.name}" style="width: 250px" title="#{bundle.EditScenarioRecordTitle_name}" />
-                    <h:outputLabel></h:outputLabel>
                     <h:commandButton action="#{scenarioRecordController.create}" value="作成"/>
                 </h:panelGrid>
             </h:form>            

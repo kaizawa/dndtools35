@@ -29,6 +29,17 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "encounterMemberController")
 @SessionScoped
 public class EncounterMemberController implements Serializable {
+        
+    @ManagedProperty(value="#{sessionController}")
+    private SessionController sessionController;
+    
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
 
     @EJB
     private ScenarioCharacterRecordFacade scenarioCharacterRecordFacade;
@@ -354,5 +365,22 @@ public class EncounterMemberController implements Serializable {
             JsfUtil.addErrorMessage("Persistence Error Occured");
         }
         return null;
+    }
+
+    
+    public String prepareEditMember() {
+        EncounterMember member = (EncounterMember) encounterMemberTable.getRowData();
+        getSessionController().setScenarioCharacterRecord(member.getScenarioCharacterRecord());
+        getSessionController().setTargetPage("/encounterRecord/Battle");
+
+        return "/scenarioCharacterRecord/Edit";
+    }
+    
+    public String prepareViewMember() {
+        EncounterMember member = (EncounterMember) encounterMemberTable.getRowData();
+        getSessionController().setScenarioCharacterRecord(member.getScenarioCharacterRecord());
+        getSessionController().setTargetPage("/encounterRecord/Battle");
+
+        return "/scenarioCharacterRecord/View";
     }
 }
