@@ -20,6 +20,7 @@
 }
 
 .appname {
+    font-weight: bold;
    font-size: 18px;
    text-transform: uppercase;
    color: white
@@ -53,7 +54,7 @@
    border: 1px dotted #CEC0C0;
     text-align: left;
     vertical-align: text-top;
-    width: 100%;
+    width: 130px;
     max-width: 200px;
     min-width: 130px;
 }
@@ -743,7 +744,32 @@ table.qPrint td{
     border-right: 1px solid #E9E9D1;
 }
 
+table.qPrintClassList {
+    border-collapse: collapse;
+    width: 320px;
+}
 
+table.qPrintClassList th{
+
+    padding:4px;
+    text-align: center;
+}
+
+table.qPrintClassList td{
+
+    text-align:center;
+    vertical-align:middle;
+    text-align: left;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+
+    border-bottom: 1px solid #E9E9D1;
+    border-top: 1px solid #E9E9D1;
+    border-left: 1px solid #E9E9D1;
+    border-right: 1px solid #E9E9D1;
+}
 
 tr.jsfcrud_odd_row {
     background-color: #E9E9D1;
