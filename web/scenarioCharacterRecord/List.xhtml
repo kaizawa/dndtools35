@@ -11,15 +11,15 @@
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
                 <h:outputText escape="false" value="#{bundle.ListScenarioCharacterRecordEmpty}" rendered="#{scenarioCharacterRecordController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{scenarioCharacterRecordController.items.rowCount > 0}">
+
+
                     <h:outputText value="#{scenarioCharacterRecordController.pagination.pageFirstItem + 1}..#{scenarioCharacterRecordController.pagination.pageLastItem + 1}/#{scenarioCharacterRecordController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{scenarioCharacterRecordController.previous}" value="#{bundle.Previous} #{scenarioCharacterRecordController.pagination.pageSize}" rendered="#{scenarioCharacterRecordController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{scenarioCharacterRecordController.next}" value="#{bundle.Next} #{scenarioCharacterRecordController.pagination.pageSize}" rendered="#{scenarioCharacterRecordController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{scenarioCharacterRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:panelGroup styleClass="tableGrid" >                    
+                    <h:dataTable value="#{scenarioCharacterRecordController.items}" styleClass="w" var="item" >
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListScenarioCharacterRecordTitle_id}"/>
@@ -206,6 +206,7 @@
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
+                </h:panelGroup>                    
                 <br />
                 <h:commandLink action="#{scenarioCharacterRecordController.prepareCreate}" value="#{bundle.ListScenarioCharacterRecordCreateLink}"/>
                 <br />

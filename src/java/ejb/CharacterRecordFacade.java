@@ -51,9 +51,44 @@ public class CharacterRecordFacade extends AbstractFacade<CharacterRecord> {
         CampaignMaster key = em.find(CampaignMaster.class, id);
         String jpqr = "select b from CharacterRecord b "
                 + "where b.campaignId = :id "
-                + "order by b.id";
+                + "order by b.saveTime DESC";
         @SuppressWarnings("unchecked")
         List<CharacterRecord> result = em.createQuery(jpqr).setParameter("id", key).getResultList();
         return result;
     }
+    
+    public int countByCampaignId(Integer id){
+        return findByCampaignId(id).size();
+    }
+    
+    @Override
+    public List<CharacterRecord> findAll() {
+        String jpqr = "select b from CharacterRecord b "
+                + "order by b.saveTime DESC";
+        @SuppressWarnings("unchecked")
+        List<CharacterRecord> result = em.createQuery(jpqr).getResultList();
+        return result;
+    }    
+    
+    @Override
+    public List<CharacterRecord> findRange(int[] range) {
+        javax.persistence.Query q = getEntityManager().createQuery("select b from CharacterRecord b " 
+                + "order by b.saveTime DESC");
+        q.setMaxResults(range[1] - range[0]);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    }
+
+    
+    public List<CharacterRecord> findRangeByCampaignId(int[] range, Integer id) {
+        CampaignMaster key = em.find(CampaignMaster.class, id);
+        javax.persistence.Query q = getEntityManager().createQuery("select b from CharacterRecord b " 
+                + "where b.campaignId = :id "
+                + "order by b.saveTime DESC");
+        q.setParameter("id", key);
+        q.setMaxResults(range[1] - range[0]);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    }   
+    
 }

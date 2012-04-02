@@ -8,7 +8,10 @@ import ejb.*;
 import entity.*;
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -17,8 +20,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
+import mbean.util.PaginationHelper;
 
 /**
  *
@@ -30,8 +36,6 @@ public class CharacterSheetController implements Serializable {
 
     @EJB
     private CharacterRecordFacade characterRecordFacade;
-    @EJB
-    private BonusRankMasterFacade bonusRankMasterFacade;
     @EJB
     private ReligionMasterFacade religionMasterFacade;
     @EJB
@@ -72,17 +76,7 @@ public class CharacterSheetController implements Serializable {
 
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
-    }
-    
-    public static final int STR = 1;
-    public static final int DEX = 2;
-    public static final int CON = 3;
-    public static final int INT = 4;
-    public static final int WIS = 5;
-    public static final int CHA = 6;
-    public static final int FORTITUTE = 1;
-    public static final int REFLEX = 2;
-    public static final int WILL = 3;    
+    }   
     
     boolean loggedIn = false;
 
@@ -129,6 +123,11 @@ public class CharacterSheetController implements Serializable {
     }
 
     public void setCharacterListSelectedCampaign(Integer selectedCampaign) {
+        if(selectedCampaign != getSessionController().getCharacterListSelectedCampaign()){
+           releaseAllButton_action();            
+           recreatePagination();
+           recreateModel();
+        }
         getSessionController().setCharacterListSelectedCampaign(selectedCampaign);
     }
     
@@ -136,17 +135,14 @@ public class CharacterSheetController implements Serializable {
      * キャラクターデータのリスト
      */
     public List<CharacterData> getCharacterDataList() {
+        
+        if (items == null) {
+            items = getPagination().createPageDataModel();
+        }
 
         List<CharacterData> charaDataList = new ArrayList<CharacterData>();
-        if (getCharacterListSelectedCampaign() == null) {
-            for (CharacterRecord charaData : characterRecordFacade.findAll()) {
-                charaDataList.add(new CharacterData(charaData));
-            }
-        } else {
-            //選択されたキャンペーンキャラクターレコードのリストを得る
-            for (CharacterRecord charaData : characterRecordFacade.findByCampaignId(getCharacterListSelectedCampaign())) {
-                charaDataList.add(new CharacterData(charaData));
-            }
+        for (Object obj : items) {
+            charaDataList.add(new CharacterData((CharacterRecord)obj));
         }
         return charaDataList;
     }
@@ -1077,4 +1073,75 @@ public class CharacterSheetController implements Serializable {
         String name = ability.getAbilityName();
         return (new StringBuilder()).append("\u3010").append(name.substring(0, 1)).append("\u3011").toString();
     }  
+    
+    private PaginationHelper pagination;
+    private DataModel items = null;
+    
+    public PaginationHelper getPagination() {
+        if (pagination == null) {
+            pagination = new PaginationHelper(15) {
+
+                @Override
+                public int getItemsCount() {
+                    if (getCharacterListSelectedCampaign() == null) {
+                        return characterRecordFacade.count();
+                    } else {
+                        return characterRecordFacade.countByCampaignId(getCharacterListSelectedCampaign());                        
+                    }
+                }
+
+                @Override
+                public DataModel createPageDataModel() {
+                    if (getCharacterListSelectedCampaign() == null) {
+                        return new ListDataModel(characterRecordFacade.findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    } else {
+                        return new ListDataModel(characterRecordFacade.findRangeByCampaignId(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}, getCharacterListSelectedCampaign()));
+                    }
+                }
+            };
+        }
+        return pagination;
+    }
+
+    public String prepareList() {
+        recreateModel();
+        return "List";
+    }
+
+
+    public DataModel getItems() {
+        if (items == null) {
+            items = getPagination().createPageDataModel();
+        }
+        return items;
+    }
+
+    private void recreateModel() {
+        items = null;
+    }
+
+    private void recreatePagination() {
+        pagination = null;
+    }
+
+    public String next() {
+        getPagination().nextPage();
+        recreateModel();
+        return "/characterSheet/CharacterListPage";
+    }
+
+    public String previous() {
+        getPagination().previousPage();
+        recreateModel();
+        return "/characterSheet/CharacterListPage";
+    }
+
+    public SelectItem[] getItemsAvailableSelectMany() {
+        return JsfUtil.getSelectItems(characterRecordFacade.findAll(), false);
+    }
+
+    public SelectItem[] getItemsAvailableSelectOne() {
+        return JsfUtil.getSelectItems(characterRecordFacade.findAll(), true);
+    }
+
 }

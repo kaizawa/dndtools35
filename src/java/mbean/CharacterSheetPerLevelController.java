@@ -378,7 +378,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     }
 
     public Integer getSkillPointAbilityModifier(){
-        int point = getCharacterData().getAbilityModifierById(INT);
+        int point = getCharacterData().getAbilityModifierById(DnDUtil.INT);
 
         // レベル1の時は4倍
         if ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() == 1)
