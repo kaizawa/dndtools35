@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -24,6 +25,17 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "monsterMasterController")
 @SessionScoped
 public class MonsterMasterController implements Serializable {
+        
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
 
     @EJB
     private MonsterSaveRecordFacade monsterSaveRecordFacade;
@@ -132,7 +144,12 @@ public class MonsterMasterController implements Serializable {
         initList();
         current = new MonsterMaster();
         selectedItemIndex = -1;
-        return "Create";
+        
+        if(getSessionController().loggedIn == false){
+            getSessionController().setTargetPage("/monsterMaster/Create");
+            return "/login/LoginPage";
+        }
+        return "/monsterMaster/Create";
     }
 
     public String create() {
@@ -158,7 +175,7 @@ public class MonsterMasterController implements Serializable {
         }
     }
 
-    public String prepareEdit() {
+    public String prepareEdit() {               
         current = (MonsterMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         List<MonsterAbilityRecord> abilityList = monsterAbilityRecordFacade.findByMonsterMaster(current);
@@ -169,7 +186,12 @@ public class MonsterMasterController implements Serializable {
         for (MonsterSaveRecord save : saveList) {
             monsterSaveList.set(save.getSaveMaster().getId() - 1, save.getMiscModifier());
         }
-        return "Edit";
+        
+        if(getSessionController().loggedIn == false){
+            getSessionController().setTargetPage("/monsterMaster/Edit");
+            return "/login/LoginPage";
+        }
+        return "/monsterMaster/Edit";
     }
 
     public String update() {
