@@ -7,29 +7,19 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.CreateCampaignMasterTitle}"></h:outputText>
+            <h:outputText value="新規キャンペーンの作成"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
+  
             <h:form>
+                <h:commandButton action="#{campaignMasterController.create}" value="作成"/>                
+                <br/>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateCampaignMasterLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{campaignMasterController.selected.id}" title="#{bundle.CreateCampaignMasterTitle_id}" required="true" requiredMessage="#{bundle.CreateCampaignMasterRequiredMessage_id}"/>
-                    <h:outputLabel value="#{bundle.CreateCampaignMasterLabel_campaignName}" for="campaignName" />
-                    <h:inputText id="campaignName" value="#{campaignMasterController.selected.campaignName}" title="#{bundle.CreateCampaignMasterTitle_campaignName}" />
-                    <h:outputLabel value="#{bundle.CreateCampaignMasterLabel_master}" for="master" />
-                    <h:inputText id="master" value="#{campaignMasterController.selected.master}" title="#{bundle.CreateCampaignMasterTitle_master}" />
+                    <h:outputLabel value="キャンペーン名" for="campaignName" />
+                    <h:inputText id="campaignName" value="#{campaignMasterController.selected.campaignName}" title="#{bundle.EditCampaignMasterTitle_campaignName}" />
+                    <h:outputLabel value="マスター" for="master" />
+                    <h:inputText id="master" value="#{campaignMasterController.selected.master}" title="#{bundle.EditCampaignMasterTitle_master}" />
                 </h:panelGrid>
-                <br />
-                <h:commandLink action="#{campaignMasterController.create}" value="#{bundle.CreateCampaignMasterSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{campaignMasterController.prepareList}" value="#{bundle.CreateCampaignMasterShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:commandLink value="#{bundle.CreateCampaignMasterIndexLink}" action="/index" immediate="true" />
             </h:form>
         </ui:define>
     </ui:composition>

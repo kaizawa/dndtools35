@@ -82,10 +82,10 @@ public class CampaignMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterCreated"));
-            return prepareCreate();
+            JsfUtil.addSuccessMessage("作成されました");
+            return prepareList();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
             return null;
         }
     }
@@ -99,17 +99,15 @@ public class CampaignMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterUpdated"));
-            return "View";
+            JsfUtil.addSuccessMessage("保存しました");
+            return "List";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
             return null;
         }
     }
 
     public String destroy() {
-        current = (CampaignMaster) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
         recreateModel();
@@ -132,9 +130,9 @@ public class CampaignMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterDeleted"));
+            JsfUtil.addSuccessMessage("削除されました");
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }
     }
 
