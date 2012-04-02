@@ -614,6 +614,15 @@ public class CharacterSheetController implements Serializable {
         List<CharacterAbilityRecord> abilityList = getCharacterData().getCharacterAbilityRecordList();
         List<CharacterSaveRecord> saveList = getCharacterData().getCharacterSaveRecordList();
 
+        /* 
+         * 初めてのセーブ時には キャラクターリストの一覧を再生性する 
+         */
+        if(charaData.getSaveTime() == null){
+            releaseAllButton_action();
+            recreatePagination();
+            recreateModel();
+        }
+        
         //更新時間を記録
         Date date = new Date();
         charaData.setSaveTime(date);
@@ -657,6 +666,9 @@ public class CharacterSheetController implements Serializable {
             JsfUtil.addSuccessMessage("削除に失敗しました");
             return null;
         }
+        releaseAllButton_action();
+        recreatePagination();
+        recreateModel();
         return "CharacterListPage";
     }
 
