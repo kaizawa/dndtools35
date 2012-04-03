@@ -2,6 +2,7 @@ package mbean;
 
 import ejb.PlayerMasterFacade;
 import entity.PlayerMaster;
+import java.security.MessageDigest;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -69,25 +70,24 @@ public class LoginController {
 
     public String login_action() {
 
-        String username = this.userName;
-        String passwd = this.password;
+        PlayerMaster player = PlayerMasterFacade.findByUsername(this.userName);
+        
+        String digest = null;
+        try {      
+            digest = getDigest(this.password);
+        } catch (Exception e){
+            JsfUtil.addErrorMessage("ログイン処理が失敗しました.");
+        }        
 
-        PlayerMaster player = PlayerMasterFacade.findByUsername(username);
-
-        if (player == null) {
-            JsfUtil.addErrorMessage("ログインに失敗しました. ユーザ名(" + username + ")が間違っています");
-            return null;
-        }
-
-        if (!player.getPassword().equals(passwd)) {
-            JsfUtil.addErrorMessage("ログインに失敗しました. パスワードが間違っています");
+        if (player == null || !player.getPassword().equals(digest)) {
+            JsfUtil.addErrorMessage("ログインに失敗しました. ユーザ名かパスワードが間違っています.");
             return null;
         }
         setPlayerMaster(player);
 
-        setLoggedIn(true);        
+        setLoggedIn(true);
 
-        JsfUtil.addSuccessMessage("ログインが成功しました");
+        JsfUtil.addSuccessMessage("ログインが成功しました.");
 
         return getSessionController().getTargetPage();
     }
@@ -116,5 +116,27 @@ public class LoginController {
 
     public PlayerMaster getPlayerMaster() {
         return getSessionController().getPlayerMaster();
+    }
+
+    private String getDigest(String data) throws Exception {
+
+        StringBuilder s = new StringBuilder();
+        MessageDigest md = MessageDigest.getInstance("SHA-1");
+        byte[] dat = data.getBytes();
+        md.update(dat);
+
+        byte[] digest = md.digest();
+        for (int i = 0; i < digest.length; i++) {
+            int d = digest[i];
+
+            if (d < 0) { // byte 128-255
+                d += 256;
+            }
+            if (d < 16) { //0-15 16
+                s.append("0");
+            }
+            s.append(Integer.toString(d, 16));
+        }
+        return s.toString();
     }
 }
