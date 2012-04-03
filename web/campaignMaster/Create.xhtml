@@ -12,7 +12,12 @@
         <ui:define name="body">
   
             <h:form>
+                <h:panelGrid style="width: 100%" columns="2">
                 <h:commandButton action="#{campaignMasterController.create}" value="作成"/>                
+                    <h:panelGrid style="text-align: right; width: 100%" >
+                        <h:commandButton action="/campaignMaster/List" value="キャンセル"/>                                        
+                    </h:panelGrid>
+                </h:panelGrid>
                 <br/>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="キャンペーン名" for="campaignName" />
