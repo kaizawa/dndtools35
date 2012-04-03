@@ -131,7 +131,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         //更新時間を記録
         Date date = new Date();
         getCharacterData().setSaveTime(date);
-
+        
         try {
             characterRecordFacade.edit(getCharacterData().getCharacterRecord());
 

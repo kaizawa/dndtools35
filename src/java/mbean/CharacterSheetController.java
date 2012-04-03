@@ -615,13 +615,12 @@ public class CharacterSheetController implements Serializable {
         List<CharacterSaveRecord> saveList = getCharacterData().getCharacterSaveRecordList();
 
         /* 
-         * 初めてのセーブ時には キャラクターリストの一覧を再生性する 
+         * セーブ時には 順番を変えるためにキャラクターリストの一覧を再生性する 
          */
-        if(charaData.getSaveTime() == null){
-            releaseAllButton_action();
-            recreatePagination();
-            recreateModel();
-        }
+        releaseAllButton_action();
+        recreatePagination();
+        recreateModel();
+
         
         //更新時間を記録
         Date date = new Date();
@@ -1154,6 +1153,12 @@ public class CharacterSheetController implements Serializable {
 
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(characterRecordFacade.findAll(), true);
+    }
+    
+    public void recreateList(){
+        releaseAllButton_action();
+        recreatePagination();
+        recreateModel();        
     }
 
 }
