@@ -10,18 +10,25 @@
             <h:outputText value="モンスターの編集"></h:outputText>
         </ui:define>
 
-        <ui:define name="control">
+        <ui:define name="controlTop">
             <h:panelGrid columns="2" style="width: 100%">
-                <h:panelGrid style="text-align: left">
+                <h:panelGrid style="text-align: left;width: 100%">
                     <h:commandButton action="#{monsterMasterController.update}" value="保存"/>                
-                </h:panelGrid>
-                <h:panelGrid style="text-align: right">
+                </h:panelGrid>               
+                <h:panelGrid id="gridPanel3" style="height: 100%; text-align: right; width: 100%">
+                    <h:commandButton action="/monsterMaster/List" id="cancelButton" value="キャンセル" immediate="true"/>
+                </h:panelGrid>                
+            </h:panelGrid>
+        </ui:define>
+        
+        <ui:define name="controlBottom">
+            <h:panelGrid columns="2" style="width: 100%">
+                <h:panelGrid style="text-align: right;width: 100%">
                     <h:commandButton style="color: #ff0033" onclick="return confirm('削除しますか?')" action="#{monsterMasterController.destroyAndView}"  value="削除"/>            
                 </h:panelGrid>                
             </h:panelGrid>
             <br />
             <br />
-            <h:commandLink action="#{monsterMasterController.prepareList}" value="モンスター一覧へ" immediate="true"/>
         </ui:define>
     </ui:composition>
 
