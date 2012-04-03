@@ -11,6 +11,9 @@
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
+                <h:panelGrid id="gridPanel2" style="text-align: right; width: 100%">
+                    <h:commandLink action="#{scenarioRecordController.prepareCreate}" value="新規シナリオを作成"/>
+                </h:panelGrid>
 
                 <h:outputText escape="false" value="シナリオが有りません" rendered="#{scenarioRecordController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{scenarioRecordController.items.rowCount > 0}">
@@ -37,30 +40,12 @@
                                 </f:facet>
                                 <h:outputText value="#{item.description}"/>
                             </h:column>
-
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="&nbsp;"/>
-                                </f:facet>
-                                <h:commandButton action="#{scenarioRecordController.destroy}" value="削除"/>
-                            </h:column>
                         </h:dataTable>
                     </h:panelGrid>                    
                 </h:panelGroup>
             </h:form>
             <br/>
-            <h:outputLabel styleClass="middleBold">新しいシナリオを作成</h:outputLabel>
-            <h:form>
-                <h:panelGrid columns="5">
-                    <h:outputLabel value="キャンペーン:" for="campaign" />
-                    <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
-                        <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                    <h:outputLabel value="シナリオ名:" for="name" />
-                    <h:inputText id="name" value="#{scenarioRecordController.selected.name}" style="width: 250px" title="#{bundle.EditScenarioRecordTitle_name}" />
-                    <h:commandButton action="#{scenarioRecordController.create}" value="作成"/>
-                </h:panelGrid>
-            </h:form>            
+
         </ui:define>
     </ui:composition>
 
