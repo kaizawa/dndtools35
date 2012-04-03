@@ -76,7 +76,7 @@ public class ScenarioRecordController implements Serializable {
     public String prepareCreate() {
         current = new ScenarioRecord();
         selectedItemIndex = -1;
-        return null;
+        return "/scenarioRecord/Create";
     }
 
     public String create() {
@@ -112,7 +112,6 @@ public class ScenarioRecordController implements Serializable {
     }
 
     public String destroy() {
-        current = (ScenarioRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();

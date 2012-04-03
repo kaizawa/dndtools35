@@ -25,7 +25,7 @@
                     <h:commandLink action="#{campaignMasterController.previous}" value="#{bundle.Previous} #{campaignMasterController.pagination.pageSize}" rendered="#{campaignMasterController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{campaignMasterController.next}" value="#{bundle.Next} #{campaignMasterController.pagination.pageSize}" rendered="#{campaignMasterController.pagination.hasNextPage}"/>&nbsp;
                     <h:panelGrid styleClass="tableGrid">
-                        <h:dataTable value="#{campaignMasterController.items}" var="item" styleClass="w">
+                        <h:dataTable value="#{campaignMasterController.items}" rules="all"  var="item" styleClass="w">
         
                         <h:column>
                             <f:facet name="header">

@@ -31,7 +31,7 @@
                         
                     <h:panelGrid id="charaListGridPanel" style="width: 100%; height: 100%;" styleClass="tableGrid">
                         <h:dataTable binding="#{characterSheetController.characterListDataTable}"
-                                     id="characterListDataTable" style="" styleClass="w" value="#{characterSheetController.characterDataList}" var="currentRow">
+                                     id="characterListDataTable" styleClass="w" value="#{characterSheetController.characterDataList}" var="currentRow">
                             <h:column id="check">
                                 <h:selectBooleanCheckbox id="checkbox1" value="#{characterSheetController.characterChecked}"/>
                             </h:column>

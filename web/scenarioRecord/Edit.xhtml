@@ -11,6 +11,12 @@
         </ui:define>
         <ui:define name="body">
             <h:form>
+                <h:panelGrid style="width: 100%" columns="2">
+                    <h:commandButton action="#{scenarioRecordController.update}" value="保存"/>
+                    <h:panelGrid style="text-align: right; width: 100%" >
+                        <h:commandButton action="#{scenarioRecordController.cancel}" value="キャンセル"/>
+                    </h:panelGrid>
+                </h:panelGrid>   
                 <h:panelGrid columns="2">
                     <h:outputLabel value="キャンペーン" for="campaign" />
                     <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
@@ -22,15 +28,19 @@
                     <h:inputTextarea id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" />
 
                 </h:panelGrid>
-                <h:commandButton action="#{scenarioRecordController.update}" value="更新"/>
-                <h:commandButton action="#{scenarioRecordController.cancel}" value="キャンセル"/>
-
-                <br />
+                <h:panelGrid id="deletePanel1" style="height: 100%; text-align: right; width: 100%">
+                    <h:commandButton action="#{scenarioRecordController.destroy()}" 
+                                     style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="シナリオの削除"/>
+                </h:panelGrid>                            
             </h:form>
-
             <hr/>
-
             <h:form styleClass="jsfcrud_list_form">
+                
+                <h:panelGrid style="text-align: right; width: 100%">
+                    <h:panelGrid columns="3" style="width: 100%">
+                        <h:commandLink action="#{encounterRecordController.prepareCreate}" value="新規エンカウンターの作成" />                    
+                    </h:panelGrid>
+                </h:panelGrid>                        
                 <h:outputText escape="false" value="エンカウンターはありません。" rendered="#{encounterRecordController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
                     <h:outputLabel styleClass="middleBold">エンカウンター一覧</h:outputLabel><br/>
@@ -44,7 +54,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="エンカウンター名"/>
                                 </f:facet>
-                                    <h:commandLink action="#{encounterRecordController.prepareView}" value="#{item.name}"/>                                
+                                <h:commandLink action="#{encounterRecordController.prepareView}" value="#{item.name}"/>                                
                             </h:column>                               
                             <h:column>
                                 <f:facet name="header">
@@ -68,16 +78,7 @@
                     </h:panelGrid>                        
                 </h:panelGroup>
             </h:form>
-            <br/>
-            <h:form>
-                <br/>
-                <h:outputLabel styleClass="smallBold">新しいエンカウンターの追加</h:outputLabel>
-                <h:panelGrid columns="3">
-                    <h:outputLabel value="名前" for="name" />
-                    <h:inputText id="name" style="width: 200px;" value="#{encounterRecordController.selected.name}" />
-                    <h:commandButton action="#{encounterRecordController.create}" value="作成" />                    
-                </h:panelGrid>
-            </h:form>
+
 
         </ui:define>
     </ui:composition>

@@ -128,7 +128,7 @@ public class EncounterRecordController implements Serializable {
     public String prepareCreate() {
         current = new EncounterRecord();
         selectedItemIndex = -1;
-        return null;
+        return "/encounterRecord/Create";
     }
 
     public String create() {
