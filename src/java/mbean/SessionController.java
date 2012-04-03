@@ -177,4 +177,11 @@ public class SessionController {
         this.scenarioCharacterRecord = scenarioCharacterRecord;
     }
     
+    public String goToLimitedPage(String pageName){
+        if (isLoggedIn() == false) {
+            setTargetPage(pageName);
+            return "/login/LoginPage";
+        }
+        return pageName;
+    }
 }    

@@ -172,6 +172,10 @@ public class RaceMasterController {
     }
 
     public String saveButton_action() {
+        if(getSessionController().isLoggedIn() == false){
+            getSessionController().setTargetPage("/raceMaster/EditRacePage");
+            return "/login/LoginPage";
+        }
         RaceMaster race = getRaceMaster();
         Integer sizeid = getSelectedSize();
 
@@ -479,11 +483,6 @@ public class RaceMasterController {
     
     public String prepareEdit(){
         initProperty();
-        
-        if (getSessionController().loggedIn == false) {
-            getSessionController().setTargetPage("/raceMaster/EditRacePage");
-            return "/login/LoginPage";
-        }
-        return "/raceMaster/EditRacePage";       
+        return getSessionController().goToLimitedPage("/raceMaster/EditRacePage");
     }
 }

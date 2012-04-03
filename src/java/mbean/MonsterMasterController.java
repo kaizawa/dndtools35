@@ -153,6 +153,10 @@ public class MonsterMasterController implements Serializable {
     }
 
     public String create() {
+        if(getSessionController().isLoggedIn() == false){
+            getSessionController().setTargetPage("/monsterMaster/Edit");
+            return "/login/LoginPage";
+        }
         try {
             getFacade().create(current);
             List<AbilityMaster> abilities = abilityMasterFacade.findAll();
@@ -195,6 +199,10 @@ public class MonsterMasterController implements Serializable {
     }
 
     public String update() {
+        if(getSessionController().isLoggedIn() == false){
+            getSessionController().setTargetPage("/monsterMaster/Edit");
+            return "/login/LoginPage";
+        }
         try {
             getFacade().edit(current);
             List<AbilityMaster> abilities = abilityMasterFacade.findAll();

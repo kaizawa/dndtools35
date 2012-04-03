@@ -156,7 +156,11 @@ public class ClassMasterController  {
         return "/classMaster/ClassListPage";
     }
 
-    public String saveButton_action() {
+    public String saveButton_action() {        
+        if(getSessionController().isLoggedIn() == false){
+            getSessionController().setTargetPage("/classMaster/EditClassPage");
+            return "/login/LoginPage";
+        }
         ClassMaster klass =  getClassMaster();
 
         BonusRankMaster rank = bonusRankMasterFacade.find(getClassEditSelectedBabRank());
