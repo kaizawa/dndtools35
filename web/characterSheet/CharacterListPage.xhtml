@@ -21,7 +21,7 @@
                             </h:selectOneMenu>
                         </h:panelGrid>                            
                         <h:panelGrid style="width: 100%; text-align: right">
-                            <h:commandButton action="#{characterSheetController.newCharaButton_action}" id="newCharaButton" style="font-size: 12px" value="新キャラクター作成"/>
+                            <h:commandLink action="#{characterSheetController.newCharaButton_action}" id="newCharaButton" style="font-size: 12px" value="新キャラクター作成"/>
                         </h:panelGrid>
                     </h:panelGrid>
                     <h:panelGroup rendered="#{scenarioCharacterRecordController.items.rowCount > 0}">
