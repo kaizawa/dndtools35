@@ -8,9 +8,7 @@ package mbean;
 import ejb.*;
 import entity.*;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -96,14 +94,14 @@ public class SessionController {
     /*
      * 選択されたキャンペーン
      */
-    private Integer characterListSelectedCampaign = null;
+    private Integer selectedCampaign = null;
 
-    public Integer getCharacterListSelectedCampaign() {
-        return characterListSelectedCampaign;
+    public Integer getSelectedCampaign() {
+        return selectedCampaign;
     }
 
-    public void setCharacterListSelectedCampaign(Integer selectedCampaign) {
-        this.characterListSelectedCampaign = selectedCampaign;
+    public void setSelectedCampaign(Integer selectedCampaign) {
+        this.selectedCampaign = selectedCampaign;
     }
     
     /*

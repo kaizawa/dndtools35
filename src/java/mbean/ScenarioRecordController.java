@@ -258,14 +258,14 @@ public class ScenarioRecordController implements Serializable {
      * 選択されたキャンペーン
      */
     public Integer getSelectedCampaign() {
-        return getSessionController().getCharacterListSelectedCampaign();
+        return getSessionController().getSelectedCampaign();
     }
 
     public void setSelectedCampaign(Integer selectedCampaign) {
-        if (selectedCampaign != getSessionController().getCharacterListSelectedCampaign()) {
+        if (selectedCampaign != getSessionController().getSelectedCampaign()) {
             recreatePagination();
             recreateModel();
         }
-        getSessionController().setCharacterListSelectedCampaign(selectedCampaign);
+        getSessionController().setSelectedCampaign(selectedCampaign);
     }
 }

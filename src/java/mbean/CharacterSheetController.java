@@ -118,17 +118,17 @@ public class CharacterSheetController implements Serializable {
     /*
      * 選択されたキャンペーン
      */
-    public Integer getCharacterListSelectedCampaign() {
-        return getSessionController().getCharacterListSelectedCampaign();
+    public Integer getSelectedCampaign() {
+        return getSessionController().getSelectedCampaign();
     }
 
-    public void setCharacterListSelectedCampaign(Integer selectedCampaign) {
-        if(selectedCampaign != getSessionController().getCharacterListSelectedCampaign()){
+    public void setSelectedCampaign(Integer selectedCampaign) {
+        if(selectedCampaign != getSessionController().getSelectedCampaign()){
            releaseAllButton_action();            
            recreatePagination();
            recreateModel();
         }
-        getSessionController().setCharacterListSelectedCampaign(selectedCampaign);
+        getSessionController().setSelectedCampaign(selectedCampaign);
     }
     
     /*
@@ -181,14 +181,14 @@ public class CharacterSheetController implements Serializable {
     // このプロパティはページ間でやり取りされるので、セッションBeanでよい
     Integer selectedCampaign;
 
-    public Integer getSelectedCampaign() {
+    public Integer getCampaign() {
         if (getCharacterData().getCampaignId() == null) {
             return null;
         }
         return getCharacterData().getCampaignId().getId();
     }
 
-    public void setSelectedCampaign(Integer campaignId) {
+    public void setCampaign(Integer campaignId) {
         if (campaignId == null) {
             getCharacterData().setCampaignId(null);
             return;
@@ -306,7 +306,7 @@ public class CharacterSheetController implements Serializable {
      */
     public void campaign_processValueChange(ValueChangeEvent vce) {
         Integer campaign = (Integer) vce.getNewValue();
-        setCharacterListSelectedCampaign(campaign);
+        setSelectedCampaign(campaign);
     }
     
     private HtmlDataTable characterListDataTable = new HtmlDataTable();
@@ -358,8 +358,8 @@ public class CharacterSheetController implements Serializable {
         characterRecord.setAcMiscMod(0);
         characterRecord.setAcShield(0);
         // もし選択されていれば現在選択しているキャンペーンをデフォルト値としてセット
-        if (getCharacterListSelectedCampaign() != null) {
-            campaign = campaignMasterFacade.find(getCharacterListSelectedCampaign());
+        if (getSelectedCampaign() != null) {
+            campaign = campaignMasterFacade.find(getSelectedCampaign());
             characterRecord.setCampaignId(campaign);
         }
 
@@ -1094,19 +1094,19 @@ public class CharacterSheetController implements Serializable {
 
                 @Override
                 public int getItemsCount() {
-                    if (getCharacterListSelectedCampaign() == null) {
+                    if (getSelectedCampaign() == null) {
                         return characterRecordFacade.count();
                     } else {
-                        return characterRecordFacade.countByCampaignId(getCharacterListSelectedCampaign());                        
+                        return characterRecordFacade.countByCampaignId(getSelectedCampaign());                        
                     }
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    if (getCharacterListSelectedCampaign() == null) {
+                    if (getSelectedCampaign() == null) {
                         return new ListDataModel(characterRecordFacade.findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
                     } else {
-                        return new ListDataModel(characterRecordFacade.findRangeByCampaignId(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}, getCharacterListSelectedCampaign()));
+                        return new ListDataModel(characterRecordFacade.findRangeByCampaignId(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}, getSelectedCampaign()));
                     }
                 }
             };
