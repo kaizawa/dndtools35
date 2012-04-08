@@ -5,32 +5,27 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/campaignMaster/EditTemplate.xhtml">
+
         <ui:define name="title">
             <h:outputText value="キャンペーン『#{campaignMasterController.selected.campaignName}』の編集"></h:outputText>
         </ui:define>
-        <ui:define name="body">
-  
-            <h:form>
-                <h:panelGrid style="width: 100%" columns="2">
-                    <h:commandButton action="#{campaignMasterController.update}" value="保存"/>                
-                    <h:panelGrid style="text-align: right; width: 100%" >
-                        <h:commandButton action="/campaignMaster/List" value="キャンセル"/>                                        
-                    </h:panelGrid>
-                </h:panelGrid>
-                <br/>
-                <h:panelGrid columns="2" style="width: 400">
-                    <h:outputLabel value="キャンペーン名" for="campaignName" />
-                    <h:inputText id="campaignName" value="#{campaignMasterController.selected.campaignName}" title="#{bundle.EditCampaignMasterTitle_campaignName}" />
-                    <h:outputLabel value="マスター" for="master" />
-                    <h:inputText id="master" value="#{campaignMasterController.selected.master}" title="#{bundle.EditCampaignMasterTitle_master}" />
-                </h:panelGrid>
 
-                <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
-                    <h:commandButton action="#{campaignMasterController.destroy}" value="削除" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')"/>                                    
-                </h:panelGrid>                
-            </h:form>
+        <ui:define name="controlTop">
+            <h:panelGrid style="width: 100%" columns="2">
+                <h:commandButton action="#{campaignMasterController.update}" value="保存"/>                
+                <h:panelGrid style="text-align: right; width: 100%" >
+                    <h:commandButton action="/campaignMaster/List" value="キャンセル"/>                                        
+                </h:panelGrid>
+            </h:panelGrid>
+        </ui:define>              
+
+        <ui:define name="controlBottom">
+            <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
+                <h:commandButton action="#{campaignMasterController.destroy}" value="削除" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')"/>                                    
+            </h:panelGrid>                
         </ui:define>
+
     </ui:composition>
 
 </html>

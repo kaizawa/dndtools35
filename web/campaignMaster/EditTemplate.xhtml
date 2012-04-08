@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+
+            <h:form>
+
+                <ui:insert name="controlTop">Default Control</ui:insert>
+
+                <br/>
+                <h:panelGrid columns="2" style="width: 400">
+                    <h:outputLabel value="キャンペーン名" for="campaignName" />
+                    <h:inputText id="campaignName" value="#{campaignMasterController.selected.campaignName}" title="#{bundle.EditCampaignMasterTitle_campaignName}" />
+                    <h:outputLabel value="マスター" for="master" />
+                    <h:inputText id="master" value="#{campaignMasterController.selected.master}" title="#{bundle.EditCampaignMasterTitle_master}" />
+                </h:panelGrid>
+
+                <ui:insert name="controlBottom"></ui:insert>
+
+                <h:panelGrid style="width: 600px">
+                    <h:outputText escape="false" value="シナリオが有りません" rendered="#{scenarioRecordController.items.rowCount == 0}"/>
+                    <h:panelGroup rendered="#{scenarioRecordController.items.rowCount > 0}">
+                        <h:outputText value="#{scenarioRecordController.pagination.pageFirstItem + 1}..#{scenarioRecordController.pagination.pageLastItem + 1}/#{scenarioRecordController.pagination.itemsCount}"/>&nbsp;
+                        <h:commandLink action="#{scenarioRecordController.previous}" value="#{bundle.Previous} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasPreviousPage}"/>&nbsp;
+                        <h:commandLink action="#{scenarioRecordController.next}" value="#{bundle.Next} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasNextPage}"/>&nbsp;
+                        <h:panelGrid styleClass="tableGrid">
+                            <h:dataTable value="#{scenarioRecordController.items}" var="item" rules="all" styleClass="left" >
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="シナリオ"/>
+                                    </f:facet>
+                                    <h:panelGrid style="text-align: left">
+                                        <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{item.name}"/>                                        
+                                    </h:panelGrid>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="備考"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.description}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGrid>                    
+                    </h:panelGroup>
+                </h:panelGrid> 
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
