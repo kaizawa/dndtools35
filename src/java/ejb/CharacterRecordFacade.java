@@ -91,4 +91,25 @@ public class CharacterRecordFacade extends AbstractFacade<CharacterRecord> {
         return q.getResultList();
     }   
     
+    public List<CharacterRecord> findByCampaign(CampaignMaster campaign) {
+        String jpqr = "select b from CharacterRecord b "
+                + "where b.campaignId = :id "
+                + "order by b.saveTime DESC";
+        @SuppressWarnings("unchecked")
+        List<CharacterRecord> result = em.createQuery(jpqr).setParameter("id", campaign).getResultList();
+        return result;
+    }
+    public List<CharacterRecord> findRangeByCampaign(int[] range, CampaignMaster campaign) {
+        javax.persistence.Query q = getEntityManager().createQuery("select b from CharacterRecord b " 
+                + "where b.campaignId = :id "
+                + "order by b.saveTime DESC");
+        q.setParameter("id", campaign);
+        q.setMaxResults(range[1] - range[0]);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    } 
+    
+    public int countByCampaign(CampaignMaster campaign){
+        return findByCampaign(campaign).size();
+    }
 }

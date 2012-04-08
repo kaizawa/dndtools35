@@ -39,8 +39,8 @@
                             <h:panelGrid columns="4" id="gridPanel6" style="text-align: center; width: 100%" styleClass="g">
                                 <h:inputText id="textField1" onchange="" requiredMessage="キャラクター名を入力して下さい" style="width: 180px" value="#{characterSheetController.characterData.characterName}"/>
                                 <h:inputText id="textField2" onchange="" requiredMessage="プレイヤー名を入力して下さい" style="width: 181px" value="#{characterSheetController.characterData.playerName}"/>
-                                <h:selectOneMenu id="dropdown1" onchange="" requiredMessage="キャンペーンを選択して下さい" value="#{characterSheetController.campaign}">
-                                    <f:selectItems id="dropdown1SelectItems1" value="#{applicationController.campaignArray}"/>
+                                <h:selectOneMenu id="dropdown1" onchange="" requiredMessage="キャンペーンを選択して下さい" value="#{characterSheetController.characterData.campaignId}">
+                                    <f:selectItems id="dropdown1SelectItems1" value="#{campaignMasterController.itemsAvailableSelectOne}"/>
                                 </h:selectOneMenu>
                             </h:panelGrid>
                             <h:panelGrid columns="4" id="gridPanel7" style="background-color: rgb(51, 51, 51); color: rgb(255, 255, 255); height: 100%; text-align: center; width: 100%">

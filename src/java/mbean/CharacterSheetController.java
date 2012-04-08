@@ -66,7 +66,6 @@ public class CharacterSheetController implements Serializable {
     private CharacterSkillRecordFacade characterSkillRecordFacade;
     @EJB
     protected ClassMasterFacade classMasterFacade;
-    
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
 
@@ -76,8 +75,7 @@ public class CharacterSheetController implements Serializable {
 
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
-    }   
-    
+    }
     boolean loggedIn = false;
 
     public boolean isLoggedIn() {
@@ -114,36 +112,52 @@ public class CharacterSheetController implements Serializable {
     protected ApplicationController getApplicationController() {
         return getApplicationController();
     }
-   
+
+    /*
+     * 選択されたキャンペーン
+     *
+     * public Integer getSelectedCampaignId() { return
+     * getSessionController().getSelectedCampaignId(); }
+     *
+     * public void setSelectedCampaignId(Integer selectedCampaign) {
+     * if(selectedCampaign != getSessionController().getSelectedCampaignId()){
+     * releaseAllButton_action(); recreatePagination(); recreateModel(); }
+     * getSessionController().setSelectedScenarioRecord(null);
+     * getSessionController().setSelectedCampaignId(selectedCampaign); }
+     */
     /*
      * 選択されたキャンペーン
      */
-    public Integer getSelectedCampaignId() {
-        return getSessionController().getSelectedCampaignId();
+    public CampaignMaster getSelectedCampaign() {
+        return getSessionController().getSelectedCampaign();
     }
 
-    public void setSelectedCampaignId(Integer selectedCampaign) {
-        if(selectedCampaign != getSessionController().getSelectedCampaignId()){
-           releaseAllButton_action();            
-           recreatePagination();
-           recreateModel();
+    public void setSelectedCampaign(CampaignMaster selectedCampaign) {
+        if (getSessionController().getSelectedCampaign() != null
+                && getSessionController().getSelectedCampaign().getId() != selectedCampaign.getId()) {
+            releaseAllButton_action();
+            recreatePagination();
+            recreateModel();
         }
         getSessionController().setSelectedScenarioRecord(null);
-        getSessionController().setSelectedCampaignId(selectedCampaign);
+        getSessionController().setSelectedCampaign(selectedCampaign);
     }
-    
+
     /*
      * キャラクターデータのリスト
      */
-    public List<CharacterData> getCharacterDataList() {
-        
+    public List<CharacterData> getCharacterDataList() {        
+        JsfUtil.addErrorMessage("getCharacterDataList is called");
+
         if (items == null) {
+            JsfUtil.addErrorMessage("items is null");
             items = getPagination().createPageDataModel();
         }
+        JsfUtil.addErrorMessage("items = " + items.getRowCount());
 
         List<CharacterData> charaDataList = new ArrayList<CharacterData>();
-        for (Object obj : items) {
-            charaDataList.add(new CharacterData((CharacterRecord)obj));
+        for (Object obj : getItems()) {
+            charaDataList.add(new CharacterData((CharacterRecord) obj));
         }
         return charaDataList;
     }
@@ -164,9 +178,8 @@ public class CharacterSheetController implements Serializable {
             return false;
         }
     }
-    
     /*
-     * キャンペーンの選択が必要？   使ってる？
+     * キャンペーンの選択が必要？ 使ってる？
      */
     private boolean campaignSelectRequired;
 
@@ -177,7 +190,6 @@ public class CharacterSheetController implements Serializable {
     public void setCampaignSelectRequired(boolean campaignSelectRequired) {
         this.campaignSelectRequired = campaignSelectRequired;
     }
-
     //キャンペーンの選択  
     // このプロパティはページ間でやり取りされるので、セッションBeanでよい
     Integer selectedCampaign;
@@ -218,9 +230,10 @@ public class CharacterSheetController implements Serializable {
         getCharacterData().setAlignmentId(alignment);
     }
     /*
-     * 選択された種族  
+     * 選択された種族
      */
     Integer selectedRace;
+
     public Integer getSelectedRace() {
         if (getCharacterData().getRaceId() == null) {
             return null;
@@ -241,6 +254,7 @@ public class CharacterSheetController implements Serializable {
      * 選択された性別
      */
     Integer selectedGender;
+
     public Integer getSelectedGender() {
         if (getCharacterData().getGenderId() == null) {
             return null;
@@ -276,7 +290,6 @@ public class CharacterSheetController implements Serializable {
         ReligionMaster religion = religionMasterFacade.find(selectedReligion);
         getCharacterData().setReligionId(religion);
     }
-    
     // キャラクタ編集画面で選択されたレベル値
     private Integer editCharacterPageSelectedLevel;
 
@@ -303,13 +316,18 @@ public class CharacterSheetController implements Serializable {
 
     /*
      * この valueChangeListener は CharacterListPage の PostConstract の init
-     * の「後」に呼ばれるようだ。なので init では 値の変更に気がついていない。。。
+     * の「後」に呼ばれるようだ。なので init では 値の変更に気がついていない。。。 
+     * 呼ばれるタイミングが不明? だれよりも最初に呼ばれてほしいものだが?
      */
     public void campaign_processValueChange(ValueChangeEvent vce) {
-        Integer campaign = (Integer) vce.getNewValue();
-        setSelectedCampaignId(campaign);        
+        items = null;        
+        JsfUtil.addErrorMessage("campaign_processValueChange is called");
+        CampaignMaster campaign = (CampaignMaster) vce.getNewValue();
+        releaseAllButton_action();
+        recreatePagination();
+        recreateModel();
+        setSelectedCampaign(campaign);
     }
-    
     private HtmlDataTable characterListDataTable = new HtmlDataTable();
 
     public HtmlDataTable getCharacterListDataTable() {
@@ -359,8 +377,8 @@ public class CharacterSheetController implements Serializable {
         characterRecord.setAcMiscMod(0);
         characterRecord.setAcShield(0);
         // もし選択されていれば現在選択しているキャンペーンをデフォルト値としてセット
-        if (getSelectedCampaignId() != null) {
-            campaign = campaignMasterFacade.find(getSelectedCampaignId());
+        if (getSelectedCampaign() != null) {
+            campaign = campaignMasterFacade.find(getSelectedCampaign());
             characterRecord.setCampaignId(campaign);
         }
 
@@ -502,7 +520,7 @@ public class CharacterSheetController implements Serializable {
         return "PrintableCharacterSummaryListPage";
 
     }
-    
+
     /*
      * チェックボックスで選択されたキャラクターのセット
      */
@@ -512,8 +530,7 @@ public class CharacterSheetController implements Serializable {
 
     public void setCheckedCharacterMap(Map checkedCharas) {
         getSessionController().setCheckedCharacterMap(checkedCharas);
-    }    
-    
+    }
 
     /**
      * チェックボックが選択されているか?
@@ -530,8 +547,8 @@ public class CharacterSheetController implements Serializable {
         CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
         if (charaData != null) {
             if (charaChecked && !getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId())) {
-                getCheckedCharacterMap().put(charaData.getCharacterRecord().getId().intValue(),charaData);
-            } else if (!charaChecked && getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId())){
+                getCheckedCharacterMap().put(charaData.getCharacterRecord().getId().intValue(), charaData);
+            } else if (!charaChecked && getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId())) {
                 getCheckedCharacterMap().remove(charaData.getCharacterRecord().getId());
             }
         }
@@ -542,7 +559,7 @@ public class CharacterSheetController implements Serializable {
         //Clear first, just in case.
         charaMap.clear();
         for (CharacterData charaData : getCharacterDataList()) {
-            charaMap.put(charaData.getCharacterRecord().getId().intValue(),charaData);
+            charaMap.put(charaData.getCharacterRecord().getId().intValue(), charaData);
         }
         return null;
     }
@@ -615,14 +632,13 @@ public class CharacterSheetController implements Serializable {
         List<CharacterAbilityRecord> abilityList = getCharacterData().getCharacterAbilityRecordList();
         List<CharacterSaveRecord> saveList = getCharacterData().getCharacterSaveRecordList();
 
-        /* 
-         * セーブ時には 順番を変えるためにキャラクターリストの一覧を再生性する 
+        /*
+         * セーブ時には 順番を変えるためにキャラクターリストの一覧を再生性する
          */
         releaseAllButton_action();
         recreatePagination();
         recreateModel();
 
-        
         //更新時間を記録
         Date date = new Date();
         charaData.setSaveTime(date);
@@ -937,7 +953,7 @@ public class CharacterSheetController implements Serializable {
     public String editSkillButton_action() {
         int index = growthTable.getRowIndex();
         // Lv とキャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする
-        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterRecord().getCharacterGrowthRecordList().get(index));                 
+        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterRecord().getCharacterGrowthRecordList().get(index));
         return "EditCharacterPerLevelPage";
     }
 
@@ -1016,7 +1032,7 @@ public class CharacterSheetController implements Serializable {
      */
     public String editSkillNomalButton_action() {
         // キャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする。Lv は 1 固定
-        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterRecord().getCharacterGrowthRecordList().get(0));                 
+        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterRecord().getCharacterGrowthRecordList().get(0));
         return "EditCharacterPerLevelPage";
     }
 
@@ -1059,7 +1075,7 @@ public class CharacterSheetController implements Serializable {
         return getCharacterData().isSkillAcceptoRankBySkillId(skill.getId())
                 || getCharacterData().hasSkillRankBySkill(skill);
     }
-    
+
     /**
      * 改行を<br>に変換し、半角スペースを &nbsp に変換
      */
@@ -1072,42 +1088,43 @@ public class CharacterSheetController implements Serializable {
         for (char c = sci.current(); c != StringCharacterIterator.DONE; c = sci.next()) {
             if (c == '\n') {
                 sb.append("<br>");
-            } else if(c == ' ') {
+            } else if (c == ' ') {
                 sb.append("&nbsp;");
-            } else {                
+            } else {
                 sb.append(c);
             }
         }
         return sb.toString();
     }
-    
-    public static String getAbilityShortName(AbilityMaster ability){
+
+    public static String getAbilityShortName(AbilityMaster ability) {
         String name = ability.getAbilityName();
         return (new StringBuilder()).append("\u3010").append(name.substring(0, 1)).append("\u3011").toString();
-    }  
-    
+    }
     private PaginationHelper pagination;
     private DataModel items = null;
-    
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
 
                 @Override
                 public int getItemsCount() {
-                    if (getSelectedCampaignId() == null) {
+                    if (getSelectedCampaign() == null) {
                         return characterRecordFacade.count();
                     } else {
-                        return characterRecordFacade.countByCampaignId(getSelectedCampaignId());                        
+                        return characterRecordFacade.countByCampaign(getSelectedCampaign());
                     }
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    if (getSelectedCampaignId() == null) {
-                        return new ListDataModel(characterRecordFacade.findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    if (getSelectedCampaign() == null) {
+                        JsfUtil.addErrorMessage("selectedCamapign is null");
+                        return new ListDataModel(characterRecordFacade.findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                     } else {
-                        return new ListDataModel(characterRecordFacade.findRangeByCampaignId(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}, getSelectedCampaignId()));
+                        JsfUtil.addErrorMessage("selectedCamapign is not null" + getSelectedCampaign().getCampaignName());
+                        return new ListDataModel(characterRecordFacade.findRangeByCampaign(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}, getSelectedCampaign()));
                     }
                 }
             };
@@ -1119,7 +1136,6 @@ public class CharacterSheetController implements Serializable {
         recreateModel();
         return "List";
     }
-
 
     public DataModel getItems() {
         if (items == null) {
@@ -1155,11 +1171,10 @@ public class CharacterSheetController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(characterRecordFacade.findAll(), true);
     }
-    
-    public void recreateList(){
+
+    public void recreateList() {
         releaseAllButton_action();
         recreatePagination();
-        recreateModel();        
+        recreateModel();
     }
-
 }

@@ -1,6 +1,7 @@
 package mbean;
 
 import ejb.ScenarioRecordFacade;
+import entity.CampaignMaster;
 import entity.ScenarioRecord;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -27,7 +28,6 @@ public class ScenarioRecordController implements Serializable {
     private ejb.ScenarioRecordFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
 
@@ -63,7 +63,7 @@ public class ScenarioRecordController implements Serializable {
                     if (getSelectedCampaign() == null) {
                         return getFacade().count();
                     } else {
-                        return getFacade().countByCampaignId(getSelectedCampaign());
+                        return getFacade().countByCampaign(getSelectedCampaign());
                     }
                 }
 
@@ -72,7 +72,7 @@ public class ScenarioRecordController implements Serializable {
                     if (getSelectedCampaign() == null) {
                         return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                     } else {
-                        return new ListDataModel(getFacade().findRangeByCampaignId(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()},getSelectedCampaign()));
+                        return new ListDataModel(getFacade().findRangeByCampaign(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}, getSelectedCampaign()));
                     }
                 }
             };
@@ -260,17 +260,18 @@ public class ScenarioRecordController implements Serializable {
     /*
      * 選択されたキャンペーン
      */
-    public Integer getSelectedCampaign() {
+    public CampaignMaster getSelectedCampaign() {
         recreatePagination();
-        recreateModel();        
-        return getSessionController().getSelectedCampaignId();
+        recreateModel();
+        return getSessionController().getSelectedCampaign();
     }
 
-    public void setSelectedCampaign(Integer selectedCampaign) {
-        if (selectedCampaign != getSessionController().getSelectedCampaignId()) {
+    public void setSelectedCampaign(CampaignMaster selectedCampaign) {
+        if (getSessionController().getSelectedCampaign() != null
+                && getSessionController().getSelectedCampaign().getId() != selectedCampaign.getId()) {
             recreatePagination();
             recreateModel();
         }
-        getSessionController().setSelectedCampaignId(selectedCampaign);
+        getSessionController().setSelectedCampaign(selectedCampaign);
     }
 }

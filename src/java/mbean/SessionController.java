@@ -202,4 +202,14 @@ public class SessionController {
         }
         return pageName;
     }
+    
+    private CampaignMaster selectedCampaign;
+
+    CampaignMaster getSelectedCampaign() {
+        return selectedCampaign;
+    }
+
+    void setSelectedCampaign(CampaignMaster selectedCampaign) {
+        this.selectedCampaign = selectedCampaign;
+    }
 }    
