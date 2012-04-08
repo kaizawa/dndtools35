@@ -74,7 +74,7 @@ public class CampaignMasterController implements Serializable {
     }
 
     public String prepareList() {
-        getSessionController().setSelectedCampaign(null);        
+        getSessionController().setSelectedCampaignId(null);        
         getSessionController().setSelectedScenarioRecord(null);
         recreateModel();
         return "/campaignMaster/List";
@@ -106,7 +106,7 @@ public class CampaignMasterController implements Serializable {
     public String prepareEdit() {
         current = (CampaignMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        getSessionController().setSelectedCampaign(current.getId());
+        getSessionController().setSelectedCampaignId(current.getId());
         return "Edit";
     }
 

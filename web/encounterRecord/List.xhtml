@@ -48,12 +48,6 @@
                                     </f:facet>
                                     <h:outputText value="#{item.comments}"/>
                                 </h:column>                    
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="&nbsp;"/>
-                                    </f:facet>
-                                    <h:commandButton action="#{encounterRecordController.destroy}" onclick="return confirm('削除しますか?')" value="削除"/>
-                                </h:column>
                             </h:dataTable>
                         </h:panelGrid>                        
                     </h:panelGroup>

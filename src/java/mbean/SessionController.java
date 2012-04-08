@@ -94,19 +94,21 @@ public class SessionController {
     /*
      * 選択されたキャンペーン
      */
-    private Integer selectedCampaign = null;
+    private Integer selectedCampaignId = null;
 
-    public Integer getSelectedCampaign() {
-        return selectedCampaign;
+    public Integer getSelectedCampaignId() {
+        return selectedCampaignId;
     }
 
-    public void setSelectedCampaign(Integer selectedCampaign) {
-        this.selectedCampaign = selectedCampaign;
+    public void setSelectedCampaignId(Integer selectedCampaignId) {
+        this.selectedCampaignId = selectedCampaignId;
     }
     
     public Boolean isCampaignSelected(){
-        return !(selectedCampaign == null);
+        return !(selectedCampaignId == null);
     }
+    
+    
     
     /*
      * チェックボックスで選択されたキャラクターのセット

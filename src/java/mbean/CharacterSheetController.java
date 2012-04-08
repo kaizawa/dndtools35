@@ -118,17 +118,18 @@ public class CharacterSheetController implements Serializable {
     /*
      * 選択されたキャンペーン
      */
-    public Integer getSelectedCampaign() {
-        return getSessionController().getSelectedCampaign();
+    public Integer getSelectedCampaignId() {
+        return getSessionController().getSelectedCampaignId();
     }
 
-    public void setSelectedCampaign(Integer selectedCampaign) {
-        if(selectedCampaign != getSessionController().getSelectedCampaign()){
+    public void setSelectedCampaignId(Integer selectedCampaign) {
+        if(selectedCampaign != getSessionController().getSelectedCampaignId()){
            releaseAllButton_action();            
            recreatePagination();
            recreateModel();
         }
-        getSessionController().setSelectedCampaign(selectedCampaign);
+        getSessionController().setSelectedScenarioRecord(null);
+        getSessionController().setSelectedCampaignId(selectedCampaign);
     }
     
     /*
@@ -306,7 +307,7 @@ public class CharacterSheetController implements Serializable {
      */
     public void campaign_processValueChange(ValueChangeEvent vce) {
         Integer campaign = (Integer) vce.getNewValue();
-        setSelectedCampaign(campaign);
+        setSelectedCampaignId(campaign);        
     }
     
     private HtmlDataTable characterListDataTable = new HtmlDataTable();
@@ -358,8 +359,8 @@ public class CharacterSheetController implements Serializable {
         characterRecord.setAcMiscMod(0);
         characterRecord.setAcShield(0);
         // もし選択されていれば現在選択しているキャンペーンをデフォルト値としてセット
-        if (getSelectedCampaign() != null) {
-            campaign = campaignMasterFacade.find(getSelectedCampaign());
+        if (getSelectedCampaignId() != null) {
+            campaign = campaignMasterFacade.find(getSelectedCampaignId());
             characterRecord.setCampaignId(campaign);
         }
 
@@ -1090,23 +1091,23 @@ public class CharacterSheetController implements Serializable {
     
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(15) {
+            pagination = new PaginationHelper(10) {
 
                 @Override
                 public int getItemsCount() {
-                    if (getSelectedCampaign() == null) {
+                    if (getSelectedCampaignId() == null) {
                         return characterRecordFacade.count();
                     } else {
-                        return characterRecordFacade.countByCampaignId(getSelectedCampaign());                        
+                        return characterRecordFacade.countByCampaignId(getSelectedCampaignId());                        
                     }
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    if (getSelectedCampaign() == null) {
+                    if (getSelectedCampaignId() == null) {
                         return new ListDataModel(characterRecordFacade.findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
                     } else {
-                        return new ListDataModel(characterRecordFacade.findRangeByCampaignId(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}, getSelectedCampaign()));
+                        return new ListDataModel(characterRecordFacade.findRangeByCampaignId(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}, getSelectedCampaignId()));
                     }
                 }
             };

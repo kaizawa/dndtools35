@@ -263,14 +263,14 @@ public class ScenarioRecordController implements Serializable {
     public Integer getSelectedCampaign() {
         recreatePagination();
         recreateModel();        
-        return getSessionController().getSelectedCampaign();
+        return getSessionController().getSelectedCampaignId();
     }
 
     public void setSelectedCampaign(Integer selectedCampaign) {
-        if (selectedCampaign != getSessionController().getSelectedCampaign()) {
+        if (selectedCampaign != getSessionController().getSelectedCampaignId()) {
             recreatePagination();
             recreateModel();
         }
-        getSessionController().setSelectedCampaign(selectedCampaign);
+        getSessionController().setSelectedCampaignId(selectedCampaign);
     }
 }
