@@ -18,7 +18,7 @@
                     </h:panelGrid>
                 </h:panelGrid>
                 
-                <h:panelGrid style="width: 400px">
+                <h:panelGrid style="width: 600px">
                 <h:outputText escape="false" value="#{bundle.ListCampaignMasterEmpty}" rendered="#{campaignMasterController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{campaignMasterController.items.rowCount > 0}">
                     <h:outputText value="#{campaignMasterController.pagination.pageFirstItem + 1}..#{campaignMasterController.pagination.pageLastItem + 1}/#{campaignMasterController.pagination.itemsCount}"/>&nbsp;

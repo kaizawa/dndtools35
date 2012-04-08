@@ -81,6 +81,7 @@ public class ScenarioRecordController implements Serializable {
     }
 
     public String prepareList() {
+        getSessionController().setSelectedScenarioRecord(null);
         recreateModel();
         current = new ScenarioRecord();
         selectedItemIndex = -1;
@@ -113,6 +114,7 @@ public class ScenarioRecordController implements Serializable {
     public String prepareEdit() {
         current = (ScenarioRecord) getItems().getRowData();
         selectedItemIndex = getPagination().getPageFirstItem() + getItems().getRowIndex();
+        getSessionController().setSelectedScenarioRecord(current);
         return "/scenarioRecord/Edit";
     }
 

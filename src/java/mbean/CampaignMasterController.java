@@ -74,8 +74,10 @@ public class CampaignMasterController implements Serializable {
     }
 
     public String prepareList() {
+        getSessionController().setSelectedCampaign(null);        
+        getSessionController().setSelectedScenarioRecord(null);
         recreateModel();
-        return "List";
+        return "/campaignMaster/List";
     }
 
     public String prepareView() {

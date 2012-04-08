@@ -4,67 +4,60 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
-    
+
     <!-- 使ってない -->
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="エンカウンター一覧"></h:outputText>
+            <h:outputText value="『#{campaignMasterController.selected.campaignName}/#{scenarioRecordController.selected.name}』のエンカウンター一覧"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                <h:commandLink action="#{encounterRecordController.reread()}" value="再読み込み"/>                                
-                <br/>
-                <h:outputText escape="false" value="エンカウンターはありません。" rendered="#{encounterRecordController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
-                    <h:outputText value="#{encounterRecordController.pagination.pageFirstItem + 1}..#{encounterRecordController.pagination.pageLastItem + 1}/#{encounterRecordController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{encounterRecordController.previous}" value="#{bundle.Previous} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{encounterRecordController.next}" value="#{bundle.Next} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{encounterRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterRecordTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterRecordTitle_name}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.name}"/>
-                        </h:column>                        
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterRecordTitle_comments}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.comments}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEncounterRecordTitle_round}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.round}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{encounterRecordController.prepareView}" value="開始"/>
-                            <h:outputText value="  "/>
-                            <h:commandLink action="#{encounterRecordController.prepareEdit}" value="変更"/> 
-                            <h:outputText value="  "/>
-                            <h:commandLink action="#{encounterRecordController.destroy}" value="削除"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
-                <br />
-                <h:commandLink action="#{encounterRecordController.prepareCreate}" value="新しいエンカウンターの作成"/>
-                <br />
-                <br />
-                <h:commandLink value="インデックスへ" action="/index" immediate="true" />
+
+                <h:panelGrid style="text-align: right; width: 100%">
+                    <h:panelGrid columns="3" style="width: 100%">
+                        <h:commandLink action="#{encounterRecordController.prepareCreate}" value="新規エンカウンターの作成" />                    
+                    </h:panelGrid>
+                </h:panelGrid>                        
+                <h:panelGrid style="width: 600px">
+
+                    <h:outputText escape="false" value="エンカウンターはありません。" rendered="#{encounterRecordController.items.rowCount == 0}"/>
+                    <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
+                        <h:outputLabel styleClass="middleBold">エンカウンター一覧</h:outputLabel><br/>
+                        <h:outputText value="#{encounterRecordController.pagination.pageFirstItem + 1}..#{encounterRecordController.pagination.pageLastItem + 1}/#{encounterRecordController.pagination.itemsCount}"/>&nbsp;
+                        <h:commandLink action="#{encounterRecordController.previous}" value="#{bundle.Previous} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasPreviousPage}"/>&nbsp;
+                        <h:commandLink action="#{encounterRecordController.next}" value="#{bundle.Next} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasNextPage}"/>&nbsp;
+                        <h:panelGrid styleClass="tableGrid">
+                            <h:dataTable value="#{encounterRecordController.items}" var="item" rules="all" styleClass="w">
+
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="エンカウンター名"/>
+                                    </f:facet>
+                                    <h:commandLink action="#{encounterRecordController.prepareView}" value="#{item.name}"/>                                
+                                </h:column>                               
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="ラウンド"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.round}"/>
+                                </h:column>                 
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="備考"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.comments}"/>
+                                </h:column>                    
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="&nbsp;"/>
+                                    </f:facet>
+                                    <h:commandButton action="#{encounterRecordController.destroy}" onclick="return confirm('削除しますか?')" value="削除"/>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGrid>                        
+                    </h:panelGroup>
+                </h:panelGrid>
             </h:form>
         </ui:define>
     </ui:composition>

@@ -100,7 +100,7 @@ public class EncounterRecordController implements Serializable {
         recreateModel();
         current = new EncounterRecord();
         selectedItemIndex = -1;
-        return "/scenarioRecord/Edit";
+        return "/encounterRecord/List";
     }
 
 

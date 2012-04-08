@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="シナリオ『#{scenarioRecordController.selected.name}』の編集"></h:outputText>
+            <h:outputText value="『#{campaignMasterController.selected.campaignName}』のシナリオ『#{scenarioRecordController.selected.name}』の編集"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form>
@@ -33,53 +33,6 @@
                                      style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="シナリオの削除"/>
                 </h:panelGrid>                            
             </h:form>
-            <hr/>
-            <h:form styleClass="jsfcrud_list_form">
-                
-                <h:panelGrid style="text-align: right; width: 100%">
-                    <h:panelGrid columns="3" style="width: 100%">
-                        <h:commandLink action="#{encounterRecordController.prepareCreate}" value="新規エンカウンターの作成" />                    
-                    </h:panelGrid>
-                </h:panelGrid>                        
-                <h:outputText escape="false" value="エンカウンターはありません。" rendered="#{encounterRecordController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{encounterRecordController.items.rowCount > 0}">
-                    <h:outputLabel styleClass="middleBold">エンカウンター一覧</h:outputLabel><br/>
-                    <h:outputText value="#{encounterRecordController.pagination.pageFirstItem + 1}..#{encounterRecordController.pagination.pageLastItem + 1}/#{encounterRecordController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{encounterRecordController.previous}" value="#{bundle.Previous} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{encounterRecordController.next}" value="#{bundle.Next} #{encounterRecordController.pagination.pageSize}" rendered="#{encounterRecordController.pagination.hasNextPage}"/>&nbsp;
-                    <h:panelGrid styleClass="tableGrid">
-                        <h:dataTable value="#{encounterRecordController.items}" var="item" rules="all" styleClass="w">
-
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="エンカウンター名"/>
-                                </f:facet>
-                                <h:commandLink action="#{encounterRecordController.prepareView}" value="#{item.name}"/>                                
-                            </h:column>                               
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="ラウンド"/>
-                                </f:facet>
-                                <h:outputText value="#{item.round}"/>
-                            </h:column>                 
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="備考"/>
-                                </f:facet>
-                                <h:outputText value="#{item.comments}"/>
-                            </h:column>                    
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="&nbsp;"/>
-                                </f:facet>
-                                <h:commandButton action="#{encounterRecordController.destroy}" onclick="return confirm('削除しますか?')" value="削除"/>
-                            </h:column>
-                        </h:dataTable>
-                    </h:panelGrid>                        
-                </h:panelGroup>
-            </h:form>
-
-
         </ui:define>
     </ui:composition>
 

@@ -179,6 +179,20 @@ public class SessionController {
         this.scenarioCharacterRecord = scenarioCharacterRecord;
     }
     
+    private ScenarioRecord selectedScenarioRecord = null;
+
+    public ScenarioRecord getSelectedScenarioRecord() {
+        return selectedScenarioRecord;
+    }
+
+    public void setSelectedScenarioRecord(ScenarioRecord scenarioRecord) {
+        this.selectedScenarioRecord = scenarioRecord;
+    }
+    
+    public Boolean isScenarioSelected(){
+        return ! (getSelectedScenarioRecord() == null);
+    }
+    
     public String goToLimitedPage(String pageName){
         if (isLoggedIn() == false) {
             setTargetPage(pageName);
