@@ -32,16 +32,17 @@ public class ScenarioRecordFacade extends AbstractFacade<ScenarioRecord> {
 
     public List<ScenarioRecord> findByCampaignId(Integer campaignId) {
         CampaignMaster campaign = em.find(CampaignMaster.class, campaignId);
-        Query q = getEntityManager().createQuery("select s from SenarioRecord s "
-                + "where s.campaignId = :campaign");
+        Query q = getEntityManager().createQuery("select s from ScenarioRecord s "
+                + "where s.campaign = :campaign");
+        q.setParameter("campaign", campaign);
         return q.getResultList();
     }
     
     public List<ScenarioRecord> findRangeByCampaignId(int[] range, Integer campaignId) {
         CampaignMaster campaign = em.find(CampaignMaster.class, campaignId);
-        Query q = getEntityManager().createQuery("select s from SenarioRecord s "
-                + "where s.campaignId = :campaign");
-        q.setParameter(":campaign", campaign);
+        Query q = getEntityManager().createQuery("select s from ScenarioRecord s "
+                + "where s.campaign = :campaign");
+        q.setParameter("campaign", campaign);
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();

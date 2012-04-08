@@ -27,6 +27,7 @@ public class ScenarioRecordController implements Serializable {
     private ejb.ScenarioRecordFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
 
@@ -111,7 +112,7 @@ public class ScenarioRecordController implements Serializable {
 
     public String prepareEdit() {
         current = (ScenarioRecord) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        selectedItemIndex = getPagination().getPageFirstItem() + getItems().getRowIndex();
         return "/scenarioRecord/Edit";
     }
 
@@ -131,7 +132,7 @@ public class ScenarioRecordController implements Serializable {
     }
 
     public String destroy() {
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        selectedItemIndex = getPagination().getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
         return prepareList();
@@ -165,8 +166,8 @@ public class ScenarioRecordController implements Serializable {
             // selected index cannot be bigger than number of items:
             selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
+            if (getPagination().getPageFirstItem() >= count) {
+                getPagination().previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
@@ -258,6 +259,8 @@ public class ScenarioRecordController implements Serializable {
      * 選択されたキャンペーン
      */
     public Integer getSelectedCampaign() {
+        recreatePagination();
+        recreateModel();        
         return getSessionController().getSelectedCampaign();
     }
 

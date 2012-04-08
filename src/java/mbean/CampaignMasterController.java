@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -28,6 +29,16 @@ public class CampaignMasterController implements Serializable {
     private ejb.CampaignMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
 
     public CampaignMasterController() {
     }
@@ -93,6 +104,7 @@ public class CampaignMasterController implements Serializable {
     public String prepareEdit() {
         current = (CampaignMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        getSessionController().setSelectedCampaign(current.getId());
         return "Edit";
     }
 
