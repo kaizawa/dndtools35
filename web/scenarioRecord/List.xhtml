@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="シナリオ一覧"></h:outputText>
+            <h:outputText value="『#{campaignMasterController.selected.campaignName}』のシナリオ一覧"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
@@ -22,19 +22,13 @@
                         <h:commandLink action="#{scenarioRecordController.previous}" value="#{bundle.Previous} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasPreviousPage}"/>&nbsp;
                         <h:commandLink action="#{scenarioRecordController.next}" value="#{bundle.Next} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasNextPage}"/>&nbsp;
                         <h:panelGrid styleClass="tableGrid">
-                            <h:dataTable value="#{scenarioRecordController.items}" var="item" rules="all" styleClass="w" >
+                            <h:dataTable value="#{scenarioRecordController.items}" var="item" rules="all" styleClass="left" >
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="シナリオ"/>
                                     </f:facet>
                                     <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{item.name}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="キャンペーン"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.campaign.campaignName}"/>
-                                </h:column>
+                                </h:column> 
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="備考"/>

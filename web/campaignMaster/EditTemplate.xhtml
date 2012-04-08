@@ -23,33 +23,6 @@
 
                 <ui:insert name="controlBottom"></ui:insert>
 
-                <h:panelGrid style="width: 600px">
-                    <h:outputText escape="false" value="シナリオが有りません" rendered="#{scenarioRecordController.items.rowCount == 0}"/>
-                    <h:panelGroup rendered="#{scenarioRecordController.items.rowCount > 0}">
-                        <h:outputText value="#{scenarioRecordController.pagination.pageFirstItem + 1}..#{scenarioRecordController.pagination.pageLastItem + 1}/#{scenarioRecordController.pagination.itemsCount}"/>&nbsp;
-                        <h:commandLink action="#{scenarioRecordController.previous}" value="#{bundle.Previous} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasPreviousPage}"/>&nbsp;
-                        <h:commandLink action="#{scenarioRecordController.next}" value="#{bundle.Next} #{scenarioRecordController.pagination.pageSize}" rendered="#{scenarioRecordController.pagination.hasNextPage}"/>&nbsp;
-                        <h:panelGrid styleClass="tableGrid">
-                            <h:dataTable value="#{scenarioRecordController.items}" var="item" rules="all" styleClass="left" >
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="シナリオ"/>
-                                    </f:facet>
-                                    <h:panelGrid style="text-align: left">
-                                        <h:commandLink action="#{scenarioRecordController.prepareEdit}" value="#{item.name}"/>                                        
-                                    </h:panelGrid>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="備考"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.description}"/>
-                                </h:column>
-                            </h:dataTable>
-                        </h:panelGrid>                    
-                    </h:panelGroup>
-                </h:panelGrid> 
-
             </h:form>
         </ui:define>
     </ui:composition>

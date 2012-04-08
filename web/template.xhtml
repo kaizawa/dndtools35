@@ -52,10 +52,8 @@
                             </h:panelGrid>                     
                             <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
                                 <h:commandLink action="/campaignMaster/List" styleClass="leftpaneltext" value="キャンペーン"/>
-                            </h:panelGrid>  
-                            <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="#{scenarioRecordController.prepareList()}" styleClass="leftpaneltext" value="シナリオ"/>
-                            </h:panelGrid>                                
+                                <h:commandLink rendered="#{sessionController.isCampaignSelected()}" action="#{scenarioRecordController.prepareList()}" styleClass="leftpaneltextScenaio" value="シナリオ"/>
+                            </h:panelGrid>                                 
                             <h:outputLabel value=""/>
                             <h:panelGrid id="adminCell" style="width: 100%; height: 100%;" styleClass="leftpanelink">
                                 <h:outputLabel styleClass="leftpaneltext" value="データ管理"/>

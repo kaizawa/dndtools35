@@ -63,7 +63,7 @@
    color: #FFFFFF !important;
    font-size: 12px!important;
    font-weight: bold !important;
-   padding-left: 10px;
+   padding-left: 5px;
    padding-right: 10px;
    width: 100%;
 }
@@ -72,7 +72,16 @@
    color: #FFFFFF !important;
    font-size: 10px!important;
    font-weight: bold !important;
-   padding-left: 25px;
+   padding-left: 15px;
+   padding-right: 10px;
+   width: 100%;
+}
+
+.leftpaneltextScenaio {
+   color: #FFFFFF !important;
+   font-size: 10px!important;
+   font-weight: bold !important;
+   padding-left: 15px;
    padding-right: 10px;
    width: 100%;
 }

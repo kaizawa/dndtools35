@@ -4,7 +4,6 @@ import entity.ScenarioCharacterRecord;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 import ejb.ScenarioCharacterRecordFacade;
-
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;

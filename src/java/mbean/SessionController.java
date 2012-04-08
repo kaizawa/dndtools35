@@ -104,6 +104,10 @@ public class SessionController {
         this.selectedCampaign = selectedCampaign;
     }
     
+    public Boolean isCampaignSelected(){
+        return !(selectedCampaign == null);
+    }
+    
     /*
      * チェックボックスで選択されたキャラクターのセット
      */
