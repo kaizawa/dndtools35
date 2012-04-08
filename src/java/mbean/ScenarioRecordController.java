@@ -5,6 +5,7 @@ import entity.ScenarioRecord;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -26,6 +27,16 @@ public class ScenarioRecordController implements Serializable {
     private ejb.ScenarioRecordFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
 
     public ScenarioRecordController() {
     }
@@ -48,12 +59,20 @@ public class ScenarioRecordController implements Serializable {
 
                 @Override
                 public int getItemsCount() {
-                    return getFacade().count();
+                    if (getSelectedCampaign() == null) {
+                        return getFacade().count();
+                    } else {
+                        return getFacade().countByCampaignId(getSelectedCampaign());
+                    }
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    if (getSelectedCampaign() == null) {
+                        return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    } else {
+                        return new ListDataModel(getFacade().findRangeByCampaignId(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()},getSelectedCampaign()));
+                    }
                 }
             };
         }
@@ -107,7 +126,7 @@ public class ScenarioRecordController implements Serializable {
         }
     }
 
-    public String cancel(){
+    public String cancel() {
         return "/scenarioRecord/List";
     }
 
@@ -188,6 +207,8 @@ public class ScenarioRecordController implements Serializable {
 
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+
+
     }
 
     @FacesConverter(forClass = ScenarioRecord.class)
@@ -227,9 +248,24 @@ public class ScenarioRecordController implements Serializable {
         }
     }
 
-    public void reset (){
+    public void reset() {
         recreateModel();
         current = new ScenarioRecord();
         selectedItemIndex = -1;
+    }
+
+    /*
+     * 選択されたキャンペーン
+     */
+    public Integer getSelectedCampaign() {
+        return getSessionController().getCharacterListSelectedCampaign();
+    }
+
+    public void setSelectedCampaign(Integer selectedCampaign) {
+        if (selectedCampaign != getSessionController().getCharacterListSelectedCampaign()) {
+            recreatePagination();
+            recreateModel();
+        }
+        getSessionController().setCharacterListSelectedCampaign(selectedCampaign);
     }
 }
