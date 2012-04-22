@@ -1,6 +1,6 @@
-/dist/
-/build/
-/nbproject/
+dist
+build
+nbproject
 .gitignore
-nbproject/private/private.properties
 nbproject/project.properties
+nbproject/private/private.properties
