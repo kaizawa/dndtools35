@@ -2,3 +2,5 @@
 /build/
 /nbproject/
 .gitignore
+nbproject/private/private.properties
+nbproject/project.properties

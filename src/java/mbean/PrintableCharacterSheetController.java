@@ -5,17 +5,8 @@
 package mbean;
 
 import entity.CharacterGrowthRecord;
-import entity.CharacterRecord;
-import entity.ClassMaster;
-import entity.SkillMaster;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.component.html.HtmlDataTable;
-import javax.faces.event.ValueChangeEvent;
 
 /**
  * <p>Page bean that corresponds to a similarly named JSP page.  This
@@ -33,7 +24,7 @@ import javax.faces.event.ValueChangeEvent;
 public class PrintableCharacterSheetController extends CharacterSheetController {
 
     /*
-     * ----- キャラクタレベル毎のクラスの選択 ----------------------------------------------
+     * キャラクタレベル毎のクラスの選択
      */
     public String getSelectedClassNameByRow() {
         int index = growthTable.getRowIndex();
@@ -47,48 +38,48 @@ public class PrintableCharacterSheetController extends CharacterSheetController 
     }
 
     /*
-     * ---------------- キャラクタ記述 ----------------------------------
+     * キャラクタ記述
      */
     public String getCharacterDescription() {
         return textToHtml(getCharacterData().getDescription());
     }
     /*
-     * ---------------- スペル記述 ----------------------------------
+     * スペル記述
      */
 
     public String getSpellDescription() {
         return textToHtml(getCharacterData().getSpellDescription());
     }
     /*
-     * ---------------- 防御記述 ----------------------------------
+     * 防御記述
      */
 
     public String getDefenceDescription() {
         return textToHtml(getCharacterData().getDefenceDescription());
     }
     /*
-     * ---------------- 攻撃記述 ----------------------------------
+     * 攻撃記述
      */
 
     public String getAttackDescription() {
         return textToHtml(getCharacterData().getAttackDescription());
     }
     /*
-     * ---------------- アイテム記述 ----------------------------------
+     * アイテム記述
      */
 
     public String getItemDescription() {
         return textToHtml(getCharacterData().getItemDescription());
     }
     /*
-     * ---------------- 特技記述 ----------------------------------
+     * 特技記述
      */
 
     public String getFeatDescription() {
         return textToHtml(getCharacterData().getFeatDescription());
     }
     /*
-     * ---------------- クラスリスト -------------------------------
+     * クラスリスト
      */
     protected String classList;
 
