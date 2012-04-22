@@ -342,7 +342,7 @@
                                     </h:panelGrid>
                                 </h:panelGrid>
                                 <h:panelGrid id="defenceGridPanel2" style="background-color: rgb(51,51,51); font-size: 12px; text-align: center; vertical-align: middle; width: 100%">
-                                    <h:inputTextarea id="textArea8" style="height: 200px; width: 100%" value="#{characterSheetController.characterData.defenceDescription}"/>
+                                    <h:inputTextarea id="textArea8" style="font-size: 12px; height: 200px; width: 100%" value="#{characterSheetController.characterData.defenceDescription}"/>
                                 </h:panelGrid>
                                 <h:panelGrid id="attackgridPanel2" style="background-color: #333333; font-size: 12px; text-align: center; vertical-align: middle; width: 100%">
                                     <h:outputText id="outputText190"
@@ -388,7 +388,7 @@
                                             <h:outputText id="outputText211" style="font-size: 10px" value="筋力"/>
                                         </h:panelGrid>
                                     </h:panelGrid>
-                                    <h:inputTextarea id="textArea9" style="height: 200px; width: 100%" value="#{characterSheetController.characterData.attackDescription}"/>
+                                    <h:inputTextarea id="textArea9" style="font-size: 12px; height: 200px; width: 100%" value="#{characterSheetController.characterData.attackDescription}"/>
                                     <h:panelGrid columns="1" id="attackGridPanel2" rendered="false" style="height: 100%; width: 100%">
                                         <h:panelGrid id="armGrid1" style="width: 100%">
                                             <h:panelGrid id="gridPanel18" rowClasses="tableTitleBlackMiddle" style="width: 100%" styleClass="tableGrid">
@@ -516,7 +516,7 @@
                                         </h:panelGrid>
                                     </h:panelGrid>
                                 </h:panelGrid>
-                                <h:inputTextarea id="textArea5" style="height: 200px; width: 100%" value="#{characterSheetController.characterData.itemDescription}"/>
+                                <h:inputTextarea id="textArea5" style="font-size: 12px; height: 200px; width: 100%" value="#{characterSheetController.characterData.itemDescription}"/>
                                 <h:panelGrid columns="3" id="loadGridPanel1" style="height: 100%; width: 100%">
                                     <h:outputText id="outputText138" styleClass="tableTitleBlackMiddle" value="軽荷重"/>
                                     <h:outputText id="outputText139" styleClass="tableTitleBlackMiddle" value="中荷重"/>
@@ -606,7 +606,7 @@
                         </h:panelGrid>
                         <h:panelGrid style="height: 100%; width: 100%" styleClass="tableGrid">
                             <h:outputText  styleClass="tableTitleBlack" value="特技・特殊能力など"/>
-                            <h:inputTextarea style="height: 200px; width: 100%" value="#{characterSheetController.characterData.featDescription}"/>
+                            <h:inputTextarea style="font-size: 12px; height: 200px; width: 100%" value="#{characterSheetController.characterData.featDescription}"/>
                         </h:panelGrid>                       
                     </h:panelGrid>                          
 
@@ -616,7 +616,7 @@
                         </h:panelGrid>
                         <h:panelGrid id="spellgridPanel1" style="height: 100%; width: 100%" styleClass="tableGrid">
                             <h:outputText id="outputText162" styleClass="tableTitleBlack" value="呪文・メモなど"/>
-                            <h:inputTextarea id="textArea6" style="height: 250px; width: 100%" value="#{characterSheetController.characterData.spellDescription}"/>
+                            <h:inputTextarea id="textArea6" style="font-size: 12px; height: 250px; width: 100%" value="#{characterSheetController.characterData.spellDescription}"/>
                         </h:panelGrid>                                                        
                     </h:panelGrid>   
 
@@ -626,10 +626,10 @@
                         </h:panelGrid>
                         <h:panelGrid id="updateGridPanel2" style="height: 100%;; width: 100%" styleClass="tableGrid">
                             <h:outputText id="outputText163" styleClass="tableTitleBlack" value="セッションログ／更新履歴"/>
-                            <h:inputTextarea id="textArea7" style="height: 150px; width: 100%" value="#{characterSheetController.characterData.updateDescription}"/>
+                            <h:inputTextarea id="textArea7" style="font-size: 12px;height: 150px; width: 100%" value="#{characterSheetController.characterData.updateDescription}"/>
                         </h:panelGrid>
                     </h:panelGrid>
-                    <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
+                    <h:panelGrid id="deleteCharaGridPanel1" style="font-size: 12px; height: 100%; text-align: right; width: 100%">
                         <h:commandButton action="#{characterSheetController.editCharaDeleteButton_action}"
                                          disabled="#{characterSheetController.deleteButtonDisabled}" id="deleteButton1" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="キャラクタの削除"/>
                     </h:panelGrid>
