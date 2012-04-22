@@ -32,7 +32,7 @@
                             <h:outputLabel id="staticText3" value="次レベル:"/>
                             <h:outputText id="outputText6" styleClass="bPrint" value="#{sessionBean.nextExperience}"/>
                             <h:outputLabel id="staticText4" value="最終更新:"/>
-                            <h:outputText id="outputText141" styleClass="bPrint" value="#{printableCharacterSheetController.characterData.saveTime}"/>
+                            <h:outputText id="outputText141" styleClass="bPrint" value="#{printableCharacterSheetController.characterData.lastChange}"/>
                         </h:panelGrid>
                         <h:panelGrid columns="1" id="classGridPanel" style="text-align: left" styleClass="gPrint">
                             <h:outputText id="outputText163" styleClass="bPrint   " value="#{printableCharacterSheetController.classList}"/>
@@ -208,7 +208,7 @@
                                     <h:outputText id="outputText71" style="font-size: 14px" value="HP"/>
                                 </h:panelGrid>
                                 <h:panelGrid id="gridPanel26" style="width: 30px">
-                                    <h:outputText id="outputText72" styleClass="bPrint" value="#{sessionBean.hitPointTotal}"/>
+                                    <h:outputText id="outputText72" styleClass="bPrint" value="#{printableCharacterSheetController.characterData.hitPoint}"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="10" id="gridPanel27" style="width: 260px"/>
                             </h:panelGrid>
