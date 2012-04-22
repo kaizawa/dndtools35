@@ -48,8 +48,7 @@ public class PrintableCharacterSummaryListController extends CharacterSheetContr
     }
 
     public String editCharaLink_action() {
-        int index = characterSummaryTable.getRowIndex();
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         
         //管理Beanへ反映
         setCharacterData(characterData);
@@ -58,86 +57,71 @@ public class PrintableCharacterSummaryListController extends CharacterSheetContr
 
     @Override
     public Integer getSaveTotal() {
-        int index = characterSummaryTable.getRowIndex();
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         SaveMaster save = (SaveMaster) getSaveTable().getRowData();
         return characterData.getSaveTotalById(save.getId());
     }
 
     @Override
     public Integer getAbilityModifier() {
-        int index = characterSummaryTable.getRowIndex();
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
+
         AbilityMaster ability = (AbilityMaster) abilityTable.getRowData();
         return characterData.getAbilityModifierById(ability.getId());
     }
 
     @Override
     public Integer getAbilityTotal() {
-        int index = characterSummaryTable.getRowIndex();        
-        CharacterData characterData =  getCharacterDataList().get(index);       
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         AbilityMaster ability = (AbilityMaster) abilityTable.getRowData();
         return characterData.getAbilityTotalById(ability.getId());
     }
 
     public String getCommonSkills() {
-        int index = characterSummaryTable.getRowIndex();
-        
-        CharacterData characterData =  getCharacterDataList().get(index);        
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();     
 
-        return "隠れ身: " + characterData.getSkillTotalCheckModifierById(4) + "<br>"
-                + "聞き耳: " + characterData.getSkillTotalCheckModifierById(7) + "<br>"
-                + "交渉: " + characterData.getSkillTotalCheckModifierById(13) + "<br>"
-                + "視認: " + characterData.getSkillTotalCheckModifierById(14) + "<br>"
-                + "忍び足: " + characterData.getSkillTotalCheckModifierById(15) + "<br>"
-                + "真意看破: " + characterData.getSkillTotalCheckModifierById(21) + "<br>"
-                + "捜索: " + characterData.getSkillTotalCheckModifierById(28);
+        return "聞き耳: " + characterData.getSkillTotalCheckModifierById(7) + "<br>"
+             + "視認: " + characterData.getSkillTotalCheckModifierById(14) + "<br>"                
+             + "交渉: " + characterData.getSkillTotalCheckModifierById(13) + "<br>"
+             + "隠れ身: " + characterData.getSkillTotalCheckModifierById(4) + "<br>"                
+             + "忍び足: " + characterData.getSkillTotalCheckModifierById(15) + "<br>"
+             + "真意看破: " + characterData.getSkillTotalCheckModifierById(21) + "<br>"
+             + "捜索: " + characterData.getSkillTotalCheckModifierById(28);
     }
     
     public String getAttackDescriptionWithBR(){
-        int index = characterSummaryTable.getRowIndex();        
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         
         return characterData.getAttackDescriptionWithBR();
     }
     
 
     public Integer getHitPoint(){
-        int index = characterSummaryTable.getRowIndex();
-        
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         
         return characterData.getHitPoint();
     } 
     
     public Integer getInitiative(){
-        int index = characterSummaryTable.getRowIndex();
-        
-        CharacterData characterData =  getCharacterDataList().get(index);
-        
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
+      
         return characterData.getInitiative();
     }   
     
     public Integer getAcTouch(){
-        int index = characterSummaryTable.getRowIndex();
-        
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         
         return characterData.getAcTouch();
     } 
     
     public Integer getAcNormal(){
-        int index = characterSummaryTable.getRowIndex();
-        
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         
         return characterData.getAcNormal();
     }  
     
     public Integer getAcFlatFooted(){
-        int index = characterSummaryTable.getRowIndex();
-        
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         
         return characterData.getAcFlatFooted();
     }        
@@ -149,16 +133,12 @@ public class PrintableCharacterSummaryListController extends CharacterSheetContr
     }
     
     public Integer getCharacterLevel(){
-        int index = characterSummaryTable.getRowIndex();
-        
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         return characterData.getCharacterLevel();
     }
     
       public String getClassList(){
-        int index = characterSummaryTable.getRowIndex();
-        
-        CharacterData characterData =  getCharacterDataList().get(index);
+        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
         return characterData.getClassList();
     }  
       
