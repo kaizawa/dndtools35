@@ -889,3 +889,8 @@ table.gPrintSummaryList td {
     color: #333333;
 
 }
+
+.textArea {
+    font-size: 12px;
+    text-align: left;
+}
