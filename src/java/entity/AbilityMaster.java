@@ -146,5 +146,9 @@ public class AbilityMaster implements Serializable {
     public void setMonsterAbilityRecordList(List<MonsterAbilityRecord> monsterAbilityRecordList) {
         this.monsterAbilityRecordList = monsterAbilityRecordList;
     }
+    
+    public static String getAbilityShortName(){
+        return (new StringBuilder()).append("\u3010").append(getAbilityShortName().substring(0, 1)).append("\u3011").toString();
+    }  
 
 }
