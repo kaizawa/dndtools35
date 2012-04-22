@@ -80,13 +80,15 @@ public class PrintableCharacterSummaryListController extends CharacterSheetContr
     public String getCommonSkills() {
         CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();     
 
-        return "聞き耳: " + characterData.getSkillTotalCheckModifierById(7) + "<br>"
-             + "視認: " + characterData.getSkillTotalCheckModifierById(14) + "<br>"                
-             + "交渉: " + characterData.getSkillTotalCheckModifierById(13) + "<br>"
-             + "隠れ身: " + characterData.getSkillTotalCheckModifierById(4) + "<br>"                
-             + "忍び足: " + characterData.getSkillTotalCheckModifierById(15) + "<br>"
-             + "真意看破: " + characterData.getSkillTotalCheckModifierById(21) + "<br>"
-             + "捜索: " + characterData.getSkillTotalCheckModifierById(28);
+        return "<table><tr>"
+             + "<td>聞き耳:</td><td>" + characterData.getSkillTotalCheckModifierById(7) + "</td></tr>"
+             + "<td>視認:</td><td>" + characterData.getSkillTotalCheckModifierById(14) + "</td></tr>"
+             + "<td>交渉:</td><td>" + characterData.getSkillTotalCheckModifierById(13) + "</td></tr>"
+             + "<td>隠れ身:</td><td>" + characterData.getSkillTotalCheckModifierById(4) + "</td></tr>"
+             + "<td>忍び足:</td><td>" + characterData.getSkillTotalCheckModifierById(15) + "</td></tr>"
+             + "<td>真意看破:</td><td>" + characterData.getSkillTotalCheckModifierById(21) + "</td></tr>"
+             + "<td>捜索:</td><td>" + characterData.getSkillTotalCheckModifierById(28) + "</td></tr>"
+             + "</table>";
     }
     
     public String getAttackDescriptionWithBR(){
