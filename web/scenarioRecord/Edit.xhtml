@@ -28,6 +28,7 @@
                     <h:inputTextarea id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" />
 
                 </h:panelGrid>
+                <h:commandLink action="#{encounterRecordController.prepareList()}" value="エンカウンター一覧へ"/>  
                 <h:panelGrid id="deletePanel1" style="height: 100%; text-align: right; width: 100%">
                     <h:commandButton action="#{scenarioRecordController.destroy()}" 
                                      style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')" value="シナリオの削除"/>

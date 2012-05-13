@@ -19,8 +19,9 @@
                 </h:panelGrid>
             </h:panelGrid>
         </ui:define>              
-
+                                
         <ui:define name="controlBottom">
+            <h:commandLink action="#{scenarioRecordController.prepareList()}" value="シナリオ一覧へ"/>
             <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
                 <h:commandButton action="#{campaignMasterController.destroy}" value="削除" style="color: rgb(255, 51, 51)" onclick="return confirm('削除しますか?')"/>                                    
             </h:panelGrid>                
