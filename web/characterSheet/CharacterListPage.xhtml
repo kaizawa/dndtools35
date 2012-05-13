@@ -16,7 +16,7 @@
                     <h:panelGrid columns="2" id="campFilterGridPanel" style="width: 100%; height: 100%;">
                         <h:panelGrid columns="2">
                             <h:outputLabel value="キャンペーン"/>
-                            <h:selectOneMenu id="dropdown1" onchange="submit()" valueChangeListener="#{characterSheetPerLevelController.campaign_processValueChange(vce)}" style="width: 240px" value="#{characterSheetController.selectedCampaign}" >
+                            <h:selectOneMenu id="dropdown1" onchange="submit()" valueChangeListener="#{characterSheetController.campaign_processValueChange(vce)}" style="width: 240px" value="#{characterSheetController.selectedCampaign}" >
                                 <f:selectItems id="dropdown1SelectItems" value="#{campaignMasterController.itemsAvailableSelectOne}"/>
                             </h:selectOneMenu>
                         </h:panelGrid>                            

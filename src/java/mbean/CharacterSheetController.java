@@ -147,13 +147,9 @@ public class CharacterSheetController implements Serializable {
      * キャラクターデータのリスト
      */
     public List<CharacterData> getCharacterDataList() {        
-        JsfUtil.addErrorMessage("getCharacterDataList is called");
-
         if (items == null) {
-            JsfUtil.addErrorMessage("items is null");
             items = getPagination().createPageDataModel();
         }
-        JsfUtil.addErrorMessage("items = " + items.getRowCount());
 
         List<CharacterData> charaDataList = new ArrayList<CharacterData>();
         for (Object obj : getItems()) {
@@ -321,7 +317,6 @@ public class CharacterSheetController implements Serializable {
      */
     public void campaign_processValueChange(ValueChangeEvent vce) {
         items = null;        
-        JsfUtil.addErrorMessage("campaign_processValueChange is called");
         CampaignMaster campaign = (CampaignMaster) vce.getNewValue();
         releaseAllButton_action();
         recreatePagination();
@@ -1120,10 +1115,8 @@ public class CharacterSheetController implements Serializable {
                 @Override
                 public DataModel createPageDataModel() {
                     if (getSelectedCampaign() == null) {
-                        JsfUtil.addErrorMessage("selectedCamapign is null");
                         return new ListDataModel(characterRecordFacade.findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                     } else {
-                        JsfUtil.addErrorMessage("selectedCamapign is not null" + getSelectedCampaign().getCampaignName());
                         return new ListDataModel(characterRecordFacade.findRangeByCampaign(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}, getSelectedCampaign()));
                     }
                 }
