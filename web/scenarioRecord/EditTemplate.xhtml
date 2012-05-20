@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="『#{campaignMasterController.selectedCampaign.campaignName}』のシナリオ『#{scenarioRecordController.selected.name}』の編集"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>            
+                
+                <ui:insert name="header"/>
+
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="キャンペーン" for="campaign" />
+                    <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selectedCampaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
+                        <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="シナリオ名" for="name" />
+                    <h:inputText id="name" value="#{scenarioRecordController.selected.name}" title="#{bundle.EditScenarioRecordTitle_name}" />
+                    <h:outputLabel value="備考" for="description" />
+                    <h:inputTextarea id="description" styleClass="middleTextArea" value="#{scenarioRecordController.selected.description}" />
+
+                </h:panelGrid>
+                
+                <ui:insert name="footer"/>
+                
+            
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
