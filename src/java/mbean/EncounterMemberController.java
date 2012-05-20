@@ -151,13 +151,16 @@ public class EncounterMemberController implements Serializable {
     }
 
     public String saveEncounterMembers() {
+        /*
+         * エンカウンターコントローラーの情報(名前など)も更新する。
+         */
+        getEncounterRecordController().update();
         try {
             for (EncounterMember member : encounterMemberList) {
                 ScenarioCharacterRecord chara = member.getScenarioCharacterRecord();
                 scenarioCharacterRecordFacade.edit(chara);
                 encounterMemberFacade.edit(member);
             }
-            JsfUtil.addSuccessMessage("保存されました");
         } catch (Exception e) {
             JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }

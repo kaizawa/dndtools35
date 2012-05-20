@@ -45,6 +45,18 @@ public class EncounterRecordController implements Serializable {
     private EncounterRecordFacade encounterRecordFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }   
+    
+/*    
     @ManagedProperty(value = "#{scenarioRecordController}")
     private ScenarioRecordController scenarioRecordController;
 
@@ -55,6 +67,8 @@ public class EncounterRecordController implements Serializable {
     public void setScenarioRecordController(ScenarioRecordController scenarioRecordController) {
         this.scenarioRecordController = scenarioRecordController;
     }
+    * 
+    */
 
     public EncounterRecordController() {
     }
@@ -77,14 +91,14 @@ public class EncounterRecordController implements Serializable {
 
                 @Override
                 public int getItemsCount() {
-                    return getFacade().countByScenarioRecord(scenarioRecordController.getSelected());
+                    return getFacade().countByScenarioRecord(getSessionController().getSelectedScenarioRecord());
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
                     return new ListDataModel(
                             getFacade().findByScenarioRecordRange(
-                            scenarioRecordController.getSelected(),
+                            getSessionController().getSelectedScenarioRecord(),
                             new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
@@ -133,7 +147,7 @@ public class EncounterRecordController implements Serializable {
 
     public String create() {
         try {
-            current.setScenarioRecord(scenarioRecordController.getSelected());
+            current.setScenarioRecord(getSessionController().getSelectedScenarioRecord());
             getFacade().create(current);
             JsfUtil.addSuccessMessage("エンカウンターが追加されました。");
             return prepareList();
@@ -209,7 +223,7 @@ public class EncounterRecordController implements Serializable {
     }
 
     private void updateCurrentItem() {
-        int count = getFacade().countByScenarioRecord(scenarioRecordController.getSelected());
+        int count = getFacade().countByScenarioRecord(getSessionController().getSelectedScenarioRecord());
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
             selectedItemIndex = count - 1;
@@ -220,7 +234,7 @@ public class EncounterRecordController implements Serializable {
         }
         if (selectedItemIndex >= 0) {
             current = getFacade().findByScenarioRecordRange(
-                    scenarioRecordController.getSelected(),
+                    getSessionController().getSelectedScenarioRecord(),
                     new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
