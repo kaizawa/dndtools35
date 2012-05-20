@@ -373,7 +373,7 @@ public class CharacterSheetController implements Serializable {
         characterRecord.setAcShield(0);
         // もし選択されていれば現在選択しているキャンペーンをデフォルト値としてセット
         if (getSelectedCampaign() != null) {
-            campaign = campaignMasterFacade.find(getSelectedCampaign());
+            campaign = getSelectedCampaign();
             characterRecord.setCampaignId(campaign);
         }
 
