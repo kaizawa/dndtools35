@@ -61,6 +61,7 @@ public class ScenarioRecordController implements Serializable {
                 @Override
                 public int getItemsCount() {
                     if (getSelectedCampaign() == null) {
+                        JsfUtil.addErrorMessage("selectedCampaing is null1");                        
                         return getFacade().count();
                     } else {
                         return getFacade().countByCampaign(getSelectedCampaign());
@@ -69,7 +70,8 @@ public class ScenarioRecordController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    if (getSelectedCampaign() == null) {
+                    if (getSelectedCampaign() == null) {                    
+                        JsfUtil.addErrorMessage("selectedCampaing is null2");
                         return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                     } else {
                         return new ListDataModel(getFacade().findRangeByCampaign(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}, getSelectedCampaign()));

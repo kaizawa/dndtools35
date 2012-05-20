@@ -90,25 +90,10 @@ public class SessionController {
     public void setCharacterGrowthRecord(CharacterGrowthRecord characterGrowthRecord) {
         this.characterGrowthRecord = characterGrowthRecord;
     }    
-    
-    /*
-     * 選択されたキャンペーン
-     */
-    private Integer selectedCampaignId = null;
 
-    public Integer getSelectedCampaignId() {
-        return selectedCampaignId;
-    }
-
-    public void setSelectedCampaignId(Integer selectedCampaignId) {
-        this.selectedCampaignId = selectedCampaignId;
-    }
-    
     public Boolean isCampaignSelected(){
-        return !(selectedCampaignId == null);
+        return !(selectedCampaign == null);
     }
-    
-    
     
     /*
      * チェックボックスで選択されたキャラクターのセット
@@ -203,6 +188,10 @@ public class SessionController {
         return pageName;
     }
     
+    
+    /*
+     * 選択されたキャンペーン
+     */        
     private CampaignMaster selectedCampaign;
 
     CampaignMaster getSelectedCampaign() {

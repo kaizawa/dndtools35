@@ -43,10 +43,12 @@ public class CampaignMasterController implements Serializable {
     public CampaignMasterController() {
     }
 
-    public CampaignMaster getSelected() {
+    public CampaignMaster getSelectedCampaign() {
+        current = getSessionController().getSelectedCampaign();
         if (current == null) {
             current = new CampaignMaster();
             selectedItemIndex = -1;
+            getSessionController().setSelectedCampaign(current);
         }
         return current;
     }
@@ -74,7 +76,7 @@ public class CampaignMasterController implements Serializable {
     }
 
     public String prepareList() {
-        getSessionController().setSelectedCampaignId(null);        
+        getSessionController().setSelectedCampaign(null);        
         getSessionController().setSelectedScenarioRecord(null);
         recreateModel();
         return "/campaignMaster/List";
@@ -83,12 +85,14 @@ public class CampaignMasterController implements Serializable {
     public String prepareView() {
         current = (CampaignMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        getSessionController().setSelectedCampaign(current);
         return "View";
     }
 
     public String prepareCreate() {
         current = new CampaignMaster();
         selectedItemIndex = -1;
+        getSessionController().setSelectedCampaign(null);
         return "Create";
     }
 
@@ -106,7 +110,7 @@ public class CampaignMasterController implements Serializable {
     public String prepareEdit() {
         current = (CampaignMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        getSessionController().setSelectedCampaignId(current.getId());
+        getSessionController().setSelectedCampaign(current);
         return "Edit";
     }
 
@@ -162,6 +166,7 @@ public class CampaignMasterController implements Serializable {
         }
         if (selectedItemIndex >= 0) {
             current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            getSessionController().setSelectedCampaign(current);
         }
     }
 

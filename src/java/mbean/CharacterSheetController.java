@@ -147,9 +147,7 @@ public class CharacterSheetController implements Serializable {
      * キャラクターデータのリスト
      */
     public List<CharacterData> getCharacterDataList() {        
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
+        items = getPagination().createPageDataModel();
 
         List<CharacterData> charaDataList = new ArrayList<CharacterData>();
         for (Object obj : getItems()) {

@@ -16,9 +16,9 @@
                 <br/>
                 <h:panelGrid columns="2" style="width: 400">
                     <h:outputLabel value="キャンペーン名" for="campaignName" />
-                    <h:inputText id="campaignName" value="#{campaignMasterController.selected.campaignName}" title="#{bundle.EditCampaignMasterTitle_campaignName}" />
+                    <h:inputText id="campaignName" value="#{campaignMasterController.selectedCampaign.campaignName}" title="#{bundle.EditCampaignMasterTitle_campaignName}" />
                     <h:outputLabel value="マスター" for="master" />
-                    <h:inputText id="master" value="#{campaignMasterController.selected.master}" title="#{bundle.EditCampaignMasterTitle_master}" />
+                    <h:inputText id="master" value="#{campaignMasterController.selectedCampaign.master}" title="#{bundle.EditCampaignMasterTitle_master}" />
                 </h:panelGrid>
 
                 <ui:insert name="controlBottom"></ui:insert>

@@ -16,11 +16,11 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputText value="#{bundle.ViewCampaignMasterLabel_id}"/>
-                    <h:outputText value="#{campaignMasterController.selected.id}" title="#{bundle.ViewCampaignMasterTitle_id}"/>
+                    <h:outputText value="#{campaignMasterController.selectedCampaign.id}" title="#{bundle.ViewCampaignMasterTitle_id}"/>
                     <h:outputText value="#{bundle.ViewCampaignMasterLabel_campaignName}"/>
-                    <h:outputText value="#{campaignMasterController.selected.campaignName}" title="#{bundle.ViewCampaignMasterTitle_campaignName}"/>
+                    <h:outputText value="#{campaignMasterController.selectedCampaign.campaignName}" title="#{bundle.ViewCampaignMasterTitle_campaignName}"/>
                     <h:outputText value="#{bundle.ViewCampaignMasterLabel_master}"/>
-                    <h:outputText value="#{campaignMasterController.selected.master}" title="#{bundle.ViewCampaignMasterTitle_master}"/>
+                    <h:outputText value="#{campaignMasterController.selectedCampaign.master}" title="#{bundle.ViewCampaignMasterTitle_master}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{campaignMasterController.destroyAndView}" value="#{bundle.ViewCampaignMasterDestroyLink}"/>
