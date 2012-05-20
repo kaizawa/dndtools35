@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="『#{campaignMasterController.selectedCampaign.campaignName}/#{scenarioRecordController.selected.name}』の新規エンカウンターの作成"></h:outputText>
+        </ui:define>
+       <ui:define name="body">
+            <h:form>          
+                <ui:insert name="memberList"/>
+                
+                <ui:insert name="commandButton"/>                
+                
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="エンカウンター名: " for="name" />
+                    <h:inputText id="name" value="#{encounterRecordController.selected.name}" 
+                                 style="width: 500" title="#{bundle.EditEncounterRecordTitle_name}" />
+                </h:panelGrid> 
+
+                <h:panelGrid columns="2"> 
+                    <h:outputLabel value="メモ " for="description" />
+                    <h:inputTextarea id="comments" styleClass="middleTextArea" value="#{encounterRecordController.selected.comments}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{encounterRecordController.prepareList}" value="シナリオ『#{scenarioRecordController.selected.name}』の編集に戻る"/>
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

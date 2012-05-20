@@ -151,13 +151,16 @@ public class EncounterMemberController implements Serializable {
     }
 
     public String saveEncounterMembers() {
+        /*
+         * エンカウンターコントローラーの情報(名前など)も更新する。
+         */
+        getEncounterRecordController().update();
         try {
             for (EncounterMember member : encounterMemberList) {
                 ScenarioCharacterRecord chara = member.getScenarioCharacterRecord();
                 scenarioCharacterRecordFacade.edit(chara);
                 encounterMemberFacade.edit(member);
             }
-            JsfUtil.addSuccessMessage("保存されました");
         } catch (Exception e) {
             JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }
@@ -225,7 +228,7 @@ public class EncounterMemberController implements Serializable {
             encounterMemberFacade.edit(nextMember);
 
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("Persistence Error Occured");
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }
         return null;
     }
@@ -260,7 +263,7 @@ public class EncounterMemberController implements Serializable {
             encounterMemberFacade.edit(prevMember);
 
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("Persistence Error Occured");
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }
         return null;
     }
@@ -278,9 +281,9 @@ public class EncounterMemberController implements Serializable {
                     encounterMemberFacade.edit(member);
                 }
             }
-            JsfUtil.addSuccessMessage("Member's Poropety Updated");
+            JsfUtil.addSuccessMessage("モンスターのイニシアチブがセットされました。");
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("Persistence Error Occured");
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }
         return null;
     }
@@ -324,7 +327,7 @@ public class EncounterMemberController implements Serializable {
             encounterMemberFacade.edit(firstMember);
 
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("Persistence Error Occured");
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }
     }
 
@@ -353,9 +356,9 @@ public class EncounterMemberController implements Serializable {
                 scenarioCharacterRecordFacade.edit(chara);
                 encounterMemberFacade.edit(member);
             }
-            JsfUtil.addSuccessMessage("Member's Poropety Updated");
+            JsfUtil.addSuccessMessage("ヒットポイントが初期値に戻されました。");
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("Persistence Error Occured");
+            JsfUtil.addErrorMessage("永続性エラーが発生しました");
         }
         return null;
     }
