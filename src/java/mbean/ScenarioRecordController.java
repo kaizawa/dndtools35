@@ -104,6 +104,7 @@ public class ScenarioRecordController implements Serializable {
 
     public String create() {
         try {
+            current.setCampaign(getSelectedCampaign());
             getFacade().create(current);
             JsfUtil.addSuccessMessage("新しいシナリオが作成されました");
             return prepareList();

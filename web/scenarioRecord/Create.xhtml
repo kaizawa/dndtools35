@@ -20,9 +20,6 @@
                 
                 <h:panelGrid columns="2">
                     <h:outputLabel value="キャンペーン" for="campaign" />
-                    <h:selectOneMenu id="campaign" value="#{scenarioRecordController.selected.campaign}" title="#{bundle.EditScenarioRecordTitle_campaign}" >
-                        <f:selectItems value="#{campaignMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
                     <h:outputLabel value="シナリオ名" for="name" />
                     <h:inputText id="name" value="#{scenarioRecordController.selected.name}" title="#{bundle.EditScenarioRecordTitle_name}" />
                     <h:outputLabel value="備考" for="description" />
