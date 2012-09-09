@@ -15,13 +15,13 @@
 
             <h:panelGroup rendered="#{encounterMemberController.encounterMemberList.size() > 0}">  
 
-                <h:panelGrid columns="9">
-                    <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="保存" styleClass="smallBold"/>                      
+                <h:panelGrid columns="9">              
+                    <h:commandButton action="#{encounterMemberController.previousTurn()}" value="&lt;前のターン" styleClass="smallBold"/>                      
                     <h:outputLabel value=" "/>                    
-                    <h:commandButton action="#{encounterMemberController.nextTurn()}" value="次のターン" styleClass="smallBold" />
-                    <h:outputLabel value=" "/>                
-                    <h:commandButton action="#{encounterMemberController.previousTurn()}" value="前のターン" styleClass="smallBold"/>                                
+                    <h:commandButton action="#{encounterMemberController.nextTurn()}" value="次のターン&gt;" styleClass="smallBold" />                              
                     <h:outputLabel value=" "/>
+                    <h:commandButton action="#{encounterMemberController.saveEncounterMembers()}" value="保存" styleClass="smallBold"/>    
+                    <h:outputLabel value=" "/>  
                     <h:commandLink value="ラウンドの最初に戻る" action="#{encounterMemberController.resetRound}"/>
                     <h:outputLabel value="  "/>                     
                     <h:commandLink value="戦闘の最初に戻る" action="#{encounterMemberController.resetBattle}"/>                    
@@ -118,7 +118,7 @@
             <h:panelGrid columns="3">
                 <h:commandLink value="モンスターを追加" action="#{monsterSelectionController.prepareList}" styleClass="smallBold" immediate="true"/>                
                 <h:outputLabel value="   "/> 
-                <h:commandLink value="プレイヤーキャラクターを追加" action="#{encounterRecordController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
+                <h:commandLink value="プレイヤーキャラクターを追加" action="#{encounterMemberController.reloadPlayerCharacter()}" styleClass="smallBold"/>                                                                                                                                
             </h:panelGrid>                
             <hr/>            
         </ui:define>            
