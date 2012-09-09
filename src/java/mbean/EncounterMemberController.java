@@ -214,10 +214,10 @@ public class EncounterMemberController implements Serializable {
         current_index = encounterMemberList.indexOf(currentMember);
         EncounterMember nextMember;
 
-        do {
+//        do {
             current_index = getNextMemberIndex(current_index);
             nextMember = encounterMemberList.get(current_index);
-        } while (nextMember.getScenarioCharacterRecord().getHitPoint() <= 0);
+//        } while (nextMember.getScenarioCharacterRecord().getHitPoint() <= 0);
 
         currentMember.setMyTurn(false);
         nextMember.setMyTurn(true);
