@@ -26,11 +26,11 @@
                         </h:panelGrid>
                         <h:panelGrid columns="8" id="gridPanel15" styleClass="gPrint">
                             <h:outputLabel id="staticText1" value="レベル:"/>
-                            <h:outputText id="outputText2" styleClass="bPrint" value="#{sessionBean.characterLevel}"/>
+                            <h:outputText id="outputText2" styleClass="bPrint" value="#{characterSheetController.characterData.characterLevel}"/>
                             <h:outputLabel id="staticText2" value="経験点:"/>
                             <h:outputText id="textField7" styleClass="bPrint" value="#{sessionController.characterData.experience}"/>
                             <h:outputLabel id="staticText3" value="次レベル:"/>
-                            <h:outputText id="outputText6" styleClass="bPrint" value="#{sessionBean.nextExperience}"/>
+                            <h:outputText id="outputText6" styleClass="bPrint" value="#{characterSheetController.characterData.getExpForNextLevel()}"/>
                             <h:outputLabel id="staticText4" value="最終更新:"/>
                             <h:outputText id="outputText141" styleClass="bPrint" value="#{printableCharacterSheetController.characterData.lastChange}"/>
                         </h:panelGrid>
