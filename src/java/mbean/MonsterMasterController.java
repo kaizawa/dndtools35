@@ -171,6 +171,8 @@ public class MonsterMasterController implements Serializable {
                 sv.setMiscModifier(monsterSaveList.get(save.getId() - 1));
                 monsterSaveRecordFacade.create(sv);
             }
+            recreatePagination();
+            recreateModel();
             JsfUtil.addSuccessMessage("モンスターが作成されました");
             return prepareCreate();
         } catch (Exception e) {
@@ -217,6 +219,8 @@ public class MonsterMasterController implements Serializable {
                 sv.setMiscModifier(monsterSaveList.get(save.getId() - 1));
                 monsterSaveRecordFacade.edit(sv);
             }
+            recreatePagination();
+            recreateModel();
             JsfUtil.addSuccessMessage("更新されました");
             return null;
         } catch (Exception e) {
