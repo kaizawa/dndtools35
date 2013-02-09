@@ -1,7 +1,0 @@
-dist
-build
-nbproject
-.gitignore
-nbproject/project.properties
-nbproject/private/private.properties
-deploy.sh

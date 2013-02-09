@@ -81,14 +81,8 @@ public class PrintableCharacterSheetController extends CharacterSheetController 
     /*
      * クラスリスト
      */
-    protected String classList;
-
-    public void setClassList(String classList){
-        this.classList = classList;
-    }
-
     public String getClassList() {
-        return classList;
+        return getCharacterData().getClassList();
     }
 
 }
