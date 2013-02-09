@@ -84,6 +84,7 @@ public class MonsterSaveRecordController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
+            recreateModel();
             JsfUtil.addSuccessMessage("MonsterSaveRecordCreated");
             return prepareCreate();
         } catch (Exception e) {
@@ -101,6 +102,7 @@ public class MonsterSaveRecordController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
+            recreateModel();
             JsfUtil.addSuccessMessage("MonsterSaveRecordUpdated");
             return "View";
         } catch (Exception e) {
