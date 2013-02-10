@@ -22,8 +22,8 @@
                     <h:commandLink action="#{monsterMasterController.next}" value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
                     <h:panelGrid styleClass="tableGrid" style="width: 400px">
 
-                        <h:dataTable value="#{monsterMasterController.items}" styleClass="w" var="item" rules="all" >
-                            <h:column>
+                        <h:dataTable value="#{monsterMasterController.items}" styleClass="w" style="text-align: left" var="item" rules="all" >
+                            <h:column >
                                 <f:facet name="header">
                                     <h:outputText value="モンスター名"/>
                                 </f:facet>
