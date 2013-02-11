@@ -127,8 +127,15 @@ public class MonsterData implements CharacterSummary {
         for (int i = 1 ; i < hitdice + 1 ; i++) {
             tempNum += i;
         }
-        hitpoint= (int )(((tempNum / hitdice.floatValue()) + getAbilityModifierById(DnDUtil.CON))* diceNum.floatValue())
+        int modifierPerLevel = getAbilityModifierById(DnDUtil.CON);
+        
+        hitpoint= (int )((tempNum / hitdice.floatValue()) * diceNum)
+                + modifierPerLevel * diceNum
                 + monster.getHitPointModifier();
+        if( hitpoint < diceNum){
+            /* At leas 1 hp is increased per level */
+            hitpoint = diceNum;
+        }
     }
 
     public void setRandomHitPoint() {
@@ -247,8 +254,13 @@ public class MonsterData implements CharacterSummary {
      * 能力値 修正値
      */
     public Integer getAbilityModifierById(int abilityId) {
-        Integer ability = monsterAbilityRecordFacade.findAll().get(abilityId -1).getBase();
-
-        return (ability / 2) - 5;
+        Integer ability = monsterAbilityRecordFacade.findByMonsterMaster(monster).get(abilityId -1).getBase();
+        
+        if(0 == ability) {
+            // must be undead.
+            return 0;
+        } else {
+            return (ability / 2) - 5;
+        }
     }
 }
