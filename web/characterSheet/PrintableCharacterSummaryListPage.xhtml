@@ -20,9 +20,9 @@
                                  value="#{printableCharacterSummaryListController.checkedCharacterList}" var="currentRow">
                         <h:column id="nameColumn1">
                             <h:panelGrid columns="1" id="gridPanel36" style="width: 150px" styleClass="qPrint">
+                                <h:outputText id="charaEditLinkText1" style="font-size: 12px;" value="#{currentRow.characterName}"/> 
                                 <h:panelGrid columns="2">
-                                    <h:outputText id="charaEditLinkText1" style="font-size: 12px;" value="#{currentRow.characterName} 
-                                                  Lv #{currentRow.characterLevel}"/>
+                                    <h:outputText id="charaEditLinkText1" style="font-size: 12px;" value="Lv #{currentRow.characterLevel}"/>
                                     <h:outputText styleClass="emptyUnderLine" value=""/>                                
                                 </h:panelGrid>
                                 <h:outputText id="playerName" value="#{currentRow.playerName}"/>
