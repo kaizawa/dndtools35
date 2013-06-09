@@ -43,7 +43,8 @@ CREATE TABLE RULEBOOK_MASTER
 
 -- 武器マスター
 CREATE TABLE ARM_MASTER
-   ("ID" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+   (
+        "ID" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"NAME" varchar(400),
 	"ARM_TYPE1" int,
 	"ARM_TYPE2" int,
@@ -95,6 +96,11 @@ CREATE TABLE CHARACTER_ITEM_RECORD
 
 --//---------------------------------------------------
 
+INSERT INTO DICE_MASTER ("NAME", "TYPE")
+values
+('d3', 3),
+('d2', 2);
+
 INSERT INTO ARM_TYPE1_MASTER ("ID", "NAME")
 values
 (1,'単純'),
@@ -127,6 +133,12 @@ values
 INSERT INTO RULEBOOK_MASTER ("NAME")
 values
 ('PHB');
+
+INSERT INTO ITEM_TYPE_MASTER ("ID", "NAME")
+VALUES
+(1, '武器'),
+(2, '防具'),
+(3, 'その他');
 
 INSERT INTO ARM_MASTER
 (name,
@@ -226,8 +238,3 @@ values
 ('リピーティング・ヘヴィ・クロスボウ',3,5,2,12,400,1,115,null,120,4,1,2,19,1,null,null,null,null,null,null,null),
 ('リピーティング・ライト・クロスボウ',3,5,2,6,250,1,115,null,80,3,1,2,19,1,null,null,null,null,null,null,null);
 
-INSERT INTO ITEM_TYPE_MASTER ("ID", "NAME")
-VALUES
-(1, '武器'),
-(2, '防具'),
-(3, 'その他');
