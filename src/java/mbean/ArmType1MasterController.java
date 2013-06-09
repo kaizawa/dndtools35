@@ -1,9 +1,9 @@
 package mbean;
 
-import entity.DiceMaster;
+import entity.ArmType1Master;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
-import ejb.DiceMasterFacade;
+import ejb.ArmType1MasterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "diceMasterController")
+@ManagedBean(name = "armType1MasterController")
 @SessionScoped
-public class DiceMasterController implements Serializable {
+public class ArmType1MasterController implements Serializable {
 
-    private DiceMaster current;
+    private ArmType1Master current;
     private DataModel items = null;
     @EJB
-    private ejb.DiceMasterFacade ejbFacade;
+    private ejb.ArmType1MasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public DiceMasterController() {
+    public ArmType1MasterController() {
     }
 
-    public DiceMaster getSelected() {
+    public ArmType1Master getSelected() {
         if (current == null) {
-            current = new DiceMaster();
+            current = new ArmType1Master();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private DiceMasterFacade getFacade() {
+    private ArmType1MasterFacade getFacade() {
         return ejbFacade;
     }
 
@@ -67,13 +67,13 @@ public class DiceMasterController implements Serializable {
     }
 
     public String prepareView() {
-        current = (DiceMaster) getItems().getRowData();
+        current = (ArmType1Master) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new DiceMaster();
+        current = new ArmType1Master();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -81,7 +81,7 @@ public class DiceMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleArm").getString("DiceMasterCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleArm").getString("ArmType1MasterCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleArm").getString("PersistenceErrorOccured"));
@@ -90,7 +90,7 @@ public class DiceMasterController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (DiceMaster) getItems().getRowData();
+        current = (ArmType1Master) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -98,7 +98,7 @@ public class DiceMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleArm").getString("DiceMasterUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleArm").getString("ArmType1MasterUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleArm").getString("PersistenceErrorOccured"));
@@ -107,7 +107,7 @@ public class DiceMasterController implements Serializable {
     }
 
     public String destroy() {
-        current = (DiceMaster) getItems().getRowData();
+        current = (ArmType1Master) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -131,7 +131,7 @@ public class DiceMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleArm").getString("DiceMasterDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleArm").getString("ArmType1MasterDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleArm").getString("PersistenceErrorOccured"));
         }
@@ -187,15 +187,15 @@ public class DiceMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    @FacesConverter(forClass = DiceMaster.class)
-    public static class DiceMasterControllerConverter implements Converter {
+    @FacesConverter(forClass = ArmType1Master.class)
+    public static class ArmType1MasterControllerConverter implements Converter {
 
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DiceMasterController controller = (DiceMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "diceMasterController");
+            ArmType1MasterController controller = (ArmType1MasterController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "armType1MasterController");
             return controller.ejbFacade.find(getKey(value));
         }
 
@@ -215,11 +215,11 @@ public class DiceMasterController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof DiceMaster) {
-                DiceMaster o = (DiceMaster) object;
+            if (object instanceof ArmType1Master) {
+                ArmType1Master o = (ArmType1Master) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + DiceMaster.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ArmType1Master.class.getName());
             }
         }
     }

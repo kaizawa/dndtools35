@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditArmMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{armMasterController.selected.id}" title="#{bundle.EditArmMasterTitle_id}" required="true" requiredMessage="#{bundle.EditArmMasterRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{armMasterController.selected.name}" title="#{bundle.EditArmMasterTitle_name}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_weight}" for="weight" />
+                    <h:inputText id="weight" value="#{armMasterController.selected.weight}" title="#{bundle.EditArmMasterTitle_weight}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_price}" for="price" />
+                    <h:inputText id="price" value="#{armMasterController.selected.price}" title="#{bundle.EditArmMasterTitle_price}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_page}" for="page" />
+                    <h:inputText id="page" value="#{armMasterController.selected.page}" title="#{bundle.EditArmMasterTitle_page}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_naturalReachMultiplier}" for="naturalReachMultiplier" />
+                    <h:inputText id="naturalReachMultiplier" value="#{armMasterController.selected.naturalReachMultiplier}" title="#{bundle.EditArmMasterTitle_naturalReachMultiplier}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_range}" for="range" />
+                    <h:inputText id="range" value="#{armMasterController.selected.range}" title="#{bundle.EditArmMasterTitle_range}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_damageDiceNum}" for="damageDiceNum" />
+                    <h:inputText id="damageDiceNum" value="#{armMasterController.selected.damageDiceNum}" title="#{bundle.EditArmMasterTitle_damageDiceNum}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_criticalMultiplier}" for="criticalMultiplier" />
+                    <h:inputText id="criticalMultiplier" value="#{armMasterController.selected.criticalMultiplier}" title="#{bundle.EditArmMasterTitle_criticalMultiplier}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_threatRange}" for="threatRange" />
+                    <h:inputText id="threatRange" value="#{armMasterController.selected.threatRange}" title="#{bundle.EditArmMasterTitle_threatRange}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_secondDamageDiceNum}" for="secondDamageDiceNum" />
+                    <h:inputText id="secondDamageDiceNum" value="#{armMasterController.selected.secondDamageDiceNum}" title="#{bundle.EditArmMasterTitle_secondDamageDiceNum}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_secondCriticalMultiplier}" for="secondCriticalMultiplier" />
+                    <h:inputText id="secondCriticalMultiplier" value="#{armMasterController.selected.secondCriticalMultiplier}" title="#{bundle.EditArmMasterTitle_secondCriticalMultiplier}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_secondThreatRange}" for="secondThreatRange" />
+                    <h:inputText id="secondThreatRange" value="#{armMasterController.selected.secondThreatRange}" title="#{bundle.EditArmMasterTitle_secondThreatRange}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_secondDamageType}" for="secondDamageType" />
+                    <h:inputText id="secondDamageType" value="#{armMasterController.selected.secondDamageType}" title="#{bundle.EditArmMasterTitle_secondDamageType}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_enhancementBonus}" for="enhancementBonus" />
+                    <h:inputText id="enhancementBonus" value="#{armMasterController.selected.enhancementBonus}" title="#{bundle.EditArmMasterTitle_enhancementBonus}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_description}" for="description" />
+                    <h:inputText id="description" value="#{armMasterController.selected.description}" title="#{bundle.EditArmMasterTitle_description}" />
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_rulebook}" for="rulebook" />
+                    <h:selectOneMenu id="rulebook" value="#{armMasterController.selected.rulebook}" title="#{bundle.EditArmMasterTitle_rulebook}" >
+                        <f:selectItems value="#{rulebookMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_secondDamageDiceType}" for="secondDamageDiceType" />
+                    <h:selectOneMenu id="secondDamageDiceType" value="#{armMasterController.selected.secondDamageDiceType}" title="#{bundle.EditArmMasterTitle_secondDamageDiceType}" >
+                        <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_damageDiceType}" for="damageDiceType" />
+                    <h:selectOneMenu id="damageDiceType" value="#{armMasterController.selected.damageDiceType}" title="#{bundle.EditArmMasterTitle_damageDiceType}" >
+                        <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_damageType}" for="damageType" />
+                    <h:selectOneMenu id="damageType" value="#{armMasterController.selected.damageType}" title="#{bundle.EditArmMasterTitle_damageType}" >
+                        <f:selectItems value="#{damageTypeMasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_armType3}" for="armType3" />
+                    <h:selectOneMenu id="armType3" value="#{armMasterController.selected.armType3}" title="#{bundle.EditArmMasterTitle_armType3}" >
+                        <f:selectItems value="#{armType3MasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_armType2}" for="armType2" />
+                    <h:selectOneMenu id="armType2" value="#{armMasterController.selected.armType2}" title="#{bundle.EditArmMasterTitle_armType2}" >
+                        <f:selectItems value="#{armType2MasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditArmMasterLabel_armType1}" for="armType1" />
+                    <h:selectOneMenu id="armType1" value="#{armMasterController.selected.armType1}" title="#{bundle.EditArmMasterTitle_armType1}" >
+                        <f:selectItems value="#{armType1MasterController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{armMasterController.update}" value="#{bundle.EditArmMasterSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditArmMasterViewLink}"/>
+                <br />
+                <h:commandLink action="#{armMasterController.prepareList}" value="#{bundle.EditArmMasterShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditArmMasterIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

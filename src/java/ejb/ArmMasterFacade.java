@@ -1,6 +1,6 @@
 package ejb;
 
-import entity.DiceMaster;
+import entity.ArmMaster;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @author kaizawa
  */
 @Stateless
-public class DiceMasterFacade extends AbstractFacade<DiceMaster> {
+public class ArmMasterFacade extends AbstractFacade<ArmMaster> {
     @PersistenceContext(unitName = "dndtoolsPU")
     private EntityManager em;
 
@@ -19,8 +19,8 @@ public class DiceMasterFacade extends AbstractFacade<DiceMaster> {
         return em;
     }
 
-    public DiceMasterFacade() {
-        super(DiceMaster.class);
+    public ArmMasterFacade() {
+        super(ArmMaster.class);
     }
 
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewArmType2MasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewArmType2MasterLabel_id}"/>
+                    <h:outputText value="#{armType2MasterController.selected.id}" title="#{bundle.ViewArmType2MasterTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewArmType2MasterLabel_name}"/>
+                    <h:outputText value="#{armType2MasterController.selected.name}" title="#{bundle.ViewArmType2MasterTitle_name}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{armType2MasterController.destroyAndView}" value="#{bundle.ViewArmType2MasterDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewArmType2MasterEditLink}"/>
+                <br />
+                <h:commandLink action="#{armType2MasterController.prepareCreate}" value="#{bundle.ViewArmType2MasterCreateLink}" />
+                <br />
+                <h:commandLink action="#{armType2MasterController.prepareList}" value="#{bundle.ViewArmType2MasterShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewArmType2MasterIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

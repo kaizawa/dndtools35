@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListArmMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListArmMasterEmpty}" rendered="#{armMasterController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{armMasterController.items.rowCount > 0}">
+                    <h:outputText value="#{armMasterController.pagination.pageFirstItem + 1}..#{armMasterController.pagination.pageLastItem + 1}/#{armMasterController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{armMasterController.previous}" value="#{bundle.Previous} #{armMasterController.pagination.pageSize}" rendered="#{armMasterController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{armMasterController.next}" value="#{bundle.Next} #{armMasterController.pagination.pageSize}" rendered="#{armMasterController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{armMasterController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_weight}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.weight}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_price}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.price}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_page}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.page}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_naturalReachMultiplier}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.naturalReachMultiplier}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_range}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.range}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_damageDiceNum}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.damageDiceNum}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_criticalMultiplier}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.criticalMultiplier}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_threatRange}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.threatRange}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_secondDamageDiceNum}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.secondDamageDiceNum}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_secondCriticalMultiplier}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.secondCriticalMultiplier}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_secondThreatRange}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.secondThreatRange}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_secondDamageType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.secondDamageType}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_enhancementBonus}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.enhancementBonus}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_rulebook}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rulebook}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_secondDamageDiceType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.secondDamageDiceType}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_damageDiceType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.damageDiceType}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_damageType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.damageType}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_armType3}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.armType3}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_armType2}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.armType2}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArmMasterTitle_armType1}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.armType1}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{armMasterController.prepareView}" value="#{bundle.ListArmMasterViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{armMasterController.prepareEdit}" value="#{bundle.ListArmMasterEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{armMasterController.destroy}" value="#{bundle.ListArmMasterDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{armMasterController.prepareCreate}" value="#{bundle.ListArmMasterCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListArmMasterIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

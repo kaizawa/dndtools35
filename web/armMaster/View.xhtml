@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewArmMasterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_id}"/>
+                    <h:outputText value="#{armMasterController.selected.id}" title="#{bundle.ViewArmMasterTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_name}"/>
+                    <h:outputText value="#{armMasterController.selected.name}" title="#{bundle.ViewArmMasterTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_weight}"/>
+                    <h:outputText value="#{armMasterController.selected.weight}" title="#{bundle.ViewArmMasterTitle_weight}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_price}"/>
+                    <h:outputText value="#{armMasterController.selected.price}" title="#{bundle.ViewArmMasterTitle_price}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_page}"/>
+                    <h:outputText value="#{armMasterController.selected.page}" title="#{bundle.ViewArmMasterTitle_page}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_naturalReachMultiplier}"/>
+                    <h:outputText value="#{armMasterController.selected.naturalReachMultiplier}" title="#{bundle.ViewArmMasterTitle_naturalReachMultiplier}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_range}"/>
+                    <h:outputText value="#{armMasterController.selected.range}" title="#{bundle.ViewArmMasterTitle_range}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_damageDiceNum}"/>
+                    <h:outputText value="#{armMasterController.selected.damageDiceNum}" title="#{bundle.ViewArmMasterTitle_damageDiceNum}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_criticalMultiplier}"/>
+                    <h:outputText value="#{armMasterController.selected.criticalMultiplier}" title="#{bundle.ViewArmMasterTitle_criticalMultiplier}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_threatRange}"/>
+                    <h:outputText value="#{armMasterController.selected.threatRange}" title="#{bundle.ViewArmMasterTitle_threatRange}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_secondDamageDiceNum}"/>
+                    <h:outputText value="#{armMasterController.selected.secondDamageDiceNum}" title="#{bundle.ViewArmMasterTitle_secondDamageDiceNum}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_secondCriticalMultiplier}"/>
+                    <h:outputText value="#{armMasterController.selected.secondCriticalMultiplier}" title="#{bundle.ViewArmMasterTitle_secondCriticalMultiplier}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_secondThreatRange}"/>
+                    <h:outputText value="#{armMasterController.selected.secondThreatRange}" title="#{bundle.ViewArmMasterTitle_secondThreatRange}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_secondDamageType}"/>
+                    <h:outputText value="#{armMasterController.selected.secondDamageType}" title="#{bundle.ViewArmMasterTitle_secondDamageType}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_enhancementBonus}"/>
+                    <h:outputText value="#{armMasterController.selected.enhancementBonus}" title="#{bundle.ViewArmMasterTitle_enhancementBonus}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_description}"/>
+                    <h:outputText value="#{armMasterController.selected.description}" title="#{bundle.ViewArmMasterTitle_description}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_rulebook}"/>
+                    <h:outputText value="#{armMasterController.selected.rulebook}" title="#{bundle.ViewArmMasterTitle_rulebook}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_secondDamageDiceType}"/>
+                    <h:outputText value="#{armMasterController.selected.secondDamageDiceType}" title="#{bundle.ViewArmMasterTitle_secondDamageDiceType}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_damageDiceType}"/>
+                    <h:outputText value="#{armMasterController.selected.damageDiceType}" title="#{bundle.ViewArmMasterTitle_damageDiceType}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_damageType}"/>
+                    <h:outputText value="#{armMasterController.selected.damageType}" title="#{bundle.ViewArmMasterTitle_damageType}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_armType3}"/>
+                    <h:outputText value="#{armMasterController.selected.armType3}" title="#{bundle.ViewArmMasterTitle_armType3}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_armType2}"/>
+                    <h:outputText value="#{armMasterController.selected.armType2}" title="#{bundle.ViewArmMasterTitle_armType2}"/>
+                    <h:outputText value="#{bundle.ViewArmMasterLabel_armType1}"/>
+                    <h:outputText value="#{armMasterController.selected.armType1}" title="#{bundle.ViewArmMasterTitle_armType1}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{armMasterController.destroyAndView}" value="#{bundle.ViewArmMasterDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewArmMasterEditLink}"/>
+                <br />
+                <h:commandLink action="#{armMasterController.prepareCreate}" value="#{bundle.ViewArmMasterCreateLink}" />
+                <br />
+                <h:commandLink action="#{armMasterController.prepareList}" value="#{bundle.ViewArmMasterShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewArmMasterIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
