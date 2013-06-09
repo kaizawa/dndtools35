@@ -1,0 +1,233 @@
+-- 削除した 装備表のデータを、キャラクターレコード表のID を元に作成。（他のフィールドは空）
+-- insert into character_equipment (character_id) (select id from character_record)
+
+    DROP TABLE CHARACTER_ITEM_RECORD;
+    DROP TABLE ITEM_TYPE_MASTER;
+    DROP TABLE ARM_MASTER;
+    DROP TABLE RULEBOOK_MASTER;
+    DROP TABLE DAMAGE_TYPE_MASTER;
+    DROP TABLE ARM_TYPE3_MASTER;
+    DROP TABLE ARM_TYPE2_MASTER;
+    DROP TABLE ARM_TYPE1_MASTER;
+
+-- 単純・軍用
+CREATE TABLE ARM_TYPE1_MASTER
+   (    "ID" int  PRIMARY KEY,
+	"NAME" varchar(100)
+   );
+
+-- 片手・両手
+CREATE TABLE ARM_TYPE2_MASTER
+   (    "ID" int  PRIMARY KEY,
+    	"NAME" varchar(100)
+   );
+
+-- 遠隔、近接
+CREATE TABLE ARM_TYPE3_MASTER
+   (    "ID" int  PRIMARY KEY,
+	    "NAME" varchar(100)
+   );
+
+-- 殴打、斬撃など
+CREATE TABLE DAMAGE_TYPE_MASTER
+   (    "ID" int PRIMARY KEY,
+	    "NAME" varchar(100)
+   );
+
+-- PHBなど
+CREATE TABLE RULEBOOK_MASTER
+    (    "ID" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+         "NAME" varchar(400),
+         "DESCRIPTION" varchar(4000)
+     );
+
+-- 武器マスター
+CREATE TABLE ARM_MASTER
+   ("ID" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"NAME" varchar(400),
+	"ARM_TYPE1" int,
+	"ARM_TYPE2" int,
+	"ARM_TYPE3" int,
+	"WEIGHT" int,
+	"PRICE" int,
+	"RULEBOOK" int,
+	"PAGE" int,
+	"NATURAL_REACH_MULTIPLIER" int, --近接の間合い（生来の間合いの倍率）
+	"RANGE" int, -- 射程
+	"DAMAGE_DICE_TYPE" int, --ダメージ用ダイスの種類
+ 	"DAMAGE_DICE_NUM" int, --ダメージ用ダイスの個数
+	"CRITICAL_MULTIPLIER" int, --クリティカル倍率
+	"THREAT_RANGE" int, --クリティカル可能域
+	"DAMAGE_TYPE" int, --ダメージの種類
+	"SECOND_DAMAGE_DICE_TYPE" int, --双頭武器の片側ダメージ用ダイスの種類
+  	"SECOND_DAMAGE_DICE_NUM" int, --双頭武器の片側ダメージ用ダイスの個数
+	"SECOND_CRITICAL_MULTIPLIER" int, --双頭武器の反対側のクリティカル倍率
+	"SECOND_THREAT_RANGE" int, --双頭武器の反対側のクリティカル可能域
+	"SECOND_DAMAGE_TYPE" int, --双頭武器の反対側のダメージの種類
+	"ENHANCEMENT_BONUS" int, --魔法の強化ボーナス
+	"DESCRIPTION" varchar(4000),
+
+	 FOREIGN KEY (DAMAGE_DICE_TYPE) REFERENCES DICE_MASTER(ID),
+	 FOREIGN KEY (SECOND_DAMAGE_DICE_TYPE) REFERENCES DICE_MASTER(ID),
+	 FOREIGN KEY (ARM_TYPE1) REFERENCES ARM_TYPE1_MASTER(ID),
+	 FOREIGN KEY (ARM_TYPE2) REFERENCES ARM_TYPE2_MASTER(ID),
+	 FOREIGN KEY (ARM_TYPE3) REFERENCES ARM_TYPE3_MASTER(ID),
+	 FOREIGN KEY (DAMAGE_TYPE) REFERENCES DAMAGE_TYPE_MASTER(ID),
+	 FOREIGN KEY (RULEBOOK) REFERENCES RULEBOOK_MASTER(ID)
+   );
+
+-- アイテム種別マスター
+CREATE TABLE ITEM_TYPE_MASTER
+   ("ID" int  PRIMARY KEY,
+	"NAME" varchar(100)
+   );
+
+-- キャラクターアイテム記録
+CREATE TABLE CHARACTER_ITEM_RECORD
+   ("ID" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "CHARACTER_ID" int,
+    "ITEM_ID" int,
+    "ITEM_TYPE_ID" int,
+    "DESCRIPTION" varchar(4000),
+
+	FOREIGN KEY (CHARACTER_ID) REFERENCES CHARACTER_RECORD(ID)
+   );
+
+--//---------------------------------------------------
+
+INSERT INTO ARM_TYPE1_MASTER ("ID", "NAME")
+values
+(1,'単純'),
+(2,'軍用'),
+(3,'特殊');
+
+INSERT INTO ARM_TYPE2_MASTER ("ID", "NAME")
+values
+(1, '素手'),
+(2, '軽い'),
+(3, '片手'),
+(4, '両手'),
+(5, '投擲'),
+(6, '射出');
+
+INSERT INTO ARM_TYPE3_MASTER ("ID", "NAME")
+values
+(1, '近接'),
+(2, '遠隔');
+
+INSERT INTO DAMAGE_TYPE_MASTER ("ID", "NAME")
+values
+(1, '刺突'),
+(2, '斬撃'),
+(3, '殴打'),
+(4, '斬撃および刺突'),
+(5, '斬撃または刺突'),
+(6, '刺突および殴打');
+
+INSERT INTO RULEBOOK_MASTER ("NAME")
+values
+('PHB');
+
+INSERT INTO ARM_MASTER
+(name,
+arm_type1,
+arm_type2,
+arm_type3,
+weight,
+price,
+rulebook,
+page,
+natural_reach_multiplier,
+range,
+damage_dice_type,
+damage_dice_num,
+critical_multiplier,
+threat_range,
+damage_type,
+second_damage_dice_type,
+second_damage_dice_num,
+second_critical_multiplier,
+second_threat_range,
+second_damage_type,
+enhancement_bonus,
+description)
+values
+('ガントレット',1,1,1,1,2,1,114,1,null,8,1,2,20,3,null,null,null,null,null,null,null),
+('素手',1,1,1,0,0,1,114,1,null,8,1,2,20,3,null,null,null,null,null,null,'非致傷ダメージ'),
+('シックル',1,2,1,2,6,1,114,1,null,2,1,2,20,2,null,null,null,null,null,null,null),
+('スパイクト・ガントレット',1,2,1,1,5,1,114,1,null,1,1,2,20,1,null,null,null,null,null,null,null),
+('ダガー',1,2,1,1,2,1,114,1,10,1,1,2,19,5,null,null,null,null,null,null,null),
+('パンチング・ダガー',1,2,1,1,2,1,114,1,null,1,1,3,20,1,null,null,null,null,null,null,null),
+('ライト・メイス',1,2,1,4,5,1,114,1,null,2,1,2,20,3,null,null,null,null,null,null,null),
+('クラブ',1,3,1,3,0,1,114,1,10,2,1,2,20,3,null,null,null,null,null,null,null),
+('ショートスピア',1,3,1,3,1,1,114,1,20,2,1,2,20,1,null,null,null,null,null,null,null),
+('ヘヴィ・メイス',1,3,1,8,12,1,114,1,null,3,1,2,20,3,null,null,null,null,null,null,null),
+('モーニングスター',1,3,1,6,8,1,114,1,null,3,1,2,20,6,null,null,null,null,null,null,null),
+('クオータースタッフ',1,4,1,4,0,1,114,1,null,2,1,2,20,3,2,1,2,20,3,null,null),
+('スピア',1,4,1,6,2,1,114,1,20,3,1,3,20,1,null,null,null,null,null,null,null),
+('ロングスピア',1,4,1,9,5,1,114,2,null,3,1,3,20,1,null,null,null,null,null,null,null),
+('ククリ',2,2,1,2,8,1,114,1,null,1,1,2,18,2,null,null,null,null,null,null,null),
+('サップ',2,2,1,2,1,1,114,1,null,2,1,2,20,3,null,null,null,null,null,null,'非致傷ダメージ'),
+('ショート・ソード',2,2,1,2,10,1,114,1,null,2,1,2,19,1,null,null,null,null,null,null,null),
+('スパイクト・ライト・シールド',2,2,1,10,5,1,114,1,null,1,1,2,20,1,null,null,null,null,null,null,null),
+('スパイクト・アーマー',2,2,1,10,50,1,114,1,null,2,1,2,20,1,null,null,null,null,null,null,null),
+('スローイング・アックス',2,2,1,2,8,1,114,1,10,2,1,2,20,2,null,null,null,null,null,null,null),
+('ハンドアックス',2,2,1,3,6,1,114,1,null,2,1,3,20,2,null,null,null,null,null,null,null),
+('ライト・シールド',2,2,1,null,0,1,114,1,null,8,1,2,20,3,null,null,null,null,null,null,null),
+('ライト・ハンマー',2,2,1,2,1,1,114,1,20,1,1,2,20,3,null,null,null,null,null,null,null),
+('ライト・ピック',2,2,1,3,4,1,114,1,null,1,1,4,20,1,null,null,null,null,null,null,null),
+('ウォーハンマー',2,3,1,5,12,1,114,1,null,3,1,3,20,3,null,null,null,null,null,null,null),
+('シミター',2,3,1,4,15,1,114,1,null,2,1,2,18,2,null,null,null,null,null,null,null),
+('スパイクト・ヘヴィ・シールド',2,3,1,10,5,1,114,1,null,2,1,2,20,1,null,null,null,null,null,null,null),
+('トライデント',2,3,1,4,15,1,114,1,10,3,1,2,20,1,null,null,null,null,null,null,null),
+('バトルアックス',2,3,1,6,10,1,114,1,null,3,1,3,20,2,null,null,null,null,null,null,null),
+('フレイル',2,3,1,5,8,1,114,1,null,3,1,2,20,3,null,null,null,null,null,null,null),
+('ヘヴィ・シールド',2,3,1,null,0,1,114,1,null,1,1,2,20,3,null,null,null,null,null,null,null),
+('ヘヴィ・ピック',2,3,1,6,8,1,114,1,null,2,1,4,20,1,null,null,null,null,null,null,null),
+('レイピア',2,3,1,2,20,1,114,1,null,2,1,2,18,1,null,null,null,null,null,null,null),
+('ロング・ソード',2,3,1,4,15,1,114,1,null,3,1,2,19,2,null,null,null,null,null,null,null),
+('ギザーム',2,4,1,12,9,1,115,2,null,1,2,3,20,2,null,null,null,null,null,null,null),
+('グレイブ',2,4,1,10,8,1,115,2,null,4,1,3,20,2,null,null,null,null,null,null,null),
+('グレートアックス',2,4,1,12,20,1,115,1,null,5,1,3,20,2,null,null,null,null,null,null,null),
+('グレートクラブ',2,4,1,8,5,1,115,1,null,4,1,2,20,3,null,null,null,null,null,null,null),
+('グレートソード',2,4,1,8,50,1,115,1,null,2,2,2,19,2,null,null,null,null,null,null,null),
+('サイズ',2,4,1,10,18,1,115,1,null,1,2,4,20,5,null,null,null,null,null,null,null),
+('ハルバード',2,4,1,12,10,1,115,1,null,4,1,3,20,5,null,null,null,null,null,null,null),
+('ファルシオン',2,4,1,8,75,1,115,1,null,1,2,2,18,2,null,null,null,null,null,null,null),
+('ヘヴィ・フレイル',2,4,1,10,15,1,115,1,null,4,1,2,19,3,null,null,null,null,null,null,null),
+('ランサー',2,4,1,12,10,1,115,2,null,1,2,3,20,1,null,null,null,null,null,null,null),
+('ランス',2,4,1,10,10,1,115,2,null,3,1,3,20,1,null,null,null,null,null,null,null),
+('カマ',3,2,1,2,2,1,115,1,null,2,1,2,20,2,null,null,null,null,null,null,null),
+('サイ',3,2,1,1,1,1,115,1,10,1,1,2,20,3,null,null,null,null,null,null,null),
+('シャンガム',3,2,1,1,3,1,115,1,null,2,1,2,20,1,null,null,null,null,null,null,null),
+('ヌンチャク',3,2,1,2,2,1,115,1,null,2,1,2,20,3,null,null,null,null,null,null,null),
+('ウィップ',3,3,1,2,1,1,115,3,null,8,1,2,20,2,null,null,null,null,null,null,'非致傷ダメージ、機会攻撃不可'),
+('ドワーヴン・ウォーアックス',3,3,1,8,30,1,115,1,null,4,1,3,20,2,null,null,null,null,null,null,null),
+('バスタード・ソード',3,3,1,6,35,1,115,1,null,4,1,2,19,2,null,null,null,null,null,null,null),
+('オーク・ダブル・アックス',3,4,1,15,60,1,115,1,null,3,1,3,20,2,3,1,3,20,2,null,null),
+('スパイクト・チェイン',3,4,1,10,25,1,115,2,null,1,2,2,20,1,null,null,null,null,null,null,null),
+('ダイア・フレイル',3,4,1,10,90,1,115,1,null,3,1,2,20,3,3,1,2,20,3,null,null),
+('ツーブレーデッド・ソード',3,4,1,10,100,1,115,1,null,3,1,2,19,2,3,1,2,19,2,null,null),
+('ドワーヴン・アーグロシュ',3,4,1,12,50,1,115,1,null,3,1,3,20,4,2,1,3,20,4,null,null),
+('ノーム・フックト・ハンマー',3,4,1,6,20,1,115,1,null,3,1,3,20,3,2,1,4,20,1,null,null),
+('ジャヴェリン',1,4,2,2,1,1,114,null,30,2,1,2,20,1,null,null,null,null,null,null,null),
+('スリング',1,4,2,0,0,1,114,null,50,1,1,2,20,3,null,null,null,null,null,null,null),
+('ダーツ',1,4,2,1,1,1,114,null,20,1,1,2,20,1,null,null,null,null,null,null,null),
+('ヘヴィ・クロスボウ',1,5,2,8,50,1,114,null,120,4,1,2,19,1,null,null,null,null,null,null,null),
+('ライト・クロスボウ',1,5,2,4,35,1,114,null,80,3,1,2,19,1,null,null,null,null,null,null,null),
+('コンポジット・ショートボウ',2,5,2,2,75,1,115,null,70,2,1,3,20,1,null,null,null,null,null,null,null),
+('コンポジット・ロングボウ',2,5,2,3,100,1,115,null,110,3,1,3,20,1,null,null,null,null,null,null,null),
+('ショートボウ',2,5,2,2,30,1,115,null,60,2,1,3,20,1,null,null,null,null,null,null,null),
+('ロングボウ',2,5,2,3,75,1,115,null,100,3,1,3,20,1,null,null,null,null,null,null,null),
+('シュリケン',3,4,2,1,1,1,115,null,10,9,2,2,20,1,null,null,null,null,null,null,null),
+('ネット',3,null,2,6,20,1,115,null,10,null,null,20,null,null,null,null,null,null,null,null,null),
+('ハンド・クロスボウ',3,5,2,2,100,1,115,null,30,1,1,2,19,1,null,null,null,null,null,null,null),
+('ボーラ',3,4,2,2,5,1,115,null,10,1,1,2,20,3,null,null,null,null,null,null,null),
+('リピーティング・ヘヴィ・クロスボウ',3,5,2,12,400,1,115,null,120,4,1,2,19,1,null,null,null,null,null,null,null),
+('リピーティング・ライト・クロスボウ',3,5,2,6,250,1,115,null,80,3,1,2,19,1,null,null,null,null,null,null,null);
+
+INSERT INTO ITEM_TYPE_MASTER ("ID", "NAME")
+VALUES
+(1, '武器'),
+(2, '防具'),
+(3, 'その他');
