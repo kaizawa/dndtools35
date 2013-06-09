@@ -81,13 +81,13 @@ public class PrintableCharacterSummaryListController extends CharacterSheetContr
         CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();     
 
         return "<table><tr>"
-             + "<td>聞き耳:</td><td>" + characterData.getSkillTotalCheckModifierById(7) + "</td></tr>"
-             + "<td>視認:</td><td>" + characterData.getSkillTotalCheckModifierById(14) + "</td></tr>"
-             + "<td>交渉:</td><td>" + characterData.getSkillTotalCheckModifierById(13) + "</td></tr>"
-             + "<td>隠れ身:</td><td>" + characterData.getSkillTotalCheckModifierById(4) + "</td></tr>"
-             + "<td>忍び足:</td><td>" + characterData.getSkillTotalCheckModifierById(15) + "</td></tr>"
-             + "<td>真意看破:</td><td>" + characterData.getSkillTotalCheckModifierById(21) + "</td></tr>"
-             + "<td>捜索:</td><td>" + characterData.getSkillTotalCheckModifierById(28) + "</td></tr>"
+             + "<td>聞き耳:</td><td>" + characterData.getSkillTotalCheckModifierById(7) + "</td><td>__</td></tr>"
+             + "<td>視認:</td><td>" + characterData.getSkillTotalCheckModifierById(14) + "</td><td>__</td></tr>"
+             + "<td>交渉:</td><td>" + characterData.getSkillTotalCheckModifierById(13) + "</td><td>__</td></tr>"
+             + "<td>隠れ身:</td><td>" + characterData.getSkillTotalCheckModifierById(4) + "</td><td>__</td></tr>"
+             + "<td>忍び足:</td><td>" + characterData.getSkillTotalCheckModifierById(15) + "</td><td>__</td></tr>"
+             + "<td>真意看破:</td><td>" + characterData.getSkillTotalCheckModifierById(21) + "</td><td>__</td></tr>"
+             + "<td>捜索:</td><td>" + characterData.getSkillTotalCheckModifierById(28) + "</td><td>__</td></tr>"
              + "</table>";
     }
     

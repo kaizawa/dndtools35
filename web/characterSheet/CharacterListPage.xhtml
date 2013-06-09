@@ -94,10 +94,10 @@
                         </h:dataTable>
                     </h:panelGrid>
                     <h:panelGrid columns="4" id="gridPanel1" style="height: 100%; width: 100%">
-                        <h:commandLink action="#{encounterToolController.listSummaryButton_action}" target="blank" >
+                        <h:commandLink action="#{characterSheetController.listSummaryButton_action}" target="blank">                        
                             <h:outputText style="size: 10px" value="選択したキャラを一覧表示" />                                                            
                         </h:commandLink> 
-                        <h:commandLink action="#{characterSheetController.listSummaryButton_action}" target="blank">
+                        <h:commandLink action="#{encounterToolController.listSummaryButton_action}" target="blank" >
                             <h:outputText style="size: 10px" value="エンカウンター(未実装)" />                                                            
                         </h:commandLink> 
                         <h:commandButton action="#{characterSheetController.selectAllButton_action}" id="selectAllButton" value="全て選択"/>

@@ -5,6 +5,147 @@
 
 /* Style rules to make Java Server faces Standarad data tables look better */
 
+/* ----------------------- new style from--------------------------------------------------------*/
+
+/* header */
+.header {
+   background-color: #333333;
+   border: 1px dotted #CEC0C0;
+   width: 100%;
+   height: 50px;
+}
+
+.headergrid {
+   height: 200px;
+}
+
+.appname {
+    font-weight: bold;
+   font-size: 18px;
+   text-transform: uppercase;
+   color: white
+}
+
+/* sub header */
+.subheader {
+   background-color: #ffffff;
+   text-align: right;
+   width: 100%;
+   height: 20px;
+   border: 1px dotted #CEC0C0;
+}
+
+.subheadertext {
+   color: #FFFFFF !important;
+   font-size: 10px!important;
+   font-weight: bold !important;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+.subheaderlink {
+   background-color: #666666;
+}
+
+/* Left Pane */
+.leftpane {
+    background-color: #E9E9D1;
+   height: 100%;
+   border: 1px dotted #CEC0C0;
+    text-align: left;
+    vertical-align: text-top;
+    width: 130px;
+    max-width: 200px;
+    min-width: 130px;
+}
+
+.leftpaneltext {
+   color: #FFFFFF !important;
+   font-size: 12px!important;
+   font-weight: bold !important;
+   padding-left: 5px;
+   padding-right: 10px;
+   width: 100%;
+}
+
+.leftpaneltextAdmin {
+   color: #FFFFFF !important;
+   font-size: 10px!important;
+   font-weight: bold !important;
+   padding-left: 15px;
+   padding-right: 10px;
+   width: 100%;
+}
+
+.leftpaneltextScenaio {
+   color: #FFFFFF !important;
+   font-size: 10px!important;
+   font-weight: bold !important;
+   padding-left: 15px;
+   padding-right: 10px;
+   width: 100%;
+}
+
+.leftpaneltextEncounter {
+   color: #FFFFFF !important;
+   font-size: 10px!important;
+   font-weight: bold !important;
+   padding-left: 25px;
+   padding-right: 10px;
+   width: 100%;
+}
+
+.leftpanelink {
+   background-color: #666666;
+}
+
+/* Right Pane */
+.rightpane {
+    width: 100%;
+    height: 100%;
+}
+
+.body {
+    width: 100%;
+    height: 100%;
+}
+
+.contents {
+   background-color: #E9E9D1;
+   border: 1px dotted #CEC0C0;
+   width: 100%;
+   height: 100%;
+   vertical-align: top;
+    text-align: left;
+    min-width: 800px;
+    font-size: 14px;
+}
+
+/* footer */
+.footer {
+   background-color: #333333;
+   text-align: right;
+   width: 100%;
+   height: 20px;
+   border: 1px dotted #CEC0C0;
+}
+
+.footertext {
+   color: #ffffff !important;
+   font-size: 10px!important;
+   font-weight: bold !important;
+   padding-left: 10px;
+   padding-right: 10px;
+   border-left: 1px solid #FEB300;
+}
+
+.messagelist{
+        left: 810px;
+        top: 150px;
+        position: fixed;
+}
+/* -----------------------new style end --------------------------------------------------------*/
+
 .topLevelGrid{
 /*
     left: 24px;
@@ -28,6 +169,7 @@ td {
     vertical-align: top;
 }
 
+/**表用 水平を真ん中に */
 table.midde {
     vertical-align: middle;
 }
@@ -35,47 +177,51 @@ table.middle td {
     vertical-align: middle;
 }
 
+/**表用 水平を左つきに */
 table.left {
     border-collapse: collapse;
     width: 100%;
 }
 table.left th{
-    background-color:#000000;
+    background-color:#333333;
     font-size:14px;
     color:white;
     padding:2px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
 }
 table.left td {
-    background-image:url(../resources/dndback01.jpg);
+/*    background-image:url(../resources/dndback01.jpg); */
+   background-color: #E9E9D1;
     font-size:12px;
     text-align:left;
     padding:2px;
     vertical-align:middle;
 }
 
-table.w{
+/**表用。 */
+table.w {
     border-collapse: collapse;
     width: 100%;
 }
 
 table.w th{
-    background-color:#000000;
+    background-color:#333333;
     font-size:14px;
     color:white;
     padding:2px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
 }
-
+/**上下線あり */
 table.w td{
-    background-image:url(../resources/dndback01.jpg);
+/*    background-image:url(../resources/dndback01.jpg);*/
+    background-color: #E9E9D1;
     font-size:12px;
     text-align:center;
     padding:2px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
     vertical-align:middle;
 }
 
@@ -85,21 +231,34 @@ table.g{
 }
 
 table.g th{
-    background-color:#000000;
+    background-color:#333333;
     font-size:16px;
     color:white;
     padding:4px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
     text-align: center;
 }
 
 table.g td{
-    background-image:url(../resources/dndback01.jpg);
+   background-color: #E9E9D1;
     font-size:18px;
     text-align:center;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
+    vertical-align:middle;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+table.q td{
+   background-color: #E9E9D1;
+    font-size:12px;
+    text-align:center;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
     vertical-align:middle;
     padding-top: 2px;
     padding-bottom: 2px;
@@ -113,7 +272,7 @@ table.p{
 }
 
 table.p th{
-    background-color:#000000;
+    background-color:#333333;
     font-size:16px;
     color:white;
     padding:4px;
@@ -121,7 +280,8 @@ table.p th{
 }
 
 table.p td{
-    background-image:url(../resources/dndback02.jpg);
+/*    background-image:url(../resources/dndback02.jpg); */
+   background-color: #E9E9D1;
     font-size:18px;
     text-align:center;
     vertical-align:middle;
@@ -132,7 +292,7 @@ table.p td{
 }
 
 table.b td{
-    background-color:black;
+    background-color:#333333;
     font-size:18px;
     text-align:center;
     vertical-align:middle;
@@ -155,10 +315,10 @@ table.waku{
     border-bottom-width: 2px;
     border-left-width: 2px;
     border-right-width: 2px;
-    border-top-color: #000000;
-    border-bottom-color: #000000;
-    border-left-color: #000000;
-    border-right-color: #000000;
+    border-top-color: #333333;
+    border-bottom-color: #333333;
+    border-left-color: #333333;
+    border-right-color: #333333;
     width: 100%;
 }
 
@@ -170,29 +330,87 @@ table.waku td{
 
 }
 
+/**表用. w と同じだが、左右にもボーダーをつけている*/
+table.border{
+    border-collapse: collapse;
+    width: 100%;
+}
+table.border th{
+    background-color:#333333;
+    font-size:14px;
+    color:white;
+    padding:2px;
+}
+table.border td{
+   background-color: #E9E9D1;
+    font-size:12px;
+    text-align:center;
+    /* padding:2px; */
+    vertical-align:middle;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
+    border-left: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+
+/**表用. border と同じだが、ボーダーの色を背景と同じ（つまり非表示）にしている*/
+table.noborder{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.noborder th{
+    background-color:#333333;
+    font-size:14px;
+    color:white;
+    padding:2px;
+}
+
+/* w と同じだが、左右にもボーダーをつけている */
+table.noborder td{
+/*    background-image:url(../resources/dndback01.jpg);*/
+   background-color: #E9E9D1;
+    font-size:12px;
+    text-align:center;
+    /* padding:2px; */
+    vertical-align:middle;
+    border-bottom: 1px solid #E9E9D1;
+    border-top: 1px solid #E9E9D1;
+    border-left: 1px solid #E9E9D1;
+    border-right: 1px solid #E9E9D1;
+}
+
 .skill-row-even {
-    background-image:url(../resources/dndback01.jpg);
+/*    background-image:url(../resources/dndback01.jpg); */
+    background-color: #E9E9D1;
     font-size:12px;
     padding:2px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
     vertical-align:middle;
     text-align: center;
 }
 
 .skill-row-odd {
-    background-image:url(../resources/dndback02.jpg);
+/*    background-image:url(../resources/dndback02.jpg); */
+       background-color: #FFFFFF;
     font-size:12px;
     padding:2px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+        border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
     vertical-align:middle;
     text-align: center;
 }
 
+.charaList-col-normal {
+}
+.charaList-col-200 {
+    width: 200px;
+}
 
 .p{
-    background-image:url(../resources/dndback02.jpg);
+/*    background-image:url(../resources/dndback02.jpg); */
+       background-color: #E9E9D1;
     font-size:18px;
     text-align:center;
     vertical-align:middle;
@@ -205,7 +423,7 @@ table.waku td{
 }
 
 .blackback{
-    background-color:black;
+    background-color:#333333;
     font-size:18px;
     text-align:center;
     vertical-align:middle;
@@ -221,12 +439,13 @@ table.waku td{
 
 
 .nomalColumn{
-    background-image:url(../resources/dndback01.jpg);
+/*    background-image:url(../resources/dndback01.jpg); */
+       background-color: #E9E9D1;
     font-size:12px;
     text-align:center;
     padding:2px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
     vertical-align:middle;
 }
 
@@ -260,7 +479,7 @@ table.waku td{
 
 /* 表の上につけるタイトル用 文字は白 パディングとかなし*/
 .tableTitleBlackNopad {
-    background-color: black;
+    background-color: #333333;
     color:#FFFFFF;
     text-align:center;
     font-weight:bold;
@@ -268,13 +487,14 @@ table.waku td{
 }
 
 .tableGrid{
-    background-color: #000000;
+    background-color: #333333;
     text-align: center;
     width:100%;
+    font-size: 12px;
 }
 
 .tableGridTitle{
-    background-color: #000000;
+    background-color: #333333;
     text-align: center;
     color: #ffffff;
     font-weight:bold;
@@ -383,9 +603,11 @@ background-color: #eeeeee;
     font-weight: bold;
 }
 
-.topLevelGridPrint{
+/* 印刷用ページのベースの設定 */
+.topLevelGridPrint800{
     font-size: 9px;
     color: #333333;
+    width:800px;
 
 }
 
@@ -426,15 +648,16 @@ table.gPrint{
 table.gPrint th{
 
     padding:4px;
-/*    border-bottom: 1px solid black; */
-    border-top: 1px solid black;
+/*    border-bottom: 1px solid #333333; */
+    border-top: 1px solid #333333;
     text-align: center;
 }
 
 table.gPrint td{
 
     text-align:center;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #333333;
+/*    border-top: 1px solid #333333; */
     vertical-align:middle;
     padding-top: 2px; 
     padding-bottom: 2px;
@@ -520,10 +743,10 @@ table.aPrint th{
     font-size: 12px;
     font-weight:bold;
     padding:4px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
+    border-left: 1px solid #333333;
+    border-right: 1px solid #333333;
     text-align: left;
     vertical-align: top;
 }
@@ -532,10 +755,10 @@ table.aPrint td{
     color: black;
     font-size: 12px;
     font-weight:bold;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-bottom: 1px solid #333333;
+    border-top: 1px solid #333333;
+    border-left: 1px solid #333333;
+    border-right: 1px solid #333333;
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 2px;
@@ -580,4 +803,136 @@ table.qPrint td{
     border-top: 1px solid white;
     border-left: 1px solid white;
     border-right: 1px solid white;
+}
+
+table.qPrintClassList {
+    border-collapse: collapse;
+    width: 320px;
+}
+
+table.qPrintClassList th{
+
+    padding:4px;
+    text-align: center;
+}
+
+table.qPrintClassList td{
+
+    text-align:center;
+    vertical-align:middle;
+    text-align: left;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+
+    border-bottom: 1px solid #E9E9D1;
+    border-top: 1px solid #E9E9D1;
+    border-left: 1px solid #E9E9D1;
+    border-right: 1px solid #E9E9D1;
+}
+
+tr.jsfcrud_odd_row {
+    background-color: #E9E9D1;
+    color: #4e6a71;
+}
+
+
+tr.jsfcrud_even_row {
+    background-color: #E9E9D1;
+    color: #4e6a71;
+}
+
+.middle {
+    font-size: 18px;
+}
+
+.middleBold {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.middleTextArea {
+    font-size: 12px; 
+    width: 500px;
+    height: 170px;
+    vertical-align: sub;
+}
+
+.smallBold {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.smallText {
+    font-size: 11px;
+}
+
+.smallTextField {
+    width: 30px;
+}
+
+.smallTextArea {
+    font-size: 12px; 
+    width: 300px;
+    height: 100px;
+    vertical-align: sub;
+}
+
+.navigationPane {
+    
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    border-top-style: none;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+}
+
+.topLevelGridPrint{
+    font-size: 9px;
+    color: #333333;
+
+}
+
+.textArea {
+    font-size: 12px;
+    text-align: left;
+}
+
+.emptyBox {
+    text-align:center;
+    vertical-align:middle;
+    text-align: left;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 20px;
+
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.emptyUnderLine {
+    text-align:center;
+    vertical-align:middle;
+    text-align: left;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 15px; /* This padding expresses blank space */
+
+    border-bottom: 1px solid black;
 }

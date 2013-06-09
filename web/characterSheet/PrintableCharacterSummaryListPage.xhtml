@@ -20,8 +20,11 @@
                                  value="#{printableCharacterSummaryListController.checkedCharacterList}" var="currentRow">
                         <h:column id="nameColumn1">
                             <h:panelGrid columns="1" id="gridPanel36" style="width: 150px" styleClass="qPrint">
-                                <h:outputText id="charaEditLinkText1" style="font-size: 12px;" value="#{currentRow.characterName} 
-                                              Lv #{currentRow.characterLevel}"/>
+                                <h:panelGrid columns="2">
+                                    <h:outputText id="charaEditLinkText1" style="font-size: 12px;" value="#{currentRow.characterName} 
+                                                  Lv #{currentRow.characterLevel}"/>
+                                    <h:outputText styleClass="emptyUnderLine" value=""/>                                
+                                </h:panelGrid>
                                 <h:outputText id="playerName" value="#{currentRow.playerName}"/>
                                 <h:outputText id="classList" value="#{currentRow.classList}"/>
                             </h:panelGrid>
@@ -59,13 +62,19 @@
                         <h:column id="acColumn">
                             <f:facet name="header"/>
                             <h:panelGrid id="acGrid" style="width: 110px" styleClass="qPrint">
-                                <h:outputText id="HP" style="font-size: 12px;" value="HP: #{currentRow.hitPoint}"/>
-                                <h:outputText id="initiative" value="イニシアチブ: #{currentRow.initiative}"/>
+                                <h:panelGrid columns="2">
+                                    <h:outputText id="HP" style="font-size: 12px;" value="HP: #{currentRow.hitPoint}"/>
+                                    <h:outputText styleClass="emptyUnderLine" value=""/>                                
+                                </h:panelGrid>
+                                <h:panelGrid columns="2">
+                                    <h:outputText id="initiative" value="イニシアチブ: #{currentRow.initiative}"/>
+                                    <h:outputText styleClass="emptyUnderLine" value=""/>                                                                    
+                                </h:panelGrid>                                
                                 <h:outputText id="AC" value="AC: #{currentRow.acNormal}/接触#{currentRow.acTouch}/立ち#{currentRow.acFlatFooted}"/>
                             </h:panelGrid>
                         </h:column>
                         <h:column id="skillColumn">
-                            <h:panelGrid id="gridPanel2" style="width: 75px" styleClass="qPrint">
+                            <h:panelGrid id="gridPanel2" style="width: 80px" styleClass="qPrint">
                                 <h:outputText escape="false" id="skills" value="#{printableCharacterSummaryListController.commonSkills}"/>
                             </h:panelGrid>
                         </h:column>
@@ -85,6 +94,9 @@
                                             <h:column id="column8">
                                                 <h:outputText id="outputText33" value="(#{printableCharacterSummaryListController.abilityModifier})"/>
                                             </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="emptyUnderLine" value=""/>                                
+                                            </h:column>
                                         </h:dataTable>
                                     </h:panelGrid>
                                     <h:panelGrid id="save">
@@ -98,6 +110,9 @@
                                             <h:column id="column3">
                                                 <h:outputText id="outputText4" value="#{printableCharacterSummaryListController.saveTotal}"/>
                                                 <f:facet name="header"/>
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText styleClass="emptyUnderLine" value=""/>                                
                                             </h:column>
                                         </h:dataTable>
                                     </h:panelGrid>

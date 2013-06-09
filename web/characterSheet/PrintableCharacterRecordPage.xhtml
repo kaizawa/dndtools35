@@ -8,12 +8,12 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">キャラクターシート</ui:insert></title>
-        <h:outputStylesheet name="css/graystyle.css"/>       
+        <h:outputStylesheet name="css/stylesheet.css"/>       
     </h:head>
 
     <h:body>    
         <h:form>
-            <h:panelGrid columns="1" id="gridPanel2" styleClass="topLevelGrid topLevelGridPrint">
+            <h:panelGrid columns="1" id="gridPanel2" styleClass="topLevelGrid topLevelGridPrint800">
                 <h:panelGrid columns="2" id="charaGridPanel" style="height: 100%; width: 100%">
                     <h:panelGrid id="characterNameGridPane" rowClasses="tableTitleBlackMiddlePrint" styleClass="tableGridPrint">
                         <h:panelGrid columns="6" id="gridPanel8" styleClass="gPrint">
@@ -24,9 +24,10 @@
                             <h:outputText id="outputText5" value="キャンペーン:"/>
                             <h:outputText id="outputText201" styleClass="bPrint" value="#{sessionController.characterData.campaignId.campaignName}"/>
                         </h:panelGrid>
-                        <h:panelGrid columns="8" id="gridPanel15" styleClass="gPrint">
+                        <h:panelGrid columns="9" id="gridPanel15" styleClass="gPrint">
                             <h:outputLabel id="staticText1" value="レベル:"/>
                             <h:outputText id="outputText2" styleClass="bPrint" value="#{characterSheetController.characterData.characterLevel}"/>
+                            <h:outputText escape="false" id="textArea1" styleClass="emptyUnderLine" value="一時:"/>
                             <h:outputLabel id="staticText2" value="経験点:"/>
                             <h:outputText id="textField7" styleClass="bPrint" value="#{sessionController.characterData.experience}"/>
                             <h:outputLabel id="staticText3" value="次レベル:"/>
@@ -91,6 +92,12 @@
                                         <h:outputText id="outputText32" value="現在値"/>
                                     </f:facet>
                                 </h:column>
+                                <h:column id="column10">
+                                    <h:outputText id="outputText31" styleClass="emptyUnderLine" value=""/>
+                                    <f:facet name="header">
+                                        <h:outputText id="outputText32" value="一時"/>
+                                    </f:facet>
+                                </h:column>
                                 <h:column id="column11">
                                     <h:outputText id="outputText33" styleClass="bPrint" value="#{printableCharacterSheetController.abilityModifier}"/>
                                     <f:facet name="header">
@@ -145,6 +152,12 @@
                                         <h:outputText id="outputText50" value="判定値"/>
                                     </f:facet>
                                 </h:column>
+                                <h:column>
+                                    <h:outputText id="outputText31" style="" styleClass="emptyUnderLine" value=""/>
+                                    <f:facet name="header">
+                                        <h:outputText id="outputText32" value="一時"/>
+                                    </f:facet>
+                                </h:column>                                
                                 <h:column id="column21">
                                     <h:outputText id="outputText51" value="#{printableCharacterSheetController.saveClassBonus}"/>
                                     <f:facet name="header">
@@ -171,8 +184,9 @@
                                 <h:panelGrid id="gridPanel12" style="font-size: 10px; height: 100%; width: 70px" styleClass="tableTitleBlackMiddlePrint">
                                     <h:outputText id="outputText59" style="font-size: 9px" value="イニシアチブ"/>
                                 </h:panelGrid>
-                                <h:panelGrid id="gridPanel23" style="width: 30px">
+                                <h:panelGrid columns="2" id="gridPanel23" style="width: 30px">
                                     <h:outputText id="outputText62" styleClass="bPrint" value="#{printableCharacterSheetController.characterData.initiativeTotal}"/>
+                                    <h:outputText style="" styleClass="emptyUnderLine" value=""/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="10" id="gridPanel1" style="width: 260px" styleClass="gPrint">
                                     <h:outputText id="outputText65" style="" value="#{printableCharacterSheetController.characterData.initiativeAbilityModifier}"/>
@@ -189,8 +203,9 @@
                                 <h:panelGrid id="gridPanel21" style=" height: 100%; width: 70px" styleClass="tableTitleBlackMiddlePrint">
                                     <h:outputText id="outputText60" value="移動速度"/>
                                 </h:panelGrid>
-                                <h:panelGrid id="gridPanel24" style="width: 30px">
+                                <h:panelGrid id="gridPanel24" style="width: 30px" columns="2">
                                     <h:outputText id="outputText64" styleClass="bPrint" value="#{printableCharacterSheetController.characterData.speedTotal}"/>
+                                    <h:outputText style="" styleClass="emptyUnderLine" value=""/>                                    
                                 </h:panelGrid>
                                 <h:panelGrid columns="10" id="gridPanel22" style="width: 260px" styleClass="gPrint">
                                     <h:outputText id="outputText68" value="#{printableCharacterSheetController.characterData.speedRaceBasse}"/>
@@ -207,8 +222,9 @@
                                 <h:panelGrid id="gridPanel25" style=" height: 100%; width: 70px" styleClass="tableTitleBlackMiddlePrint">
                                     <h:outputText id="outputText71" style="font-size: 14px" value="HP"/>
                                 </h:panelGrid>
-                                <h:panelGrid id="gridPanel26" style="width: 30px">
+                                <h:panelGrid id="gridPanel26" style="width: 30px" columns="2">
                                     <h:outputText id="outputText72" styleClass="bPrint" value="#{printableCharacterSheetController.characterData.hitPoint}"/>
+                                    <h:outputText style="" styleClass="emptyUnderLine" value=""/>                                    
                                 </h:panelGrid>
                                 <h:panelGrid columns="10" id="gridPanel27" style="width: 260px"/>
                             </h:panelGrid>
@@ -238,8 +254,9 @@
                                 <h:panelGrid id="gridPanel3" style="width: 70px;" styleClass="tableTitleBlackMiddlePrint">
                                     <h:outputText id="outputText76" style="font-size: 14px; " value="AC"/>
                                 </h:panelGrid>
-                                <h:panelGrid id="gridPanel9" style="width: 30px">
+                                <h:panelGrid id="gridPanel9" style="width: 30px" columns="2">
                                     <h:outputText id="outputText90" styleClass="bPrint" value="#{printableCharacterSheetController.characterData.acNormal}"/>
+                                    <h:outputText style="" styleClass="emptyUnderLine" value=""/>                                    
                                 </h:panelGrid>
                                 <h:panelGrid columns="2" id="gridPanel30" style="width: 260px" styleClass="tableTitleBlackMiddlePrint">
                                     <h:panelGrid id="gridPanel13" style="width: 70px; height: 100%;">
@@ -402,7 +419,10 @@
                     </h:panelGrid>
                     <h:panelGrid id="rightGridPanel" style="height: 100%; width: 390px " >
                         <h:panelGrid id="skillGridPanel" style="" styleClass="tableGridPrint">
-                            <h:outputText id="outputText56" style="" styleClass="tableTitleBlackPrint" value="技能"/>
+                            <h:panelGrid columns="2" style="text-align: center;width: 100%">
+                                <h:outputText id="outputText56" style="" styleClass="tableTitleBlackPrint" value="技能"/>                                
+                                <h:outputText styleClass="emptyUnderLine" value="一時:"/>                                                                
+                            </h:panelGrid>
                             <h:dataTable binding="#{printableCharacterSheetController.skillTable}" id="skillTable" style="" styleClass="gPrint"
                                          value="#{applicationController.skillList}" var="currentRow">
                                 <h:column id="column27">
