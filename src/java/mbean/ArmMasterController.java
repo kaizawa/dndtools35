@@ -123,6 +123,10 @@ public class ArmMasterController implements Serializable {
             return "List";
         }
     }
+    
+    public String prepareCopy(){
+        return "List";
+    }
 
     private void performDestroy() {
         try {
