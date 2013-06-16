@@ -93,7 +93,8 @@ public class DamageTypeMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.DamageTypeMaster[ id=" + id + " ]";
+        //return "entity.DamageTypeMaster[ id=" + id + " ]";
+        return name;
     }
 
 }

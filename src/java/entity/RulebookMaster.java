@@ -106,7 +106,8 @@ public class RulebookMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.RulebookMaster[ id=" + id + " ]";
+        //return "entity.RulebookMaster[ id=" + id + " ]";
+        return name;
     }
 
 }

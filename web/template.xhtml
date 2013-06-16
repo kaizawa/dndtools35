@@ -61,15 +61,24 @@
                             </h:panelGrid> 
 
                             <h:panelGrid id="classListCell2" style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="/classMaster/ClassListPage" id="classListLink" styleClass="leftpaneltextAdmin" value="クラス"/>
+                                <h:commandLink action="/classMaster/ClassListPage" 
+                                               id="classListLink" styleClass="leftpaneltextAdmin" value="クラス"/>
                             </h:panelGrid>
+                            
                             <h:panelGrid id="raceListCell2" style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="/raceMaster/RaceListPage" id="raceListLink" styleClass="leftpaneltextAdmin" value="種族"/>
+                                <h:commandLink action="/raceMaster/RaceListPage" 
+                                               id="raceListLink" styleClass="leftpaneltextAdmin" value="種族"/>
                             </h:panelGrid>       
 
                             <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="/monsterMaster/List" styleClass="leftpaneltextAdmin" value="モンスター"/>
+                                <h:commandLink action="/monsterMaster/List" 
+                                               styleClass="leftpaneltextAdmin" value="モンスター"/>
                             </h:panelGrid>  
+
+                            <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                                <h:commandLink action="/armMaster/List" 
+                                               styleClass="leftpaneltextAdmin" value="武器"/>
+                            </h:panelGrid>                             
                         </h:panelGrid>                
                     </h:form>                    
                 </h:panelGrid>  

@@ -93,7 +93,8 @@ public class ArmType2Master implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.ArmType2Master[ id=" + id + " ]";
+        //return "entity.ArmType2Master[ id=" + id + " ]";
+        return name;
     }
 
 }
