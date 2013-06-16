@@ -61,7 +61,9 @@
                                 <h:outputText id="outputText9" value="信仰する神格"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2" id="aligngridPanel1" style="text-align: left" styleClass="g">
-                                <h:selectOneMenu id="dropdown2" onchange="" style="" value="#{characterSheetController.selectedAlignment}" valueChangeListener="#{characterSheetController.dropdown2_processValueChange(vce)}">
+                                <h:selectOneMenu id="dropdown2" onchange="" style="" 
+                                                 value="#{characterSheetController.selectedAlignment}" 
+                                                 valueChangeListener="#{characterSheetController.dropdown2_processValueChange(vce)}">
                                     <f:selectItems id="dropdown2SelectItems1" value="#{applicationController.alignmentArray}"/>
                                 </h:selectOneMenu>
                                 <h:selectOneMenu id="dropdown3" onchange="" value="#{characterSheetController.selectedReligion}">
