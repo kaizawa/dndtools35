@@ -11,6 +11,9 @@
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
+                <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
+                <br/>
+
                 <h:outputText escape="false" value="#{bundle.ListArmMasterEmpty}" rendered="#{armMasterController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{armMasterController.items.rowCount > 0}">
                     <h:outputText value="#{armMasterController.pagination.pageFirstItem + 1}..#{armMasterController.pagination.pageLastItem + 1}/#{armMasterController.pagination.itemsCount}"/>&nbsp;
@@ -134,26 +137,21 @@
                             <f:facet name="header">
                                 <h:outputText value="ルールブック"/>
                             </f:facet>
-                            <h:outputText value="#{item.rulebook.name} P.#{item.page}"/>
+                            <h:outputText value="#{item.rulebook.name} P.#{item.page}" rendered="#{item.rulebook.name != null}"/>
                         </h:column>
 
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{armMasterController.prepareView}" value="#{bundle.ListArmMasterViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{armMasterController.prepareEdit}" value="#{bundle.ListArmMasterEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{armMasterController.destroy}" value="#{bundle.ListArmMasterDestroyLink}"/>
+                            <h:commandLink action="#{armMasterController.prepareEdit}" value="編集"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{armMasterController.prepareCreate}" value="#{bundle.ListArmMasterCreateLink}"/>
+                <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.ListArmMasterIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

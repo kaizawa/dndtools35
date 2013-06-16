@@ -11,32 +11,40 @@
         </ui:define>
         <ui:define name="body">
             <h:form>
+                <h:panelGrid columns="2" style="height: 100%; width: 100%">
+                    <h:panelGrid style="height: 100%; text-align: left; width: 100%">
+                        <h:commandButton action="#{armMasterController.update}" value="保存"/>
+                    </h:panelGrid>
+                    <h:panelGrid style="height: 100%; text-align: right; width: 100%">
+                        <h:commandButton action="/armMaster/List" value="キャンセル" immediate="true"/>
+                    </h:panelGrid>
+                </h:panelGrid>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="名前" for="name" />
                     <h:inputText id="name" value="#{armMasterController.selected.name}" />
-                    
+
                     <h:outputLabel value="生来の間合いの倍率" for="naturalReachMultiplier" />
                     <h:inputText id="naturalReachMultiplier" value="#{armMasterController.selected.naturalReachMultiplier}" title="#{bundle.CreateArmMasterTitle_naturalReachMultiplier}" />
-    
+
                     <h:outputLabel value="ダメージダイス数" for="damageDiceNum" />
                     <h:inputText id="damageDiceNum" value="#{armMasterController.selected.damageDiceNum}" title="#{bundle.CreateArmMasterTitle_damageDiceNum}" />
-                    
+
                     <h:outputLabel value="ダメージダイス" for="damageDiceType" />
                     <h:selectOneMenu id="damageDiceType" value="#{armMasterController.selected.damageDiceType}" >
                         <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    
+
                     <h:outputLabel value="ダメージタイプ" for="damageType" />
                     <h:selectOneMenu id="damageType" value="#{armMasterController.selected.damageType}">
                         <f:selectItems value="#{damageTypeMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>                    
-                    
+
                     <h:outputLabel value="クリティカル倍率" for="criticalMultiplier" />
                     <h:inputText id="criticalMultiplier" value="#{armMasterController.selected.criticalMultiplier}" title="#{bundle.CreateArmMasterTitle_criticalMultiplier}" />
-                    
+
                     <h:outputLabel value="クリティカル可能域" for="threatRange" />
                     <h:inputText id="threatRange" value="#{armMasterController.selected.threatRange}" title="#{bundle.CreateArmMasterTitle_threatRange}" />
-                    
+
                     <h:outputLabel value="魔法強化ボーナス" for="enhancementBonus" />
                     <h:inputText id="enhancementBonus" value="#{armMasterController.selected.enhancementBonus}" title="#{bundle.CreateArmMasterTitle_enhancementBonus}" />
 
@@ -44,7 +52,7 @@
                     <h:selectOneMenu id="armType1" value="#{armMasterController.selected.armType1}">
                         <f:selectItems value="#{armType1MasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    
+
                     <h:outputLabel value="武器タイプ2" for="armType2" />
                     <h:selectOneMenu id="armType2" value="#{armMasterController.selected.armType2}" >
                         <f:selectItems value="#{armType2MasterController.itemsAvailableSelectOne}"/>
@@ -54,53 +62,63 @@
                     <h:selectOneMenu id="armType3" value="#{armMasterController.selected.armType3}" >
                         <f:selectItems value="#{armType3MasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    
+
                     <h:outputLabel value="射程" for="range" />
                     <h:inputText id="range" value="#{armMasterController.selected.range}" title="#{bundle.CreateArmMasterTitle_range}" />
-                    
+
                     <h:outputLabel value="重さ" for="weight" />
                     <h:inputText id="weight" value="#{armMasterController.selected.weight}" 
                                  title="#{bundle.CreateArmMasterTitle_weight}" />
-                    
+
                     <h:outputLabel value="値段" for="price" />
                     <h:inputText id="price" value="#{armMasterController.selected.price}" title="#{bundle.CreateArmMasterTitle_price}" />
-                    
+
                     <h:outputLabel value="ルールブック" for="rulebook" />
                     <h:selectOneMenu id="rulebook" value="#{armMasterController.selected.rulebook}" >
                         <f:selectItems value="#{rulebookMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    
+
                     <h:outputLabel value="ルールブックページ" for="page" />
                     <h:inputText id="page" value="#{armMasterController.selected.page}" title="#{bundle.CreateArmMasterTitle_page}" />   
 
                     <h:outputLabel value="双頭武器ダメージダイス数" for="secondDamageDiceNum" />
                     <h:inputText id="secondDamageDiceNum" value="#{armMasterController.selected.secondDamageDiceNum}" title="#{bundle.CreateArmMasterTitle_secondDamageDiceNum}" />
-                    
+
                     <h:outputLabel value="双頭武器ダメージダイス" for="secondDamageDiceType" />
                     <h:selectOneMenu id="secondDamageDiceType" value="#{armMasterController.selected.secondDamageDiceType}">
                         <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>               
-                    
+
                     <h:outputLabel value="双頭武器ダメージタイプ" for="secondDamageType" />
                     <h:inputText id="secondDamageType" value="#{armMasterController.selected.secondDamageType}" title="#{bundle.CreateArmMasterTitle_secondDamageType}" />                    
-                    
+
                     <h:outputLabel value="双頭武器クリティカル倍率" for="secondCriticalMultiplier" />
                     <h:inputText id="secondCriticalMultiplier" value="#{armMasterController.selected.secondCriticalMultiplier}" title="#{bundle.CreateArmMasterTitle_secondCriticalMultiplier}" />
-                    
+
                     <h:outputLabel value="双頭武器クリティカル可能域" for="secondThreatRange" />
                     <h:inputText id="secondThreatRange" value="#{armMasterController.selected.secondThreatRange}" title="#{bundle.CreateArmMasterTitle_secondThreatRange}" />
-                    
+
                     <h:outputLabel value="備考" for="description" />
                     <h:inputTextarea id="description" value="#{armMasterController.selected.description}" title="#{bundle.CreateArmMasterTitle_description}" />                    
                 </h:panelGrid>
                 <br />
-                <h:commandLink action="#{armMasterController.create}" value="#{bundle.CreateArmMasterSaveLink}" />
+                
+                <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
+                    <h:commandButton action="#{armMasterController.destroyCurrent}"
+                                     disabled="#{armMasterController.deleteButtonDisabled}" 
+                                     id="deleteButton1" style="color: rgb(255, 51, 51)" 
+                                     onclick="return confirm('削除しますか?')" value="武器の削除"/>
+                </h:panelGrid>
+                
+                <h:panelGrid columns="2" style="height: 100%; width: 100%">
+                    <h:panelGrid style="height: 100%; text-align: left; width: 100%">
+                        <h:commandButton action="#{armMasterController.update}"  value="保存"/>
+                    </h:panelGrid>
+                    <h:panelGrid style="height: 100%; text-align: right; width: 100%">
+                        <h:commandButton action="/armMaster/List"  value="キャンセル" immediate="true"/>
+                    </h:panelGrid>
+                </h:panelGrid>
                 <br />
-                <br />
-                <h:commandLink action="#{armMasterController.prepareList}" value="#{bundle.CreateArmMasterShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateArmMasterIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
