@@ -30,21 +30,9 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="武器タイプ1"/>
+                                <h:outputText value="武器タイプ"/>
                             </f:facet>
-                            <h:outputText value="#{item.armType1.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="武器タイプ2"/>
-                            </f:facet>
-                            <h:outputText value="#{item.armType2.name}"/>                       
-                        </h:column>                            
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="武器タイプ3"/>
-                            </f:facet>
-                            <h:outputText value="#{item.armType3.name}"/>
+                            <h:outputText value="#{item.armType1.name} #{item.armType2.name} #{item.armType3.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
@@ -58,13 +46,14 @@
                             </f:facet>
                             <h:outputText value="#{item.price}"/>
                         </h:column>
-
+                        <!--
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="生来の間合いの倍率"/>
                             </f:facet>
                             <h:outputText value="#{item.naturalReachMultiplier}"/>
                         </h:column>
+                        -->
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="射程"/>
@@ -85,16 +74,17 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="クリティカル倍率"/>
+                                <h:outputText value="倍率"/>
                             </f:facet>
                             <h:outputText value="#{item.criticalMultiplier}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="クリティカル可能域"/>
+                                <h:outputText value="可能域"/>
                             </f:facet>
                             <h:outputText value="#{item.threatRange}"/>
                         </h:column>
+                        <!--
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="双頭武器の反対側ダメージ"/>                                                                
@@ -115,15 +105,16 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="相当武器の反対側"/>
+                                <h:outputText value="双頭武器の反対側"/>
                                 <br/>
                                 <h:outputText value="ダメージタイプ"/>                                
                             </f:facet>
                             <h:outputText value="#{item.secondDamageType}"/>
                         </h:column>
+                        -->
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="魔法強化ボーナス"/>
+                                <h:outputText value="魔法強化"/>
                             </f:facet>
                             <h:outputText value="#{item.enhancementBonus}"/>
                         </h:column>
@@ -133,18 +124,30 @@
                             </f:facet>
                             <h:outputText value="#{item.description}"/>
                         </h:column>
+                        <!--
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="ルールブック"/>
                             </f:facet>
                             <h:outputText value="#{item.rulebook.name} P.#{item.page}" rendered="#{item.rulebook.name != null}"/>
                         </h:column>
+                        -->
 
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
+                                <h:outputText value="コピー作成"/>
                             </f:facet>
                             <h:commandLink action="#{armMasterController.prepareCopy}" value="コピー"/>
+                            <br/>
+                            <h:commandLink action="#{armMasterController.createEnhanced(1)}" value="+1"/>
+                            <h:outputLabel value=" "/>                            
+                            <h:commandLink action="#{armMasterController.createEnhanced(2)}" value="+2"/>
+                            <h:outputLabel value=" "/>                            
+                            <h:commandLink action="#{armMasterController.createEnhanced(3)}" value="+3"/>
+                            <h:outputLabel value=" "/>                            
+                            <h:commandLink action="#{armMasterController.createEnhanced(4)}" value="+4"/>
+                            <h:outputLabel value=" "/>                                                        
+                            <h:commandLink action="#{armMasterController.createEnhanced(5)}" value="+5"/>                            
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

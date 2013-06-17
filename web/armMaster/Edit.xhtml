@@ -21,7 +21,7 @@
                 </h:panelGrid>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="名前" for="name" />
-                    <h:inputText id="name" value="#{armMasterController.selected.name}" />
+                    <h:inputText id="name" value="#{armMasterController.selected.name}" style="width: 500px" />
 
                     <h:outputLabel value="生来の間合いの倍率" for="naturalReachMultiplier" />
                     <h:inputText id="naturalReachMultiplier" value="#{armMasterController.selected.naturalReachMultiplier}" title="#{bundle.CreateArmMasterTitle_naturalReachMultiplier}" />
@@ -99,7 +99,8 @@
                     <h:inputText id="secondThreatRange" value="#{armMasterController.selected.secondThreatRange}" title="#{bundle.CreateArmMasterTitle_secondThreatRange}" />
 
                     <h:outputLabel value="備考" for="description" />
-                    <h:inputTextarea id="description" value="#{armMasterController.selected.description}" title="#{bundle.CreateArmMasterTitle_description}" />                    
+                    <h:inputTextarea id="description" value="#{armMasterController.selected.description}" 
+                                     style="width: 500px; height: 200px" />                    
                 </h:panelGrid>
                 <br />
                 

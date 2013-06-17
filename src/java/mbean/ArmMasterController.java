@@ -75,13 +75,48 @@ public class ArmMasterController implements Serializable {
     public String prepareCreate() {
         current = new ArmMaster();
         selectedItemIndex = -1;
-        return "Create";
+        return "Edit";
     }
 
     public String prepareEdit() {
         current = (ArmMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Create";
+        return "Edit";
+    }
+
+    public String prepareCopy() {
+        current = copy((ArmMaster) getItems().getRowData());
+        current.setName(current.getName() + "のコピー");
+        selectedItemIndex = -1;
+        return "Edit";
+    }
+    
+    public String createEnhanced(int level) {
+        current = copy((ArmMaster) getItems().getRowData());
+        current.setName(current.getName() + "+" + level);
+        current.setEnhancementBonus(level);
+        int additionalPrice = 0;
+        switch(level){
+            case 1:
+                additionalPrice = 2000;
+                break;
+            case 2:
+                additionalPrice = 8000;                
+                break;
+            case 3:
+                additionalPrice = 18000;
+                break;
+            case 4:
+                additionalPrice = 32000;                
+                break;
+            case 5:
+                additionalPrice = 50000;                
+        }
+        current.setDescription(null == current.getDescription() ? "高品質"
+                : current.getDescription() + "\n高品質");
+        current.setPrice(current.getPrice() + additionalPrice + 300);
+        selectedItemIndex = -1;
+        return "Edit";
     }
 
     public String update() {
@@ -103,7 +138,7 @@ public class ArmMasterController implements Serializable {
         recreateModel();
         return "List";
     }
-    
+
     public String destroyCurrent() {
         performDestroy();
         recreatePagination();
@@ -122,10 +157,6 @@ public class ArmMasterController implements Serializable {
             recreateModel();
             return "List";
         }
-    }
-    
-    public String prepareCopy(){
-        return "List";
     }
 
     private void performDestroy() {
@@ -187,6 +218,35 @@ public class ArmMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    private ArmMaster copy(ArmMaster original) {
+        ArmMaster copied = new ArmMaster();
+        copied.setName(original.getName());
+        copied.setWeight(original.getWeight());
+        copied.setPrice(original.getPrice());
+        copied.setPage(original.getPage());
+        copied.setNaturalReachMultiplier(original.getNaturalReachMultiplier());
+        copied.setRange(original.getRange());
+        copied.setDamageDiceNum(original.getDamageDiceNum());
+        copied.setCriticalMultiplier(original.getCriticalMultiplier());
+        copied.setThreatRange(original.getThreatRange());
+        copied.setSecondDamageDiceNum(original.getSecondDamageDiceNum());
+        copied.setSecondCriticalMultiplier(original.getSecondCriticalMultiplier());
+        copied.setSecondThreatRange(original.getSecondThreatRange());
+        copied.setSecondDamageType(original.getSecondDamageType());
+        copied.setEnhancementBonus(original.getEnhancementBonus());
+        copied.setDescription(original.getDescription());
+        copied.setRulebook(original.getRulebook());
+        copied.setSecondDamageDiceType(original.getSecondDamageDiceType());
+        copied.setDamageDiceType(original.getDamageDiceType());
+        copied.setDamageType(original.getDamageType());
+        copied.setArmType3(original.getArmType3());
+        copied.setArmType2(original.getArmType2());
+        copied.setArmType1(original.getArmType1());
+        return copied;
+    }
+    
+    
+
     @FacesConverter(forClass = ArmMaster.class)
     public static class ArmMasterControllerConverter implements Converter {
 
@@ -225,11 +285,11 @@ public class ArmMasterController implements Serializable {
             }
         }
     }
-    
+
     /*
      * 削除ボタンの表示
      */
     public boolean isDeleteButtonDisabled() {
-        return ( current == null || current.getId() == null);
+        return (current == null || current.getId() == null);
     }
 }
