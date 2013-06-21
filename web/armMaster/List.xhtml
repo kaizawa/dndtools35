@@ -19,9 +19,10 @@
                     <h:outputText value="#{armMasterController.pagination.pageFirstItem + 1}..#{armMasterController.pagination.pageLastItem + 1}/#{armMasterController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{armMasterController.previous}" value="#{bundle.Previous} #{armMasterController.pagination.pageSize}" rendered="#{armMasterController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{armMasterController.next}" value="#{bundle.Next} #{armMasterController.pagination.pageSize}" rendered="#{armMasterController.pagination.hasNextPage}"/>&nbsp;
+                    <h:panelGrid id="tableGrid" styleClass="tableGrid">
                     <h:dataTable value="#{armMasterController.items}" var="item" border="0" cellpadding="2" 
-                                 cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-
+                                 cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" 
+                                 styleClass="w" style="text-align: left; border:solid 1px">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="名前"/>
@@ -150,6 +151,7 @@
                             <h:commandLink action="#{armMasterController.createEnhanced(5)}" value="+5"/>                            
                         </h:column>
                     </h:dataTable>
+                    </h:panelGrid>
                 </h:panelGroup>
                 <br />
                 <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
