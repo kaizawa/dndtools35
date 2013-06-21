@@ -22,7 +22,10 @@
                     <h:panelGrid id="tableGrid" styleClass="tableGrid">
                     <h:dataTable value="#{armMasterController.items}" var="item" border="0" cellpadding="2" 
                                  cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" 
-                                 styleClass="w" style="text-align: left; border:solid 1px">
+                                 styleClass="w" style="text-align: left; border:solid 1px"
+                                 columnClasses="columnNomal,columnNomal,columnNomal,columnNomal,
+                                 columnNomal,columnNomal,columnNomal,columnNomal,
+                                 columnNomal,columnNomal,column30,columnNomal">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="名前"/>
@@ -121,9 +124,9 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="備考"/>
+                                <h:outputText value="備考" style="width: 30%"/>
                             </f:facet>
-                            <h:outputText value="#{item.description}"/>
+                            <h:outputText value="#{item.description}" style="width: 30%"/>
                         </h:column>
                         <!--
                         <h:column>

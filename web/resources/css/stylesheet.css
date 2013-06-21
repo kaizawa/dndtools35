@@ -936,3 +936,11 @@ tr.jsfcrud_even_row {
 
     border-bottom: 1px solid black;
 }
+
+/* for table's columnClass */
+td.column30 {
+    width: 30%;
+}
+td.columnNomal {
+    
+}
