@@ -36,24 +36,18 @@
                                 <h:selectBooleanCheckbox id="checkbox1" value="#{characterSheetController.characterChecked}"/>
                             </h:column>
                             <h:column id="column1">
-                                <h:outputText id="outputText2" style="font-size: 14px; font-weight: bold;"  value="#{currentRow.characterName}"/>
-                                <f:facet name="header">
-                                    <h:outputText id="outputText3" value="キャラクター名"/>
-                                </f:facet>
-                            </h:column>
-                            <h:column id="column3">
-                                <h:outputText id="outputText6" style="font-size: 14px; font-weight: bold;" value="#{currentRow.playerName}"/>
-                                <f:facet name="header">
-                                    <h:outputText id="outputText7" value="プレイヤー"/>
-                                </f:facet>
-                            </h:column>
-                            <h:column id="column5">
                                 <h:commandLink action="#{characterSheetController.charaEditLink_action}" id="charaEditLink"
-                                               style="font-size: 12px; " >
-                                    <h:outputText id="charaEditLinkText" value="修正"/>
+                                               style="font-size: 12px; font-weight: bold;" >
+                                    <h:outputText id="charaEditLinkText" value="#{currentRow.characterName}"/>
                                 </h:commandLink>
                                 <f:facet name="header">
-                                    <h:outputText id="outputText9"/>
+                                    <h:outputText id="outputText9" value="キャラクター名"/>
+                                </f:facet>
+                            </h:column>                            
+                            <h:column id="column3">
+                                <h:outputText id="outputText6" style="font-size: 14px; " value="#{currentRow.playerName}"/>
+                                <f:facet name="header">
+                                    <h:outputText id="outputText7" value="プレイヤー"/>
                                 </f:facet>
                             </h:column>
                             <h:column id="column4">
