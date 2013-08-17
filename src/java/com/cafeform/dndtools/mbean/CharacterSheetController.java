@@ -21,12 +21,10 @@ import com.cafeform.dndtools.entity.PlayerMaster;
 import com.cafeform.dndtools.entity.SaveMaster;
 import com.cafeform.dndtools.entity.CharacterAbilityRecord;
 import com.cafeform.dndtools.entity.RaceMaster;
-import com.cafeform.dndtools.ejb.SkillMasterFacade;
 import com.cafeform.dndtools.ejb.GenderMasterFacade;
 import com.cafeform.dndtools.ejb.CharacterGrowthRecordFacade;
 import com.cafeform.dndtools.ejb.AlignmentMasterFacade;
 import com.cafeform.dndtools.ejb.ReligionMasterFacade;
-import com.cafeform.dndtools.ejb.SaveMasterFacade;
 import com.cafeform.dndtools.ejb.CharacterSkillRecordFacade;
 import com.cafeform.dndtools.ejb.ClassMasterFacade;
 import com.cafeform.dndtools.ejb.CharacterSkillGrowthRecordFacade;
@@ -64,40 +62,21 @@ import javax.inject.Named;
 @SessionScoped
 public class CharacterSheetController implements Serializable {
 
-    @Inject
-    private CharacterRecordFacade characterRecordFacade;
-    @Inject
-    private ReligionMasterFacade religionMasterFacade;
-    @Inject
-    private GenderMasterFacade genderMasterFacade;
-    @Inject
-    private AlignmentMasterFacade alignmentMasterFacade;
-    @Inject
-    private AbilityMasterFacade abilityMasterFacade;
-    @Inject
-    private RaceMasterFacade raceMasterFacade;
-    @Inject
-    private CampaignMasterFacade campaignMasterFacade;
-    @Inject
-    private CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
-    @Inject
-    private CharacterGrowthRecordFacade characterGrowthRecordFacade;
-    @Inject
-    private CharacterEquipmentFacade characterEquipmentFacade;
-    @Inject
-    private CharacterSaveRecordFacade characterSaveRecordFacade;
-    @Inject
-    private SaveMasterFacade saveMasterFacade;
-    @Inject
-    private CharacterAbilityRecordFacade characterAbilityRecordFacade;
-    @Inject
-    private SkillMasterFacade skillMasterFacade;
-    @Inject
-    private CharacterSkillRecordFacade characterSkillRecordFacade;
-    @Inject
-    protected ClassMasterFacade classMasterFacade;
-    @Inject
-    private SessionController sessionController;
+    @Inject private CharacterRecordFacade characterRecordFacade;
+    @Inject private ReligionMasterFacade religionMasterFacade;
+    @Inject private GenderMasterFacade genderMasterFacade;
+    @Inject private AlignmentMasterFacade alignmentMasterFacade;
+    @Inject private RaceMasterFacade raceMasterFacade;
+    @Inject private CampaignMasterFacade campaignMasterFacade;
+    @Inject private CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
+    @Inject private CharacterGrowthRecordFacade characterGrowthRecordFacade;
+    @Inject private CharacterEquipmentFacade characterEquipmentFacade;
+    @Inject private CharacterSaveRecordFacade characterSaveRecordFacade;
+    @Inject private CharacterAbilityRecordFacade characterAbilityRecordFacade;
+    @Inject private CharacterSkillRecordFacade characterSkillRecordFacade;
+    @Inject protected ClassMasterFacade classMasterFacade;
+    @Inject private SessionController sessionController;
+    @Inject private ApplicationController applicationController;
 
     public SessionController getSessionController() {
         return sessionController;
@@ -404,7 +383,6 @@ public class CharacterSheetController implements Serializable {
         try {
             characterRecordFacade.create(characterRecord);
         } catch (Exception ex) {
-            ex.printStackTrace();
             JsfUtil.addSuccessMessage("キャラクターの作成に失敗しました");
             return null;
         }
@@ -413,7 +391,7 @@ public class CharacterSheetController implements Serializable {
         //  CharacterSkillRecord と CharacterSkillGrowthRecord の作成
         ////////////////////////////////
         //キャラクター技能毎のレコードを作成
-        List<SkillMaster> skilllist = skillMasterFacade.findAll();
+        List<SkillMaster> skilllist = applicationController.getSkillList();
         List<CharacterSkillRecord> charaSkillList = new ArrayList<CharacterSkillRecord>();
         List<CharacterSkillGrowthRecord> charaSkillGrowthList = new ArrayList<CharacterSkillGrowthRecord>();
 
@@ -424,7 +402,6 @@ public class CharacterSheetController implements Serializable {
             try {
                 characterSkillRecordFacade.create(charaSkillRecord);
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JsfUtil.addSuccessMessage("キャラクター技能レコードの作成に失敗しました");
                 return null;
             }
@@ -438,7 +415,6 @@ public class CharacterSheetController implements Serializable {
             try {
                 characterSkillGrowthRecordFacade.create(skillGrowthRecord);
             } catch (Exception e) {
-                e.printStackTrace();
                 JsfUtil.addSuccessMessage("キャラクターの技能成長レコードの作製に失敗しました");
                 return null;
             }
@@ -447,7 +423,7 @@ public class CharacterSheetController implements Serializable {
         ////////////////////////////////////
         // CharacterAbilityRecordの作成
         //////////////////////////////////////
-        List<AbilityMaster> abilityList = abilityMasterFacade.findAll();
+        List<AbilityMaster> abilityList = applicationController.getAbilityList();
         List<CharacterAbilityRecord> charaAbilityList = new ArrayList<CharacterAbilityRecord>();
         for (AbilityMaster ability : abilityList) {
             CharacterAbilityRecord abilityRecord = new CharacterAbilityRecord(characterRecord.getId().intValue(), ability.getId().intValue());
@@ -469,7 +445,7 @@ public class CharacterSheetController implements Serializable {
         ////////////////////////////////////
         // CharacterSaveRecordの作成
         //////////////////////////////////////
-        List<SaveMaster> saveList = saveMasterFacade.findAll();
+        List<SaveMaster> saveList = applicationController.getSaveList();
         List<CharacterSaveRecord> charaSaveList = new ArrayList<CharacterSaveRecord>();
         for (SaveMaster save : saveList) {
             CharacterSaveRecord saveRecord = new CharacterSaveRecord(characterRecord.getId().intValue(), save.getId().intValue());
@@ -493,7 +469,6 @@ public class CharacterSheetController implements Serializable {
         try {
             characterEquipmentFacade.create(equip);
         } catch (Exception ex) {
-            ex.printStackTrace();
             JsfUtil.addSuccessMessage("キャラクター装備データの作成に失敗しました");
             return null;
         }
@@ -507,7 +482,6 @@ public class CharacterSheetController implements Serializable {
         try {
             characterGrowthRecordFacade.create(charaGrowth);
         } catch (Exception e) {
-            e.printStackTrace();
             JsfUtil.addSuccessMessage("キャラクターの成長レコードの作成に失敗しました");
 
             return null;
@@ -684,7 +658,6 @@ public class CharacterSheetController implements Serializable {
             }
             JsfUtil.addSuccessMessage("保存されました");
         } catch (Exception ex) {
-            ex.printStackTrace();
             JsfUtil.addSuccessMessage("キャラクターの保存に失敗しました");
             return null;
         }
@@ -697,7 +670,6 @@ public class CharacterSheetController implements Serializable {
         try {
             characterRecordFacade.remove(getCharacterData().getCharacterRecord());
         } catch (Exception ex) {
-            ex.printStackTrace();
             JsfUtil.addSuccessMessage("削除に失敗しました");
             return null;
         }
@@ -903,7 +875,7 @@ public class CharacterSheetController implements Serializable {
      */
     public String getSkillRankCheck() {
         int skillId = skillTable.getRowIndex() + 1;
-        SkillMaster skill = skillMasterFacade.find(skillId);
+        SkillMaster skill = applicationController.getSkillBySkillId(skillId);
         ClassMaster klass;
 
         List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();

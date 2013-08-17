@@ -14,7 +14,6 @@ import com.cafeform.dndtools.ejb.CharacterRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterSkillRecordFacade;
 import com.cafeform.dndtools.ejb.SaveMasterFacade;
-import com.cafeform.dndtools.ejb.SkillMasterFacade;
 import javax.inject.Inject;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ValueChangeEvent;
@@ -48,8 +47,6 @@ public class PageHeader {
     private AbilityMasterFacade abilityMasterFacade1;
     @Inject
     private AbilityMasterFacade abilityMasterFacade;
-    @Inject
-    private SkillMasterFacade skillMasterFacade;
     @Inject
     private CharacterSkillRecordFacade characterSkillRecordFacade;
     @Inject

@@ -50,7 +50,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
@@ -79,14 +78,16 @@ public class CharacterData implements CharacterSummary {
     protected RaceMasterFacade raceMasterFacade;
     protected CharacterGrowthRecordFacade characterGrowthRecordFacade;
     protected CharacterRecordFacade characterRecordFacade;
-    private CharacterRecord characterRecord;
+    private CharacterRecord characterRecord;  
+    protected List<SkillMaster> skillList;
+    protected List<AbilityMaster> abilityList;
+    protected List<SaveMaster> saveList;
     
     public CharacterRecord getCharacterRecord() {
         return characterRecord;
     }
 
-    private CharacterData() {
-    }
+    private CharacterData() { }
 
     public CharacterData(CharacterRecord characterRecord) {
         this.characterRecord = characterRecord;
@@ -105,7 +106,6 @@ public class CharacterData implements CharacterSummary {
             classSkillMasterFacade = (ClassSkillMasterFacade) ctx.lookup("java:module/ClassSkillMasterFacade");
             classMasterFacade = (ClassMasterFacade) ctx.lookup("java:module/ClassMasterFacade");
             characterSkillGrowthRecordFacade = (CharacterSkillGrowthRecordFacade) ctx.lookup("java:module/CharacterSkillGrowthRecordFacade");
-            skillMasterFacade = (SkillMasterFacade) ctx.lookup("java:module/SkillMasterFacade");
             religionMasterFacade = (ReligionMasterFacade) ctx.lookup("java:module/ReligionMasterFacade");
             alignmentMasterFacade = (AlignmentMasterFacade) ctx.lookup("java:module/AlignmentMasterFacade");
             abilityMasterFacade = (AbilityMasterFacade) ctx.lookup("java:module/AbilityMasterFacade");
@@ -116,6 +116,9 @@ public class CharacterData implements CharacterSummary {
         } catch (NamingException ex) {
             Logger.getLogger(CharacterData.class.getName()).log(Level.SEVERE, null, ex);
         }
+        skillList = skillMasterFacade.findAll();
+        abilityList = abilityMasterFacade.findAll();
+        saveList = saveMasterFacade.findAll();
     }
 
     public Integer getSkillMiscModifierById(int index) {
@@ -159,7 +162,6 @@ public class CharacterData implements CharacterSummary {
             try {
                 characterGrowthRecordFacade.create(newRecord);
             } catch (Exception e) {
-                e.printStackTrace();
                 context.addMessage("contents:contentGrid:label1", new FacesMessage(("キャラクターの成長レコードの作成に失敗しました")));
                 return;
             }
@@ -178,9 +180,8 @@ public class CharacterData implements CharacterSummary {
         List<CharacterSkillGrowthRecord> characterSkillGrowthList = new ArrayList<CharacterSkillGrowthRecord>();
         // 足りないレベルのレコードを探す。もし無ければ作成
         for (int i = 1; i < getLevel() + 1; i++) {
-            List<SkillMaster> skilllist = skillMasterFacade.findAll();
             OUTER:
-            for (SkillMaster skill : skilllist) {
+            for (SkillMaster skill : skillList) {
                 for (CharacterSkillGrowthRecord skillgrowth : searchedCharaSkillGrowthList) {
                     if (skillgrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() == i && skillgrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId().intValue()) {
                         //作成したリストに追加
@@ -197,7 +198,6 @@ public class CharacterData implements CharacterSummary {
                 try {
                     characterSkillGrowthRecordFacade.create(newRecord);
                 } catch (Exception e) {
-                    e.printStackTrace();
                     context.addMessage("contents:contentGrid:label1", new FacesMessage(("キャラクターの技能成長レコードの作製に失敗しました")));
                     return;
                 }
@@ -243,8 +243,8 @@ public class CharacterData implements CharacterSummary {
     public Integer getAbilityBaseById(int id) {
         // 能力値 ID は 1-6 だが、List の ID は 0 から並んでいるので -1 する
         Integer result;
-        List<CharacterAbilityRecord> abilityList = characterRecord.getCharacterAbilityRecordList();
-        CharacterAbilityRecord ability = abilityList.get(id - 1);
+        List<CharacterAbilityRecord> charAbilityList = characterRecord.getCharacterAbilityRecordList();
+        CharacterAbilityRecord ability = charAbilityList.get(id - 1);
         result = ability.getBase();
         if (result == null) {
             return 0;
@@ -272,7 +272,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     public void setAbilityMiscModifierById(int id, Integer newVal) {
-        characterRecord.getCharacterAbilityRecordList().get(id - 1).setMiscModifier(newVal);;
+        characterRecord.getCharacterAbilityRecordList().get(id - 1).setMiscModifier(newVal);
     }
 
     /**
@@ -367,7 +367,7 @@ public class CharacterData implements CharacterSummary {
 
     public Integer getSkillAbilityModifierById(int skill) {
 
-        return getAbilityModifierById(skillMasterFacade.find(skill).getAbilityId().getId());
+        return getAbilityModifierById(skillList.get(skill-1).getAbilityId().getId());
     }
     /*
      * 技能 対応能力値名
@@ -375,7 +375,7 @@ public class CharacterData implements CharacterSummary {
 
     public String getSkillAbilityNameById(int skill) {
 
-        return skillMasterFacade.find(skill).getAbilityId().getAbilityName();
+        return skillList.get(skill-1).getAbilityId().getAbilityName();
     }
     /*
      * 技能 対応能力値名 省略名
@@ -384,7 +384,7 @@ public class CharacterData implements CharacterSummary {
     public String getSkillAbilityShortNameById(int skill) {
 
         String name;
-        name = skillMasterFacade.find(skill).getAbilityId().getAbilityName();
+        name = skillList.get(skill-1).getAbilityId().getAbilityName();
         return name.substring(0, 1);
     }
     /*
@@ -468,7 +468,7 @@ public class CharacterData implements CharacterSummary {
     public Integer getSkillTotalRankById(int skillId) {
         Float totalRank = 0f;
 
-        SkillMaster skill = skillMasterFacade.find(skillId);
+        SkillMaster skill = skillList.get(skillId-1);
         // レベル毎のループ
         List<CharacterGrowthRecord> growthlist = characterRecord.getCharacterGrowthRecordList();
         for (CharacterGrowthRecord growth : growthlist) {
@@ -486,8 +486,8 @@ public class CharacterData implements CharacterSummary {
      */
     protected boolean skillAcceptNoRankBySkillId;
 
-    public boolean isSkillAcceptoRankBySkillId(int skillid) {
-        SkillMaster skill = skillMasterFacade.find(skillid);
+    public boolean isSkillAcceptoRankBySkillId(int skillId) {
+        SkillMaster skill = skillList.get(skillId-1);
 
         if (skill == null) {
             return false;
@@ -561,7 +561,7 @@ public class CharacterData implements CharacterSummary {
      */
     public Integer getSkillArmorModifierById(int skillId) {
         int result = 0;
-        SkillMaster skill = skillMasterFacade.find(skillId);
+        SkillMaster skill = skillList.get(skillId-1);
 
         if (skill.getArmorCheck() == 0) {
             //この技能に防具ペナルティはない
@@ -587,7 +587,7 @@ public class CharacterData implements CharacterSummary {
      */
     public Integer getSkillSynergyModifierById(int skillId) {
         int result = 0;
-        SkillMaster skill = skillMasterFacade.find(skillId);
+        SkillMaster skill = skillList.get(skillId-1);
 
         List<SkillSynergyMaster> synergyList = skillSynergyMasterFacade.findBySkill(skill);
         for (SkillSynergyMaster synergy : synergyList) {
@@ -1369,7 +1369,15 @@ public class CharacterData implements CharacterSummary {
     }
 
     public String getCharacterName() {
-        return characterRecord.getCharacterName();
+        if (null == characterRecord.getCharacterName() ||
+                "".equals(characterRecord.getCharacterName())) 
+        {
+            return "no name";
+        } 
+        else 
+        {    
+            return characterRecord.getCharacterName();
+        }
     }
 
     public String getDefenceDescription() {
@@ -1573,8 +1581,8 @@ public class CharacterData implements CharacterSummary {
         List<CharacterSkillRecord> skillRecordList = characterRecord.getCharacterSkillRecordList();
         List<CharacterSkillGrowthRecord> skillGrowthList = characterRecord.getCharacterSkillGrowthRecordList();
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
-        List<CharacterAbilityRecord> abilityList = characterRecord.getCharacterAbilityRecordList();
-        List<CharacterSaveRecord> saveList = characterRecord.getCharacterSaveRecordList();
+        List<CharacterAbilityRecord> charAbilityList = characterRecord.getCharacterAbilityRecordList();
+        List<CharacterSaveRecord> charSaveList = characterRecord.getCharacterSaveRecordList();
 
         //更新時間を記録
         Date date = new Date();
@@ -1592,10 +1600,10 @@ public class CharacterData implements CharacterSummary {
         for (CharacterSkillGrowthRecord skillGrowth : skillGrowthList) {
             characterSkillGrowthRecordFacade.edit(skillGrowth);
         }
-        for (CharacterAbilityRecord ability : abilityList) {
+        for (CharacterAbilityRecord ability : charAbilityList) {
             characterAbilityRecordFacade.edit(ability);
         }
-        for (CharacterSaveRecord save : saveList) {
+        for (CharacterSaveRecord save : charSaveList) {
             characterSaveRecordFacade.edit(save);
         }
     }
@@ -1607,11 +1615,14 @@ public class CharacterData implements CharacterSummary {
     @Override
     public String getAbilities() {
         StringBuilder str = new StringBuilder();
-        List<CharacterAbilityRecord> abilityList = characterRecord.getCharacterAbilityRecordList();
-        for (CharacterAbilityRecord ability : abilityList) {
-            str.append(getAbilityShortName(ability.getAbilityMaster())
-                    + " " + getAbilityTotalById(ability.getAbilityMaster().getId())
-                    + "(" + getAbilityModifierById(ability.getAbilityMaster().getId()) + ")<br>");
+        List<CharacterAbilityRecord> charAbilityList = characterRecord.getCharacterAbilityRecordList();
+        for (CharacterAbilityRecord ability : charAbilityList) {
+            str.append(getAbilityShortName(ability.getAbilityMaster())).append(" ")
+                    .append(getAbilityTotalById(ability.getAbilityMaster().getId()))
+                    .append("(")
+                    .append(getAbilityModifierById(ability.getAbilityMaster()
+                    .getId()))
+                    .append(")<br>");
         }
         return str.toString();
     }

@@ -15,7 +15,6 @@ import com.cafeform.dndtools.entity.RaceMaster;
 import com.cafeform.dndtools.ejb.CharacterGrowthRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterSkillGrowthRecordFacade;
-import com.cafeform.dndtools.ejb.SkillMasterFacade;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -43,13 +42,13 @@ import javax.inject.Named;
 public class CharacterSheetPerLevelController extends CharacterSheetController { 
     
     @Inject
-    protected SkillMasterFacade skillMasterFacade;
-    @Inject
     protected CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
     @Inject
     protected CharacterGrowthRecordFacade characterGrowthRecordFacade;
     @Inject
     protected CharacterRecordFacade characterRecordFacade;
+    @Inject 
+    protected ApplicationController applicationController;
     
     private HtmlSelectOneMenu levelDropdown = new HtmlSelectOneMenu();
 
@@ -119,7 +118,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     // 特定のレベルのランク値 (計算値)
     public Integer getSkillRank() {
         int skillId = skillTable.getRowIndex() + 1;
-        SkillMaster skill = skillMasterFacade.find(skillId);
+        SkillMaster skill = applicationController.getSkillBySkillId(skillId);
 
         return getCharacterData().getSkillRankByLevelAndSkill( getCharacterGrowthRecord(), skill).intValue();
     }
@@ -297,7 +296,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
 
     public String getClassSkill() {
         int skillId = skillTable.getRowIndex() + 1;
-        SkillMaster skill = skillMasterFacade.find(skillId);
+        SkillMaster skill = applicationController.getSkillBySkillId(skillId);
         CharacterGrowthRecord growth =  getCharacterGrowthRecord();
 
         if (getCharacterData().isClassSkillByLevelAndSkill(growth, skill)) {
@@ -324,7 +323,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
      * @return
      */
     public Integer getSkillPointUsedTotal(){
-        List<SkillMaster> skills = skillMasterFacade.findAll();
+        List<SkillMaster> skills = applicationController.getSkillList();
         Integer points = 0;
 
         for(SkillMaster skill: skills){
@@ -377,7 +376,7 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
      * @return
      */
     public Integer getSkillPointUsed(){
-        List<SkillMaster> skills = skillMasterFacade.findAll();
+        List<SkillMaster> skills = applicationController.getSkillList();
         Integer points = 0;
 
         for(SkillMaster skill: skills){

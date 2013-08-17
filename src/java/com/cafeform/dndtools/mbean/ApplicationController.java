@@ -85,7 +85,6 @@ public class ApplicationController {
 
     @PostConstruct
     public void init() {
-
         //アプリケーション起動時のリストをアプリケーションBeanに保存しておく
         //アビリティ、技能、性別、ダイスは追加されることはないので・・・
         setAbilityList(abilityMasterFacade.findAll());
@@ -117,7 +116,6 @@ public class ApplicationController {
         ///////////////////////
         List<SkillMaster> skillFindAll = getSkillList();
         List<SelectItem> tempSkillList = new ArrayList<SelectItem>();
-        //未選択状態
         tempSkillList.add(new SelectItem(null, "未選択"));
         for (SkillMaster skill : skillFindAll) {
             SelectItem selectItem = new SelectItem();
@@ -342,7 +340,7 @@ public class ApplicationController {
     }    
     
     public SkillMaster getSkillBySkillId(int skillId){
-        return this.skillList.get(skillId);
+        return this.skillList.get(skillId - 1);
     }
     
     //---------------  セーブのリスト -----------------------------

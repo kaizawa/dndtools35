@@ -4,13 +4,10 @@ import com.cafeform.dndtools.entity.CampaignMaster;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
-
 import java.io.Serializable;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
-//
-//import javax.faces.bean.ManagedProperty;
-//
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -20,6 +17,8 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 @Named
 @SessionScoped
@@ -209,14 +208,24 @@ public class CampaignMasterController implements Serializable {
 
     @FacesConverter(forClass = CampaignMaster.class)
     public static class CampaignMasterControllerConverter implements Converter {
+        InitialContext ctx;
+        private com.cafeform.dndtools.ejb.CampaignMasterFacade ejbFacade;
 
+        public CampaignMasterControllerConverter() {
+            try {
+                ctx = new InitialContext();
+                ejbFacade = (CampaignMasterFacade) ctx.lookup("java:module/CampaignMasterFacade");
+            } catch (NamingException ex) {
+                Logger.getLogger(CampaignMasterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CampaignMasterController controller = (CampaignMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "campaignMasterController");
-            return controller.ejbFacade.find(getKey(value));
+            return ejbFacade.find(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -226,11 +235,12 @@ public class CampaignMasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
