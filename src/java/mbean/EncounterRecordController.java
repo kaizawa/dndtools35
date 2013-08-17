@@ -7,10 +7,11 @@ import ejb.ScenarioCharacterRecordFacade;
 import entity.*;
 import java.io.Serializable;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -21,11 +22,11 @@ import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 
-@ManagedBean(name = "encounterRecordController")
+
 @SessionScoped
 public class EncounterRecordController implements Serializable {
 
-    @EJB
+    @Inject
     private ScenarioCharacterRecordFacade scenarioCharacterRecordFacade;
 
     public ScenarioCharacterRecordFacade getScenarioCharacterRecordFacade() {
@@ -35,17 +36,17 @@ public class EncounterRecordController implements Serializable {
     public void setScenarioCharacterRecordFacade(ScenarioCharacterRecordFacade scenarioCharacterRecordFacade) {
         this.scenarioCharacterRecordFacade = scenarioCharacterRecordFacade;
     }
-    @EJB
+    @Inject
     private CharacterRecordFacade characterRecordFacade;
-    @EJB
+    @Inject
     private EncounterMemberFacade encounterMemberFacade;
     private EncounterRecord current;
     private DataModel items = null;
-    @EJB
+    @Inject
     private EncounterRecordFacade encounterRecordFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {
@@ -57,7 +58,7 @@ public class EncounterRecordController implements Serializable {
     }   
     
 /*    
-    @ManagedProperty(value = "#{scenarioRecordController}")
+    @Inject
     private ScenarioRecordController scenarioRecordController;
 
     public ScenarioRecordController getScenarioRecordController() {

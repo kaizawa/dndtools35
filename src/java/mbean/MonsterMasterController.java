@@ -10,10 +10,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -22,11 +23,11 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "monsterMasterController")
+
 @SessionScoped
 public class MonsterMasterController implements Serializable {
         
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {
@@ -37,13 +38,13 @@ public class MonsterMasterController implements Serializable {
         this.sessionController = sessionController;
     }
 
-    @EJB
+    @Inject
     private MonsterSaveRecordFacade monsterSaveRecordFacade;
-    @EJB
+    @Inject
     private SaveMasterFacade saveMasterFacade;
-    @EJB
+    @Inject
     private MonsterAbilityRecordFacade monsterAbilityRecordFacade;
-    @EJB
+    @Inject
     private AbilityMasterFacade abilityMasterFacade;
 
     public AbilityMasterFacade getAbilityMasterFacade() {
@@ -79,7 +80,7 @@ public class MonsterMasterController implements Serializable {
     }
     private MonsterMaster current;
     private DataModel items = null;
-    @EJB
+    @Inject
     private ejb.MonsterMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;

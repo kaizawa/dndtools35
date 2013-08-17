@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
@@ -29,7 +30,6 @@ public class CharacterData implements CharacterSummary {
     private CharacterSkillRecordFacade characterSkillRecordFacade;
     private CharacterAbilityRecordFacade characterAbilityRecordFacade;
     private SaveMasterFacade saveMasterFacade;
-    private SkillMasterFacade skillMasterFacade1;
     private ClassSkillMasterFacade classSkillMasterFacade;
     protected ClassMasterFacade classMasterFacade;
     protected CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
@@ -42,7 +42,7 @@ public class CharacterData implements CharacterSummary {
     protected CharacterGrowthRecordFacade characterGrowthRecordFacade;
     protected CharacterRecordFacade characterRecordFacade;
     private CharacterRecord characterRecord;
-
+    
     public CharacterRecord getCharacterRecord() {
         return characterRecord;
     }

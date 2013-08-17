@@ -8,12 +8,15 @@ package mbean;
 
 import ejb.*;
 import entity.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -28,12 +31,12 @@ import mbean.util.JsfUtil;
  *
  * @author ka78231
  */
-@ManagedBean
+
 @SessionScoped
-public class ClassMasterController  {
+public class ClassMasterController implements Serializable {
    
     
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {
@@ -44,7 +47,7 @@ public class ClassMasterController  {
         this.sessionController = sessionController;
     }
     
-    @ManagedProperty(value = "#{applicationController}")
+    @Inject
     private ApplicationController applicationController;
 
     public ApplicationController getApplicationController() {
@@ -55,19 +58,19 @@ public class ClassMasterController  {
         this.applicationController = applicationController;
     }
     
-    @EJB
+    @Inject
     private DiceMasterFacade diceMasterFacade;
-    @EJB
+    @Inject
     private SaveMasterFacade saveMasterFacade;
-    @EJB
+    @Inject
     private ClassSaveMasterFacade classSaveMasterFacade;
-    @EJB
+    @Inject
     private ClassSkillMasterFacade classSkillMasterFacade;
-    @EJB
+    @Inject
     private SkillMasterFacade skillMasterFacade;
-    @EJB
+    @Inject
     private ClassMasterFacade classMasterFacade;
-    @EJB
+    @Inject
     private BonusRankMasterFacade bonusRankMasterFacade;
 
     private HtmlDataTable classSkillTable = new HtmlDataTable();

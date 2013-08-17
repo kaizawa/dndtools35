@@ -13,10 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
@@ -25,48 +21,51 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author kaizawa
  */
-@ManagedBean(name = "characterSheetController")
+@Named
 @SessionScoped
 public class CharacterSheetController implements Serializable {
 
-    @EJB
+    @Inject
     private CharacterRecordFacade characterRecordFacade;
-    @EJB
+    @Inject
     private ReligionMasterFacade religionMasterFacade;
-    @EJB
+    @Inject
     private GenderMasterFacade genderMasterFacade;
-    @EJB
+    @Inject
     private AlignmentMasterFacade alignmentMasterFacade;
-    @EJB
+    @Inject
     private AbilityMasterFacade abilityMasterFacade;
-    @EJB
+    @Inject
     private RaceMasterFacade raceMasterFacade;
-    @EJB
+    @Inject
     private CampaignMasterFacade campaignMasterFacade;
-    @EJB
+    @Inject
     private CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
-    @EJB
+    @Inject
     private CharacterGrowthRecordFacade characterGrowthRecordFacade;
-    @EJB
+    @Inject
     private CharacterEquipmentFacade characterEquipmentFacade;
-    @EJB
+    @Inject
     private CharacterSaveRecordFacade characterSaveRecordFacade;
-    @EJB
+    @Inject
     private SaveMasterFacade saveMasterFacade;
-    @EJB
+    @Inject
     private CharacterAbilityRecordFacade characterAbilityRecordFacade;
-    @EJB
+    @Inject
     private SkillMasterFacade skillMasterFacade;
-    @EJB
+    @Inject
     private CharacterSkillRecordFacade characterSkillRecordFacade;
-    @EJB
+    @Inject
     protected ClassMasterFacade classMasterFacade;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {
@@ -107,10 +106,6 @@ public class CharacterSheetController implements Serializable {
      */
     public void setPlayerMaster(PlayerMaster playerMaster) {
         this.playerMaster = playerMaster;
-    }
-
-    protected ApplicationController getApplicationController() {
-        return getApplicationController();
     }
 
     /*

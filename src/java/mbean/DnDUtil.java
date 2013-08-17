@@ -4,18 +4,12 @@
  */
 package mbean;
 
-import entity.*;
-import java.text.SimpleDateFormat;
-import java.text.StringCharacterIterator;
-import java.util.*;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author ka78231
  */
-@ManagedBean
 @RequestScoped
 public class DnDUtil {
     

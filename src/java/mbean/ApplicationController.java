@@ -10,12 +10,9 @@ import entity.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.ejb.PostActivate;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 /**
  * <p>Application scope data bean for your application. Create properties here
@@ -28,33 +25,32 @@ import javax.faces.model.SelectItem;
  *
  * @author ka78231
  */
-@ManagedBean
 @ApplicationScoped
 public class ApplicationController {
 
-    @EJB
+    @Inject
     private SizeMasterFacade sizeMasterFacade;
-    @EJB
+    @Inject
     private CampaignMasterFacade campaignMasterFacade;
-    @EJB
+    @Inject
     private ClassMasterFacade classMasterFacade;
-    @EJB
+    @Inject
     private ReligionMasterFacade religionMasterFacade;
-    @EJB
+    @Inject
     private AlignmentMasterFacade alignmentMasterFacade;
-    @EJB
+    @Inject
     private GenderMasterFacade genderMasterFacade;
-    @EJB
+    @Inject
     private RaceMasterFacade raceMasterFacade;
-    @EJB
+    @Inject
     private DiceMasterFacade diceMasterFacade;
-    @EJB
+    @Inject
     private BonusRankMasterFacade bonusRankMasterFacade;
-    @EJB
+    @Inject
     private SaveMasterFacade saveMasterFacade;
-    @EJB
+    @Inject
     private SkillMasterFacade skillMasterFacade;
-    @EJB
+    @Inject
     private AbilityMasterFacade abilityMasterFacade;
     
     /**
@@ -320,6 +316,10 @@ public class ApplicationController {
     public void setSkillList(List<SkillMaster> skillList) {
         this.skillList = skillList;
     }    
+    
+    public SkillMaster getSkillBySkillId(int skillId){
+        return this.skillList.get(skillId);
+    }
     
     //---------------  セーブのリスト -----------------------------
     protected List<SaveMaster> saveList;

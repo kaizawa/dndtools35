@@ -12,18 +12,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.component.html.HtmlDataTable;
 import mbean.util.JsfUtil;
 
-@ManagedBean(name = "encounterMemberController")
+
 @SessionScoped
 public class EncounterMemberController implements Serializable {
         
-    @ManagedProperty(value="#{sessionController}")
+    @Inject
     private SessionController sessionController;
     
     public SessionController getSessionController() {
@@ -34,7 +35,7 @@ public class EncounterMemberController implements Serializable {
         this.sessionController = sessionController;
     }
 
-    @EJB
+    @Inject
     private ScenarioCharacterRecordFacade scenarioCharacterRecordFacade;
 
     public ScenarioCharacterRecordFacade getScenarioCharacterRecordFacade() {
@@ -44,7 +45,7 @@ public class EncounterMemberController implements Serializable {
     public void setScenarioCharacterRecordFacade(ScenarioCharacterRecordFacade scenarioCharacterRecordFacade) {
         this.scenarioCharacterRecordFacade = scenarioCharacterRecordFacade;
     }
-    @EJB
+    @Inject
     private EncounterRecordFacade encounterRecordFacade;
 
     public EncounterMemberFacade getEncounterMemberFacade() {
@@ -62,7 +63,7 @@ public class EncounterMemberController implements Serializable {
     public void setEncounterRecordFacade(EncounterRecordFacade encounterRecordFacade) {
         this.encounterRecordFacade = encounterRecordFacade;
     }
-    @ManagedProperty(value = "#{encounterRecordController}")
+    @Inject
     private EncounterRecordController encounterRecordController;
 
     public EncounterRecordController getEncounterRecordController() {
@@ -72,7 +73,7 @@ public class EncounterMemberController implements Serializable {
     public void setEncounterRecordController(EncounterRecordController encounterRecordController) {
         this.encounterRecordController = encounterRecordController;
     }
-    @EJB
+    @Inject
     private EncounterMemberFacade encounterMemberFacade;
 
     public HtmlDataTable getEncounterMemberTable() {

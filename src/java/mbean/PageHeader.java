@@ -15,9 +15,10 @@ import ejb.SaveMasterFacade;
 import ejb.SkillMasterFacade;
 import entity.*;
 import java.util.List;
-import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.FacesException;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.ValueChangeEvent;
@@ -33,29 +34,29 @@ import javax.faces.event.ValueChangeEvent;
  * @version Created on 2009/03/29, 14:55:38
  * @author ka78231
  */
-@ManagedBean
+
 @RequestScoped
 public class PageHeader {
 
-    @EJB
+    @Inject
     private CharacterEquipmentFacade characterEquipmentFacade;
-    @EJB
+    @Inject
     private CharacterSaveRecordFacade characterSaveRecordFacade;
-    @EJB
+    @Inject
     private SaveMasterFacade saveMasterFacade;
-    @EJB
+    @Inject
     private CharacterAbilityRecordFacade characterAbilityRecordFacade;
-    @EJB
+    @Inject
     private AbilityMasterFacade abilityMasterFacade1;
-    @EJB
+    @Inject
     private AbilityMasterFacade abilityMasterFacade;
-    @EJB
+    @Inject
     private SkillMasterFacade skillMasterFacade;
-    @EJB
+    @Inject
     private CharacterSkillRecordFacade characterSkillRecordFacade;
-    @EJB
+    @Inject
     private CampaignMasterFacade campaignMasterFacade;
-    @EJB
+    @Inject
     private CharacterRecordFacade characterRecordFacade;
 
     public PageHeader() {
@@ -65,7 +66,7 @@ public class PageHeader {
         return "CharacterListPage";
     }
 
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {

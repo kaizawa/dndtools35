@@ -5,20 +5,23 @@
 package mbean;
 
 import entity.DiceMaster;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
+
 import javax.faces.component.html.HtmlDataTable;
 
 /**
  *
  * @author kaizawa
  */
-@ManagedBean
+
 @SessionScoped
-public class DiceToolsController {
+public class DiceToolsController implements Serializable {
     //ダイスタイプ
     private DiceMaster selectedDice = null;
 

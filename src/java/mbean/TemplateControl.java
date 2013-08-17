@@ -5,7 +5,8 @@
 package mbean;
 
 import entity.ScenarioRecord;
-import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
@@ -13,11 +14,11 @@ import javax.faces.bean.RequestScoped;
  *
  * @author kaizawa
  */
-@ManagedBean
+
 @RequestScoped
 public class TemplateControl {
 
-    @ManagedProperty(value = "#{scenarioRecordController}")
+    @Inject
     private ScenarioRecordController scenarioRecordController;
 
     public EncounterRecordController getEncounterRecordController() {
@@ -36,7 +37,7 @@ public class TemplateControl {
         this.scenarioRecordController = scenarioRecordController;
     }
     
-    @ManagedProperty(value = "#{encounterRecordController}")
+    @Inject
     private EncounterRecordController encounterRecordController;
 
     /**

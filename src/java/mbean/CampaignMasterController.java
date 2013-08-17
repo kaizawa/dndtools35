@@ -7,10 +7,12 @@ import ejb.CampaignMasterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.annotation.ManagedBean;
+
+import javax.enterprise.context.SessionScoped;
+//
+//import javax.faces.bean.ManagedProperty;
+//
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,19 +20,20 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
-@ManagedBean(name = "campaignMasterController")
+
 @SessionScoped
 public class CampaignMasterController implements Serializable {
 
     private CampaignMaster current;
     private DataModel items = null;
-    @EJB
+    @Inject
     private ejb.CampaignMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {

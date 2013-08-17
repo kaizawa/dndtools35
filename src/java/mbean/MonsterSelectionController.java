@@ -11,10 +11,11 @@ import entity.ScenarioCharacterRecord;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
+
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
@@ -25,7 +26,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
 
-@ManagedBean(name = "monsterSelectionController")
+
 @SessionScoped
 public class MonsterSelectionController implements Serializable {
     
@@ -40,9 +41,9 @@ public class MonsterSelectionController implements Serializable {
     }
 
     private Integer MAX_NAME_INDEX = 100;
-    @EJB
+    @Inject
     private EncounterMemberFacade encounterMemberFacade;
-    @ManagedProperty(value = "#{encounterRecordController}")
+    @Inject
     private EncounterRecordController encounterRecordController;
     
     public EncounterRecordController getEncounterRecordController() {
@@ -54,7 +55,7 @@ public class MonsterSelectionController implements Serializable {
     }
     private MonsterData current;
     private DataModel items = null;
-    @EJB
+    @Inject
     private ejb.MonsterMasterFacade monsterMasterFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;

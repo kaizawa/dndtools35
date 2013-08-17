@@ -4,10 +4,11 @@ import ejb.ScenarioRecordFacade;
 import entity.CampaignMaster;
 import entity.ScenarioRecord;
 import java.io.Serializable;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,17 +19,17 @@ import javax.faces.model.SelectItem;
 import mbean.util.JsfUtil;
 import mbean.util.PaginationHelper;
 
-@ManagedBean(name = "scenarioRecordController")
+
 @SessionScoped
 public class ScenarioRecordController implements Serializable {
 
     private ScenarioRecord current;
     private DataModel items = null;
-    @EJB
+    @Inject
     private ejb.ScenarioRecordFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {

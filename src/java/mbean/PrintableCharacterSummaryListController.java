@@ -9,12 +9,12 @@ import entity.CharacterRecord;
 import entity.SaveMaster;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.convert.NumberConverter;
 
-@ManagedBean
+
 @RequestScoped
 public class PrintableCharacterSummaryListController extends CharacterSheetController {
     private HtmlDataTable characterSummaryTable = new HtmlDataTable();

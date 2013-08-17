@@ -3,18 +3,19 @@ package mbean;
 import ejb.PlayerMasterFacade;
 import entity.PlayerMaster;
 import java.security.MessageDigest;
-import javax.ejb.EJB;
+
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import mbean.util.JsfUtil;
 
-@ManagedBean
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 @RequestScoped
 public class LoginController {
 
-    @ManagedProperty(value = "#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {
@@ -24,7 +25,7 @@ public class LoginController {
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
     }
-    @EJB
+    @Inject
     private PlayerMasterFacade PlayerMasterFacade;
     private String userName;
     private String password;

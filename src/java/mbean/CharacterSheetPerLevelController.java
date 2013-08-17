@@ -13,9 +13,11 @@ import ejb.SkillMasterFacade;
 import entity.*;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
+
+
+
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
 import mbean.util.JsfUtil;
@@ -29,17 +31,17 @@ import mbean.util.JsfUtil;
  *
  * @author ka78231
  */
-@ManagedBean
+
 @SessionScoped
 public class CharacterSheetPerLevelController extends CharacterSheetController { 
     
-    @EJB
+    @Inject
     protected SkillMasterFacade skillMasterFacade;
-    @EJB
+    @Inject
     protected CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
-    @EJB
+    @Inject
     protected CharacterGrowthRecordFacade characterGrowthRecordFacade;
-    @EJB
+    @Inject
     protected CharacterRecordFacade characterRecordFacade;
     
     private HtmlSelectOneMenu levelDropdown = new HtmlSelectOneMenu();

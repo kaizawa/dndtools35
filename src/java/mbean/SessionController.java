@@ -7,12 +7,18 @@ package mbean;
 
 import ejb.*;
 import entity.*;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.inject.Inject;
+//
+//import javax.faces.bean.ManagedProperty;
+//
 
 /**
  * <p>Session scope data bean for your application.  Create properties
@@ -26,25 +32,44 @@ import javax.faces.bean.SessionScoped;
  *
  * @author ka78231
  */
-@ManagedBean
+
 @SessionScoped
-public class SessionController {
-    @EJB
+public class SessionController  implements Serializable {
+    @Inject
     private CharacterRecordFacade characterRecordFacade;
-    @EJB
+    @Inject
     private BonusRankMasterFacade bonusRankMasterFacade;
-    @EJB
+    @Inject
     private ReligionMasterFacade religionMasterFacade;
-    @EJB
+    @Inject
     private GenderMasterFacade genderMasterFacade;
-    @EJB
+    @Inject
     private AlignmentMasterFacade alignmentMasterFacade;
-    @EJB
+    @Inject
     private AbilityMasterFacade abilityMasterFacade;
-    @EJB
+    @Inject
     private RaceMasterFacade raceMasterFacade;
-    @EJB
+    @Inject
     private CampaignMasterFacade campaignMasterFacade; 
+    
+    /** NOTE */
+    /*
+    Need to remove all javajavax.faces.bean.ManagedBean and @ManagedProperty.
+            javax.faces.bean.ManagedBean need to be replaced by javax.annotation.ManagedBean;
+            and @ManagedProperty must be replaced by @Inject
+                    @Inject can is also be replaced by @Inject
+                    * */
+    
+    @Inject
+    private ApplicationController applicationController;
+
+    public ApplicationController getApplicationController() {
+        return applicationController;
+    }
+
+    public void setApplicationController(ApplicationController applicationController) {
+        this.applicationController = applicationController;
+    }
     
     @PostConstruct
     public void init() {

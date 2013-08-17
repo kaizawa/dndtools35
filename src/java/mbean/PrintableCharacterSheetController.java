@@ -5,7 +5,7 @@
 package mbean;
 
 import entity.CharacterGrowthRecord;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.RequestScoped;
 
 /**
@@ -19,7 +19,7 @@ import javax.faces.bean.RequestScoped;
  * @version Created on 2009/02/20, 23:11:21
  * @author ka78231
  */
-@ManagedBean
+
 @RequestScoped
 public class PrintableCharacterSheetController extends CharacterSheetController {
 

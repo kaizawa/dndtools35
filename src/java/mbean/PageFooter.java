@@ -6,7 +6,7 @@
 package mbean;
 
 import javax.faces.FacesException;
-import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.RequestScoped;
 
 /**
@@ -21,7 +21,7 @@ import javax.faces.bean.RequestScoped;
  * @author ka78231
  */
 
-@ManagedBean
+
 @RequestScoped
 public class PageFooter  {
 

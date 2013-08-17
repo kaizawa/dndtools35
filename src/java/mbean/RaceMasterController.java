@@ -9,17 +9,17 @@ import ejb.*;
 import entity.RaceAbilityMaster;
 import entity.RaceMaster;
 import entity.RaceSaveMaster;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 import mbean.util.JsfUtil;
 
 /**
@@ -30,11 +30,12 @@ import mbean.util.JsfUtil;
  *
  * @author ka78231
  */
-@ManagedBean
-@SessionScoped
-public class RaceMasterController {
 
-    @ManagedProperty(value = "#{sessionController}")
+@Named
+@SessionScoped
+public class RaceMasterController implements Serializable {
+
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {
@@ -44,7 +45,7 @@ public class RaceMasterController {
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
     }
-    @ManagedProperty(value = "#{applicationController}")
+    @Inject
     private ApplicationController applicationController;
 
     public ApplicationController getApplicationController() {
@@ -54,15 +55,15 @@ public class RaceMasterController {
     public void setApplicationController(ApplicationController applicationController) {
         this.applicationController = applicationController;
     }
-    @EJB
+    @Inject
     private SizeMasterFacade sizeMasterFacade;
-    @EJB
+    @Inject
     private RaceSaveMasterFacade raceSaveMasterFacade;
-    @EJB
+    @Inject
     private RaceAbilityMasterFacade raceAbilityMasterFacade;
-    @EJB
+    @Inject
     private RaceMasterFacade raceMasterFacade;
-    @EJB
+    @Inject
     private SaveMasterFacade saveMasterFacade;
     private RaceMaster raceMaster;
 

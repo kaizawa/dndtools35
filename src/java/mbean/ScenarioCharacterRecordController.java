@@ -6,10 +6,11 @@ import mbean.util.PaginationHelper;
 import ejb.ScenarioCharacterRecordFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
+
+import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +19,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "scenarioCharacterRecordController")
+
 @SessionScoped
 public class ScenarioCharacterRecordController implements Serializable {
     
@@ -35,7 +36,7 @@ public class ScenarioCharacterRecordController implements Serializable {
 
     private ScenarioCharacterRecord current;
     private DataModel items = null;
-    @EJB
+    @Inject
     private ejb.ScenarioCharacterRecordFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
