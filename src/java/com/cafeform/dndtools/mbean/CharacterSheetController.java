@@ -637,9 +637,9 @@ public class CharacterSheetController implements Serializable {
         charaData.setSaveTime(date);
 
         try {
-            // CharacterRecord(CHARACTER_RECORD)の更新
+            charaData.updateGrowthRecord();            
+            // CharacterRecord(CHARACTER_RECORD)の更新            
             characterRecordFacade.edit(charaData.getCharacterRecord());
-            charaData.updateGrowthRecord();
             characterEquipmentFacade.edit(equip);
             for (CharacterGrowthRecord growth : growthList) {
                 characterGrowthRecordFacade.edit(growth);
@@ -944,7 +944,7 @@ public class CharacterSheetController implements Serializable {
     public String editSkillButton_action() {
         int index = growthTable.getRowIndex();
         // Lv とキャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする
-        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterRecord().getCharacterGrowthRecordList().get(index));
+        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(index));
         return "EditCharacterPerLevelPage";
     }
 
@@ -1023,7 +1023,7 @@ public class CharacterSheetController implements Serializable {
      */
     public String editSkillNomalButton_action() {
         // キャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする。Lv は 1 固定
-        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterRecord().getCharacterGrowthRecordList().get(0));
+        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(0));
         return "EditCharacterPerLevelPage";
     }
 

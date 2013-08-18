@@ -1355,6 +1355,24 @@ public class CharacterData implements CharacterSummary {
     public List<CharacterGrowthRecord> getCharacterGrowthRecordList() {
         return characterRecord.getCharacterGrowthRecordList();
     }
+    
+    /**
+     * This method only return a list of CharacterGrowthRecode whose level
+     * is less than or equal current level 
+     */
+    public List<CharacterGrowthRecord> getCurrentCharacterGrowthRecordList() {
+        List<CharacterGrowthRecord> totalList = characterRecord.getCharacterGrowthRecordList();
+        List<CharacterGrowthRecord> currentList = new ArrayList();
+        
+        for (CharacterGrowthRecord growth : totalList) {
+            // 経験値から見たキャラクタレベル以上は考慮しない
+            if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getLevel()) {
+                break;
+            }
+            currentList.add(growth);
+        }
+        return currentList;
+    }
 
     public RaceMaster getRaceId() {
         return characterRecord.getRaceId();

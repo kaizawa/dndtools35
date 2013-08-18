@@ -51,7 +51,9 @@
                             </h:panelGrid>
                             <h:panelGrid columns="4" id="gridPanel8" style="color: rgb(51,51,51); text-align: center" styleClass="g">
                                 <h:outputText id="outputText5"
-                                              style="font-size: 18px; font-weight: bold; left: 55px; position: relative; text-align: right; width: 100px" value="#{characterSheetController.characterData.characterLevel}"/>
+                                              style="font-size: 18px; font-weight: bold; left: 55px; position: relative; 
+                                              text-align: right; width: 100px"
+                                              value="#{characterSheetController.characterData.characterLevel}"/>
                                 <h:inputText id="textField3" onchange="" style="left: 40px; position: relative; text-align: right; width: 100px" value="#{characterSheetController.characterData.experience}"/>
                                 <h:outputText id="outputText6" style="left: 10px; position: relative; text-align: right; width: 100px" value="#{characterSheetController.characterData.getExpForNextLevel()}"/>
                                 <h:outputText id="outputText7" value="#{characterSheetController.characterData.lastChange}"/>
@@ -117,7 +119,7 @@
                             <h:outputText id="outputText21" styleClass="tableTitleBlack" value="クラスとレベル"/>
                             <h:dataTable binding="#{characterSheetController.growthTable}" cellpadding="1" cellspacing="0"
                                          id="growthTable" rowClasses="list-row-even,list-row-odd" styleClass="w"
-                                         value="#{characterSheetController.characterData.characterGrowthRecordList}" var="currentRow">
+                                         value="#{characterSheetController.characterData.currentCharacterGrowthRecordList}" var="currentRow">
                                 <h:column id="column1">
                                     <h:outputText id="outputText22" value="#{currentRow.characterGrowthRecordPK['characterLevel']}"/>
                                     <f:facet name="header">
