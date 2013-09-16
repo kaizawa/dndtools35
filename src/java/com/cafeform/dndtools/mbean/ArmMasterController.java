@@ -4,9 +4,19 @@ import com.cafeform.dndtools.entity.ArmMaster;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.ArmMasterFacade;
-
+import com.cafeform.dndtools.ejb.ArmType1MasterFacade;
+import com.cafeform.dndtools.ejb.ArmType2MasterFacade;
+import com.cafeform.dndtools.ejb.ArmType3MasterFacade;
+import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
+import com.cafeform.dndtools.entity.ArmType1Master;
+import com.cafeform.dndtools.entity.ArmType2Master;
+import com.cafeform.dndtools.entity.ArmType3Master;
+import com.cafeform.dndtools.entity.DamageTypeMaster;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -24,10 +34,21 @@ public class ArmMasterController implements Serializable {
 
     private ArmMaster current;
     private DataModel items = null;
-    @Inject
-    private com.cafeform.dndtools.ejb.ArmMasterFacade ejbFacade;
+    @Inject private com.cafeform.dndtools.ejb.ArmMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private SelectItem[] armType1MasterOptions;
+    private SelectItem[] armType2MasterOptions;
+    private SelectItem[] armType3MasterOptions;
+    private SelectItem[] damageTypeMasterOptions;
+    private List<ArmMaster> filteredArms;
+    private List<ArmMaster> allArms;    
+    
+    @Inject protected ArmType1MasterFacade armType1MasterFacade;
+    @Inject protected ArmType2MasterFacade armType2MasterFacade;    
+    @Inject protected ArmType3MasterFacade armType3MasterFacade; 
+    @Inject protected DamageTypeMasterFacade damageTypeMasterFacade;
+    @Inject protected ArmMasterFacade armMasterFacade;
 
     public ArmMasterController() {
     }
@@ -291,5 +312,93 @@ public class ArmMasterController implements Serializable {
      */
     public boolean isDeleteButtonDisabled() {
         return (current == null || current.getId() == null);
+    }
+    
+
+
+    @PostConstruct
+    public void init() {
+        allArms = armMasterFacade.findAll();
+        armType1MasterOptions = createFilterOptions(armType1MasterFacade.findAll().toArray(new ArmType1Master[0]));
+        armType2MasterOptions = createFilterOptions(armType2MasterFacade.findAll().toArray(new ArmType2Master[0]));
+        armType3MasterOptions = createFilterOptions(armType3MasterFacade.findAll().toArray(new ArmType3Master[0]));        
+        damageTypeMasterOptions = createFilterOptions(damageTypeMasterFacade.findAll().toArray(new DamageTypeMaster[0]));                
+    }
+    
+    public SelectItem[] getDamageTypeMasterOptions() {
+        return damageTypeMasterOptions;
+    }
+    
+    public String saveButton_action() {
+        doSave();
+        return null;
+    }
+
+    public void doSave() {
+        // 全レベルのスキルレコードと、成長レコードも保存する
+        //List<CharacterSkillGrowthRecord> skillGrowthList = getCharacterData().getCharacterSkillGrowthRecordList();
+        //List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
+        // 更新時刻記録用にキャラクターレコードも保存する。
+        // ここで保存するのは、本当は好ましくは無いが。
+
+        //更新時間を記録
+        Date date = new Date();
+        //getCharacterData().setSaveTime(date);
+        
+        try {
+            /*
+            characterRecordFacade.edit(getCharacterData().getCharacterRecord());
+
+            for (CharacterSkillGrowthRecord skillGrowth : skillGrowthList) {
+                characterSkillGrowthRecordFacade.edit(skillGrowth);
+            }
+            for (CharacterGrowthRecord growth : growthList) {
+                characterGrowthRecordFacade.edit(growth);
+            }
+            */ 
+            JsfUtil.addSuccessMessage("保存されました");
+
+        } catch (Exception ex) {
+            JsfUtil.addSuccessMessage("成長記録の保存に失敗しました");
+        }
+    }
+
+    public String returnCharacterRecordPageButton_action() {
+        return "EditCharacterRecordPage";
+    }
+
+    public List<ArmMaster> getFilteredArms() {
+        return filteredArms;
+    }
+
+    public void setFilteredArms(List<ArmMaster> filteredArms) {
+        this.filteredArms = filteredArms;
+    }
+
+    public List<ArmMaster> getAllArms() {
+        return allArms;
+    }
+
+    private SelectItem[] createFilterOptions(Object[] data) {
+        SelectItem[] options = new SelectItem[data.length + 1];
+
+        options[0] = new SelectItem("", "選択");
+        for (int i = 0; i < data.length; i++) {
+            options[i + 1] = new SelectItem(data[i], data[i].toString());
+        }
+
+        return options;
+    }
+
+    public SelectItem[] getArmType1MasterOptions() {
+        return armType1MasterOptions;
+    }
+    
+    public SelectItem[] getArmType2MasterOptions() {
+        return armType2MasterOptions;
+    }
+    
+    public SelectItem[] getArmType3MasterOptions() {
+        return armType3MasterOptions;
     }
 }

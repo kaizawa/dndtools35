@@ -15,6 +15,37 @@
     </ui:define>
     <ui:define name="body">
       <h:form>
+        
+        <h:panelGrid id="armGridPanel" style="" styleClass="tableGrid">
+          <h:outputText styleClass="tableTitleBlack" value="武器"/>
+          <h:dataTable styleClass="w"
+                       value="#{characterSheetController.characterArmRecordList}"
+                       var="currentRow">
+            <h:column >
+              <h:outputText style="font-size: 12px; 
+                                  font-weight: bold" value="#{currentRow.armId.name}"/>
+              <f:facet name="header">
+                <h:outputText escape="false" style="" value="名前"/>
+              </f:facet>
+            </h:column>
+            <h:column >
+              <h:outputText style="font-size: 12px; 
+                                  font-weight: bold" value="#{currentRow.armId.damageDiceNum}
+                                  #{currentRow.armId.damageDiceType.name}"/>
+              <f:facet name="header">
+                <h:outputText escape="false" style="" value="ダメージ"/>
+              </f:facet>
+            </h:column>
+          </h:dataTable>
+
+          <h:panelGrid style="height: 100%; width: 100%" styleClass="p">
+            <h:panelGrid style="width: 100%; height: 100%; text-align: right" >
+              <h:commandButton action="#{characterSheetController.editArmButton_action}" 
+                               value="武器の編集"/>
+            </h:panelGrid>
+          </h:panelGrid>
+        </h:panelGrid>
+        
         <h:panelGrid columns="1" id="contentsGrid" style="width: 100%">
           <h:panelGrid columns="4" id="charaIdGridPanel1" style="height: 100%; text-align: left; width: 100%">
             <h:panelGrid id="gridPanel14" style="width: 100%; height: 100%;">
@@ -524,37 +555,7 @@
                                  id="button7" value="保存"/>
               </h:panelGrid>
 
-              <h:panelGrid id="armGridPanel" style="" styleClass="tableGrid">
-                <h:outputText styleClass="tableTitleBlack" value="武器"/>
-                <h:dataTable styleClass="w"
-                             value="#{characterSheetController.characterArmRecordList}"
-                             var="currentRow">
-                  <h:column >
-                    <h:outputText style="font-size: 12px; 
-                                  font-weight: bold" value="#{currentRow.armId.name}"/>
-                    <f:facet name="header">
-                      <h:outputText escape="false" style="" value="名前"/>
-                    </f:facet>
-                  </h:column>
-                  <h:column >
-                    <h:outputText style="font-size: 12px; 
-                                  font-weight: bold" value="#{currentRow.armId.damageDiceNum}
-                                  #{currentRow.armId.damageDiceType.name}"/>
-                    <f:facet name="header">
-                      <h:outputText escape="false" style="" value="ダメージ"/>
-                    </f:facet>
-                  </h:column>
-                </h:dataTable>
-                
-                <h:panelGrid style="height: 100%; width: 100%" styleClass="p">
-                  <h:panelGrid style="width: 100%; height: 100%; text-align: right" 
-                               styleClass="tableTitleBlackMiddle">
-                    <h:commandButton action="#{characterSheetController.editArmButton_action}" 
-                                     value="武器の編集"/>
-                  </h:panelGrid>
-                </h:panelGrid>
-                
-              </h:panelGrid>
+
 
               <h:panelGrid style="height: 100%; text-align: left; width: 100%">
                 <h:commandButton action="#{characterSheetController.saveButton_action}" value="保存"/>
