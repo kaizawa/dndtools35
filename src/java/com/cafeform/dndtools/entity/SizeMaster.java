@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SizeMaster.findBySizeName", query = "SELECT s FROM SizeMaster s WHERE s.sizeName = :sizeName"),
     @NamedQuery(name = "SizeMaster.findByAcModifier", query = "SELECT s FROM SizeMaster s WHERE s.acModifier = :acModifier")})
 public class SizeMaster implements Serializable {
+    @OneToMany(mappedBy = "sizeId")
+    private List<RaceMaster> raceMasterList;
     @Column(name = "REACH")
     private Integer reach;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -125,6 +127,15 @@ public class SizeMaster implements Serializable {
 
     public void setContactSpace(Double contactSpace) {
         this.contactSpace = contactSpace;
+    }
+
+    @XmlTransient
+    public List<RaceMaster> getRaceMasterList() {
+        return raceMasterList;
+    }
+
+    public void setRaceMasterList(List<RaceMaster> raceMasterList) {
+        this.raceMasterList = raceMasterList;
     }
     
 }

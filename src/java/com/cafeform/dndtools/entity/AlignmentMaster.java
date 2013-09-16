@@ -25,6 +25,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AlignmentMaster.findByAlignmentName", query = "SELECT a FROM AlignmentMaster a WHERE a.alignmentName = :alignmentName"),
     @NamedQuery(name = "AlignmentMaster.findByAlignmentShortName", query = "SELECT a FROM AlignmentMaster a WHERE a.alignmentShortName = :alignmentShortName")})
 public class AlignmentMaster implements Serializable {
+    @OneToMany(mappedBy = "alignmentId")
+    private List<CharacterRecord> characterRecordList;
+    @OneToMany(mappedBy = "alignmentId")
+    private List<ReligionMaster> religionMasterList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -105,6 +109,24 @@ public class AlignmentMaster implements Serializable {
     public String toString() {
         //return "entity.AlignmentMaster[ id=" + id + " ]";
         return getAlignmentName();
+    }
+
+    @XmlTransient
+    public List<CharacterRecord> getCharacterRecordList() {
+        return characterRecordList;
+    }
+
+    public void setCharacterRecordList(List<CharacterRecord> characterRecordList) {
+        this.characterRecordList = characterRecordList;
+    }
+
+    @XmlTransient
+    public List<ReligionMaster> getReligionMasterList() {
+        return religionMasterList;
+    }
+
+    public void setReligionMasterList(List<ReligionMaster> religionMasterList) {
+        this.religionMasterList = religionMasterList;
     }
     
 }

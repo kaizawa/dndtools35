@@ -25,6 +25,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -61,6 +62,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "CharacterRecord.findByAcShield", query = "SELECT c FROM CharacterRecord c WHERE c.acShield = :acShield"),
     @NamedQuery(name = "CharacterRecord.findByAcMiscMod", query = "SELECT c FROM CharacterRecord c WHERE c.acMiscMod = :acMiscMod")})
 public class CharacterRecord implements Serializable {
+    @OneToMany(mappedBy = "characterId")
+    private List<CharacterArmRecord> characterArmRecordList;
     @Column(name =     "SAVE_TIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date saveTime;
@@ -501,5 +504,14 @@ public class CharacterRecord implements Serializable {
     @Override
     public String toString() {
         return "entity.CharacterRecord[id=" + id + "]";
+    }
+
+    @XmlTransient
+    public List<CharacterArmRecord> getCharacterArmRecordList() {
+        return characterArmRecordList;
+    }
+
+    public void setCharacterArmRecordList(List<CharacterArmRecord> characterArmRecordList) {
+        this.characterArmRecordList = characterArmRecordList;
     }
 }

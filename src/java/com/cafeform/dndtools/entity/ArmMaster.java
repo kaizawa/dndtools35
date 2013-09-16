@@ -1,6 +1,7 @@
 package com.cafeform.dndtools.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,6 +44,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ArmMaster.findByEnhancementBonus", query = "SELECT a FROM ArmMaster a WHERE a.enhancementBonus = :enhancementBonus"),
     @NamedQuery(name = "ArmMaster.findByDescription", query = "SELECT a FROM ArmMaster a WHERE a.description = :description")})
 public class ArmMaster implements Serializable {
+    @OneToMany(mappedBy = "armId")
+    private List<CharacterArmRecord> characterArmRecordList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -315,6 +320,15 @@ public class ArmMaster implements Serializable {
     @Override
     public String toString() {
         return "entity.ArmMaster[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<CharacterArmRecord> getCharacterArmRecordList() {
+        return characterArmRecordList;
+    }
+
+    public void setCharacterArmRecordList(List<CharacterArmRecord> characterArmRecordList) {
+        this.characterArmRecordList = characterArmRecordList;
     }
 
 }

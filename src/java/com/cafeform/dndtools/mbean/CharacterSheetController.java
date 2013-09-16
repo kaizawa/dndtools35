@@ -32,9 +32,12 @@ import com.cafeform.dndtools.ejb.CharacterEquipmentFacade;
 import com.cafeform.dndtools.ejb.CharacterRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterAbilityRecordFacade;
 import com.cafeform.dndtools.ejb.AbilityMasterFacade;
+import com.cafeform.dndtools.ejb.ArmMasterFacade;
+import com.cafeform.dndtools.ejb.ArmType1MasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
+import com.cafeform.dndtools.entity.CharacterArmRecord;
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
@@ -54,10 +57,6 @@ import javax.inject.Inject;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-/**
- *
- * @author kaizawa
- */
 @Named
 @SessionScoped
 public class CharacterSheetController implements Serializable {
@@ -1165,5 +1164,18 @@ public class CharacterSheetController implements Serializable {
         releaseAllButton_action();
         recreatePagination();
         recreateModel();
+    }
+    
+    public List<CharacterArmRecord> getCharacterArmRecordList ()
+    {
+        return getCharacterData().getCharacterRecord().getCharacterArmRecordList();
+    }
+    
+    /*
+     * Arms edit button.
+     */
+    public String editArmButton_action() {
+        getSessionController().setCharacterArmRecord(getCharacterArmRecordList ());
+        return "EditCharacterArmPage";
     }
 }

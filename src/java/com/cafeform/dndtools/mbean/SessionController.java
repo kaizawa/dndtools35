@@ -20,8 +20,10 @@ import com.cafeform.dndtools.ejb.AbilityMasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.ReligionMasterFacade;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
+import com.cafeform.dndtools.entity.CharacterArmRecord;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -221,5 +223,18 @@ public class SessionController  implements Serializable {
 
     void setSelectedCampaign(CampaignMaster selectedCampaign) {
         this.selectedCampaign = selectedCampaign;
+    }
+    
+    /*
+     * Character Arms.
+     */
+    private List<CharacterArmRecord> characterArmRecordList;
+
+    public List<CharacterArmRecord> getCharacterArmRecordList() {
+        return characterArmRecordList;
+    }
+
+    void setCharacterArmRecord(List<CharacterArmRecord> characterArmRecordList) {
+        this.characterArmRecordList = characterArmRecordList;
     }
 }    

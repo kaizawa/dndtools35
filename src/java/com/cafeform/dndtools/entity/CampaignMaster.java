@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CampaignMaster.findByCampaignName", query = "SELECT c FROM CampaignMaster c WHERE c.campaignName = :campaignName"),
     @NamedQuery(name = "CampaignMaster.findByMaster", query = "SELECT c FROM CampaignMaster c WHERE c.master = :master")})
 public class CampaignMaster implements Serializable {
+    @OneToMany(mappedBy = "campaignId")
+    private List<CharacterRecord> characterRecordList;
     @OneToMany(mappedBy = "campaign")
     private List<ScenarioRecord> scenarioRecordList;
     private static final long serialVersionUID = 1L;
@@ -104,6 +106,15 @@ public class CampaignMaster implements Serializable {
 
     public void setScenarioRecordList(List<ScenarioRecord> scenarioRecordList) {
         this.scenarioRecordList = scenarioRecordList;
+    }
+
+    @XmlTransient
+    public List<CharacterRecord> getCharacterRecordList() {
+        return characterRecordList;
+    }
+
+    public void setCharacterRecordList(List<CharacterRecord> characterRecordList) {
+        this.characterRecordList = characterRecordList;
     }
     
 }

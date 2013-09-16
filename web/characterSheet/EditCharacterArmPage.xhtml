@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:f="http://java.sun.com/jsf/core">
+
+  <ui:composition template="/template.xhtml">
+    <ui:define name="title">
+      <h:outputText 
+        value="キャラクター『#{characterSheetController.characterData.characterRecord.characterName}』
+        の武器の編集"></h:outputText>
+    </ui:define>
+    <ui:define name="body">
+      <h:form>
+
+        <h:panelGrid columns="1" id="gridPanel1" style="width: 100%">
+          <h:panelGrid columns="1" id="gridPanel6" style="height: 100%; width: 100%">
+            <h:panelGrid id="naviGationGridPanel1" style="height: 100%; width: 100%">
+
+              <h:panelGrid columns="2" id="gridPanel5" style="height: 100%;
+                           text-align: left; width: 100%">
+                <h:panelGrid id="gridPanel3" style="height: 100%; text-align: left; 
+                             width: 100%">
+                  <h:commandButton 
+                    action="#{characterSheetArmController.saveButton_action}" 
+                    id="saveButton1" value="保存"/>
+                </h:panelGrid>
+
+                <h:panelGrid id="gridPanel4" style="height: 100%; text-align: right; 
+                             width: 100%">
+                  <h:commandLink 
+                    action="#{characterSheetArmController
+                              .returnCharacterRecordPageButton_action()}"
+                    id="returnCharacterRecordPageButton1" 
+                    value="キャラクター修正画面へ戻る"/>
+                </h:panelGrid>
+              </h:panelGrid>  
+                <p:dataTable id="dataTable" var="arm" value="#{characterSheetArmController.allArms}" 
+                             widgetVar="armsTable" 
+                             emptyMessage="No arms found with given criteria" 
+                             filteredValue="#{characterSheetArmController.filteredArms}">
+                  <f:facet name="header">
+                    <p:outputPanel>
+                      <h:outputText value="Search all fields:" />
+                      <p:inputText id="globalFilter" onkeyup="PF('armsTable').filter()" style="width:150px" />
+                    </p:outputPanel>
+                  </f:facet>
+                  <p:column id="modelColumn" filterBy="#{arm.name}" 
+                            headerText="Name" footerText="contains"
+                            filterMatchMode="contains">
+                    <h:outputText value="#{arm.name}" />
+                  </p:column>
+                  <p:column id="armType1MasterColumn" 
+                            headerText="単・軍・特" footerText="exact"
+                            filterBy="#{arm.armType1}"                             
+                            filterOptions="#{characterSheetArmController.armType1MasterOptions}"
+                            filterMatchMode="exact" >
+                    <h:outputText value="#{arm.armType1.name}" />
+                  </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+          </h:panelGrid>
+          <h:outputText id="outputText29" style="font-size: 8px" 
+                        value="#{characterSheetPerLevelController.characterData.id}"/>
+        </h:panelGrid>
+      </h:form>
+    </ui:define>            
+  </ui:composition>
+</html> 

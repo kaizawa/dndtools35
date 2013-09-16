@@ -2,50 +2,52 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-    </h:head>
-    <h:body>
-        <p>
-            <h1>インデックス</h1>
-        </p>        
+  <h:head>
+    <title>Facelet Title</title>
+    <h:outputStylesheet name="css/jsfcrud.css"/>
+  </h:head>
+  <h:body>
+    <p>
+      <h1>インデックス</h1>
+    </p>        
 
-        <p>
-            <h:form>
-                <h:commandLink action="/scenarioRecord/List" value="シナリオ一覧"/>
-            </h:form>  
-        </p>
+    <p>
+      <h:form>
+        <h:commandLink action="/scenarioRecord/List" value="シナリオ一覧"/>
+      </h:form>  
+    </p>
 
-        <p>
-            <h:form>
-                <h:commandLink action="/monsterMaster/List" value="モンスター一覧"/>
-            </h:form>
-        </p>            
-        <p>
-            <h:form>
-                <h:commandLink action="/typeMaster/List" value="種別一覧"/>
-            </h:form>
-        </p>
+    <p>
+      <h:form>
+        <h:commandLink action="/monsterMaster/List" value="モンスター一覧"/>
+      </h:form>
+    </p>            
+    <p>
+      <h:form>
+        <h:commandLink action="/typeMaster/List" value="種別一覧"/>
+      </h:form>
+    </p>
 
-        <h:form>
-            <h:commandLink action="/campaignMaster/List" value="Show All CampaignMaster Items"/>
-        </h:form>
-        <br />
-        <h:link outcome="/armMaster/List" value="Show All ArmMaster Items"/>
-        <br />
-        <h:link outcome="/armType1Master/List" value="Show All ArmType1Master Items"/>
-        <br />
-        <h:link outcome="/armType2Master/List" value="Show All ArmType2Master Items"/>
-        <br />
-        <h:link outcome="/armType3Master/List" value="Show All ArmType3Master Items"/>
-        <br />
-        <h:link outcome="/damageTypeMaster/List" value="Show All DamageTypeMaster Items"/>
-        <br />
-        <h:link outcome="/diceMaster/List" value="Show All DiceMaster Items"/>
-        <br />
-        <h:link outcome="/rulebookMaster/List" value="Show All RulebookMaster Items"/>
-    </h:body>
+    <h:form>
+      <h:commandLink action="/campaignMaster/List" value="Show All CampaignMaster Items"/>
+    </h:form>
+    <br />
+    <h:link outcome="/armMaster/List" value="Show All ArmMaster Items"/>
+    <br />
+    <h:link outcome="/armType1Master/List" value="Show All ArmType1Master Items"/>
+    <br />
+    <h:link outcome="/armType2Master/List" value="Show All ArmType2Master Items"/>
+    <br />
+    <h:link outcome="/armType3Master/List" value="Show All ArmType3Master Items"/>
+    <br />
+    <h:link outcome="/damageTypeMaster/List" value="Show All DamageTypeMaster Items"/>
+    <br />
+    <h:link outcome="/diceMaster/List" value="Show All DiceMaster Items"/>
+    <br />
+    <h:link outcome="/rulebookMaster/List" value="Show All RulebookMaster Items"/>
+    <br />
+    <h:link outcome="welcomePrimefaces" value="Primefacesようこそページ" />
+  </h:body>
 
 
 
