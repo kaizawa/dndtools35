@@ -77,8 +77,9 @@ public class ArmMaster implements Serializable {
     private Integer secondCriticalMultiplier;
     @Column(name = "SECOND_THREAT_RANGE")
     private Integer secondThreatRange;
-    @Column(name = "SECOND_DAMAGE_TYPE")
-    private Integer secondDamageType;
+    @JoinColumn(name = "SECOND_DAMAGE_TYPE", referencedColumnName = "ID")
+    @ManyToOne
+    private DamageTypeMaster secondDamageType;
     @Column(name = "ENHANCEMENT_BONUS")
     private Integer enhancementBonus;
     @Size(max = 4000)
@@ -217,11 +218,11 @@ public class ArmMaster implements Serializable {
         this.secondThreatRange = secondThreatRange;
     }
 
-    public Integer getSecondDamageType() {
+    public DamageTypeMaster getSecondDamageType() {
         return secondDamageType;
     }
 
-    public void setSecondDamageType(Integer secondDamageType) {
+    public void setSecondDamageType(DamageTypeMaster secondDamageType) {
         this.secondDamageType = secondDamageType;
     }
 

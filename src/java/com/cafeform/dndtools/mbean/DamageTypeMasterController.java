@@ -7,11 +7,9 @@ import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
-
-import javax.inject.Inject;
+import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -20,15 +18,13 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-import javax.inject.Named;
-
-@Named
+@Named("damageTypeMasterController")
 @SessionScoped
 public class DamageTypeMasterController implements Serializable {
 
     private DamageTypeMaster current;
     private DataModel items = null;
-    @Inject
+    @EJB
     private com.cafeform.dndtools.ejb.DamageTypeMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -191,16 +187,21 @@ public class DamageTypeMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public DamageTypeMaster getDamageTypeMaster(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+
     @FacesConverter(forClass = DamageTypeMaster.class)
     public static class DamageTypeMasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             DamageTypeMasterController controller = (DamageTypeMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "damageTypeMasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "damageTypeMasterController");
+            return controller.getDamageTypeMaster(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -210,11 +211,12 @@ public class DamageTypeMasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;

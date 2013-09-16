@@ -44,6 +44,8 @@ import com.cafeform.dndtools.ejb.AbilityMasterFacade;
 import com.cafeform.dndtools.ejb.SkillSynergyMasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
+import com.cafeform.dndtools.entity.ArmMaster;
+import com.cafeform.dndtools.entity.CharacterArmRecord;
 import java.text.SimpleDateFormat;
 import java.text.StringCharacterIterator;
 import java.util.*;
@@ -1802,5 +1804,62 @@ public class CharacterData implements CharacterSummary {
     
     public Date getSaveTime() {
         return characterRecord.getSaveTime();
+    }
+    
+    /**
+     * Return attack bonus and damage bonus for this character for given 
+     * arms.
+     * 
+     * e.g. 近接: +17/+12(d8+7 19-20/x2)(悪へ+d6)
+     * 
+     * @param armRecord
+     * @return modifiers
+     */
+    public String getAttackModifiers (CharacterArmRecord armRecord)
+    {
+        ArmMaster arm = armRecord.getArmId();
+        String type3Name = null != arm.getArmType3() ? arm.getArmType3().getName() : "";        
+        StringBuilder modifiers = new StringBuilder();
+        modifiers.append(type3Name).append(" "); // 遠隔・近接
+        int baseAttack = getBaseAttackTotal();
+        int attackBonus = getRangeAttackBonus();
+        int numAttacks = ((baseAttack - 1) / 5) + 1;
+        int enhancementBonus = null != arm.getEnhancementBonus() ? arm.getEnhancementBonus() : 0;
+        
+        
+        /* Attack bonus */
+        for(int i = 0 ; i < numAttacks ; i++)
+        {
+            if ( 0 != i ){
+                modifiers.append("/");
+            }
+            modifiers.append("+")
+                .append(attackBonus + enhancementBonus - (i * 5));
+        }
+        
+        int threatRange = null != arm.getThreatRange() ? arm.getThreatRange() : 20;
+        String threatRangStr;        
+        if(20 == threatRange) 
+        {
+            threatRangStr = "20";
+        }
+        else 
+        {
+            threatRangStr = threatRange + "-20";
+        }
+        
+        String diceType = null != arm.getDamageDiceType() ? arm.getDamageDiceType().getName() : "";
+
+        /* Damange bonus & Critical area */ 
+        modifiers.append("(")
+            .append(arm.getDamageDiceNum())
+            .append(diceType)
+            .append("+").append(getAttackBonusStrengthBonus() + enhancementBonus)
+            .append(" ")
+            .append(threatRangStr).append("/")
+            .append(arm.getCriticalMultiplier())
+            .append(")");
+
+        return modifiers.toString();
     }
 }

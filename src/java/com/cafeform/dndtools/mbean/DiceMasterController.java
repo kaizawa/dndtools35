@@ -4,9 +4,11 @@ import com.cafeform.dndtools.entity.DiceMaster;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.DiceMasterFacade;
+import com.cafeform.dndtools.entity.DamageTypeMaster;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
+import javax.ejb.EJB;
 
 
 import javax.inject.Inject;
@@ -29,7 +31,7 @@ public class DiceMasterController implements Serializable {
     private DiceMaster current;
     private DataModel items = null;
     @Inject
-    private com.cafeform.dndtools.ejb.DiceMasterFacade ejbFacade;
+    private DiceMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -58,7 +60,8 @@ public class DiceMasterController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(),
+                        getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -190,17 +193,22 @@ public class DiceMasterController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
+    
+    public DiceMaster getDiceMaster(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
 
     @FacesConverter(forClass = DiceMaster.class)
     public static class DiceMasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             DiceMasterController controller = (DiceMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "diceMasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "diceMasterController");
+            return controller.getDiceMaster(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -210,11 +218,12 @@ public class DiceMasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
@@ -223,7 +232,8 @@ public class DiceMasterController implements Serializable {
                 DiceMaster o = (DiceMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + DiceMaster.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type "
+                    + object.getClass().getName() + "; expected type: " + DiceMaster.class.getName());
             }
         }
     }

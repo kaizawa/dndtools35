@@ -190,17 +190,23 @@ public class ArmType1MasterController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
+    
+    public ArmType1Master getArmType1Master (Integer id)
+    {
+        return ejbFacade.find(id);
+    }
 
     @FacesConverter(forClass = ArmType1Master.class)
     public static class ArmType1MasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             ArmType1MasterController controller = (ArmType1MasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "armType1MasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "armType1MasterController");
+            return controller.getArmType1Master(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {

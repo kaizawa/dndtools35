@@ -6,6 +6,9 @@ import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.AlignmentMasterFacade;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
+import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -14,16 +17,14 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named
+@Named("alignmentMasterController")
 @SessionScoped
 public class AlignmentMasterController implements Serializable {
 
     private AlignmentMaster current;
     private DataModel items = null;
-    @Inject
+    @EJB
     private com.cafeform.dndtools.ejb.AlignmentMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -46,7 +47,6 @@ public class AlignmentMasterController implements Serializable {
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -81,10 +81,10 @@ public class AlignmentMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage("AlignmentMasterCreated");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AlignmentMasterCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -98,10 +98,10 @@ public class AlignmentMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage("AlignmentMasterUpdated");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AlignmentMasterUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -131,9 +131,9 @@ public class AlignmentMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage("AlignmentMasterDeleted");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AlignmentMasterDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -187,16 +187,21 @@ public class AlignmentMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public AlignmentMaster getAlignmentMaster(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+
     @FacesConverter(forClass = AlignmentMaster.class)
     public static class AlignmentMasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             AlignmentMasterController controller = (AlignmentMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "alignmentMasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "alignmentMasterController");
+            return controller.getAlignmentMaster(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -206,11 +211,12 @@ public class AlignmentMasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
@@ -219,7 +225,7 @@ public class AlignmentMasterController implements Serializable {
                 AlignmentMaster o = (AlignmentMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + AlignmentMasterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + AlignmentMaster.class.getName());
             }
         }
     }

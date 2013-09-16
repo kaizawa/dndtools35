@@ -4,13 +4,8 @@ import com.cafeform.dndtools.entity.CharacterRecord;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.CharacterRecordFacade;
-
 import java.io.Serializable;
-import java.util.ResourceBundle;
 import javax.enterprise.context.SessionScoped;
-
-
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -19,17 +14,16 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
-
 import javax.inject.Named;
 
 @Named
 @SessionScoped
 public class CharacterRecordController implements Serializable {
 
-    private CharacterRecord current;
-    private DataModel items = null;
     @Inject
-    private com.cafeform.dndtools.ejb.CharacterRecordFacade ejbFacade;
+    private CharacterRecordFacade characterRecordFacade;
+    private CharacterRecord currentCharacterRecord;
+    private DataModel items = null;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -37,29 +31,29 @@ public class CharacterRecordController implements Serializable {
     }
 
     public CharacterRecord getSelected() {
-        if (current == null) {
-            current = new CharacterRecord();
+        if (currentCharacterRecord == null) {
+            currentCharacterRecord = new CharacterRecord();
             selectedItemIndex = -1;
         }
-        return current;
+        return currentCharacterRecord;
     }
 
-    private CharacterRecordFacade getFacade() {
-        return ejbFacade;
+    private CharacterRecordFacade getCharacterRecordFacade() {
+        return characterRecordFacade;
     }
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
                 @Override
                 public int getItemsCount() {
-                    return getFacade().count();
+                    return getCharacterRecordFacade().count();
                 }
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getCharacterRecordFacade().findRange(
+                        new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -72,20 +66,20 @@ public class CharacterRecordController implements Serializable {
     }
 
     public String prepareView() {
-        current = (CharacterRecord) getItems().getRowData();
+        currentCharacterRecord = (CharacterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new CharacterRecord();
+        currentCharacterRecord = new CharacterRecord();
         selectedItemIndex = -1;
         return "Create";
     }
 
     public String create() {
         try {
-            getFacade().create(current);
+            getCharacterRecordFacade().create(currentCharacterRecord);
             JsfUtil.addSuccessMessage("CharacterRecordCreated");
             return prepareCreate();
         } catch (Exception e) {
@@ -95,14 +89,14 @@ public class CharacterRecordController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (CharacterRecord) getItems().getRowData();
+        currentCharacterRecord = (CharacterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
 
     public String update() {
         try {
-            getFacade().edit(current);
+            getCharacterRecordFacade().edit(currentCharacterRecord);
             JsfUtil.addSuccessMessage("CharacterRecordUpdated");
             return "View";
         } catch (Exception e) {
@@ -112,7 +106,7 @@ public class CharacterRecordController implements Serializable {
     }
 
     public String destroy() {
-        current = (CharacterRecord) getItems().getRowData();
+        currentCharacterRecord = (CharacterRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -135,7 +129,7 @@ public class CharacterRecordController implements Serializable {
 
     private void performDestroy() {
         try {
-            getFacade().remove(current);
+            getCharacterRecordFacade().remove(currentCharacterRecord);
             JsfUtil.addSuccessMessage("CharacterRecordDeleted");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
@@ -143,7 +137,7 @@ public class CharacterRecordController implements Serializable {
     }
 
     private void updateCurrentItem() {
-        int count = getFacade().count();
+        int count = getCharacterRecordFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
             selectedItemIndex = count - 1;
@@ -153,7 +147,7 @@ public class CharacterRecordController implements Serializable {
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            currentCharacterRecord = getCharacterRecordFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -185,23 +179,24 @@ public class CharacterRecordController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return JsfUtil.getSelectItems(characterRecordFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return JsfUtil.getSelectItems(characterRecordFacade.findAll(), true);
     }
 
     @FacesConverter(forClass = CharacterRecord.class)
     public static class CharacterRecordControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             CharacterRecordController controller = (CharacterRecordController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "characterRecordController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "characterRecordController");
+            return controller.characterRecordFacade.find(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -211,11 +206,12 @@ public class CharacterRecordController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
@@ -224,7 +220,9 @@ public class CharacterRecordController implements Serializable {
                 CharacterRecord o = (CharacterRecord) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CharacterRecordController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type "
+                    + object.getClass().getName() + "; expected type: "
+                    + CharacterRecordController.class.getName());
             }
         }
     }

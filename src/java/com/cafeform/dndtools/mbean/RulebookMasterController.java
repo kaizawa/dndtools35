@@ -7,7 +7,8 @@ import com.cafeform.dndtools.ejb.RulebookMasterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
-import javax.inject.Inject;
+import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -16,15 +17,14 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.inject.Named;
 
-@Named
+@Named("rulebookMasterController")
 @SessionScoped
 public class RulebookMasterController implements Serializable {
 
     private RulebookMaster current;
     private DataModel items = null;
-    @Inject
+    @EJB
     private com.cafeform.dndtools.ejb.RulebookMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -187,16 +187,21 @@ public class RulebookMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public RulebookMaster getRulebookMaster(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+
     @FacesConverter(forClass = RulebookMaster.class)
     public static class RulebookMasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             RulebookMasterController controller = (RulebookMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "rulebookMasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "rulebookMasterController");
+            return controller.getRulebookMaster(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -206,11 +211,12 @@ public class RulebookMasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;

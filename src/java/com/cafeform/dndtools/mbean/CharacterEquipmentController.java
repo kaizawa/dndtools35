@@ -6,6 +6,9 @@ import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.CharacterEquipmentFacade;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
+import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -14,17 +17,14 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.inject.Inject;
 
-import javax.inject.Named;
-
-@Named
+@Named("characterEquipmentController")
 @SessionScoped
 public class CharacterEquipmentController implements Serializable {
 
     private CharacterEquipment current;
     private DataModel items = null;
-    @Inject
+    @EJB
     private com.cafeform.dndtools.ejb.CharacterEquipmentFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -47,7 +47,6 @@ public class CharacterEquipmentController implements Serializable {
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -82,10 +81,10 @@ public class CharacterEquipmentController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage("CharacterEquipmentCreated");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterEquipmentCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -99,10 +98,10 @@ public class CharacterEquipmentController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage("CharacterEquipmentUpdated");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterEquipmentUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -132,9 +131,9 @@ public class CharacterEquipmentController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage("CharacterEquipmentDeleted");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterEquipmentDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -188,16 +187,21 @@ public class CharacterEquipmentController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public CharacterEquipment getCharacterEquipment(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+
     @FacesConverter(forClass = CharacterEquipment.class)
     public static class CharacterEquipmentControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             CharacterEquipmentController controller = (CharacterEquipmentController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "characterEquipmentController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "characterEquipmentController");
+            return controller.getCharacterEquipment(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -207,11 +211,12 @@ public class CharacterEquipmentController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
@@ -220,7 +225,7 @@ public class CharacterEquipmentController implements Serializable {
                 CharacterEquipment o = (CharacterEquipment) object;
                 return getStringKey(o.getCharacterId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CharacterEquipmentController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CharacterEquipment.class.getName());
             }
         }
     }

@@ -7,10 +7,9 @@ import com.cafeform.dndtools.ejb.ArmType2MasterFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
+import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-
-
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,17 +17,14 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.inject.Inject;
 
-import javax.inject.Named;
-
-@Named
+@Named("armType2MasterController")
 @SessionScoped
 public class ArmType2MasterController implements Serializable {
 
     private ArmType2Master current;
     private DataModel items = null;
-    @Inject
+    @EJB
     private com.cafeform.dndtools.ejb.ArmType2MasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -191,16 +187,21 @@ public class ArmType2MasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public ArmType2Master getArmType2Master(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+
     @FacesConverter(forClass = ArmType2Master.class)
     public static class ArmType2MasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             ArmType2MasterController controller = (ArmType2MasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "armType2MasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "armType2MasterController");
+            return controller.getArmType2Master(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -210,11 +211,12 @@ public class ArmType2MasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;

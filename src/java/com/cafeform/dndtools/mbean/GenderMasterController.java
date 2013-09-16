@@ -6,9 +6,9 @@ import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.GenderMasterFacade;
 
 import java.io.Serializable;
-
-
-import javax.inject.Inject;
+import java.util.ResourceBundle;
+import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -18,15 +18,13 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-import javax.inject.Named;
-
-@Named
+@Named("genderMasterController")
 @SessionScoped
 public class GenderMasterController implements Serializable {
 
     private GenderMaster current;
     private DataModel items = null;
-    @Inject
+    @EJB
     private com.cafeform.dndtools.ejb.GenderMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
@@ -49,7 +47,6 @@ public class GenderMasterController implements Serializable {
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -84,10 +81,10 @@ public class GenderMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage("GenderMasterCreated");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("GenderMasterCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -101,10 +98,10 @@ public class GenderMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage("GenderMasterUpdated");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("GenderMasterUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -134,9 +131,9 @@ public class GenderMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage("GenderMasterDeleted");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("GenderMasterDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, "PersistenceErrorOccured");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -190,16 +187,21 @@ public class GenderMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public GenderMaster getGenderMaster(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+
     @FacesConverter(forClass = GenderMaster.class)
     public static class GenderMasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             GenderMasterController controller = (GenderMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "genderMasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "genderMasterController");
+            return controller.getGenderMaster(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -209,11 +211,12 @@ public class GenderMasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
@@ -222,7 +225,7 @@ public class GenderMasterController implements Serializable {
                 GenderMaster o = (GenderMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + GenderMasterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + GenderMaster.class.getName());
             }
         }
     }

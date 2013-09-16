@@ -27,8 +27,10 @@ import com.cafeform.dndtools.ejb.BonusRankMasterFacade;
 import com.cafeform.dndtools.ejb.AbilityMasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
+import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
 import com.cafeform.dndtools.ejb.ReligionMasterFacade;
 import com.cafeform.dndtools.ejb.SaveMasterFacade;
+import com.cafeform.dndtools.entity.DamageTypeMaster;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -52,30 +54,19 @@ import javax.inject.Named;
 @ApplicationScoped
 public class ApplicationController {
 
-    @Inject
-    private SizeMasterFacade sizeMasterFacade;
-    @Inject
-    private CampaignMasterFacade campaignMasterFacade;
-    @Inject
-    private ClassMasterFacade classMasterFacade;
-    @Inject
-    private ReligionMasterFacade religionMasterFacade;
-    @Inject
-    private AlignmentMasterFacade alignmentMasterFacade;
-    @Inject
-    private GenderMasterFacade genderMasterFacade;
-    @Inject
-    private RaceMasterFacade raceMasterFacade;
-    @Inject
-    private DiceMasterFacade diceMasterFacade;
-    @Inject
-    private BonusRankMasterFacade bonusRankMasterFacade;
-    @Inject
-    private SaveMasterFacade saveMasterFacade;
-    @Inject
-    private SkillMasterFacade skillMasterFacade;
-    @Inject
-    private AbilityMasterFacade abilityMasterFacade;
+    @Inject private SizeMasterFacade sizeMasterFacade;
+    @Inject private CampaignMasterFacade campaignMasterFacade;
+    @Inject private ClassMasterFacade classMasterFacade;
+    @Inject private ReligionMasterFacade religionMasterFacade;
+    @Inject private AlignmentMasterFacade alignmentMasterFacade;
+    @Inject private GenderMasterFacade genderMasterFacade;
+    @Inject private RaceMasterFacade raceMasterFacade;
+    @Inject private DiceMasterFacade diceMasterFacade;
+    @Inject private BonusRankMasterFacade bonusRankMasterFacade;
+    @Inject private SaveMasterFacade saveMasterFacade;
+    @Inject private SkillMasterFacade skillMasterFacade;
+    @Inject private AbilityMasterFacade abilityMasterFacade;
+    @Inject private DamageTypeMasterFacade damageTypeMasterFacade;
     
     /**
      * <p>Construct a new application data bean instance.</p>
@@ -314,6 +305,10 @@ public class ApplicationController {
         SelectItem[] tempSizeArray = sizeList.toArray(new SelectItem[0]);
         //セッションBeanへのセット
         setSizeArray(tempSizeArray);
+        
+        /* Damage TYpe */
+        damageTypeList = damageTypeMasterFacade.findAll();
+        
     }
 
 
@@ -533,5 +528,13 @@ public class ApplicationController {
 
     public void setSizeArray(SelectItem[] sizeArray) {
         this.sizeArray = sizeArray;
+    }
+    
+    
+    List<DamageTypeMaster> damageTypeList;
+    
+    public List<DamageTypeMaster> getDamageTypeList () 
+    {
+     return damageTypeList;
     }
 }

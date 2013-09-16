@@ -31,12 +31,10 @@ import com.cafeform.dndtools.ejb.CharacterSkillGrowthRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterEquipmentFacade;
 import com.cafeform.dndtools.ejb.CharacterRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterAbilityRecordFacade;
-import com.cafeform.dndtools.ejb.AbilityMasterFacade;
-import com.cafeform.dndtools.ejb.ArmMasterFacade;
-import com.cafeform.dndtools.ejb.ArmType1MasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
+import com.cafeform.dndtools.ejb.CharacterArmRecordFacade;
 import com.cafeform.dndtools.entity.CharacterArmRecord;
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
@@ -76,6 +74,7 @@ public class CharacterSheetController implements Serializable {
     @Inject protected ClassMasterFacade classMasterFacade;
     @Inject private SessionController sessionController;
     @Inject private ApplicationController applicationController;
+    @Inject private CharacterArmRecordFacade characterArmRecordFacade;
 
     public SessionController getSessionController() {
         return sessionController;
@@ -396,7 +395,8 @@ public class CharacterSheetController implements Serializable {
 
         for (SkillMaster skill : skilllist) {
             //あらたに CharacterSkillRecord を確保
-            CharacterSkillRecord charaSkillRecord = new CharacterSkillRecord(characterRecord.getId().intValue(), skill.getId().intValue());
+            CharacterSkillRecord charaSkillRecord = 
+                new CharacterSkillRecord(characterRecord.getId().intValue(), skill.getId().intValue());
             charaSkillRecord.setMiscModifier(0);
             try {
                 characterSkillRecordFacade.create(charaSkillRecord);
@@ -408,7 +408,8 @@ public class CharacterSheetController implements Serializable {
 
             //あらたに 1Lv用の CharacterSkillGrowthRecord を作成
             CharacterSkillGrowthRecord skillGrowthRecord =
-                    new CharacterSkillGrowthRecord(characterRecord.getId().intValue(), 1, skill.getId().intValue());
+                new CharacterSkillGrowthRecord(characterRecord.getId().intValue(), 1, 
+                skill.getId().intValue());
             //スキルポイントを0に初期化
             skillGrowthRecord.setSkillPoint(0);
             try {
@@ -425,7 +426,8 @@ public class CharacterSheetController implements Serializable {
         List<AbilityMaster> abilityList = applicationController.getAbilityList();
         List<CharacterAbilityRecord> charaAbilityList = new ArrayList<CharacterAbilityRecord>();
         for (AbilityMaster ability : abilityList) {
-            CharacterAbilityRecord abilityRecord = new CharacterAbilityRecord(characterRecord.getId().intValue(), ability.getId().intValue());
+            CharacterAbilityRecord abilityRecord = 
+                new CharacterAbilityRecord(characterRecord.getId().intValue(), ability.getId().intValue());
             //各能力値のデフォルトを10にセット
             abilityRecord.setBase(10);
             abilityRecord.setFeatModifier(0);
@@ -434,8 +436,8 @@ public class CharacterSheetController implements Serializable {
             try {
                 characterAbilityRecordFacade.create(abilityRecord);
             } catch (Exception ex) {
-                ex.printStackTrace();
-                JsfUtil.addSuccessMessage("キャラクター能力値(" + ability.getAbilityName() + ")レコードの作成に失敗しました");
+                JsfUtil.addSuccessMessage("キャラクター能力値(" + ability.getAbilityName() 
+                    + ")レコードの作成に失敗しました");
                 return null;
             }
             charaAbilityList.add(abilityRecord);
@@ -447,14 +449,14 @@ public class CharacterSheetController implements Serializable {
         List<SaveMaster> saveList = applicationController.getSaveList();
         List<CharacterSaveRecord> charaSaveList = new ArrayList<CharacterSaveRecord>();
         for (SaveMaster save : saveList) {
-            CharacterSaveRecord saveRecord = new CharacterSaveRecord(characterRecord.getId().intValue(), save.getId().intValue());
+            CharacterSaveRecord saveRecord = 
+                new CharacterSaveRecord(characterRecord.getId().intValue(), save.getId().intValue());
             //各能力値のデフォルトを10にセット
             saveRecord.setMiscModifier(0);
             //キャラクターセーヴレコードを作成
             try {
                 characterSaveRecordFacade.create(saveRecord);
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JsfUtil.addSuccessMessage("キャラクターセーヴレコードの作成に失敗しました");
                 return null;
             }
@@ -1177,5 +1179,22 @@ public class CharacterSheetController implements Serializable {
     public String editArmButton_action() {
         getSessionController().setCharacterArmRecord(getCharacterArmRecordList ());
         return "EditCharacterArmPage";
+    }
+    
+    public String deleteArmButton_action (CharacterArmRecord armRecord)
+    {
+        List<CharacterArmRecord> armList = getCharacterData().getCharacterRecord().getCharacterArmRecordList();
+        armList.remove(armRecord);
+        
+        try 
+        {
+            characterArmRecordFacade.remove(armRecord);
+        } 
+        catch (Exception ex) 
+        {
+            JsfUtil.addSuccessMessage("武器の削除に失敗しました");
+            return null;
+        }
+        return null;
     }
 }

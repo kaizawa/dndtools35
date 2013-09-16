@@ -42,7 +42,13 @@
                            emptyMessage="指定された条件に合う武器は見つかりませんでした" 
                            filteredValue="#{armMasterController.filteredArms}"
                            style="width:100%" >
-
+                <p:column>
+                  <p:commandButton value="選択" update="" id="ajax"
+                                   action="#{armMasterController.addArm}" 
+                                   styleClass="ui-priority-primary">  
+                    <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
+                  </p:commandButton>
+                </p:column>  
                 <p:column id="nameColumn" filterBy="#{arm.name}" sortBy="#{arm.name}"
                           headerText="名前" footerText="名前"
                           filterMatchMode="contains">

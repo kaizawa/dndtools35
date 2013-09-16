@@ -4,6 +4,7 @@ import com.cafeform.dndtools.entity.ArmType3Master;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.ArmType3MasterFacade;
+import com.cafeform.dndtools.entity.ArmType2Master;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -187,17 +188,22 @@ public class ArmType3MasterController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
+    
+    public ArmType3Master getArmType3Master(Integer id) {
+        return ejbFacade.find(id);
+    }
 
     @FacesConverter(forClass = ArmType3Master.class)
     public static class ArmType3MasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             ArmType3MasterController controller = (ArmType3MasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "armType3MasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "armType3MasterController");
+            return controller.getArmType3Master(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -207,11 +213,12 @@ public class ArmType3MasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;

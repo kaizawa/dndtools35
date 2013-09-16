@@ -20,28 +20,35 @@
           <h:outputText styleClass="tableTitleBlack" value="武器"/>
           <h:dataTable styleClass="w"
                        value="#{characterSheetController.characterArmRecordList}"
-                       var="currentRow">
+                       var="armRecord">
             <h:column >
               <h:outputText style="font-size: 12px; 
-                                  font-weight: bold" value="#{currentRow.armId.name}"/>
+                                  font-weight: bold" value="#{armRecord.armId.name}"/>
               <f:facet name="header">
                 <h:outputText escape="false" style="" value="名前"/>
               </f:facet>
             </h:column>
             <h:column >
-              <h:outputText style="font-size: 12px; 
-                                  font-weight: bold" value="#{currentRow.armId.damageDiceNum}
-                                  #{currentRow.armId.damageDiceType.name}"/>
+              <h:outputText 
+                style="font-size: 12px; font-weight: bold" 
+                value="#{characterSheetController.characterData.getAttackModifiers(armRecord)}"/>
               <f:facet name="header">
                 <h:outputText escape="false" style="" value="ダメージ"/>
               </f:facet>
             </h:column>
+            <h:column >
+              <h:commandButton 
+                action="#{characterSheetController.deleteArmButton_action(armRecord)}" value="削除"/>
+              <f:facet name="header">
+                <h:outputText escape="false" style="" value=""/>
+              </f:facet>
+            </h:column>
           </h:dataTable>
 
-          <h:panelGrid style="height: 100%; width: 100%" styleClass="p">
+          <h:panelGrid style="height: 100%; width: 100%" >
             <h:panelGrid style="width: 100%; height: 100%; text-align: right" >
               <h:commandButton action="#{characterSheetController.editArmButton_action}" 
-                               value="武器の編集"/>
+                               value="武器の追加"/>
             </h:panelGrid>
           </h:panelGrid>
         </h:panelGrid>

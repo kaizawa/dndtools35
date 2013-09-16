@@ -7,10 +7,14 @@ import com.cafeform.dndtools.ejb.ArmMasterFacade;
 import com.cafeform.dndtools.ejb.ArmType1MasterFacade;
 import com.cafeform.dndtools.ejb.ArmType2MasterFacade;
 import com.cafeform.dndtools.ejb.ArmType3MasterFacade;
+import com.cafeform.dndtools.ejb.CharacterArmRecordFacade;
+import com.cafeform.dndtools.ejb.CharacterRecordFacade;
 import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
 import com.cafeform.dndtools.entity.ArmType1Master;
 import com.cafeform.dndtools.entity.ArmType2Master;
 import com.cafeform.dndtools.entity.ArmType3Master;
+import com.cafeform.dndtools.entity.CharacterArmRecord;
+import com.cafeform.dndtools.entity.CharacterRecord;
 import com.cafeform.dndtools.entity.DamageTypeMaster;
 import java.io.Serializable;
 import java.util.Date;
@@ -32,9 +36,24 @@ import javax.inject.Named;
 @SessionScoped
 public class ArmMasterController implements Serializable {
 
-    private ArmMaster current;
+    @Inject
+    protected ArmType1MasterFacade armType1MasterFacade;
+    @Inject
+    protected ArmType2MasterFacade armType2MasterFacade;
+    @Inject
+    protected ArmType3MasterFacade armType3MasterFacade;
+    @Inject
+    protected DamageTypeMasterFacade damageTypeMasterFacade;
+    @Inject
+    protected ArmMasterFacade armMasterFacade;
+    @Inject
+    protected SessionController sessionController;
+    @Inject
+    protected CharacterRecordFacade characterRecordFacade;
+    @Inject
+    protected CharacterArmRecordFacade characterArmRecordFacade;
+    private ArmMaster currentArmMaster;
     private DataModel items = null;
-    @Inject private com.cafeform.dndtools.ejb.ArmMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private SelectItem[] armType1MasterOptions;
@@ -42,27 +61,38 @@ public class ArmMasterController implements Serializable {
     private SelectItem[] armType3MasterOptions;
     private SelectItem[] damageTypeMasterOptions;
     private List<ArmMaster> filteredArms;
-    private List<ArmMaster> allArms;    
-    
-    @Inject protected ArmType1MasterFacade armType1MasterFacade;
-    @Inject protected ArmType2MasterFacade armType2MasterFacade;    
-    @Inject protected ArmType3MasterFacade armType3MasterFacade; 
-    @Inject protected DamageTypeMasterFacade damageTypeMasterFacade;
-    @Inject protected ArmMasterFacade armMasterFacade;
+    private List<ArmMaster> allArms;
+    private ArmMaster selectedArm;
+
+    public ArmMaster getSelectedArm() {
+        return selectedArm;
+    }
+
+    public void setSelectedArm(ArmMaster selectedArm) {
+        this.selectedArm = selectedArm;
+    }
 
     public ArmMasterController() {
     }
 
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
+
     public ArmMaster getSelected() {
-        if (current == null) {
-            current = new ArmMaster();
+        if (currentArmMaster == null) {
+            currentArmMaster = new ArmMaster();
             selectedItemIndex = -1;
         }
-        return current;
+        return currentArmMaster;
     }
 
     private ArmMasterFacade getFacade() {
-        return ejbFacade;
+        return armMasterFacade;
     }
 
     public PaginationHelper getPagination() {
@@ -75,7 +105,8 @@ public class ArmMasterController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(),
+                        getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -88,61 +119,61 @@ public class ArmMasterController implements Serializable {
     }
 
     public String prepareView() {
-        current = (ArmMaster) getItems().getRowData();
+        currentArmMaster = (ArmMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new ArmMaster();
+        currentArmMaster = new ArmMaster();
         selectedItemIndex = -1;
         return "Edit";
     }
 
     public String prepareEdit() {
-        current = (ArmMaster) getItems().getRowData();
+        currentArmMaster = (ArmMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
 
     public String prepareCopy() {
-        current = copy((ArmMaster) getItems().getRowData());
-        current.setName(current.getName() + "のコピー");
+        currentArmMaster = copy((ArmMaster) getItems().getRowData());
+        currentArmMaster.setName(currentArmMaster.getName() + "のコピー");
         selectedItemIndex = -1;
         return "Edit";
     }
-    
+
     public String createEnhanced(int level) {
-        current = copy((ArmMaster) getItems().getRowData());
-        current.setName(current.getName() + "+" + level);
-        current.setEnhancementBonus(level);
+        currentArmMaster = copy((ArmMaster) getItems().getRowData());
+        currentArmMaster.setName(currentArmMaster.getName() + "+" + level);
+        currentArmMaster.setEnhancementBonus(level);
         int additionalPrice = 0;
-        switch(level){
+        switch (level) {
             case 1:
                 additionalPrice = 2000;
                 break;
             case 2:
-                additionalPrice = 8000;                
+                additionalPrice = 8000;
                 break;
             case 3:
                 additionalPrice = 18000;
                 break;
             case 4:
-                additionalPrice = 32000;                
+                additionalPrice = 32000;
                 break;
             case 5:
-                additionalPrice = 50000;                
+                additionalPrice = 50000;
         }
-        current.setDescription(null == current.getDescription() ? "高品質"
-                : current.getDescription() + "\n高品質");
-        current.setPrice(current.getPrice() + additionalPrice + 300);
+        currentArmMaster.setDescription(null == currentArmMaster.getDescription() ? "高品質"
+            : currentArmMaster.getDescription() + "\n高品質");
+        currentArmMaster.setPrice(currentArmMaster.getPrice() + additionalPrice + 300);
         selectedItemIndex = -1;
         return "Edit";
     }
 
     public String update() {
         try {
-            getFacade().edit(current);
+            getFacade().edit(currentArmMaster);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArmMasterUpdated"));
             return prepareList();
         } catch (Exception e) {
@@ -152,7 +183,7 @@ public class ArmMasterController implements Serializable {
     }
 
     public String destroy() {
-        current = (ArmMaster) getItems().getRowData();
+        currentArmMaster = (ArmMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -182,7 +213,7 @@ public class ArmMasterController implements Serializable {
 
     private void performDestroy() {
         try {
-            getFacade().remove(current);
+            getFacade().remove(currentArmMaster);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArmMasterDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -200,7 +231,7 @@ public class ArmMasterController implements Serializable {
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            currentArmMaster = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -232,11 +263,11 @@ public class ArmMasterController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return JsfUtil.getSelectItems(armMasterFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return JsfUtil.getSelectItems(armMasterFacade.findAll(), true);
     }
 
     private ArmMaster copy(ArmMaster original) {
@@ -265,8 +296,6 @@ public class ArmMasterController implements Serializable {
         copied.setArmType1(original.getArmType1());
         return copied;
     }
-    
-    
 
     @FacesConverter(forClass = ArmMaster.class)
     public static class ArmMasterControllerConverter implements Converter {
@@ -277,8 +306,8 @@ public class ArmMasterController implements Serializable {
                 return null;
             }
             ArmMasterController controller = (ArmMasterController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "armMasterController");
-            return controller.ejbFacade.find(getKey(value));
+                getValue(facesContext.getELContext(), null, "armMasterController");
+            return controller.armMasterFacade.find(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -302,7 +331,8 @@ public class ArmMasterController implements Serializable {
                 ArmMaster o = (ArmMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ArmMaster.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type "
+                    + object.getClass().getName() + "; expected type: " + ArmMaster.class.getName());
             }
         }
     }
@@ -311,55 +341,45 @@ public class ArmMasterController implements Serializable {
      * 削除ボタンの表示
      */
     public boolean isDeleteButtonDisabled() {
-        return (current == null || current.getId() == null);
+        return (currentArmMaster == null || currentArmMaster.getId() == null);
     }
-    
-
 
     @PostConstruct
     public void init() {
         allArms = armMasterFacade.findAll();
         armType1MasterOptions = createFilterOptions(armType1MasterFacade.findAll().toArray(new ArmType1Master[0]));
         armType2MasterOptions = createFilterOptions(armType2MasterFacade.findAll().toArray(new ArmType2Master[0]));
-        armType3MasterOptions = createFilterOptions(armType3MasterFacade.findAll().toArray(new ArmType3Master[0]));        
-        damageTypeMasterOptions = createFilterOptions(damageTypeMasterFacade.findAll().toArray(new DamageTypeMaster[0]));                
+        armType3MasterOptions = createFilterOptions(armType3MasterFacade.findAll().toArray(new ArmType3Master[0]));
+        damageTypeMasterOptions = createFilterOptions(damageTypeMasterFacade.findAll().toArray(new DamageTypeMaster[0]));
     }
-    
+
     public SelectItem[] getDamageTypeMasterOptions() {
         return damageTypeMasterOptions;
     }
-    
+
     public String saveButton_action() {
         doSave();
         return null;
     }
 
     public void doSave() {
-        // 全レベルのスキルレコードと、成長レコードも保存する
-        //List<CharacterSkillGrowthRecord> skillGrowthList = getCharacterData().getCharacterSkillGrowthRecordList();
-        //List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
-        // 更新時刻記録用にキャラクターレコードも保存する。
-        // ここで保存するのは、本当は好ましくは無いが。
-
+        CharacterRecord characterRecord = getSessionController().getCharacterData().getCharacterRecord();
+        List<CharacterArmRecord> armRecordList = characterRecord.getCharacterArmRecordList();
         //更新時間を記録
         Date date = new Date();
-        //getCharacterData().setSaveTime(date);
-        
+        characterRecord.setSaveTime(date);
+
+        CharacterArmRecord newArmRecord = new CharacterArmRecord();
+        newArmRecord.setCharacterId(characterRecord);
+        newArmRecord.setArmId(selectedArm);
+
         try {
-            /*
-            characterRecordFacade.edit(getCharacterData().getCharacterRecord());
-
-            for (CharacterSkillGrowthRecord skillGrowth : skillGrowthList) {
-                characterSkillGrowthRecordFacade.edit(skillGrowth);
-            }
-            for (CharacterGrowthRecord growth : growthList) {
-                characterGrowthRecordFacade.edit(growth);
-            }
-            */ 
-            JsfUtil.addSuccessMessage("保存されました");
-
+            //characterRecordFacade.edit(characterRecord);
+            characterArmRecordFacade.create(newArmRecord);
+            armRecordList.add(newArmRecord);
+            JsfUtil.addSuccessMessage("追加されました");
         } catch (Exception ex) {
-            JsfUtil.addSuccessMessage("成長記録の保存に失敗しました");
+            JsfUtil.addSuccessMessage("武器の追加にに失敗しました");
         }
     }
 
@@ -393,12 +413,17 @@ public class ArmMasterController implements Serializable {
     public SelectItem[] getArmType1MasterOptions() {
         return armType1MasterOptions;
     }
-    
+
     public SelectItem[] getArmType2MasterOptions() {
         return armType2MasterOptions;
     }
-    
+
     public SelectItem[] getArmType3MasterOptions() {
         return armType3MasterOptions;
+    }
+
+    public String addArm() {
+        doSave();
+        return returnCharacterRecordPageButton_action();
     }
 }

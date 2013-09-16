@@ -4,9 +4,11 @@ import com.cafeform.dndtools.entity.CampaignMaster;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
+
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ResourceBundle;
+import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,41 +17,25 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
-@Named
+@Named("campaignMasterController")
 @SessionScoped
 public class CampaignMasterController implements Serializable {
 
     private CampaignMaster current;
     private DataModel items = null;
-    @Inject
+    @EJB
     private com.cafeform.dndtools.ejb.CampaignMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    
-    @Inject
-    private SessionController sessionController;
-
-    public SessionController getSessionController() {
-        return sessionController;
-    }
-    public void setSessionController(SessionController sessionController) {
-        this.sessionController = sessionController;
-    }
 
     public CampaignMasterController() {
     }
 
-    public CampaignMaster getSelectedCampaign() {
-        current = getSessionController().getSelectedCampaign();
+    public CampaignMaster getSelected() {
         if (current == null) {
             current = new CampaignMaster();
             selectedItemIndex = -1;
-            getSessionController().setSelectedCampaign(current);
         }
         return current;
     }
@@ -61,7 +47,6 @@ public class CampaignMasterController implements Serializable {
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -77,33 +62,29 @@ public class CampaignMasterController implements Serializable {
     }
 
     public String prepareList() {
-        getSessionController().setSelectedCampaign(null);        
-        getSessionController().setSelectedScenarioRecord(null);
         recreateModel();
-        return "/campaignMaster/List";
+        return "List";
     }
 
     public String prepareView() {
         current = (CampaignMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        getSessionController().setSelectedCampaign(current);
         return "View";
     }
 
     public String prepareCreate() {
         current = new CampaignMaster();
         selectedItemIndex = -1;
-        getSessionController().setSelectedCampaign(null);
         return "Create";
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage("作成されました");
-            return prepareList();
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterCreated"));
+            return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("永続性エラーが発生しました");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -111,22 +92,23 @@ public class CampaignMasterController implements Serializable {
     public String prepareEdit() {
         current = (CampaignMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        getSessionController().setSelectedCampaign(current);
         return "Edit";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage("保存しました");
-            return "List";
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterUpdated"));
+            return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("永続性エラーが発生しました");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String destroy() {
+        current = (CampaignMaster) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
         recreateModel();
@@ -149,9 +131,9 @@ public class CampaignMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage("削除されました");
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CampaignMasterDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("永続性エラーが発生しました");
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -167,7 +149,6 @@ public class CampaignMasterController implements Serializable {
         }
         if (selectedItemIndex >= 0) {
             current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-            getSessionController().setSelectedCampaign(current);
         }
     }
 
@@ -206,26 +187,21 @@ public class CampaignMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public CampaignMaster getCampaignMaster(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+
     @FacesConverter(forClass = CampaignMaster.class)
     public static class CampaignMasterControllerConverter implements Converter {
-        InitialContext ctx;
-        private com.cafeform.dndtools.ejb.CampaignMasterFacade ejbFacade;
-
-        public CampaignMasterControllerConverter() {
-            try {
-                ctx = new InitialContext();
-                ejbFacade = (CampaignMasterFacade) ctx.lookup("java:module/CampaignMasterFacade");
-            } catch (NamingException ex) {
-                Logger.getLogger(CampaignMasterController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            return ejbFacade.find(getKey(value));
+            CampaignMasterController controller = (CampaignMasterController) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "campaignMasterController");
+            return controller.getCampaignMaster(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -249,7 +225,7 @@ public class CampaignMasterController implements Serializable {
                 CampaignMaster o = (CampaignMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CampaignMasterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CampaignMaster.class.getName());
             }
         }
     }

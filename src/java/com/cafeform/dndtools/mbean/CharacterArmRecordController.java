@@ -1,9 +1,9 @@
 package com.cafeform.dndtools.mbean;
 
-import com.cafeform.dndtools.entity.ReligionMaster;
+import com.cafeform.dndtools.entity.CharacterArmRecord;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
-import com.cafeform.dndtools.ejb.ReligionMasterFacade;
+import com.cafeform.dndtools.ejb.CharacterArmRecordFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("religionMasterController")
+@Named("characterArmRecordController")
 @SessionScoped
-public class ReligionMasterController implements Serializable {
+public class CharacterArmRecordController implements Serializable {
 
-    private ReligionMaster current;
+    private CharacterArmRecord current;
     private DataModel items = null;
     @EJB
-    private com.cafeform.dndtools.ejb.ReligionMasterFacade ejbFacade;
+    private com.cafeform.dndtools.ejb.CharacterArmRecordFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public ReligionMasterController() {
+    public CharacterArmRecordController() {
     }
 
-    public ReligionMaster getSelected() {
+    public CharacterArmRecord getSelected() {
         if (current == null) {
-            current = new ReligionMaster();
+            current = new CharacterArmRecord();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private ReligionMasterFacade getFacade() {
+    private CharacterArmRecordFacade getFacade() {
         return ejbFacade;
     }
 
@@ -67,13 +67,13 @@ public class ReligionMasterController implements Serializable {
     }
 
     public String prepareView() {
-        current = (ReligionMaster) getItems().getRowData();
+        current = (CharacterArmRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new ReligionMaster();
+        current = new CharacterArmRecord();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -81,7 +81,7 @@ public class ReligionMasterController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ReligionMasterCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterArmRecordCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -90,7 +90,7 @@ public class ReligionMasterController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (ReligionMaster) getItems().getRowData();
+        current = (CharacterArmRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -98,7 +98,7 @@ public class ReligionMasterController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ReligionMasterUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterArmRecordUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -107,7 +107,7 @@ public class ReligionMasterController implements Serializable {
     }
 
     public String destroy() {
-        current = (ReligionMaster) getItems().getRowData();
+        current = (CharacterArmRecord) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -131,7 +131,7 @@ public class ReligionMasterController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ReligionMasterDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CharacterArmRecordDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -187,21 +187,22 @@ public class ReligionMasterController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public ReligionMaster getReligionMaster(java.lang.Integer id) {
+    public CharacterArmRecord getCharacterArmRecord(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = ReligionMaster.class)
-    public static class ReligionMasterControllerConverter implements Converter {
+    @FacesConverter(forClass = CharacterArmRecord.class)
+    public static class CharacterArmRecordControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ReligionMasterController controller = (ReligionMasterController) facesContext.getApplication().getELResolver().
-                getValue(facesContext.getELContext(), null, "religionMasterController");
-            return controller.getReligionMaster(getKey(value));
+            CharacterArmRecordController controller = (CharacterArmRecordController) facesContext
+                .getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "characterArmRecordController");
+            return controller.getCharacterArmRecord(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -221,11 +222,11 @@ public class ReligionMasterController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof ReligionMaster) {
-                ReligionMaster o = (ReligionMaster) object;
+            if (object instanceof CharacterArmRecord) {
+                CharacterArmRecord o = (CharacterArmRecord) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ReligionMaster.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CharacterArmRecord.class.getName());
             }
         }
     }
