@@ -37,7 +37,7 @@
                     value="キャラクター修正画面へ戻る"/>
                 </h:panelGrid>
               </h:panelGrid>  
-              <p:dataTable id="dataTable" var="arm" value="#{armMasterController.allArms}" 
+              <p:dataTable id="dataTable" var="arm" value="#{applicationController.armList}" 
                            widgetVar="armsTable" 
                            emptyMessage="指定された条件に合う武器は見つかりませんでした" 
                            filteredValue="#{armMasterController.filteredArms}"

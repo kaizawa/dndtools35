@@ -36,22 +36,16 @@ import javax.inject.Named;
 @SessionScoped
 public class ArmMasterController implements Serializable {
 
-    @Inject
-    protected ArmType1MasterFacade armType1MasterFacade;
-    @Inject
-    protected ArmType2MasterFacade armType2MasterFacade;
-    @Inject
-    protected ArmType3MasterFacade armType3MasterFacade;
-    @Inject
-    protected DamageTypeMasterFacade damageTypeMasterFacade;
-    @Inject
-    protected ArmMasterFacade armMasterFacade;
-    @Inject
-    protected SessionController sessionController;
-    @Inject
-    protected CharacterRecordFacade characterRecordFacade;
-    @Inject
-    protected CharacterArmRecordFacade characterArmRecordFacade;
+    @Inject protected ArmType1MasterFacade armType1MasterFacade;
+    @Inject protected ArmType2MasterFacade armType2MasterFacade;
+    @Inject protected ArmType3MasterFacade armType3MasterFacade;    
+    @Inject protected DamageTypeMasterFacade damageTypeMasterFacade;
+    @Inject protected ArmMasterFacade armMasterFacade;
+    @Inject protected SessionController sessionController;
+    @Inject protected CharacterRecordFacade characterRecordFacade;
+    @Inject protected CharacterArmRecordFacade characterArmRecordFacade;
+    @Inject protected ApplicationController applicationController;    
+    
     private ArmMaster currentArmMaster;
     private DataModel items = null;
     private PaginationHelper pagination;
@@ -61,9 +55,16 @@ public class ArmMasterController implements Serializable {
     private SelectItem[] armType3MasterOptions;
     private SelectItem[] damageTypeMasterOptions;
     private List<ArmMaster> filteredArms;
-    private List<ArmMaster> allArms;
     private ArmMaster selectedArm;
 
+    public ApplicationController getApplicationController() {
+        return applicationController;
+    }
+
+    public void setApplicationController(ApplicationController applicationController) {
+        this.applicationController = applicationController;
+    }
+    
     public ArmMaster getSelectedArm() {
         return selectedArm;
     }
@@ -175,6 +176,7 @@ public class ArmMasterController implements Serializable {
         try {
             getFacade().edit(currentArmMaster);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArmMasterUpdated"));
+            applicationController.resetArmList();
             return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -346,7 +348,6 @@ public class ArmMasterController implements Serializable {
 
     @PostConstruct
     public void init() {
-        allArms = armMasterFacade.findAll();
         armType1MasterOptions = createFilterOptions(armType1MasterFacade.findAll().toArray(new ArmType1Master[0]));
         armType2MasterOptions = createFilterOptions(armType2MasterFacade.findAll().toArray(new ArmType2Master[0]));
         armType3MasterOptions = createFilterOptions(armType3MasterFacade.findAll().toArray(new ArmType3Master[0]));
@@ -393,10 +394,6 @@ public class ArmMasterController implements Serializable {
 
     public void setFilteredArms(List<ArmMaster> filteredArms) {
         this.filteredArms = filteredArms;
-    }
-
-    public List<ArmMaster> getAllArms() {
-        return allArms;
     }
 
     private SelectItem[] createFilterOptions(Object[] data) {

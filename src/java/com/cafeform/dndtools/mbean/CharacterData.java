@@ -1822,10 +1822,9 @@ public class CharacterData implements CharacterSummary {
         StringBuilder modifiers = new StringBuilder();
         modifiers.append(type3Name).append(" "); // 遠隔・近接
         int baseAttack = getBaseAttackTotal();
-        int attackBonus = getRangeAttackBonus();
+        int attackBonus = 1 == arm.getArmType3().getId() ? getMeleeAttackBonus() :  getRangeAttackBonus();
         int numAttacks = ((baseAttack - 1) / 5) + 1;
         int enhancementBonus = null != arm.getEnhancementBonus() ? arm.getEnhancementBonus() : 0;
-        
         
         /* Attack bonus */
         for(int i = 0 ; i < numAttacks ; i++)
@@ -1856,7 +1855,7 @@ public class CharacterData implements CharacterSummary {
             .append(diceType)
             .append("+").append(getAttackBonusStrengthBonus() + enhancementBonus)
             .append(" ")
-            .append(threatRangStr).append("/")
+            .append(threatRangStr).append("/x")
             .append(arm.getCriticalMultiplier())
             .append(")");
 

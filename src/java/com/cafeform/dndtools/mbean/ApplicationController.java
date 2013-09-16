@@ -25,15 +25,18 @@ import com.cafeform.dndtools.ejb.DiceMasterFacade;
 import com.cafeform.dndtools.ejb.AlignmentMasterFacade;
 import com.cafeform.dndtools.ejb.BonusRankMasterFacade;
 import com.cafeform.dndtools.ejb.AbilityMasterFacade;
+import com.cafeform.dndtools.ejb.ArmMasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
 import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
 import com.cafeform.dndtools.ejb.ReligionMasterFacade;
 import com.cafeform.dndtools.ejb.SaveMasterFacade;
+import com.cafeform.dndtools.entity.ArmMaster;
 import com.cafeform.dndtools.entity.DamageTypeMaster;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -67,6 +70,7 @@ public class ApplicationController {
     @Inject private SkillMasterFacade skillMasterFacade;
     @Inject private AbilityMasterFacade abilityMasterFacade;
     @Inject private DamageTypeMasterFacade damageTypeMasterFacade;
+    @EJB private ArmMasterFacade armMasterFacade;
     
     /**
      * <p>Construct a new application data bean instance.</p>
@@ -309,9 +313,27 @@ public class ApplicationController {
         /* Damage TYpe */
         damageTypeList = damageTypeMasterFacade.findAll();
         
+        /* Arm master */
+       armList = armMasterFacade.findAll();
+       
+    }
+    
+    /* Arm List */
+    private List<ArmMaster> armList;
+
+    public List<ArmMaster> getArmList() {
+        return armList;
     }
 
-
+    public void setArmList(List<ArmMaster> armList) {
+        this.armList = armList;
+    }
+    
+    public void resetArmList() 
+    {
+       setArmList(armMasterFacade.findAll());
+    }
+    
     //-------------  能力のリスト     ------------------------------
     private List<AbilityMaster> abilityList;
 

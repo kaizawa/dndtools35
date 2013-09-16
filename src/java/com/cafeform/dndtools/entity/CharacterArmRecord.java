@@ -46,7 +46,27 @@ public class CharacterArmRecord implements Serializable {
     @JoinColumn(name = "ARM_ID", referencedColumnName = "ID")
     @ManyToOne
     private ArmMaster armId;
+    @Column(name = "ATTACK_MODIFIER")
+    private Integer attackModifier;
+    @Column(name = "DAMAGE_MODIFIER")
+    private Integer damageModifier;
 
+    public Integer getAttackModifier() {
+        return attackModifier;
+    }
+
+    public void setAttackModifier(Integer attackModifier) {
+        this.attackModifier = attackModifier;
+    }
+
+    public Integer getDamageModifier() {
+        return damageModifier;
+    }
+
+    public void setDamageModifier(Integer damageModifier) {
+        this.damageModifier = damageModifier;
+    }
+    
     public CharacterArmRecord() {
     }
 
