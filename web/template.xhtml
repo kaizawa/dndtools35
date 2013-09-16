@@ -3,105 +3,105 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><ui:insert name="title">Default Title</ui:insert></title>
-        <h:outputStylesheet name="css/stylesheet.css"/>
-    </h:head>
+  <h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title><ui:insert name="title">Default Title</ui:insert></title>
+    <h:outputStylesheet name="css/stylesheet.css"/>
+  </h:head>
 
-    <h:body>
+  <h:body>
 
-        <h:panelGrid id="header" style="  width: 100%" styleClass="header">
-            <h:panelGrid columns="2" id="headerGrid" style="width: 100%; height: 100%;">
-                <h:panelGrid id="imageGrid" >
-                    <h:graphicImage id="image1" value="/resources/dndlogo.gif" width="96"/>
-                </h:panelGrid>
-                <h:panelGrid id="appnameGrid" styleClass="appname">
-                    <ui:insert name="title">Default Title</ui:insert>
-                </h:panelGrid>
-            </h:panelGrid>
+    <h:panelGrid id="header" style="  width: 100%" styleClass="header">
+      <h:panelGrid columns="2" id="headerGrid" style="width: 100%; height: 100%;">
+        <h:panelGrid id="imageGrid" >
+          <h:graphicImage id="image1" value="/resources/dndlogo.gif" width="96"/>
+        </h:panelGrid>
+        <h:panelGrid id="appnameGrid" styleClass="appname">
+          <ui:insert name="title">Default Title</ui:insert>
+        </h:panelGrid>
+      </h:panelGrid>
+    </h:panelGrid>
+
+    <h:form>                                
+      <h:panelGrid columns="10" id="subHeaderGrid" style="width: 100%; height: 100%;" styleClass="subheader">
+        <h:panelGrid id="profileCell" rendered="false" style="width: 100%; height: 100%;" styleClass="subheaderlink">
+          <h:commandLink action="#{pageHeader.profileLink_action}" id="profileLink2" styleClass="subheadertext" value="プレイヤー設定"/>
+        </h:panelGrid>
+        <h:panelGrid id="logoutCell" rendered="#{loginController.loggedIn}" style="width: 100%; height: 100%;" styleClass="subheaderlink">
+          <h:commandLink action="#{loginController.logout_action()}" id="logoutLink" styleClass="subheadertext" value="ログアウト"/>
+        </h:panelGrid>
+        <h:panelGrid id="loginCell" rendered="#{loginController.notLoggedIn}" style="width: 100%; height: 100%;" styleClass="subheaderlink">
+          <h:commandLink action="/login/LoginPage" id="loginLink" styleClass="subheadertext" value="ログイン"/>
+        </h:panelGrid>
+        <h:panelGrid id="newCharaCell" rendered="false" style="width: 100%; height: 100%;" styleClass="subheaderlink">
+          <h:commandLink action="#{pageHeader.newCharaLink_action}" id="newCharaLink" styleClass="subheadertext" value="新規キャラクター作成"/>
+        </h:panelGrid>
+        <h:panelGrid id="charaListCell" style="width: 100%; height: 100%;" rendered="false" styleClass="subheaderlink">
+          <h:commandLink action="#{pageHeader.charaListLink_action}" id="charaListLink" styleClass="subheadertext" value="キャラクター一覧"/>                        
+        </h:panelGrid>                   
+      </h:panelGrid>
+    </h:form>
+
+    <h:panelGrid columns="2" styleClass="body">
+      <h:panelGrid id="topcontents" style="width: 100%" styleClass="contents" columns="2">
+        <h:panelGrid styleClass="leftpane" >
+          <h:form>
+            <h:panelGrid style="width: 100%">
+              <h:panelGrid id="charaListCell" style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                <h:commandLink action="/characterSheet/CharacterListPage" id="charaListLink" styleClass="leftpaneltext" value="キャラクター"/>                        
+              </h:panelGrid>                     
+              <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                <h:commandLink action="#{campaignMasterController.prepareList()}" styleClass="leftpaneltext" value="キャンペーン"/>
+                <h:commandLink rendered="#{sessionController.isCampaignSelected()}" action="#{scenarioRecordController.prepareList()}" styleClass="leftpaneltextScenaio" value="シナリオ"/>
+                <h:commandLink rendered="#{sessionController.isScenarioSelected()}" action="#{encounterRecordController.prepareList()}" styleClass="leftpaneltextEncounter" value="エンカウンター"/>                                
+              </h:panelGrid>                                 
+              <h:outputLabel value=""/>
+              <h:panelGrid id="adminCell" style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                <h:outputLabel styleClass="leftpaneltext" value="データ管理"/>
+              </h:panelGrid> 
+
+              <h:panelGrid id="classListCell2" style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                <h:commandLink action="/classMaster/ClassListPage" 
+                               id="classListLink" styleClass="leftpaneltextAdmin" value="クラス"/>
+              </h:panelGrid>
+
+              <h:panelGrid id="raceListCell2" style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                <h:commandLink action="/raceMaster/RaceListPage" 
+                               id="raceListLink" styleClass="leftpaneltextAdmin" value="種族"/>
+              </h:panelGrid>       
+
+              <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                <h:commandLink action="/monsterMaster/List" 
+                               styleClass="leftpaneltextAdmin" value="モンスター"/>
+              </h:panelGrid>  
+
+              <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
+                <h:commandLink action="/armMaster/List" 
+                               styleClass="leftpaneltextAdmin" value="武器"/>
+              </h:panelGrid>                             
+            </h:panelGrid>                
+          </h:form>                    
+        </h:panelGrid>  
+        <h:panelGrid styleClass="rightpane">
+          <h:panelGroup layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+          </h:panelGroup> 
+          <ui:insert name="body">Default Body</ui:insert>
         </h:panelGrid>
 
-        <h:form>                                
-            <h:panelGrid columns="10" id="subHeaderGrid" style="width: 100%; height: 100%;" styleClass="subheader">
-                <h:panelGrid id="profileCell" rendered="false" style="width: 100%; height: 100%;" styleClass="subheaderlink">
-                    <h:commandLink action="#{pageHeader.profileLink_action}" id="profileLink2" styleClass="subheadertext" value="プレイヤー設定"/>
-                </h:panelGrid>
-                <h:panelGrid id="logoutCell" rendered="#{loginController.loggedIn}" style="width: 100%; height: 100%;" styleClass="subheaderlink">
-                    <h:commandLink action="#{loginController.logout_action()}" id="logoutLink" styleClass="subheadertext" value="ログアウト"/>
-                </h:panelGrid>
-                <h:panelGrid id="loginCell" rendered="#{loginController.notLoggedIn}" style="width: 100%; height: 100%;" styleClass="subheaderlink">
-                    <h:commandLink action="/login/LoginPage" id="loginLink" styleClass="subheadertext" value="ログイン"/>
-                </h:panelGrid>
-                <h:panelGrid id="newCharaCell" rendered="false" style="width: 100%; height: 100%;" styleClass="subheaderlink">
-                    <h:commandLink action="#{pageHeader.newCharaLink_action}" id="newCharaLink" styleClass="subheadertext" value="新規キャラクター作成"/>
-                </h:panelGrid>
-                <h:panelGrid id="charaListCell" style="width: 100%; height: 100%;" rendered="false" styleClass="subheaderlink">
-                    <h:commandLink action="#{pageHeader.charaListLink_action}" id="charaListLink" styleClass="subheadertext" value="キャラクター一覧"/>                        
-                </h:panelGrid>                   
-            </h:panelGrid>
-        </h:form>
+      </h:panelGrid>
 
-        <h:panelGrid columns="2" styleClass="body">
-            <h:panelGrid id="topcontents" style="width: 100%" styleClass="contents" columns="2">
-                <h:panelGrid styleClass="leftpane" >
-                    <h:form>
-                        <h:panelGrid style="width: 100%">
-                            <h:panelGrid id="charaListCell" style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="/characterSheet/CharacterListPage" id="charaListLink" styleClass="leftpaneltext" value="キャラクター"/>                        
-                            </h:panelGrid>                     
-                            <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="#{campaignMasterController.prepareList()}" styleClass="leftpaneltext" value="キャンペーン"/>
-                                <h:commandLink rendered="#{sessionController.isCampaignSelected()}" action="#{scenarioRecordController.prepareList()}" styleClass="leftpaneltextScenaio" value="シナリオ"/>
-                                <h:commandLink rendered="#{sessionController.isScenarioSelected()}" action="#{encounterRecordController.prepareList()}" styleClass="leftpaneltextEncounter" value="エンカウンター"/>                                
-                            </h:panelGrid>                                 
-                            <h:outputLabel value=""/>
-                            <h:panelGrid id="adminCell" style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:outputLabel styleClass="leftpaneltext" value="データ管理"/>
-                            </h:panelGrid> 
+    </h:panelGrid>
 
-                            <h:panelGrid id="classListCell2" style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="/classMaster/ClassListPage" 
-                                               id="classListLink" styleClass="leftpaneltextAdmin" value="クラス"/>
-                            </h:panelGrid>
-                            
-                            <h:panelGrid id="raceListCell2" style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="/raceMaster/RaceListPage" 
-                                               id="raceListLink" styleClass="leftpaneltextAdmin" value="種族"/>
-                            </h:panelGrid>       
-
-                            <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="/monsterMaster/List" 
-                                               styleClass="leftpaneltextAdmin" value="モンスター"/>
-                            </h:panelGrid>  
-
-                            <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                                <h:commandLink action="/armMaster/List" 
-                                               styleClass="leftpaneltextAdmin" value="武器"/>
-                            </h:panelGrid>                             
-                        </h:panelGrid>                
-                    </h:form>                    
-                </h:panelGrid>  
-                <h:panelGrid styleClass="rightpane">
-                    <h:panelGroup layout="block">
-                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                    </h:panelGroup> 
-                    <ui:insert name="body">Default Body</ui:insert>
-                </h:panelGrid>
-
-            </h:panelGrid>
-
+    <h:form>
+      <h:panelGrid id="footer" style=" width: 100%" styleClass="footer">
+        <h:panelGrid id="footerGrid" style="">
+          <h:panelGrid id="gotoTopCell" style="">
+            <h:commandLink action="#{pageFooter.gotoTopLink_action}" id="gotoTopLink" styleClass="footertext" value="一番上へ" />
+          </h:panelGrid>
         </h:panelGrid>
-
-        <h:form>
-            <h:panelGrid id="footer" style=" width: 100%" styleClass="footer">
-                <h:panelGrid id="footerGrid" style="">
-                    <h:panelGrid id="gotoTopCell" style="">
-                        <h:commandLink action="#{pageFooter.gotoTopLink_action}" id="gotoTopLink" styleClass="footertext" value="一番上へ" />
-                    </h:panelGrid>
-                </h:panelGrid>
-            </h:panelGrid>        
-        </h:form>
-    </h:body>
+      </h:panelGrid>        
+    </h:form>
+  </h:body>
 
 </html>

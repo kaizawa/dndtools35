@@ -3,173 +3,135 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"  
       xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListArmMasterTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:form styleClass="jsfcrud_list_form">
-                <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
+  <ui:composition template="/template.xhtml">
+    <ui:define name="title">
+      <h:outputText value="#{bundle.ListArmMasterTitle}"></h:outputText>
+    </ui:define>
+    <ui:define name="body">
+      <h:form styleClass="jsfcrud_list_form">
+        <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
+        <br/>
+
+        <h:outputText escape="false" 
+                      value="#{bundle.ListArmMasterEmpty}" 
+                      rendered="#{armMasterController.items.rowCount == 0}"/>
+        <h:panelGroup rendered="#{armMasterController.items.rowCount > 0}">
+          <h:outputText value="#{armMasterController.pagination.pageFirstItem + 1}..
+                        #{armMasterController.pagination.pageLastItem + 1}/
+                        #{armMasterController.pagination.itemsCount}"/>&nbsp;
+          <h:commandLink action="#{armMasterController.previous}" 
+                         value="#{bundle.Previous} #{armMasterController.pagination.pageSize}" 
+                         rendered="#{armMasterController.pagination.hasPreviousPage}"/>&nbsp;
+          <h:commandLink action="#{armMasterController.next}" 
+                         value="#{bundle.Next} #{armMasterController.pagination.pageSize}" 
+                         rendered="#{armMasterController.pagination.hasNextPage}"/>&nbsp;
+          <h:panelGrid id="tableGrid" styleClass="tableGrid">
+
+            <p:dataTable id="dataTable" var="arm" value="#{applicationController.armList}" 
+                         widgetVar="armsTable" 
+                         emptyMessage="指定された条件に合う武器は見つかりませんでした" 
+                         filteredValue="#{armMasterController.filteredArms}"
+                         style="width:100%" >
+ 
+              <p:column id="nameColumn" filterBy="#{arm.name}" sortBy="#{arm.name}"
+                        headerText="名前" footerText="名前"
+                        filterMatchMode="contains">
+                <p:commandLink action="#{armMasterController.prepareEdit}" value="#{arm.name}">
+                  <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
+                </p:commandLink>
+              </p:column>
+              <p:column id="damageColumn" headerText="ダメージ" footerText="ダメージ">
+                <h:outputText value="#{arm.damageDiceNum}#{arm.damageDiceType.name}" />
+              </p:column>
+              <p:column id="armType1MasterColumn" 
+                        headerText="単・軍・特" footerText="単・軍・特"
+                        filterBy="#{arm.armType1}"                             
+                        filterOptions="#{armMasterController.armType1MasterOptions}"
+                        filterMatchMode="exact" >
+                <h:outputText value="#{arm.armType1.name}" />
+              </p:column>
+              <p:column id="armType2MasterColumn" 
+                        headerText="片・両・投" footerText="片・両・投"
+                        filterBy="#{arm.armType2}"                             
+                        filterOptions="#{armMasterController.armType2MasterOptions}"
+                        filterMatchMode="exact" >
+                <h:outputText value="#{arm.armType2.name}" />
+              </p:column>
+              <p:column id="armType3MasterColumn" 
+                        headerText="近・遠" footerText="近・遠"
+                        filterBy="#{arm.armType3}"                             
+                        filterOptions="#{armMasterController.armType3MasterOptions}"
+                        filterMatchMode="exact" >
+                <h:outputText value="#{arm.armType3.name}" />
+              </p:column>
+              <p:column id="damageTypeMasterColumn"
+                        headerText="斬・殴・刺" footerText="斬・殴・刺"
+                        filterBy="#{arm.damageType}"                             
+                        filterOptions="#{armMasterController.damageTypeMasterOptions}"
+                        filterMatchMode="exact" >
+                <h:outputText value="#{arm.damageType.name}" />                  
+              </p:column>
+              
+              <p:column headerText="重さ" footerText="重さ">
+                <h:outputText value="#{arm.weight}" />
+              </p:column>
+              <p:column headerText="値段" footerText="値段">
+                <h:outputText value="#{arm.price}" />
+              </p:column>
+              <p:column headerText="射程" footerText="射程">
+                <h:outputText value="#{arm.range}" />
+              </p:column>
+              <p:column headerText="倍率" footerText="倍率">
+                <h:outputText value="#{arm.criticalMultiplier}" />
+              </p:column>
+              <p:column headerText="可能域" footerText="可能域">
+                <h:outputText value="#{arm.threatRange}" />
+              </p:column>
+              <p:column headerText="魔法ボーナス" footerText="魔法ボーナス">
+                <h:outputText value="#{arm.enhancementBonus}" />
+              </p:column>
+              <p:column headerText="備考" footerText="備考" style="width: 30%">
+                <h:outputText value="#{arm.enhancementBonus}" />
+              </p:column>
+              <p:column headerText="コピー作成" footerText="コピー作成">
+                <h:commandLink action="#{armMasterController.prepareCopy}" value="コピー">
+                  <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
+                </h:commandLink>
                 <br/>
+                <h:commandLink action="#{armMasterController.createEnhanced(1)}" value="+1">
+                  <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
+                </h:commandLink>
+                <h:outputLabel value=" "/>                            
+                <h:commandLink action="#{armMasterController.createEnhanced(2)}" value="+2">
+                  <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
+                </h:commandLink>
+                <h:outputLabel value=" "/>                            
+                <h:commandLink action="#{armMasterController.createEnhanced(3)}" value="+3">
+                  <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
+                </h:commandLink>
+                <h:outputLabel value=" "/>                            
+                <h:commandLink action="#{armMasterController.createEnhanced(4)}" value="+4">
+                  <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
+                </h:commandLink>
+                <h:outputLabel value=" "/>                                                        
+                <h:commandLink action="#{armMasterController.createEnhanced(5)}" value="+5">  
+                  <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
+                </h:commandLink>
+              </p:column>
 
-                <h:outputText escape="false" 
-                              value="#{bundle.ListArmMasterEmpty}" 
-                              rendered="#{armMasterController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{armMasterController.items.rowCount > 0}">
-                    <h:outputText value="#{armMasterController.pagination.pageFirstItem + 1}..
-                                  #{armMasterController.pagination.pageLastItem + 1}/
-                                  #{armMasterController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{armMasterController.previous}" 
-                                   value="#{bundle.Previous} #{armMasterController.pagination.pageSize}" 
-                                   rendered="#{armMasterController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{armMasterController.next}" 
-                                   value="#{bundle.Next} #{armMasterController.pagination.pageSize}" 
-                                   rendered="#{armMasterController.pagination.hasNextPage}"/>&nbsp;
-                    <h:panelGrid id="tableGrid" styleClass="tableGrid">
-                    <h:dataTable value="#{armMasterController.items}" var="item" border="0" cellpadding="2" 
-                                 cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" 
-                                 styleClass="w" style="text-align: left; border:solid 1px"
-                                 columnClasses="columnNomal,columnNomal,columnNomal,columnNomal,
-                                 columnNomal,columnNomal,columnNomal,columnNomal,
-                                 columnNomal,columnNomal,column30,columnNomal">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="名前"/>
-                            </f:facet>
-                            <h:commandLink action="#{armMasterController.prepareEdit}" value="#{item.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="武器タイプ"/>
-                            </f:facet>
-                            <h:outputText value="#{item.armType1.name} #{item.armType2.name} #{item.armType3.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="重さ"/>
-                            </f:facet>
-                            <h:outputText value="#{item.weight}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="価格"/>
-                            </f:facet>
-                            <h:outputText value="#{item.price}"/>
-                        </h:column>
-                        <!--
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="生来の間合いの倍率"/>
-                            </f:facet>
-                            <h:outputText value="#{item.naturalReachMultiplier}"/>
-                        </h:column>
-                        -->
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="射程"/>
-                            </f:facet>
-                            <h:outputText value="#{item.range}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="ダメージ"/>
-                            </f:facet>
-                            <h:outputText value="#{item.damageDiceNum}#{item.damageDiceType.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="ダメージタイプ"/>
-                            </f:facet>
-                            <h:outputText value="#{item.damageType.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="倍率"/>
-                            </f:facet>
-                            <h:outputText value="#{item.criticalMultiplier}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="可能域"/>
-                            </f:facet>
-                            <h:outputText value="#{item.threatRange}"/>
-                        </h:column>
-                        <!--
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="双頭武器の反対側ダメージ"/>                                                                
-                            </f:facet>
-                            <h:outputText value="#{item.secondDamageDiceNum}#{item.secondDamageDiceType}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="双頭武器の反対側クリティカル倍率"/>
-                            </f:facet>
-                            <h:outputText value="#{item.secondCriticalMultiplier}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="双頭武器の反対側クリティカル可能域"/>
-                            </f:facet>
-                            <h:outputText value="#{item.secondThreatRange}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="双頭武器の反対側"/>
-                                <br/>
-                                <h:outputText value="ダメージタイプ"/>                                
-                            </f:facet>
-                            <h:outputText value="#{item.secondDamageType}"/>
-                        </h:column>
-                        -->
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="魔法強化"/>
-                            </f:facet>
-                            <h:outputText value="#{item.enhancementBonus}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="備考" style="width: 30%"/>
-                            </f:facet>
-                            <h:outputText value="#{item.description}" style="width: 30%"/>
-                        </h:column>
-                        <!--
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="ルールブック"/>
-                            </f:facet>
-                            <h:outputText value="#{item.rulebook.name} P.#{item.page}" rendered="#{item.rulebook.name != null}"/>
-                        </h:column>
-                        -->
-
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="コピー作成"/>
-                            </f:facet>
-                            <h:commandLink action="#{armMasterController.prepareCopy}" value="コピー"/>
-                            <br/>
-                            <h:commandLink action="#{armMasterController.createEnhanced(1)}" value="+1"/>
-                            <h:outputLabel value=" "/>                            
-                            <h:commandLink action="#{armMasterController.createEnhanced(2)}" value="+2"/>
-                            <h:outputLabel value=" "/>                            
-                            <h:commandLink action="#{armMasterController.createEnhanced(3)}" value="+3"/>
-                            <h:outputLabel value=" "/>                            
-                            <h:commandLink action="#{armMasterController.createEnhanced(4)}" value="+4"/>
-                            <h:outputLabel value=" "/>                                                        
-                            <h:commandLink action="#{armMasterController.createEnhanced(5)}" value="+5"/>                            
-                        </h:column>
-                    </h:dataTable>
-                    </h:panelGrid>
-                </h:panelGroup>
-                <br />
-                <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
-                <br />
-                <br />
-            </h:form>
-        </ui:define>
-    </ui:composition>
+            </p:dataTable>
+            
+          </h:panelGrid>
+        </h:panelGroup>
+        <br />
+        <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
+        <br />
+        <br />
+      </h:form>
+    </ui:define>
+  </ui:composition>
 
 </html>

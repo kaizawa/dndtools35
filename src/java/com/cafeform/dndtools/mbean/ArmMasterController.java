@@ -119,12 +119,6 @@ public class ArmMasterController implements Serializable {
         return "List";
     }
 
-    public String prepareView() {
-        currentArmMaster = (ArmMaster) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
     public String prepareCreate() {
         currentArmMaster = new ArmMaster();
         selectedItemIndex = -1;
@@ -132,20 +126,20 @@ public class ArmMasterController implements Serializable {
     }
 
     public String prepareEdit() {
-        currentArmMaster = (ArmMaster) getItems().getRowData();
+        currentArmMaster = selectedArm;
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
 
     public String prepareCopy() {
-        currentArmMaster = copy((ArmMaster) getItems().getRowData());
+        currentArmMaster = selectedArm;
         currentArmMaster.setName(currentArmMaster.getName() + "のコピー");
         selectedItemIndex = -1;
         return "Edit";
     }
 
     public String createEnhanced(int level) {
-        currentArmMaster = copy((ArmMaster) getItems().getRowData());
+        currentArmMaster = copy(selectedArm);
         currentArmMaster.setName(currentArmMaster.getName() + "+" + level);
         currentArmMaster.setEnhancementBonus(level);
         int additionalPrice = 0;
