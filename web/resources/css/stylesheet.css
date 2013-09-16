@@ -640,12 +640,12 @@ background-color: #eeeeee;
     vertical-align: middle;
 }
 
-table.gPrint{
+table.wPrint{
     border-collapse: collapse;
     width: 100%;
 }
 
-table.gPrint th{
+table.wPrint th{
 
     padding:4px;
 /*    border-bottom: 1px solid #333333; */
@@ -653,7 +653,7 @@ table.gPrint th{
     text-align: center;
 }
 
-table.gPrint td{
+table.wPrint td{
 
     text-align:center;
     border-bottom: 1px solid #333333;

@@ -5,6 +5,7 @@
 package com.cafeform.dndtools.mbean;
 
 import com.cafeform.dndtools.entity.AbilityMaster;
+import com.cafeform.dndtools.entity.CharacterArmRecord;
 import com.cafeform.dndtools.entity.SaveMaster;
 import java.util.ArrayList;
 import java.util.List;
@@ -158,6 +159,15 @@ public class PrintableCharacterSummaryListController extends CharacterSheetContr
     
     public String getAttackDescription() {
         CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
-        return textToHtml(characterData.getAttackDescription());
+        //return textToHtml(characterData.getAttackDescription());
+        List<CharacterArmRecord> armRecordList = characterData.getCharacterRecord().getCharacterArmRecordList();
+        StringBuilder armListStr = new StringBuilder();
+        
+        for (CharacterArmRecord armRecord : armRecordList) 
+        {
+            armListStr.append("■").append(armRecord.getArmId().getName()).append("\n");
+            armListStr.append(characterData.getAttackModifiers(armRecord)).append("\n");
+        }
+        return textToHtml(armListStr.toString());
     }
 }

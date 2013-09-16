@@ -4,124 +4,152 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>キャラクターサマリー</title>
-        <h:outputStylesheet name="css/stylesheet.css"/>     
-    </h:head>
+  <h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>キャラクターサマリー</title>
+    <h:outputStylesheet name="css/stylesheet.css"/>     
+  </h:head>
 
-    <h:body>    
-        <h:form>
-            <h:panelGrid columns="1" id="gridPanel34" styleClass="topLevelGrid topLevelGridPrint">
-                <h:panelGrid id="charaListGridPanel" style="width: 100%; height: 100%;">
-                    <h:dataTable binding="#{printableCharacterSummaryListController.characterSummaryTable}"
-                                 id="characterSummaryTable" style="" styleClass="gPrintSummaryList" 
-                                 value="#{printableCharacterSummaryListController.checkedCharacterList}" var="currentRow">
-                        <h:column id="nameColumn1">
-                            <h:panelGrid columns="1" id="gridPanel36" style="width: 150px" styleClass="qPrint">
-                                <h:outputText id="charaEditLinkText1" style="font-size: 12px;" value="#{currentRow.characterName}"/> 
-                                <h:panelGrid columns="2">
-                                    <h:outputText id="charaEditLinkText1" style="font-size: 12px;" value="Lv #{currentRow.characterLevel}"/>
-                                    <h:outputText styleClass="emptyUnderLine" value=""/>                                
-                                </h:panelGrid>
-                                <h:outputText id="playerName" value="#{currentRow.playerName}"/>
-                                <h:outputText id="classList" value="#{currentRow.classList}"/>
-                            </h:panelGrid>
-                            <f:facet name="header"/>
-                        </h:column>
-                        <h:column id="attack_column">
-                            <h:panelGrid id="gridPanel1" styleClass="qPrint">
-                                <h:outputText escape="false" id="outputText2" value="#{printableCharacterSummaryListController.attackDescription}"/>
-                            </h:panelGrid>
-                            <f:facet name="header"/>
-                            <f:facet name="header"/>
-                        </h:column>
-                        <h:column id="armor_column">
-                            <h:panelGrid styleClass="qPrint">
-                                <h:outputText rendered="#{!currentRow.characterEquipment.head.isEmpty()}" escape="false" value="頭: #{currentRow.characterEquipment.head}"/>                                                                
-                                <h:outputText rendered="#{!currentRow.characterEquipment.necklace.isEmpty()}" escape="false" value="首輪: #{currentRow.characterEquipment.necklace}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.armRing.isEmpty()}" escape="false" value="腕輪: #{currentRow.characterEquipment.armRing}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.ring1.isEmpty()}" escape="false" value="指輪1: #{currentRow.characterEquipment.ring1}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.ring2.isEmpty()}" escape="false" value="指輪2: #{currentRow.characterEquipment.ring2}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.belt.isEmpty()}" escape="false" value="ベルト: #{currentRow.characterEquipment.belt}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.eye.isEmpty()}" escape="false" value="目: #{currentRow.characterEquipment.eye}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.glove.isEmpty()}" escape="false" value="手袋: #{currentRow.characterEquipment.glove}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.boots.isEmpty()}" escape="false" value="靴: #{currentRow.characterEquipment.boots}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.arm1.isEmpty()}" escape="false" value="武器1: #{currentRow.characterEquipment.arm1}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.arm2.isEmpty()}" escape="false" value="武器2: #{currentRow.characterEquipment.arm2}"/>                                
-                                <h:outputText rendered="#{!currentRow.characterEquipment.armor.isEmpty()}" escape="false" value="鎧: #{currentRow.characterEquipment.armor}"/>  
-                                <h:outputText rendered="#{!currentRow.characterEquipment.robe.isEmpty()}" escape="false" value="ローブ: #{currentRow.characterEquipment.robe}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.vest.isEmpty()}" escape="false" value="ベスト: #{currentRow.characterEquipment.vest}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.cloak.isEmpty()}" escape="false" value="マント: #{currentRow.characterEquipment.cloak}"/>
-                                <h:outputText rendered="#{!currentRow.characterEquipment.shield.isEmpty()}" escape="false" value="盾: #{currentRow.characterEquipment.shield}"/>                                                                
-                            </h:panelGrid>
-                            <f:facet name="header"/>
-                            <f:facet name="header"/>
-                        </h:column>
-                        <h:column id="acColumn">
-                            <f:facet name="header"/>
-                            <h:panelGrid id="acGrid" style="width: 110px" styleClass="qPrint">
-                                <h:panelGrid columns="2">
-                                    <h:outputText id="HP" style="font-size: 12px;" value="HP: #{currentRow.hitPoint}"/>
-                                    <h:outputText styleClass="emptyUnderLine" value=""/>                                
-                                </h:panelGrid>
-                                <h:panelGrid columns="2">
-                                    <h:outputText id="initiative" value="イニシアチブ: #{currentRow.initiative}"/>
-                                    <h:outputText styleClass="emptyUnderLine" value=""/>                                                                    
-                                </h:panelGrid>                                
-                                <h:outputText id="AC" value="AC: #{currentRow.acNormal}/接触#{currentRow.acTouch}/立ち#{currentRow.acFlatFooted}"/>
-                            </h:panelGrid>
-                        </h:column>
-                        <h:column id="skillColumn">
-                            <h:panelGrid id="gridPanel2" style="width: 80px" styleClass="qPrint">
-                                <h:outputText escape="false" id="skills" value="#{printableCharacterSummaryListController.commonSkills}"/>
-                            </h:panelGrid>
-                        </h:column>
-                        <h:column id="saveColumn16">
-                            <h:panelGrid id="gridPanel37" styleClass="qPrint">
-                                <h:panelGrid columns="2" id="saveAndAbility">
-                                    <h:panelGrid id="ability">
-                                        <h:dataTable binding="#{printableCharacterSummaryListController.abilityTable}" headerClass="list-header"
-                                                     id="abilityTable" rowClasses="list-row-even,list-row-odd" 
-                                                     value="#{applicationController.abilityList}" var="abilityCurrentRow">
-                                            <h:column id="column6">
-                                                <h:outputText id="outputText29" value="#{printableCharacterSummaryListController.getAbilityShortName()}"/>
-                                            </h:column>
-                                            <h:column id="column7">
-                                                <h:outputText id="outputText31" value="#{printableCharacterSummaryListController.abilityTotal}"/>
-                                            </h:column>
-                                            <h:column id="column8">
-                                                <h:outputText id="outputText33" value="(#{printableCharacterSummaryListController.abilityModifier})"/>
-                                            </h:column>
-                                            <h:column>
-                                                <h:outputText styleClass="emptyUnderLine" value=""/>                                
-                                            </h:column>
-                                        </h:dataTable>
-                                    </h:panelGrid>
-                                    <h:panelGrid id="save">
-                                        <h:dataTable binding="#{printableCharacterSummaryListController.saveTable}" headerClass="list-header"
-                                                     id="saveTable" rowClasses="list-row-even,list-row-odd" value="#{applicationController.saveList}"
-                                                     var="saveCurrentRow">
-                                            <h:column id="column2">
-                                                <h:outputText id="outputText1" value="#{saveCurrentRow.saveName}"/>
-                                                <f:facet name="header"/>
-                                            </h:column>
-                                            <h:column id="column3">
-                                                <h:outputText id="outputText4" value="#{printableCharacterSummaryListController.saveTotal}"/>
-                                                <f:facet name="header"/>
-                                            </h:column>
-                                            <h:column>
-                                                <h:outputText styleClass="emptyUnderLine" value=""/>                                
-                                            </h:column>
-                                        </h:dataTable>
-                                    </h:panelGrid>
-                                </h:panelGrid>
-                            </h:panelGrid>
-                            <f:facet name="header"/>
-                        </h:column>
-                    </h:dataTable>
+  <h:body>    
+    <h:form>
+      <h:panelGrid columns="1" id="gridPanel34" styleClass="topLevelGrid topLevelGridPrint">
+        <h:panelGrid id="charaListGridPanel" style="width: 100%; height: 100%;">
+          <h:dataTable binding="#{printableCharacterSummaryListController.characterSummaryTable}"
+                       id="characterSummaryTable" style="" styleClass="gPrintSummaryList" 
+                       value="#{printableCharacterSummaryListController.checkedCharacterList}" 
+                       var="currentRow">
+            <h:column id="nameColumn1">
+              <h:panelGrid columns="1" id="gridPanel36" style="width: 150px" styleClass="qPrint">
+                <h:outputText style="font-size: 12px;" value="#{currentRow.characterName}"/> 
+                <h:panelGrid columns="2">
+                  <h:outputText style="font-size: 12px;" value="Lv #{currentRow.characterLevel}"/>
+                  <h:outputText styleClass="emptyUnderLine" value=""/>                                
                 </h:panelGrid>
-            </h:panelGrid>
-        </h:form>
-    </h:body>
+                <h:outputText id="playerName" value="#{currentRow.playerName}"/>
+                <h:outputText id="classList" value="#{currentRow.classList}"/>
+              </h:panelGrid>
+              <f:facet name="header"/>
+            </h:column>
+            <h:column id="attack_column">
+              <h:panelGrid id="gridPanel1" styleClass="qPrint">
+                <h:outputText escape="false" id="outputText2" 
+                              value="#{printableCharacterSummaryListController.attackDescription}"/>
+              </h:panelGrid>
+              <f:facet name="header"/>
+              <f:facet name="header"/>
+            </h:column>
+            <h:column id="armor_column">
+              <h:panelGrid styleClass="qPrint">
+                <h:outputText rendered="#{!currentRow.characterEquipment.head.isEmpty()}" escape="false" 
+                              value="頭: #{currentRow.characterEquipment.head}"/>                 
+                <h:outputText rendered="#{!currentRow.characterEquipment.necklace.isEmpty()}" escape="false" 
+                              value="首輪: #{currentRow.characterEquipment.necklace}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.armRing.isEmpty()}" escape="false"
+                              value="腕輪: #{currentRow.characterEquipment.armRing}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.ring1.isEmpty()}" escape="false" 
+                              value="指輪1: #{currentRow.characterEquipment.ring1}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.ring2.isEmpty()}" escape="false" 
+                              value="指輪2: #{currentRow.characterEquipment.ring2}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.belt.isEmpty()}" escape="false" 
+                              value="ベルト: #{currentRow.characterEquipment.belt}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.eye.isEmpty()}" escape="false" 
+                              value="目: #{currentRow.characterEquipment.eye}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.glove.isEmpty()}" escape="false" 
+                              value="手袋: #{currentRow.characterEquipment.glove}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.boots.isEmpty()}" escape="false" 
+                              value="靴: #{currentRow.characterEquipment.boots}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.arm1.isEmpty()}" escape="false" 
+                              value="武器1: #{currentRow.characterEquipment.arm1}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.arm2.isEmpty()}" escape="false" 
+                              value="武器2: #{currentRow.characterEquipment.arm2}"/>                                
+                <h:outputText rendered="#{!currentRow.characterEquipment.armor.isEmpty()}" escape="false" 
+                              value="鎧: #{currentRow.characterEquipment.armor}"/>  
+                <h:outputText rendered="#{!currentRow.characterEquipment.robe.isEmpty()}" escape="false" 
+                              value="ローブ: #{currentRow.characterEquipment.robe}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.vest.isEmpty()}" escape="false" 
+                              value="ベスト: #{currentRow.characterEquipment.vest}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.cloak.isEmpty()}" escape="false" 
+                              value="マント: #{currentRow.characterEquipment.cloak}"/>
+                <h:outputText rendered="#{!currentRow.characterEquipment.shield.isEmpty()}" escape="false" 
+                              value="盾: #{currentRow.characterEquipment.shield}"/>                                                                
+              </h:panelGrid>
+              <f:facet name="header"/>
+              <f:facet name="header"/>
+            </h:column>
+            <h:column id="acColumn">
+              <f:facet name="header"/>
+              <h:panelGrid id="acGrid" style="width: 110px" styleClass="qPrint">
+                <h:panelGrid columns="2">
+                  <h:outputText id="HP" style="font-size: 12px;" value="HP: #{currentRow.hitPoint}"/>
+                  <h:outputText styleClass="emptyUnderLine" value=""/>                                
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                  <h:outputText id="initiative" value="イニシアチブ: #{currentRow.initiative}"/>
+                  <h:outputText styleClass="emptyUnderLine" value=""/>                                                                         </h:panelGrid>                                
+                <h:outputText 
+                  id="AC" 
+                  value="AC: #{currentRow.acNormal}/接触#{currentRow.acTouch}/立ち#{currentRow.acFlatFooted}"/>
+              </h:panelGrid>
+            </h:column>
+            <h:column id="skillColumn">
+              <h:panelGrid id="gridPanel2" style="width: 80px" styleClass="qPrint">
+                <h:outputText 
+                  escape="false" id="skills" 
+                  value="#{printableCharacterSummaryListController.commonSkills}"/>
+              </h:panelGrid>
+            </h:column>
+            <h:column id="saveColumn16">
+              <h:panelGrid id="gridPanel37" styleClass="qPrint">
+                <h:panelGrid columns="2" id="saveAndAbility">
+                  <h:panelGrid id="ability">
+                    <h:dataTable binding="#{printableCharacterSummaryListController.abilityTable}" 
+                                 headerClass="list-header"
+                                 id="abilityTable" rowClasses="list-row-even,list-row-odd" 
+                                 value="#{applicationController.abilityList}" var="abilityCurrentRow">
+                      <h:column id="column6">
+                        <h:outputText id="outputText29" 
+                                      value="#{printableCharacterSummaryListController.getAbilityShortName()}"/>
+                      </h:column>
+                      <h:column id="column7">
+                        <h:outputText id="outputText31" 
+                                      value="#{printableCharacterSummaryListController.abilityTotal}"/>
+                      </h:column>
+                      <h:column id="column8">
+                        <h:outputText id="outputText33" 
+                                      value="(#{printableCharacterSummaryListController.abilityModifier})"/>
+                      </h:column>
+                      <h:column>
+                        <h:outputText styleClass="emptyUnderLine" value=""/>                                
+                      </h:column>
+                    </h:dataTable>
+                  </h:panelGrid>
+                  <h:panelGrid id="save">
+                    <h:dataTable binding="#{printableCharacterSummaryListController.saveTable}" 
+                                 headerClass="list-header"
+                                 id="saveTable" rowClasses="list-row-even,list-row-odd" 
+                                 value="#{applicationController.saveList}"
+                                 var="saveCurrentRow">
+                      <h:column id="column2">
+                        <h:outputText id="outputText1" value="#{saveCurrentRow.saveName}"/>
+                        <f:facet name="header"/>
+                      </h:column>
+                      <h:column id="column3">
+                        <h:outputText id="outputText4" 
+                                      value="#{printableCharacterSummaryListController.saveTotal}"/>
+                        <f:facet name="header"/>
+                      </h:column>
+                      <h:column>
+                        <h:outputText styleClass="emptyUnderLine" value=""/>                                
+                      </h:column>
+                    </h:dataTable>
+                  </h:panelGrid>
+                </h:panelGrid>
+              </h:panelGrid>
+              <f:facet name="header"/>
+            </h:column>
+          </h:dataTable>
+        </h:panelGrid>
+      </h:panelGrid>
+    </h:form>
+  </h:body>
 </html>
