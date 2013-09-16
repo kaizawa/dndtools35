@@ -16,8 +16,8 @@
         <Node id="armType2Master/List.xhtml" x="150" y="1650" zoom="true"/>
         <Node id="monsterSkillRecord/List.xhtml" x="650" y="600" zoom="true"/>
         <Node id="armType2Master/View.xhtml" x="900" y="150" zoom="true"/>
-        <Node id="rulebookMaster/View.xhtml" x="400" y="1350" zoom="true"/>
         <Node id="armType1Master/Edit.xhtml" x="400" y="1500" zoom="true"/>
+        <Node id="rulebookMaster/View.xhtml" x="400" y="1350" zoom="true"/>
         <Node id="armType2Master/Create.xhtml" x="1150" y="1050" zoom="true"/>
         <Node id="typeMaster/Create.xhtml" x="1150" y="450" zoom="true"/>
         <Node id="damageTypeMaster/List.xhtml" x="2400" y="600" zoom="true"/>
@@ -44,8 +44,8 @@
         <Node id="encounterRecord/EditTemplate.xhtml" x="650" y="900" zoom="true"/>
         <Node id="damageTypeMaster/Create.xhtml" x="1900" y="300" zoom="true"/>
         <Node id="monsterSkillRecord/Edit.xhtml" x="900" y="750" zoom="true"/>
-        <Node id="scenarioRecord/View.xhtml" x="1650" y="300" zoom="true"/>
         <Node id="encounterMember/Edit.xhtml" x="2650" y="450" zoom="true"/>
+        <Node id="scenarioRecord/View.xhtml" x="1650" y="300" zoom="true"/>
         <Node id="armType3Master/View.xhtml" x="900" y="450" zoom="true"/>
         <Node id="template.xhtml" x="2650" y="150" zoom="true"/>
         <Node id="armType3Master/Create.xhtml" x="400" y="300" zoom="true"/>
@@ -56,8 +56,8 @@
         <Node id="raceMaster/RaceListPage.xhtml" x="1900" y="600" zoom="true"/>
         <Node id="armType1Master/Create.xhtml" x="150" y="1050" zoom="true"/>
         <Node id="typeMaster/List.xhtml" x="900" y="1200" zoom="true"/>
-        <Node id="diceMaster/View.xhtml" x="2150" y="150" zoom="true"/>
         <Node id="campaignMaster/EditTemplate.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="diceMaster/View.xhtml" x="2150" y="150" zoom="true"/>
         <Node id="scenarioRecord/Create.xhtml" x="650" y="1050" zoom="true"/>
         <Node id="monsterMaster/Edit.xhtml" x="1900" y="900" zoom="true"/>
         <Node id="campaignMaster/Create.xhtml" x="900" y="1050" zoom="true"/>
@@ -65,21 +65,21 @@
         <Node id="characterRecord/List.xhtml" x="900" y="300" zoom="true"/>
         <Node id="scenarioRecord/List.xhtml" x="150" y="900" zoom="true"/>
         <Node id="monsterSkillRecord/Create.xhtml" x="1400" y="600" zoom="true"/>
-        <Node id="scenarioRecord/EditTemplate.xhtml" x="1900" y="750" zoom="true"/>
         <Node id="encounterRecord/List.xhtml" x="1650" y="900" zoom="true"/>
+        <Node id="scenarioRecord/EditTemplate.xhtml" x="1900" y="750" zoom="true"/>
         <Node id="armType3Master/List.xhtml" x="150" y="750" zoom="true"/>
         <Node id="damageTypeMaster/Edit.xhtml" x="1150" y="750" zoom="true"/>
         <Node id="characterRecord/Edit.xhtml" x="110" y="111" zoom="true"/>
-        <Node id="campaignMaster/View.xhtml" x="1900" y="150" zoom="true"/>
         <Node id="encounterRecord/Battle.xhtml" x="150" y="600" zoom="true"/>
         <Node id="raceMaster/EditRacePage.xhtml" x="1650" y="750" zoom="true"/>
+        <Node id="campaignMaster/View.xhtml" x="1900" y="150" zoom="true"/>
         <Node id="encounterMember/List.xhtml" x="150" y="1200" zoom="true"/>
         <Node id="login/LoginPage.xhtml" x="150" y="450" zoom="true"/>
         <Node id="scenarioRecord/Edit.xhtml" x="1150" y="150" zoom="true"/>
         <Node id="typeMaster/Edit.xhtml" x="2900" y="300" zoom="true"/>
         <Node id="index.xhtml" x="150" y="1500" zoom="true"/>
-        <Node id="damageTypeMaster/View.xhtml" x="900" y="900" zoom="true"/>
         <Node id="armMaster/Edit.xhtml" x="2400" y="450" zoom="true"/>
+        <Node id="damageTypeMaster/View.xhtml" x="900" y="900" zoom="true"/>
         <Node id="armType3Master/Edit.xhtml" x="2900" y="150" zoom="true"/>
         <Node id="campaignMaster/Edit.xhtml" x="650" y="1350" zoom="true"/>
         <Node id="scenarioCharacterRecord/Create.xhtml" x="2650" y="300" zoom="true"/>

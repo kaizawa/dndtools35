@@ -944,3 +944,8 @@ td.column30 {
 td.columnNomal {
     
 }
+
+/* For PrimeFaces all component */
+.ui-widget, .ui-widget .ui-widget {
+  font-size: 90% !important;
+}

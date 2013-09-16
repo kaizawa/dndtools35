@@ -37,29 +37,31 @@
                     value="キャラクター修正画面へ戻る"/>
                 </h:panelGrid>
               </h:panelGrid>  
-                <p:dataTable id="dataTable" var="arm" value="#{characterSheetArmController.allArms}" 
-                             widgetVar="armsTable" 
-                             emptyMessage="No arms found with given criteria" 
-                             filteredValue="#{characterSheetArmController.filteredArms}">
-                  <f:facet name="header">
-                    <p:outputPanel>
-                      <h:outputText value="Search all fields:" />
-                      <p:inputText id="globalFilter" onkeyup="PF('armsTable').filter()" style="width:150px" />
-                    </p:outputPanel>
-                  </f:facet>
-                  <p:column id="modelColumn" filterBy="#{arm.name}" 
-                            headerText="Name" footerText="contains"
-                            filterMatchMode="contains">
-                    <h:outputText value="#{arm.name}" />
-                  </p:column>
-                  <p:column id="armType1MasterColumn" 
-                            headerText="単・軍・特" footerText="exact"
-                            filterBy="#{arm.armType1}"                             
-                            filterOptions="#{characterSheetArmController.armType1MasterOptions}"
-                            filterMatchMode="exact" >
-                    <h:outputText value="#{arm.armType1.name}" />
-                  </p:column>
-                </p:dataTable>
+              <p:dataTable id="dataTable" var="arm" value="#{characterSheetArmController.allArms}" 
+                           widgetVar="armsTable" 
+                           emptyMessage="指定された条件に合う武器は見つかりませんでした" 
+                           filteredValue="#{characterSheetArmController.filteredArms}">
+                <!--
+                <f:facet name="header">
+                  <p:outputPanel>
+                    <h:outputText value="全ての項目を検索:" />
+                    <p:inputText id="globalFilter" onkeyup="PF('armsTable').filter()" style="width:150px"/>
+                  </p:outputPanel>
+                </f:facet>
+                -->
+                <p:column id="modelColumn" filterBy="#{arm.name}" 
+                          headerText="名前" footerText="contains"
+                          filterMatchMode="contains">
+                  <h:outputText value="#{arm.name}" />
+                </p:column>
+                <p:column id="armType1MasterColumn" 
+                          headerText="単・軍・特" footerText="exact"
+                          filterBy="#{arm.armType1}"                             
+                          filterOptions="#{characterSheetArmController.armType1MasterOptions}"
+                          filterMatchMode="exact" >
+                  <h:outputText value="#{arm.armType1.name}" />
+                </p:column>
+              </p:dataTable>
             </h:panelGrid>
           </h:panelGrid>
           <h:outputText id="outputText29" style="font-size: 8px" 

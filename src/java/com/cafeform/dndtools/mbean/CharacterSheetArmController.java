@@ -123,7 +123,7 @@ public class CharacterSheetArmController implements Serializable {
     private SelectItem[] createFilterOptions(ArmType1Master[] data) {
         SelectItem[] options = new SelectItem[data.length + 1];
 
-        options[0] = new SelectItem("", "Select");
+        options[0] = new SelectItem("", "選択");
         for (int i = 0; i < data.length; i++) {
             options[i + 1] = new SelectItem(data[i], data[i].getName());
         }
