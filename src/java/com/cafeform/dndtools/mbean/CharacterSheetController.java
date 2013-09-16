@@ -625,6 +625,7 @@ public class CharacterSheetController implements Serializable {
         List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
         List<CharacterAbilityRecord> abilityList = getCharacterData().getCharacterAbilityRecordList();
         List<CharacterSaveRecord> saveList = getCharacterData().getCharacterSaveRecordList();
+        List<CharacterArmRecord> armRecordList = charaData.getCharacterRecord().getCharacterArmRecordList();
 
         /*
          * セーブ時には 順番を変えるためにキャラクターリストの一覧を再生性する
@@ -656,6 +657,10 @@ public class CharacterSheetController implements Serializable {
             }
             for (CharacterSaveRecord save : saveList) {
                 characterSaveRecordFacade.edit(save);
+            }
+            for (CharacterArmRecord armRecord : armRecordList )
+            {
+                characterArmRecordFacade.edit(armRecord);
             }
             JsfUtil.addSuccessMessage("保存されました");
         } catch (Exception ex) {

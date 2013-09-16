@@ -14,45 +14,10 @@
       </h:outputText>
     </ui:define>
     <ui:define name="body">
-      <h:form>
-        
-        <h:panelGrid id="armGridPanel" style="" styleClass="tableGrid">
-          <h:outputText styleClass="tableTitleBlack" value="武器"/>
-          <h:dataTable styleClass="w"
-                       value="#{characterSheetController.characterArmRecordList}"
-                       var="armRecord">
-            <h:column >
-              <h:outputText style="font-size: 12px; 
-                                  font-weight: bold" value="#{armRecord.armId.name}"/>
-              <f:facet name="header">
-                <h:outputText escape="false" style="" value="名前"/>
-              </f:facet>
-            </h:column>
-            <h:column >
-              <h:outputText 
-                style="font-size: 12px; font-weight: bold" 
-                value="#{characterSheetController.characterData.getAttackModifiers(armRecord)}"/>
-              <f:facet name="header">
-                <h:outputText escape="false" style="" value="ダメージ"/>
-              </f:facet>
-            </h:column>
-            <h:column >
-              <h:commandButton 
-                action="#{characterSheetController.deleteArmButton_action(armRecord)}" value="削除"/>
-              <f:facet name="header">
-                <h:outputText escape="false" style="" value=""/>
-              </f:facet>
-            </h:column>
-          </h:dataTable>
+      <h:form>       
 
-          <h:panelGrid style="height: 100%; width: 100%" >
-            <h:panelGrid style="width: 100%; height: 100%; text-align: right" >
-              <h:commandButton action="#{characterSheetController.editArmButton_action}" 
-                               value="武器の追加"/>
-            </h:panelGrid>
-          </h:panelGrid>
-        </h:panelGrid>
-        
+
+
         <h:panelGrid columns="1" id="contentsGrid" style="width: 100%">
           <h:panelGrid columns="4" id="charaIdGridPanel1" style="height: 100%; text-align: left; width: 100%">
             <h:panelGrid id="gridPanel14" style="width: 100%; height: 100%;">
@@ -242,6 +207,64 @@
               </h:dataTable>
             </h:panelGrid>
           </h:panelGrid>
+            
+             <h:panelGrid columns="2" style="width: 100%; height: 100%;">
+                <h:panelGrid style="height: 100%; text-align: left; width: 100%">
+                  <h:commandButton action="#{characterSheetController.saveButton_action}" 
+                                   value="保存"/>
+                </h:panelGrid>
+                <h:panelGrid style="width: 100%; height: 100%; text-align: right" >
+                  <h:commandButton action="#{characterSheetController.editArmButton_action}" 
+                                   value="武器の追加"/>
+                </h:panelGrid>
+              </h:panelGrid>
+
+              <h:panelGrid id="armGridPanel" style="" styleClass="tableGrid">
+                <h:outputText styleClass="tableTitleBlack" value="武器"/>
+                <h:dataTable styleClass="w"
+                             value="#{characterSheetController.characterArmRecordList}"
+                             var="armRecord">
+                  <h:column >
+                    <h:outputText style="font-size: 12px; 
+                                  font-weight: bold" value="#{armRecord.armId.name}"/>
+                    <f:facet name="header">
+                      <h:outputText escape="false" style="" value="名前"/>
+                    </f:facet>
+                  </h:column>
+                  <h:column >
+                    <h:outputText 
+                      style="font-size: 12px; font-weight: bold" 
+                      value="#{characterSheetController.characterData.getAttackModifiers(armRecord)}"/>
+                    <f:facet name="header">
+                      <h:outputText escape="false" style="" value="ダメージ"/>
+                    </f:facet>
+                  </h:column>
+                  <h:column >
+                    <h:inputText 
+                      style="font-size: 12px; font-weight: bold; width: 30px; text-align: right" 
+                      value="#{armRecord.attackModifier}"/>
+                    <f:facet name="header">
+                      <h:outputText escape="false" style="" value="攻撃修正値"/>
+                    </f:facet>
+                  </h:column>
+                  <h:column >
+                    <h:inputText 
+                      style="font-size: 12px; font-weight: bold; width: 30px; text-align: right" 
+                      value="#{armRecord.damageModifier}"/>
+                    <f:facet name="header">
+                      <h:outputText escape="false" style="" value="ダメージ修正値"/>
+                    </f:facet>
+                  </h:column>
+                  <h:column >
+                    <h:commandButton 
+                      action="#{characterSheetController.deleteArmButton_action(armRecord)}" value="削除"/>
+                    <f:facet name="header">
+                      <h:outputText escape="false" style="" value=""/>
+                    </f:facet>
+                  </h:column>
+                </h:dataTable>
+              </h:panelGrid>            
+            
           <h:panelGrid columns="2" id="abilityAndSkillGridPanel1" style="width: 100%; height: 100%;">
             <h:panelGrid columns="1" id="leftGridPanel1" style="height: 100%; width: 100% ">
               <h:panelGrid id="buttonGridPanel2" style="height: 100%; text-align: left; width: 100%">
@@ -708,14 +731,17 @@
                   </h:column>
                   <h:column id="column21">
                     <h:outputText id="outputText149" rendered="#{characterSheetController.isTriableSkill()}" 
-                                  style="font-size: 18px; font-weight: bold" value="#{characterSheetController.skillTotalCheckModifier}"/>
+                                  style="font-size: 18px; font-weight: bold" 
+                                  value="#{characterSheetController.skillTotalCheckModifier}"/>
                     <f:facet name="header">
                       <h:outputText id="outputText150" value="判定値"/>
                     </f:facet>
                   </h:column>
                   <h:column id="column22">
                     <h:outputText id="outputText151" rendered="#{characterSheetController.isTriableSkill()}" 
-                                  style="font-size: 10px; width: 40px" value="#{characterSheetController.skillAbilityModifier} 【#{characterSheetController.skillAbilityShortName}】"/>
+                                  style="font-size: 10px; width: 40px" 
+                                  value="#{characterSheetController.skillAbilityModifier}
+                                  【#{characterSheetController.skillAbilityShortName}】"/>
                     <f:facet name="header">
                       <h:outputText id="outputText152" style="font-size: 10px" value="能力"/>
                     </f:facet>

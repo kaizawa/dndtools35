@@ -1825,6 +1825,8 @@ public class CharacterData implements CharacterSummary {
         int attackBonus = 1 == arm.getArmType3().getId() ? getMeleeAttackBonus() :  getRangeAttackBonus();
         int numAttacks = ((baseAttack - 1) / 5) + 1;
         int enhancementBonus = null != arm.getEnhancementBonus() ? arm.getEnhancementBonus() : 0;
+        int attackModifier = null != armRecord.getAttackModifier() ? armRecord.getAttackModifier() : 0;
+        int damageModifier = null != armRecord.getDamageModifier()? armRecord.getDamageModifier() : 0;        
         
         /* Attack bonus */
         for(int i = 0 ; i < numAttacks ; i++)
@@ -1833,7 +1835,7 @@ public class CharacterData implements CharacterSummary {
                 modifiers.append("/");
             }
             modifiers.append("+")
-                .append(attackBonus + enhancementBonus - (i * 5));
+                .append(attackBonus + enhancementBonus + attackModifier - (i * 5));
         }
         
         int threatRange = null != arm.getThreatRange() ? arm.getThreatRange() : 20;
@@ -1853,7 +1855,8 @@ public class CharacterData implements CharacterSummary {
         modifiers.append("(")
             .append(arm.getDamageDiceNum())
             .append(diceType)
-            .append("+").append(getAttackBonusStrengthBonus() + enhancementBonus)
+            .append("+")
+            .append(getAttackBonusStrengthBonus() + enhancementBonus + damageModifier)
             .append(" ")
             .append(threatRangStr).append("/x")
             .append(arm.getCriticalMultiplier())
