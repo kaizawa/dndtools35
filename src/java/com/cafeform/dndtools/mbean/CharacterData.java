@@ -1828,11 +1828,14 @@ public class CharacterData implements CharacterSummary {
         int enhancementBonus = null != arm.getEnhancementBonus() ? arm.getEnhancementBonus() : 0;
         int attackModifier = null != armRecord.getAttackModifier() ? armRecord.getAttackModifier() : 0;
         int damageModifier = null != armRecord.getDamageModifier()? armRecord.getDamageModifier() : 0;        
+        int strengthDamageBonus = 0;
 
-        /* Attack bonus */
-        if(1 == arm.getArmType3().getId()) {
+        /* Attack bonus & Streangth Damage bonus */
+        if (1 == arm.getArmType3().getId()) {
             attackBonus = getMeleeAttackBonus();
-            if(null != arm.getSize()) {
+
+            /* size modifier */
+            if (null != arm.getSize()) {
                 /* Calculate differnce of size between race and arm */
                 int diff = Math.abs(getRaceId().getSizeId().getId() - arm.getSize().getId());
                 if(0 != diff)
@@ -1841,8 +1844,26 @@ public class CharacterData implements CharacterSummary {
                     attackBonus -= (2 * diff);
                 }
             }
+            /* 
+             * String damage bonus 
+             * Bonus point is multipled by 1.5, if it two hand weapon
+             */
+            strengthDamageBonus = getAttackBonusStrengthBonus();        
+            if (null != arm.getArmType2() && arm.getArmType2().getId() == 4) {
+                strengthDamageBonus *= 1.5;
+            }
         } else {
             attackBonus = getRangeAttackBonus();
+            
+            /* Streangth bonus/penalty for composite long bow */
+            if (null != arm.getComposite_long_bow_streangth_bonus())
+            {
+                if (getAbilityModifierById(STR) < arm.getComposite_long_bow_streangth_bonus()){
+                    attackBonus -=2;
+                } 
+                strengthDamageBonus += Math.min(getAbilityModifierById(STR),
+                        arm.getComposite_long_bow_streangth_bonus());
+            }
         }
 
         for(int i = 0 ; i < numAttacks ; i++)
@@ -1871,15 +1892,7 @@ public class CharacterData implements CharacterSummary {
         
         String diceType = null != arm.getDamageDiceType() ? arm.getDamageDiceType().getName() : "";
         
-        /* 
-         * String damage bonus 
-         * Bonus point is multipled by 1.5, if it two hand weapon
-         */
-        int strengthDamageBonus = getAttackBonusStrengthBonus();
-        if(null != arm.getArmType2() && arm.getArmType2().getId() == 4)
-        {
-            strengthDamageBonus *= 1.5;
-        }
+ 
 
         /* Damange bonus & Critical area */ 
         modifiers.append("(")

@@ -109,6 +109,16 @@ public class ArmMaster implements Serializable {
     @JoinColumn(name = "SIZE", referencedColumnName = "ID")
     @ManyToOne
     private SizeMaster size;
+    @Column(name = "COMPOSITE_LONG_BOW_STRENGTH_BONUS")
+    private Integer composite_long_bow_streangth_bonus;
+
+    public Integer getComposite_long_bow_streangth_bonus() {
+        return composite_long_bow_streangth_bonus;
+    }
+
+    public void setComposite_long_bow_streangth_bonus(Integer composite_long_bow_streangth_bonus) {
+        this.composite_long_bow_streangth_bonus = composite_long_bow_streangth_bonus;
+    }
 
     public SizeMaster getSize() {
         return size;

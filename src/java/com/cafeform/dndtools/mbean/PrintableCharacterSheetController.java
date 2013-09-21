@@ -4,6 +4,7 @@
  */
 package com.cafeform.dndtools.mbean;
 
+import com.cafeform.dndtools.entity.CharacterArmRecord;
 import com.cafeform.dndtools.entity.CharacterGrowthRecord;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -23,7 +24,6 @@ public class PrintableCharacterSheetController extends CharacterSheetController 
         } else {
             return growth.getClassId().getClassName();
         }
-
     }
 
     /*
@@ -73,5 +73,9 @@ public class PrintableCharacterSheetController extends CharacterSheetController 
     public String getClassList() {
         return getCharacterData().getClassList();
     }
-
+    
+    public String getArmDescription(CharacterArmRecord armRecord)
+    {
+        return textToHtml(armRecord.getDescription());
+    }
 }

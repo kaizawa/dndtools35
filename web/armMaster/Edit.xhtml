@@ -128,6 +128,9 @@
           <h:inputText id="secondThreatRange" 
                        value="#{armMasterController.selected.secondThreatRange}" 
                        title="#{bundle.CreateArmMasterTitle_secondThreatRange}" />
+          <h:outputLabel value="コンポジットロングボウ【筋】ボーナス" for="strengthBonus" />
+          <h:inputText id="strengthBonus" 
+                       value="#{armMasterController.selected.composite_long_bow_streangth_bonus}" />
           <h:outputLabel value="備考" for="description" />
           <h:inputTextarea id="description" value="#{armMasterController.selected.description}" 
                            style="width: 500px; height: 200px" />                    

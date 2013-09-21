@@ -23,6 +23,9 @@
 -- 全て中型にセット
 -- update arm_master set size = 5;
 
+-- composite long bow streangth bonus の追加
+-- alter table "ARM_MASTER" add column COMPOSITE_LONG_BOW_STRENGTH_BONUS int
+
 DROP TABLE MONSTER_FEAT_RECORD;
 DROP TABLE MONSTER_SUB_TYPE_RECORD;
 DROP TABLE MONSTER_SKILL_RECORD;
