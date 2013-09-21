@@ -34,11 +34,13 @@
 
           <h:outputLabel value="ダメージダイス" for="damageDiceType" />
           <h:selectOneMenu id="damageDiceType" value="#{armMasterController.selected.damageDiceType}" >
+            <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{applicationController.diceList}"/>
           </h:selectOneMenu>
 
           <h:outputLabel value="ダメージタイプ" for="damageType" />
           <h:selectOneMenu id="damageType" value="#{armMasterController.selected.damageType}">
+            <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{applicationController.damageTypeList}"/>
           </h:selectOneMenu>                    
 
@@ -57,16 +59,19 @@
 
           <h:outputLabel value="武器タイプ1" for="armType1" />
           <h:selectOneMenu id="armType1" value="#{armMasterController.selected.armType1}">
+            <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{armType1MasterController.itemsAvailableSelectOne}"/>
           </h:selectOneMenu>
 
           <h:outputLabel value="武器タイプ2" for="armType2" />
           <h:selectOneMenu id="armType2" value="#{armMasterController.selected.armType2}" >
+            <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{armType2MasterController.itemsAvailableSelectOne}"/>
           </h:selectOneMenu>                    
 
           <h:outputLabel value="武器タイプ3" for="armType3" />
           <h:selectOneMenu id="armType3" value="#{armMasterController.selected.armType3}" >
+            <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{armType3MasterController.itemsAvailableSelectOne}"/>
           </h:selectOneMenu>
 
@@ -84,6 +89,7 @@
 
           <h:outputLabel value="ルールブック" for="rulebook" />
           <h:selectOneMenu id="rulebook" value="#{armMasterController.selected.rulebook}" >
+            <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{rulebookMasterController.itemsAvailableSelectOne}"/>
           </h:selectOneMenu>
 
@@ -99,11 +105,13 @@
           <h:outputLabel value="双頭武器ダメージダイス" for="secondDamageDiceType" />
           <h:selectOneMenu id="secondDamageDiceType"
                            value="#{armMasterController.selected.secondDamageDiceType}">
+            <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{applicationController.diceList}"/>
           </h:selectOneMenu>               
 
           <h:outputLabel value="双頭武器ダメージタイプ" for="secondDamageType" />
           <h:selectOneMenu id="secondDamageType" value="#{armMasterController.selected.secondDamageType}">
+            <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{applicationController.damageTypeList}"/>
           </h:selectOneMenu>                      
 

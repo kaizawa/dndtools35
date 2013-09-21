@@ -1,6 +1,5 @@
 package com.cafeform.dndtools.mbean;
 
-import com.cafeform.dndtools.ejb.AbilityMasterFacade;
 import com.cafeform.dndtools.ejb.MonsterAbilityRecordFacade;
 import com.cafeform.dndtools.entity.MonsterMaster;
 import java.util.ArrayList;

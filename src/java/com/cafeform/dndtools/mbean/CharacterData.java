@@ -185,7 +185,8 @@ public class CharacterData implements CharacterSummary {
             OUTER:
             for (SkillMaster skill : skillList) {
                 for (CharacterSkillGrowthRecord skillgrowth : searchedCharaSkillGrowthList) {
-                    if (skillgrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() == i && skillgrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId().intValue()) {
+                    if (skillgrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() == i && 
+                        skillgrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId().intValue()) {
                         //作成したリストに追加
                         characterSkillGrowthList.add(skillgrowth);
                         continue OUTER;
@@ -200,7 +201,8 @@ public class CharacterData implements CharacterSummary {
                 try {
                     characterSkillGrowthRecordFacade.create(newRecord);
                 } catch (Exception e) {
-                    context.addMessage("contents:contentGrid:label1", new FacesMessage(("キャラクターの技能成長レコードの作製に失敗しました")));
+                    context.addMessage("contents:contentGrid:label1", 
+                        new FacesMessage(("キャラクターの技能成長レコードの作製に失敗しました")));
                     return;
                 }
 
@@ -363,36 +365,35 @@ public class CharacterData implements CharacterSummary {
 
         return (getAbilityTotalById(ability) / 2) - 5;
     }
-    /*
+
+    /**
      * 技能 対応能力修正値
      */
-
     public Integer getSkillAbilityModifierById(int skill) {
 
         return getAbilityModifierById(skillList.get(skill-1).getAbilityId().getId());
     }
-    /*
+    
+    /**
      * 技能 対応能力値名
      */
-
     public String getSkillAbilityNameById(int skill) {
 
         return skillList.get(skill-1).getAbilityId().getAbilityName();
     }
-    /*
+    /**
      * 技能 対応能力値名 省略名
      */
-
     public String getSkillAbilityShortNameById(int skill) {
 
         String name;
         name = skillList.get(skill-1).getAbilityId().getAbilityName();
         return name.substring(0, 1);
     }
-    /*
+    
+    /**
      * 技能 ポイント
      */
-
     public Integer getSkillTotalPointById(int skill) {
         int point = 0;
 
