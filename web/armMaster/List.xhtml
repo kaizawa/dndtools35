@@ -11,27 +11,14 @@
       <h:outputText value="#{bundle.ListArmMasterTitle}"></h:outputText>
     </ui:define>
     <ui:define name="body">
-      <h:form styleClass="jsfcrud_list_form">
+      <h:form>
         <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
         <br/>
 
-        <h:outputText escape="false" 
-                      value="#{bundle.ListArmMasterEmpty}" 
-                      rendered="#{armMasterController.items.rowCount == 0}"/>
-        <h:panelGroup rendered="#{armMasterController.items.rowCount > 0}">
-          <h:outputText value="#{armMasterController.pagination.pageFirstItem + 1}..
-                        #{armMasterController.pagination.pageLastItem + 1}/
-                        #{armMasterController.pagination.itemsCount}"/>&nbsp;
-          <h:commandLink action="#{armMasterController.previous}" 
-                         value="#{bundle.Previous} #{armMasterController.pagination.pageSize}" 
-                         rendered="#{armMasterController.pagination.hasPreviousPage}"/>&nbsp;
-          <h:commandLink action="#{armMasterController.next}" 
-                         value="#{bundle.Next} #{armMasterController.pagination.pageSize}" 
-                         rendered="#{armMasterController.pagination.hasNextPage}"/>&nbsp;
           <h:panelGrid id="tableGrid" styleClass="tableGrid">
 
             <p:dataTable id="dataTable" var="arm" value="#{applicationController.armList}" 
-                         widgetVar="armsTable" 
+                         widgetVar="armsTable" sortBy="#{arm.name}"
                          emptyMessage="指定された条件に合う武器は見つかりませんでした" 
                          filteredValue="#{armMasterController.filteredArms}"
                          style="width:100%" >
@@ -39,9 +26,9 @@
               <p:column id="nameColumn" filterBy="#{arm.name}" sortBy="#{arm.name}"
                         headerText="名前" footerText="名前"
                         filterMatchMode="contains">
-                <p:commandLink action="#{armMasterController.prepareEdit}" value="#{arm.name}">
+                <h:commandLink action="#{armMasterController.prepareEdit}" value="#{arm.name}">
                   <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  
-                </p:commandLink>
+                </h:commandLink>
               </p:column>
               <p:column id="damageColumn" headerText="ダメージ" footerText="ダメージ">
                 <h:outputText value="#{arm.damageDiceNum}#{arm.damageDiceType.name}" />
@@ -125,7 +112,6 @@
             </p:dataTable>
             
           </h:panelGrid>
-        </h:panelGroup>
         <br />
         <h:commandLink action="#{armMasterController.prepareCreate}" value="新しい武器を作る"/>
         <br />

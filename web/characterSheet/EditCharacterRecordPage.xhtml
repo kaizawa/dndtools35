@@ -167,7 +167,8 @@
               <h:outputText id="outputText21" styleClass="tableTitleBlack" value="クラスとレベル"/>
               <h:dataTable binding="#{characterSheetController.growthTable}" cellpadding="1" cellspacing="0"
                            id="growthTable" rowClasses="list-row-even,list-row-odd" styleClass="w"
-                           value="#{characterSheetController.characterData.currentCharacterGrowthRecordList}" var="currentRow">
+                           value="#{characterSheetController.characterData.currentCharacterGrowthRecordList}" 
+                           var="currentRow">
                 <h:column id="column1">
                   <h:outputText id="outputText22" value="#{currentRow.characterGrowthRecordPK['characterLevel']}"/>
                   <f:facet name="header">

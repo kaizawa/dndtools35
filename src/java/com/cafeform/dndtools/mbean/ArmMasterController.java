@@ -2,7 +2,6 @@ package com.cafeform.dndtools.mbean;
 
 import com.cafeform.dndtools.entity.ArmMaster;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
-import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import com.cafeform.dndtools.ejb.ArmMasterFacade;
 import com.cafeform.dndtools.ejb.ArmType1MasterFacade;
 import com.cafeform.dndtools.ejb.ArmType2MasterFacade;
@@ -19,15 +18,12 @@ import com.cafeform.dndtools.entity.DamageTypeMaster;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,10 +42,6 @@ public class ArmMasterController implements Serializable {
     @Inject protected CharacterArmRecordFacade characterArmRecordFacade;
     @Inject protected ApplicationController applicationController;    
     
-    private ArmMaster currentArmMaster;
-    private DataModel items = null;
-    private PaginationHelper pagination;
-    private int selectedItemIndex;
     private SelectItem[] armType1MasterOptions;
     private SelectItem[] armType2MasterOptions;
     private SelectItem[] armType3MasterOptions;
@@ -85,63 +77,40 @@ public class ArmMasterController implements Serializable {
     }
 
     public ArmMaster getSelected() {
-        if (currentArmMaster == null) {
-            currentArmMaster = new ArmMaster();
-            selectedItemIndex = -1;
+        if (selectedArm == null) {
+            selectedArm = new ArmMaster();
         }
-        return currentArmMaster;
+        return selectedArm;
     }
 
-    private ArmMasterFacade getFacade() {
+    private ArmMasterFacade getArmMasterFacade() {
         return armMasterFacade;
     }
 
-    public PaginationHelper getPagination() {
-        if (pagination == null) {
-            pagination = new PaginationHelper(100) {
-                @Override
-                public int getItemsCount() {
-                    return getFacade().count();
-                }
-
-                @Override
-                public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(),
-                        getPageFirstItem() + getPageSize()}));
-                }
-            };
-        }
-        return pagination;
-    }
-
     public String prepareList() {
-        recreateModel();
+        selectedArm = null;
         return "List";
     }
 
     public String prepareCreate() {
-        currentArmMaster = new ArmMaster();
-        selectedItemIndex = -1;
+        selectedArm = new ArmMaster();
         return "Edit";
     }
 
     public String prepareEdit() {
-        currentArmMaster = selectedArm;
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
 
     public String prepareCopy() {
-        currentArmMaster = selectedArm;
-        currentArmMaster.setName(currentArmMaster.getName() + "のコピー");
-        selectedItemIndex = -1;
+        selectedArm = copy(selectedArm);
+        selectedArm.setName(selectedArm.getName() + "のコピー");
         return "Edit";
     }
 
     public String createEnhanced(int level) {
-        currentArmMaster = copy(selectedArm);
-        currentArmMaster.setName(currentArmMaster.getName() + "+" + level);
-        currentArmMaster.setEnhancementBonus(level);
+        selectedArm = copy(selectedArm);
+        selectedArm.setName(selectedArm.getName() + "+" + level);
+        selectedArm.setEnhancementBonus(level);
         int additionalPrice = 0;
         switch (level) {
             case 1:
@@ -159,103 +128,49 @@ public class ArmMasterController implements Serializable {
             case 5:
                 additionalPrice = 50000;
         }
-        currentArmMaster.setDescription(null == currentArmMaster.getDescription() ? "高品質"
-            : currentArmMaster.getDescription() + "\n高品質");
-        currentArmMaster.setPrice(currentArmMaster.getPrice() + additionalPrice + 300);
-        selectedItemIndex = -1;
+        selectedArm.setDescription(null == selectedArm.getDescription() ? "高品質"
+            : selectedArm.getDescription() + "\n高品質");
+        selectedArm.setPrice(selectedArm.getPrice() + additionalPrice + 300);
+
         return "Edit";
+    }
+    
+    private void resetArmList()
+    {
+        applicationController.resetArmList();
     }
 
     public String update() {
         try {
-            getFacade().edit(currentArmMaster);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArmMasterUpdated"));
-            applicationController.resetArmList();
+            if (null == selectedArm.getId()) 
+            {
+                getArmMasterFacade().create(selectedArm);
+                JsfUtil.addSuccessMessage("追加されました。");                
+            }
+            else 
+            {
+                getArmMasterFacade().edit(selectedArm);
+                JsfUtil.addSuccessMessage("更新されました。");
+            }
+            resetArmList();
             return prepareList();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            resetArmList();            
+            JsfUtil.addErrorMessage("更新に失敗しました");
             return null;
         }
     }
 
     public String destroy() {
-        currentArmMaster = (ArmMaster) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyCurrent() {
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyAndView() {
-        performDestroy();
-        recreateModel();
-        updateCurrentItem();
-        if (selectedItemIndex >= 0) {
-            return "View";
-        } else {
-            // all items were removed - go back to list
-            recreateModel();
-            return "List";
-        }
-    }
-
-    private void performDestroy() {
         try {
-            getFacade().remove(currentArmMaster);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArmMasterDeleted"));
+            getArmMasterFacade().remove(selectedArm);
+            JsfUtil.addSuccessMessage("削除されました");            
+            resetArmList();                                        
+            return prepareList();                    
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage("削除できませんでした。まだ使われている可能性があります。");
+            return null;
         }
-    }
-
-    private void updateCurrentItem() {
-        int count = getFacade().count();
-        if (selectedItemIndex >= count) {
-            // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
-            // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
-            }
-        }
-        if (selectedItemIndex >= 0) {
-            currentArmMaster = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-        }
-    }
-
-    public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
-        return items;
-    }
-
-    private void recreateModel() {
-        items = null;
-    }
-
-    private void recreatePagination() {
-        pagination = null;
-    }
-
-    public String next() {
-        getPagination().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previous() {
-        getPagination().previousPage();
-        recreateModel();
-        return "List";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -337,7 +252,7 @@ public class ArmMasterController implements Serializable {
      * 削除ボタンの表示
      */
     public boolean isDeleteButtonDisabled() {
-        return (currentArmMaster == null || currentArmMaster.getId() == null);
+        return (selectedArm == null || selectedArm.getId() == null);
     }
 
     @PostConstruct
@@ -352,12 +267,7 @@ public class ArmMasterController implements Serializable {
         return damageTypeMasterOptions;
     }
 
-    public String saveButton_action() {
-        doSave();
-        return null;
-    }
-
-    public void doSave() {
+    public String addCharacterArmRecord() {
         CharacterRecord characterRecord = getSessionController().getCharacterData().getCharacterRecord();
         List<CharacterArmRecord> armRecordList = characterRecord.getCharacterArmRecordList();
         //更新時間を記録
@@ -376,6 +286,7 @@ public class ArmMasterController implements Serializable {
         } catch (Exception ex) {
             JsfUtil.addSuccessMessage("武器の追加にに失敗しました");
         }
+        return "EditCharacterRecordPage";
     }
 
     public String returnCharacterRecordPageButton_action() {
@@ -411,10 +322,5 @@ public class ArmMasterController implements Serializable {
 
     public SelectItem[] getArmType3MasterOptions() {
         return armType3MasterOptions;
-    }
-
-    public String addArm() {
-        doSave();
-        return returnCharacterRecordPageButton_action();
     }
 }

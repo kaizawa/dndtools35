@@ -130,7 +130,7 @@
         <br />
 
         <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">
-          <h:commandButton action="#{armMasterController.destroyCurrent}"
+          <h:commandButton action="#{armMasterController.destroy}"
                            disabled="#{armMasterController.deleteButtonDisabled}" 
                            id="deleteButton1" style="color: rgb(255, 51, 51)" 
                            onclick="return confirm('削除しますか?')" value="武器の削除"/>

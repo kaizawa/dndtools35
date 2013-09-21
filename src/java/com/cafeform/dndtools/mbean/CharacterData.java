@@ -1851,13 +1851,19 @@ public class CharacterData implements CharacterSummary {
         }
         
         String diceType = null != arm.getDamageDiceType() ? arm.getDamageDiceType().getName() : "";
+        
+        int strengthDamageBonus = getAttackBonusStrengthBonus();
+        if(null != arm.getArmType2() && arm.getArmType2().getId() == 4)
+        {
+            strengthDamageBonus *= 1.5;
+        }
 
         /* Damange bonus & Critical area */ 
         modifiers.append("(")
             .append(arm.getDamageDiceNum())
             .append(diceType)
             .append("+")
-            .append(getAttackBonusStrengthBonus() + enhancementBonus + damageModifier)
+            .append(strengthDamageBonus + enhancementBonus + damageModifier)
             .append(" ")
             .append(threatRangStr).append("/x")
             .append(arm.getCriticalMultiplier())
