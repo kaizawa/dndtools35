@@ -26,6 +26,9 @@
 -- composite long bow streangth bonus の追加
 -- alter table "ARM_MASTER" add column COMPOSITE_LONG_BOW_STRENGTH_BONUS int
 
+-- 高品質追加
+alter table "ARM_MASTER" add column MASTERWORK boolean;
+
 DROP TABLE MONSTER_FEAT_RECORD;
 DROP TABLE MONSTER_SUB_TYPE_RECORD;
 DROP TABLE MONSTER_SKILL_RECORD;

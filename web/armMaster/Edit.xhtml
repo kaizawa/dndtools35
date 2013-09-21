@@ -53,6 +53,10 @@
           <h:inputText id="threatRange" value="#{armMasterController.selected.threatRange}" 
                        title="#{bundle.CreateArmMasterTitle_threatRange}" />
 
+          <h:outputLabel value="高品質" for="masterWord" />
+          <h:selectBooleanCheckbox id="masterWord" 
+                                   value="#{armMasterController.selected.masterwork}" />
+
           <h:outputLabel value="魔法強化ボーナス" for="enhancementBonus" />
           <h:inputText id="enhancementBonus" value="#{armMasterController.selected.enhancementBonus}" 
                        title="#{bundle.CreateArmMasterTitle_enhancementBonus}" />

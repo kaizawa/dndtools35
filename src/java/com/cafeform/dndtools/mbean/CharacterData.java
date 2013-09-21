@@ -1823,13 +1823,13 @@ public class CharacterData implements CharacterSummary {
         StringBuilder modifiers = new StringBuilder();
         modifiers.append(type3Name).append(" "); // 遠隔・近接
         int baseAttack = getBaseAttackTotal();
-        int attackBonus;
+        int attackBonus = 0;
         int numAttacks = ((baseAttack - 1) / 5) + 1;
         int enhancementBonus = null != arm.getEnhancementBonus() ? arm.getEnhancementBonus() : 0;
         int attackModifier = null != armRecord.getAttackModifier() ? armRecord.getAttackModifier() : 0;
         int damageModifier = null != armRecord.getDamageModifier()? armRecord.getDamageModifier() : 0;        
         int strengthDamageBonus = 0;
-
+        
         /* Attack bonus & Streangth Damage bonus */
         if (1 == arm.getArmType3().getId()) {
             attackBonus = getMeleeAttackBonus();
@@ -1864,6 +1864,12 @@ public class CharacterData implements CharacterSummary {
                 strengthDamageBonus += Math.min(getAbilityModifierById(STR),
                         arm.getComposite_long_bow_streangth_bonus());
             }
+        }
+        
+        /* Is Masterwork ? */
+        if (0 == enhancementBonus && arm.isMasterwork())
+        {
+            attackBonus++;
         }
 
         for(int i = 0 ; i < numAttacks ; i++)

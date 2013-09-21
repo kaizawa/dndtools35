@@ -111,6 +111,16 @@ public class ArmMaster implements Serializable {
     private SizeMaster size;
     @Column(name = "COMPOSITE_LONG_BOW_STRENGTH_BONUS")
     private Integer composite_long_bow_streangth_bonus;
+    @Column(name = "MASTERWORK")
+    private boolean masterwork;
+
+    public boolean isMasterwork() {
+        return masterwork;
+    }
+
+    public void setMasterwork(boolean masterwork) {
+        this.masterwork = masterwork;
+    }
 
     public Integer getComposite_long_bow_streangth_bonus() {
         return composite_long_bow_streangth_bonus;

@@ -129,13 +129,12 @@ public class ArmMasterController implements Serializable {
                 additionalPrice = 18000;
                 break;
             case 4:
-                additionalPrice = 32000;
+                additionalPrice = 32000;                
                 break;
             case 5:
                 additionalPrice = 50000;
         }
-        selectedArm.setDescription(null == selectedArm.getDescription() ? "高品質"
-            : selectedArm.getDescription() + "\n高品質");
+        selectedArm.setMasterwork(true);
         selectedArm.setPrice(selectedArm.getPrice() + additionalPrice + 300);
 
         return "Edit";
