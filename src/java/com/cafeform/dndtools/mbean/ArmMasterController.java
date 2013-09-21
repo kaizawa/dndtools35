@@ -144,6 +144,7 @@ public class ArmMasterController implements Serializable {
     private void resetArmList()
     {
         applicationController.resetArmList();
+        filteredArms = null;
     }
 
     public String update() {
@@ -334,6 +335,4 @@ public class ArmMasterController implements Serializable {
 
         return options;
     }
-
-
 }
