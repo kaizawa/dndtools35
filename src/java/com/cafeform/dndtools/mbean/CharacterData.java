@@ -1000,7 +1000,7 @@ public class CharacterData implements CharacterSummary {
      */
     public Integer getMeleeAttackBonus() {
         return getBaseAttackTotal() + getAbilityModifierById(STR);
-    }
+    }    
     /*
      * 攻撃ボーナス 組み付きボーナス
      */
@@ -1823,22 +1823,41 @@ public class CharacterData implements CharacterSummary {
         StringBuilder modifiers = new StringBuilder();
         modifiers.append(type3Name).append(" "); // 遠隔・近接
         int baseAttack = getBaseAttackTotal();
-        int attackBonus = 1 == arm.getArmType3().getId() ? getMeleeAttackBonus() :  getRangeAttackBonus();
+        int attackBonus;
         int numAttacks = ((baseAttack - 1) / 5) + 1;
         int enhancementBonus = null != arm.getEnhancementBonus() ? arm.getEnhancementBonus() : 0;
         int attackModifier = null != armRecord.getAttackModifier() ? armRecord.getAttackModifier() : 0;
         int damageModifier = null != armRecord.getDamageModifier()? armRecord.getDamageModifier() : 0;        
-        
+
         /* Attack bonus */
+        if(1 == arm.getArmType3().getId()) {
+            attackBonus = getMeleeAttackBonus();
+            if(null != arm.getSize()) {
+                /* Calculate differnce of size between race and arm */
+                int diff = Math.abs(getRaceId().getSizeId().getId() - arm.getSize().getId());
+                if(0 != diff)
+                {
+                    /* Arm size is unmatch */
+                    attackBonus -= (2 * diff);
+                }
+            }
+        } else {
+            attackBonus = getRangeAttackBonus();
+        }
+
         for(int i = 0 ; i < numAttacks ; i++)
         {
             if ( 0 != i ){
                 modifiers.append("/");
             }
+            /*
+             * Base Attack Bonus + Magic + Modifier 
+             */
             modifiers.append("+")
                 .append(attackBonus + enhancementBonus + attackModifier - (i * 5));
         }
         
+        /* Critical range */
         int threatRange = null != arm.getThreatRange() ? arm.getThreatRange() : 20;
         String threatRangStr;        
         if(20 == threatRange) 
@@ -1852,6 +1871,10 @@ public class CharacterData implements CharacterSummary {
         
         String diceType = null != arm.getDamageDiceType() ? arm.getDamageDiceType().getName() : "";
         
+        /* 
+         * String damage bonus 
+         * Bonus point is multipled by 1.5, if it two hand weapon
+         */
         int strengthDamageBonus = getAttackBonusStrengthBonus();
         if(null != arm.getArmType2() && arm.getArmType2().getId() == 4)
         {

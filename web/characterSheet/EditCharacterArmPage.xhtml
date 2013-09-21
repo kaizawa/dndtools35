@@ -71,6 +71,16 @@
                       filterMatchMode="exact" >
               <h:outputText value="#{arm.damageType.name}" />
             </p:column>
+            <p:column id="sizeColumn" 
+                        headerText="サイズ" footerText="サイズ"
+                        filterBy="#{arm.size}"                             
+                        filterOptions="#{armMasterController.sizeMasterOpItems}"
+                        filterMatchMode="exact" >
+                <h:outputText value="#{arm.size.sizeName}" />
+            </p:column>
+            <p:column headerText="魔法" footerText="魔法">
+                <h:outputText value="#{arm.enhancementBonus}" />
+            </p:column>
           </p:dataTable>
           <h:outputText id="outputText29" style="font-size: 8px" 
                         value="#{characterSheetPerLevelController.characterData.id}"/>

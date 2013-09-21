@@ -296,17 +296,17 @@ public class ApplicationController {
         // サイズの配列
         /////////////////////////////////////////////////
         List<SizeMaster> sizeFindAll = sizeMasterFacade.findAll();
-        List<SelectItem> sizeList = new ArrayList<SelectItem>();
+        List<SelectItem> sizeSelectItemList = new ArrayList<SelectItem>();
         //未選択状態
         religionList.add(new SelectItem(null, "未選択"));
         for (SizeMaster size : sizeFindAll) {
             SelectItem selectItem = new SelectItem();
             selectItem.setValue(size.getId());
             selectItem.setLabel(size.getSizeName());
-            sizeList.add(selectItem);
+            sizeSelectItemList.add(selectItem);
         }
         //リストから配列への変換
-        SelectItem[] tempSizeArray = sizeList.toArray(new SelectItem[0]);
+        SelectItem[] tempSizeArray = sizeSelectItemList.toArray(new SelectItem[0]);
         //セッションBeanへのセット
         setSizeArray(tempSizeArray);
         
@@ -314,8 +314,22 @@ public class ApplicationController {
         damageTypeList = damageTypeMasterFacade.findAll();
         
         /* Arm master */
-       armList = armMasterFacade.findAll();
+        armList = armMasterFacade.findAll();
+        
+        /* Size list */
+        sizeList = sizeMasterFacade.findAll();
        
+    }
+    
+    /* Size List */
+    private List<SizeMaster> sizeList;
+
+    public List<SizeMaster> getSizeList() {
+        return sizeList;
+    }
+
+    public void setSizeList(List<SizeMaster> sizeList) {
+        this.sizeList = sizeList;
     }
     
     /* Arm List */

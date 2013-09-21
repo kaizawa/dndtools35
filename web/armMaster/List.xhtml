@@ -54,6 +54,13 @@
                         filterMatchMode="exact" >
                 <h:outputText value="#{arm.armType3.name}" />
               </p:column>
+              <p:column id="sizeColumn" 
+                        headerText="サイズ" footerText="サイズ"
+                        filterBy="#{arm.size}"                             
+                        filterOptions="#{armMasterController.sizeMasterOpItems}"
+                        filterMatchMode="exact" >
+                <h:outputText value="#{arm.size.sizeName}" />
+              </p:column>
               <p:column id="damageTypeMasterColumn"
                         headerText="斬・殴・刺" footerText="斬・殴・刺"
                         filterBy="#{arm.damageType}"                             
@@ -77,12 +84,14 @@
               <p:column headerText="可能域" footerText="可能域">
                 <h:outputText value="#{arm.threatRange}" />
               </p:column>
-              <p:column headerText="魔法ボーナス" footerText="魔法ボーナス">
+              <p:column headerText="魔法" footerText="魔法">
                 <h:outputText value="#{arm.enhancementBonus}" />
               </p:column>
+              <!--
               <p:column headerText="備考" footerText="備考" style="width: 30%">
                 <h:outputText value="#{arm.enhancementBonus}" />
               </p:column>
+              -->
               <p:column headerText="コピー作成" footerText="コピー作成">
                 <h:commandLink action="#{armMasterController.prepareCopy}" value="コピー">
                   <f:setPropertyActionListener value="#{arm}" target="#{armMasterController.selectedArm}"/>  

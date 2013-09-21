@@ -9,16 +9,19 @@ import com.cafeform.dndtools.ejb.ArmType3MasterFacade;
 import com.cafeform.dndtools.ejb.CharacterArmRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterRecordFacade;
 import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
+import com.cafeform.dndtools.ejb.SizeMasterFacade;
 import com.cafeform.dndtools.entity.ArmType1Master;
 import com.cafeform.dndtools.entity.ArmType2Master;
 import com.cafeform.dndtools.entity.ArmType3Master;
 import com.cafeform.dndtools.entity.CharacterArmRecord;
 import com.cafeform.dndtools.entity.CharacterRecord;
 import com.cafeform.dndtools.entity.DamageTypeMaster;
+import com.cafeform.dndtools.entity.SizeMaster;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -40,12 +43,15 @@ public class ArmMasterController implements Serializable {
     @Inject protected SessionController sessionController;
     @Inject protected CharacterRecordFacade characterRecordFacade;
     @Inject protected CharacterArmRecordFacade characterArmRecordFacade;
+    @EJB protected SizeMasterFacade sizeMasterFacade;    
     @Inject protected ApplicationController applicationController;    
+
     
     private SelectItem[] armType1MasterOptions;
     private SelectItem[] armType2MasterOptions;
     private SelectItem[] armType3MasterOptions;
     private SelectItem[] damageTypeMasterOptions;
+    private SelectItem[] sizeMasterOptions;    
     private List<ArmMaster> filteredArms;
     private ArmMaster selectedArm;
 
@@ -261,10 +267,27 @@ public class ArmMasterController implements Serializable {
         armType2MasterOptions = createFilterOptions(armType2MasterFacade.findAll().toArray(new ArmType2Master[0]));
         armType3MasterOptions = createFilterOptions(armType3MasterFacade.findAll().toArray(new ArmType3Master[0]));
         damageTypeMasterOptions = createFilterOptions(damageTypeMasterFacade.findAll().toArray(new DamageTypeMaster[0]));
+        sizeMasterOptions = createFilterOptions(sizeMasterFacade.findAll().toArray(new SizeMaster[0]));
     }
 
     public SelectItem[] getDamageTypeMasterOptions() {
         return damageTypeMasterOptions;
+    }
+    
+    public SelectItem[] getArmType1MasterOptions() {
+        return armType1MasterOptions;
+    }
+
+    public SelectItem[] getArmType2MasterOptions() {
+        return armType2MasterOptions;
+    }
+
+    public SelectItem[] getArmType3MasterOptions() {
+        return armType3MasterOptions;
+    }
+    
+    public SelectItem[] getSizeMasterOpItems() {
+        return sizeMasterOptions;
     }
 
     public String addCharacterArmRecord() {
@@ -312,15 +335,5 @@ public class ArmMasterController implements Serializable {
         return options;
     }
 
-    public SelectItem[] getArmType1MasterOptions() {
-        return armType1MasterOptions;
-    }
 
-    public SelectItem[] getArmType2MasterOptions() {
-        return armType2MasterOptions;
-    }
-
-    public SelectItem[] getArmType3MasterOptions() {
-        return armType3MasterOptions;
-    }
 }

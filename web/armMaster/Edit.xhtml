@@ -74,6 +74,11 @@
             <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{armType3MasterController.itemsAvailableSelectOne}"/>
           </h:selectOneMenu>
+          <h:outputLabel value="サイズ" for="size" />
+          <h:selectOneMenu id="size" value="#{armMasterController.selected.size}" >
+            <f:selectItem itemValue="" itemLabel="選択"/>
+            <f:selectItems value="#{applicationController.sizeList}"/>
+          </h:selectOneMenu>
 
           <h:outputLabel value="射程" for="range" />
           <h:inputText id="range" value="#{armMasterController.selected.range}" 

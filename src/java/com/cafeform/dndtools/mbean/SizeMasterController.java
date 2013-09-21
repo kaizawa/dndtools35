@@ -185,17 +185,22 @@ public class SizeMasterController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
+    
+    public SizeMaster getSizeMaster(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
 
     @FacesConverter(forClass = SizeMaster.class)
     public static class SizeMasterControllerConverter implements Converter {
 
+        @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
             SizeMasterController controller = (SizeMasterController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "sizeMasterController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getSizeMaster(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -205,11 +210,12 @@ public class SizeMasterController implements Serializable {
         }
 
         String getStringKey(java.lang.Integer value) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
 
+        @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
@@ -218,7 +224,9 @@ public class SizeMasterController implements Serializable {
                 SizeMaster o = (SizeMaster) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + SizeMasterController.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " 
+                    + object.getClass().getName() + "; expected type: " 
+                    + SizeMasterController.class.getName());
             }
         }
     }

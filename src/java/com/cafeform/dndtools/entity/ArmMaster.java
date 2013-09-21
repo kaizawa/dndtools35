@@ -106,6 +106,17 @@ public class ArmMaster implements Serializable {
     @JoinColumn(name = "ARM_TYPE1", referencedColumnName = "ID")
     @ManyToOne
     private ArmType1Master armType1;
+    @JoinColumn(name = "SIZE", referencedColumnName = "ID")
+    @ManyToOne
+    private SizeMaster size;
+
+    public SizeMaster getSize() {
+        return size;
+    }
+
+    public void setSize(SizeMaster size) {
+        this.size = size;
+    }
 
     public ArmMaster() {
     }

@@ -17,6 +17,12 @@
 -- alter table "CHARACTER_ARM_RECORD" add column "ATTACK_MODIFIER" int;
 -- alter table "CHARACTER_ARM_RECORD" add column "DAMAGE_MODIFIER" int; 
 
+-- ARM_MASTER への SIZE の追加
+-- alter table "ARM_MASTER" add column "SIZE" int
+-- alter table "ARM_MASTER" add  FOREIGN KEY (SIZE) REFERENCES SIZE_MASTER(ID)
+-- 全て中型にセット
+-- update arm_master set size = 5;
+
 DROP TABLE MONSTER_FEAT_RECORD;
 DROP TABLE MONSTER_SUB_TYPE_RECORD;
 DROP TABLE MONSTER_SKILL_RECORD;
