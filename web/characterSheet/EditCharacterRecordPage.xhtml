@@ -257,6 +257,14 @@
                     </f:facet>
                   </h:column>
                   <h:column >
+                    <h:inputText 
+                      style="font-size: 12px; font-weight: bold; width: 100px; text-align: right" 
+                      value="#{armRecord.description}"/>
+                    <f:facet name="header">
+                      <h:outputText escape="false" style="" value="備考"/>
+                    </f:facet>
+                  </h:column>
+                  <h:column >
                     <h:commandButton 
                       action="#{characterSheetController.deleteArmButton_action(armRecord)}" value="削除"/>
                     <f:facet name="header">
