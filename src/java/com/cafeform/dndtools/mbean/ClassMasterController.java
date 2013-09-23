@@ -514,7 +514,7 @@ public class ClassMasterController implements Serializable {
      
     public String prepareEdit() {
         initProperty();
-        if(getSessionController().loggedIn == false){
+        if(getSessionController().isLoggedIn() == false){
             getSessionController().setTargetPage("/classMaster/EditClassPage");
             return "/login/LoginPage";
         }

@@ -17,6 +17,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 @Named("campaignMasterController")
 @SessionScoped
@@ -24,15 +25,23 @@ public class CampaignMasterController implements Serializable {
 
     private CampaignMaster current;
     private DataModel items = null;
-    @EJB
-    private com.cafeform.dndtools.ejb.CampaignMasterFacade ejbFacade;
+    @EJB private com.cafeform.dndtools.ejb.CampaignMasterFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    @Inject private SessionController sessionController;
+
+    public SessionController getSessionController() {
+        return sessionController;
+    }
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
 
     public CampaignMasterController() {
     }
 
-    public CampaignMaster getSelected() {
+    public CampaignMaster getSelectedCampaign() {
         if (current == null) {
             current = new CampaignMaster();
             selectedItemIndex = -1;
@@ -92,6 +101,7 @@ public class CampaignMasterController implements Serializable {
     public String prepareEdit() {
         current = (CampaignMaster) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        sessionController.setSelectedCampaign(current);
         return "Edit";
     }
 

@@ -73,7 +73,7 @@ public class PageHeader {
     }
 
     public String profileLink_action() {
-        if (getSessionController().loggedIn) {
+        if (getSessionController().isLoggedIn()) {
             return "profile";
         } else {
             return "LoginPage";
@@ -81,7 +81,7 @@ public class PageHeader {
     }
 
     public String adminLink_action() {
-        if (getSessionController().loggedIn) {
+        if (getSessionController().isLoggedIn()) {
             return "AdminPage";
         } else {
             return "LoginPage";
@@ -107,7 +107,7 @@ public class PageHeader {
     }
 
     public String newClassLink_action() {
-        if (getSessionController().loggedIn) {
+        if (getSessionController().isLoggedIn()) {
             ClassMaster classMaster = new ClassMaster();
             getSessionController().setClassMaster(classMaster);
             return "EditClassPage";
@@ -117,7 +117,7 @@ public class PageHeader {
     }
 
     public String classListLink_action() {
-        if (getSessionController().loggedIn) {
+        if (getSessionController().isLoggedIn()) {
             return "ClassListPage";
         } else {
             return "LoginPage";
@@ -136,7 +136,7 @@ public class PageHeader {
     }
 
     public String newRaceLink_action() {
-        if (getSessionController().loggedIn) {
+        if (getSessionController().isLoggedIn()) {
             RaceMaster raceMaster = new RaceMaster();
             getSessionController().setRaceMaster(raceMaster);
             return "EditRacePage";
@@ -146,7 +146,7 @@ public class PageHeader {
     }
 
     public String raceListLink_action() {
-        if (getSessionController().loggedIn) {
+        if (getSessionController().isLoggedIn()) {
             return "RaceListPage";
         } else {
             return "LoginPage";

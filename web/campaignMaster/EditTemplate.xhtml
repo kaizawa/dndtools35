@@ -2,29 +2,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html">
 
-    <ui:composition template="/template.xhtml">
+  <ui:composition template="/template.xhtml">
 
-        <ui:define name="body">
+    <ui:define name="body">
 
-            <h:form>
+      <h:form>
 
-                <ui:insert name="controlTop">Default Control</ui:insert>
+        <ui:insert name="controlTop">Default Control</ui:insert>
 
-                <br/>
-                <h:panelGrid columns="2" style="width: 400">
-                    <h:outputLabel value="キャンペーン名" for="campaignName" />
-                    <h:inputText id="campaignName" value="#{campaignMasterController.selectedCampaign.campaignName}" title="#{bundle.EditCampaignMasterTitle_campaignName}" />
-                    <h:outputLabel value="マスター" for="master" />
-                    <h:inputText id="master" value="#{campaignMasterController.selectedCampaign.master}" title="#{bundle.EditCampaignMasterTitle_master}" />
-                </h:panelGrid>
+        <br/>
+        <h:panelGrid columns="2" style="width: 400">
+          <h:outputLabel value="キャンペーン名" for="campaignName" />
+          <h:inputText id="campaignName" value="#{campaignMasterController.selectedCampaign.campaignName}" 
+                       title="#{bundle.EditCampaignMasterTitle_campaignName}" />
+          <h:outputLabel value="マスター" for="master" />
+          <h:inputText id="master" value="#{campaignMasterController.selectedCampaign.master}" 
+                       title="#{bundle.EditCampaignMasterTitle_master}" />
+        </h:panelGrid>
 
-                <ui:insert name="controlBottom"></ui:insert>
+        <ui:insert name="controlBottom"></ui:insert>
 
-            </h:form>
-        </ui:define>
-    </ui:composition>
+      </h:form>
+    </ui:define>
+  </ui:composition>
 
 </html>

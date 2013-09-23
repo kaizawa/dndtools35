@@ -484,6 +484,10 @@ public class RaceMasterController implements Serializable {
     
     public String prepareEdit(){
         initProperty();
+        if(getSessionController().isLoggedIn() == false){
+            getSessionController().setTargetPage("/classMaster/EditClassPage");
+            return "/login/LoginPage";
+        }
         return getSessionController().goToLimitedPage("/raceMaster/EditRacePage");
     }
 }

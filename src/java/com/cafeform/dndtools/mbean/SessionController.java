@@ -75,7 +75,7 @@ public class SessionController  implements Serializable {
         setLoggedIn(false);
     }    
 
-    boolean loggedIn = false;
+    private boolean loggedIn = false;
     
     public boolean isLoggedIn() {
         return loggedIn;

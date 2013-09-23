@@ -2,33 +2,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html">
 
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="ログイン"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:form>
-                <h:panelGrid rendered="#{loginController.notLoggedIn}" id="contentGrid" style="height: 100%; width: 100%">
-                    <h:panelGrid id="paddingPanel1" style="height: 20px; width: 100%">
+  <ui:composition template="/template.xhtml">
+    <ui:define name="title">
+      <h:outputText value="ログイン"></h:outputText>
+    </ui:define>
+    <ui:define name="body">
+      <h:form>
+        <h:panelGrid rendered="#{loginController.notLoggedIn}" id="contentGrid" style="height: 100%; width: 100%">
+          <h:panelGrid id="paddingPanel1" style="height: 20px; width: 100%">
 
-                    </h:panelGrid>
-                    <h:outputLabel style="color: green" value="admin/admin でログインしてください。 (現在アカウントでの制限は行なっていません)"/>                    
-                    <h:panelGrid  cellpadding="5" columns="2" id="dataGrid1" style="width: 100%; height: 100%;">
-                        <h:outputLabel id="label1" value="ユーザー名:"/>
-                        <h:inputText value="#{loginController.userName}" id="usernameTextField" />
-                        <h:outputLabel id="label2" value="パスワード:"/>
-                        <h:inputSecret value="#{loginController.password}" id="passwordField" />
-                    </h:panelGrid>
-                    <h:panelGrid cellpadding="5" columns="2" id="commandGrid1" style="height: 100%">
-                        <h:commandButton action="#{loginController.login_action}" id="login1" value="ログイン"/>
-                        <h:commandButton action="#{loginController.register_action}" id="register1" rendered="false" value="登録"/>
-                    </h:panelGrid>
-                </h:panelGrid>
-            </h:form>
-        </ui:define>            
-    </ui:composition>
+          </h:panelGrid>
+          <h:outputLabel style="color: green" 
+                         value="admin/admin でログインしてください。 (現在アカウントでの制限は行なっていません)"/>                    
+          <h:panelGrid  cellpadding="5" columns="2" id="dataGrid1" style="width: 100%; height: 100%;">
+            <h:outputLabel id="label1" value="ユーザー名:"/>
+            <h:inputText value="#{loginController.userName}" id="usernameTextField" />
+            <h:outputLabel id="label2" value="パスワード:"/>
+            <h:inputSecret value="#{loginController.password}" id="passwordField" />
+          </h:panelGrid>
+          <h:panelGrid cellpadding="5" columns="2" id="commandGrid1" style="height: 100%">
+            <h:commandButton action="#{loginController.login_action}" id="login1" value="ログイン"/>
+            <h:commandButton action="#{loginController.register_action}" id="register1" rendered="false" 
+                             value="登録"/>
+          </h:panelGrid>
+        </h:panelGrid>
+      </h:form>
+    </ui:define>            
+  </ui:composition>
 </html> 

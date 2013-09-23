@@ -149,7 +149,7 @@ public class MonsterMasterController implements Serializable {
         current = new MonsterMaster();
         selectedItemIndex = -1;
         
-        if(getSessionController().loggedIn == false){
+        if(getSessionController().isLoggedIn() == false){
             getSessionController().setTargetPage("/monsterMaster/Create");
             return "/login/LoginPage";
         }
@@ -197,7 +197,7 @@ public class MonsterMasterController implements Serializable {
             monsterSaveList.set(save.getSaveMaster().getId() - 1, save.getMiscModifier());
         }
         
-        if(getSessionController().loggedIn == false){
+        if(getSessionController().isLoggedIn() == false){
             getSessionController().setTargetPage("/monsterMaster/Edit");
             return "/login/LoginPage";
         }

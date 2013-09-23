@@ -37,11 +37,6 @@
                      styleClass="subheaderlink">
           <h:commandLink action="/login/LoginPage" id="loginLink" styleClass="subheadertext" value="ログイン"/>
         </h:panelGrid>
-        <h:panelGrid id="newCharaCell" rendered="false" style="width: 100%; height: 100%;"
-                     styleClass="subheaderlink">
-          <h:commandLink action="#{pageHeader.newCharaLink_action}" id="newCharaLink" 
-                         styleClass="subheadertext" value="新規キャラクター作成"/>
-        </h:panelGrid>
         <h:panelGrid id="charaListCell" style="width: 100%; height: 100%;" rendered="false" 
                      styleClass="subheaderlink">
           <h:commandLink action="#{pageHeader.charaListLink_action}" id="charaListLink" 
@@ -60,7 +55,7 @@
                                styleClass="leftpaneltext" value="キャラクター"/>                                     
               </h:panelGrid>                     
               <h:panelGrid  style="width: 100%; height: 100%;" styleClass="leftpanelink">
-                <h:commandLink action="#{campaignMasterController.prepareList()}" styleClass="leftpaneltext" 
+                <h:commandLink action="/campaignMaster/List" styleClass="leftpaneltext" 
                                value="キャンペーン"/>
                 <h:commandLink rendered="#{sessionController.isCampaignSelected()}" 
                                action="#{scenarioRecordController.prepareList()}" 
