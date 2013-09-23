@@ -146,19 +146,19 @@ public class ApplicationController {
         //  種族の配列
         /////////////////////////
         List<RaceMaster> raceFindAll = raceMasterFacade.findAll();
-        List<SelectItem> raceList = new ArrayList<SelectItem>();
+        List<SelectItem> raseSelectedItemList = new ArrayList<SelectItem>();
         //未選択状態
-        raceList.add(new SelectItem(null, "未選択"));
+        raseSelectedItemList.add(new SelectItem(null, "未選択"));
 
         for (RaceMaster race : raceFindAll) {
             SelectItem selectItem = new SelectItem();
             selectItem.setValue(race.getId());
             selectItem.setLabel(race.getRaceName());
 
-            raceList.add(selectItem);
+            raseSelectedItemList.add(selectItem);
         }
         //リストから配列への変換
-        SelectItem[] tempRaceArray = raceList.toArray(new SelectItem[0]);
+        SelectItem[] tempRaceArray = raseSelectedItemList.toArray(new SelectItem[0]);
         //セッションBeanへのセット
         setRaceArray(tempRaceArray);
 
@@ -312,13 +312,12 @@ public class ApplicationController {
         
         /* Damage TYpe */
         damageTypeList = damageTypeMasterFacade.findAll();
-        
         /* Arm master */
         armList = armMasterFacade.findAll();
-        
         /* Size list */
         sizeList = sizeMasterFacade.findAll();
-       
+        /* Race List */
+       raceList = raceMasterFacade.findAll();
     }
     
     /* Size List */
@@ -555,7 +554,7 @@ public class ApplicationController {
     public void setAdminRaceFunctionArray(SelectItem[] adminRaceFunctionArray) {
         this.adminRaceFunctionArray = adminRaceFunctionArray;
     }
-    //---- 種族のサイズの配列 ----------------------------
+    /* 種族のサイズの配列 */
     protected SelectItem[] sizeArray;
 
     public SelectItem[] getSizeArray() {
@@ -566,11 +565,21 @@ public class ApplicationController {
         this.sizeArray = sizeArray;
     }
     
-    
-    List<DamageTypeMaster> damageTypeList;
+    private List<DamageTypeMaster> damageTypeList;
     
     public List<DamageTypeMaster> getDamageTypeList () 
     {
      return damageTypeList;
     }
+    
+    private List<RaceMaster> raceList;
+
+    public List<RaceMaster> getRaceList() {
+        return raceList;
+    }
+
+    public void setRaceList(List<RaceMaster> raceList) {
+        this.raceList = raceList;
+    }
+    
 }
