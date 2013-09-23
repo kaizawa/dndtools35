@@ -210,7 +210,7 @@ public class MonsterData implements CharacterSummary {
     }
 
     private String getType() {
-        return monster.getType().getName();
+        return null == monster.getType() ? "タイプ未設定" : monster.getType().getName();
     }
 
     @Override
