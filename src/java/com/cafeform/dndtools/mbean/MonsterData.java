@@ -181,7 +181,7 @@ public class MonsterData implements CharacterSummary {
     }
 
     private String getSize() {
-        return monster.getSizeId().getSizeName();
+        return null == monster.getSizeId() ? "サイズ未設定" : monster.getSizeId().getSizeName();
     }
 
     @Override
