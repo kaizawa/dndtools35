@@ -211,6 +211,9 @@ public class ArmMasterController implements Serializable {
         copied.setArmType3(original.getArmType3());
         copied.setArmType2(original.getArmType2());
         copied.setArmType1(original.getArmType1());
+        copied.setMasterwork(original.isMasterwork());
+        copied.setSize(original.getSize());
+        copied.setComposite_long_bow_streangth_bonus(original.getComposite_long_bow_streangth_bonus());
         return copied;
     }
 
