@@ -35,7 +35,7 @@
                        value="#{monsterMasterController.selected.hitDiceNum}"  />
           <h:outputLabel value="ヒットダイス種" for="hitDiceType" />
           <h:selectOneMenu id="hitDiceType" value="#{monsterMasterController.selected.hitDiceType}">                                       
-            <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
+            <f:selectItems value="#{applicationController.diceList}"/>
           </h:selectOneMenu> 
         </h:panelGrid>
 
