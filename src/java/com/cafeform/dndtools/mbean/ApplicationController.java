@@ -198,17 +198,17 @@ public class ApplicationController {
         // 属性の配列
         /////////////////////////
         List<AlignmentMaster> alignmentFindAll = alignmentMasterFacade.findAll();
-        List<SelectItem> alignmentList = new ArrayList<SelectItem>();
+        List<SelectItem> alignmentSelectItemList = new ArrayList<SelectItem>();
         //未選択状態
-        alignmentList.add(new SelectItem(null, "未選択"));
+        alignmentSelectItemList.add(new SelectItem(null, "未選択"));
         for (AlignmentMaster align : alignmentFindAll) {
             SelectItem selectItem = new SelectItem();
             selectItem.setValue(align.getId());
             selectItem.setLabel(align.getAlignmentName());
-            alignmentList.add(selectItem);
+            alignmentSelectItemList.add(selectItem);
         }
         //リストから配列への変換
-        SelectItem[] tempAlignmentArray = alignmentList.toArray(new SelectItem[0]);
+        SelectItem[] tempAlignmentArray = alignmentSelectItemList.toArray(new SelectItem[0]);
         //セッションBEANへのセット
         setAlignmentArray(tempAlignmentArray);
 
@@ -339,7 +339,9 @@ public class ApplicationController {
         /* Arm Types */
         armType1List = armType1MasterFacade.findAll();
         armType2List = armType2MasterFacade.findAll();
-        armType3List = armType3MasterFacade.findAll();        
+        armType3List = armType3MasterFacade.findAll(); 
+        /* alignment list */
+        alignmentList = alignmentMasterFacade.findAll();
         
     }
     
@@ -654,4 +656,15 @@ public class ApplicationController {
     public void setArmType3List(List<ArmType3Master> armType3List) {
         this.armType3List = armType3List;
     }
+    
+    private List<AlignmentMaster> alignmentList;
+
+    public List<AlignmentMaster> getAlignmentList() {
+        return alignmentList;
+    }
+
+    public void setAlignmentList(List<AlignmentMaster> alignmentList) {
+        this.alignmentList = alignmentList;
+    }
+    
 }
