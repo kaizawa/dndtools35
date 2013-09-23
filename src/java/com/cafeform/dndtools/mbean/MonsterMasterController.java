@@ -178,7 +178,7 @@ public class MonsterMasterController implements Serializable {
             recreatePagination();
             recreateModel();
             JsfUtil.addSuccessMessage("モンスターが作成されました");
-            return prepareCreate();
+            return prepareList();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, "永続性エラーが発生しました");
             return null;

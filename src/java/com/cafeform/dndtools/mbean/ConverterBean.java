@@ -24,6 +24,7 @@ import com.cafeform.dndtools.entity.ArmType2Master;
 import com.cafeform.dndtools.entity.ArmType3Master;
 import com.cafeform.dndtools.entity.DamageTypeMaster;
 import com.cafeform.dndtools.entity.DiceMaster;
+import com.cafeform.dndtools.entity.SizeMaster;
 import com.cafeform.dndtools.entity.TypeMaster;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -62,7 +63,7 @@ public class ConverterBean implements Serializable {
     }
     
     @FacesConverter(forClass = TypeMaster.class)
-    public static class TypeMasterControllerConverter extends ConverterImpl {
+    public static class TypeMasterConverter extends ConverterImpl {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -94,7 +95,7 @@ public class ConverterBean implements Serializable {
     }
 
     @FacesConverter(forClass = ArmType1Master.class)
-    public static class ArmType1MasterControllerConverter extends ConverterImpl {
+    public static class ArmType1MasterConverter extends ConverterImpl {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -126,7 +127,7 @@ public class ConverterBean implements Serializable {
     }
 
     @FacesConverter(forClass = ArmType2Master.class)
-    public static class ArmType2MasterControllerConverter extends ConverterImpl {
+    public static class ArmType2MasterConverter extends ConverterImpl {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -158,7 +159,7 @@ public class ConverterBean implements Serializable {
     }
 
     @FacesConverter(forClass = ArmType3Master.class)
-    public static class ArmType3MasterControllerConverter extends ConverterImpl {
+    public static class ArmType3MasterConverter extends ConverterImpl {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -190,7 +191,7 @@ public class ConverterBean implements Serializable {
     }
 
     @FacesConverter(forClass = DiceMaster.class)
-    public static class DiceMasterControllerConverter extends ConverterImpl {
+    public static class DiceMasterConverter extends ConverterImpl {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -222,7 +223,7 @@ public class ConverterBean implements Serializable {
     }
 
     @FacesConverter(forClass = DamageTypeMaster.class)
-    public class DamageTypeMasterControllerConverter extends ConverterImpl {
+    public class DamageTypeMasterConverter extends ConverterImpl {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -245,6 +246,39 @@ public class ConverterBean implements Serializable {
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " 
                     + object.getClass().getName() + "; expected type: " + DamageTypeMaster.class.getName());
+            }
+        }
+    }
+    
+    
+    public SizeMaster getSizeMaster(java.lang.Integer id) {
+        return sizeMasterFacade.find(id);
+    }
+
+    @FacesConverter(forClass = SizeMaster.class)
+    public class SizeMasterConverter extends ConverterImpl {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            ConverterBean controller = (ConverterBean) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "converterBean");
+            return controller.getSizeMaster(getKey(value));
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof SizeMaster) {
+                SizeMaster o = (SizeMaster) object;
+                return getStringKey(o.getId());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type " 
+                    + object.getClass().getName() + "; expected type: " + SizeMaster.class.getName());
             }
         }
     }
