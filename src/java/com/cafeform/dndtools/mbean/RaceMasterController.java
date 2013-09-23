@@ -45,16 +45,11 @@ public class RaceMasterController implements Serializable {
     public void setApplicationController(ApplicationController applicationController) {
         this.applicationController = applicationController;
     }
-    @Inject
-    private SizeMasterFacade sizeMasterFacade;
-    @Inject
-    private RaceSaveMasterFacade raceSaveMasterFacade;
-    @Inject
-    private RaceAbilityMasterFacade raceAbilityMasterFacade;
-    @Inject
-    private RaceMasterFacade raceMasterFacade;
-    @Inject
-    private SaveMasterFacade saveMasterFacade;
+    @Inject private SizeMasterFacade sizeMasterFacade;
+    @Inject private RaceSaveMasterFacade raceSaveMasterFacade;
+    @Inject private RaceAbilityMasterFacade raceAbilityMasterFacade;
+    @Inject private RaceMasterFacade raceMasterFacade;
+    @Inject private SaveMasterFacade saveMasterFacade;
     private RaceMaster raceMaster;
     private RaceMaster selectedRace;
 
@@ -274,7 +269,6 @@ public class RaceMasterController implements Serializable {
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
             JsfUtil.addErrorMessage("種族の保存に失敗しました");
             return null;
         }
@@ -308,7 +302,6 @@ public class RaceMasterController implements Serializable {
         try {
             raceMasterFacade.remove(getRaceMaster());
         } catch (Exception ex) {
-            ex.printStackTrace();
             JsfUtil.addErrorMessage("種族の削除に失敗しました。利用中の可能性があります。");
             return null;
         }

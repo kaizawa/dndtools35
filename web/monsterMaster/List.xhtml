@@ -14,20 +14,28 @@
                 <h:panelGrid style="width: 100%; text-align: right">
                     <h:commandLink action="#{monsterMasterController.prepareCreate}" value="新モンスター登録"/>
                 </h:panelGrid>
-
-                <h:outputText escape="false" value="モンスターは登録されていません。" rendered="#{monsterMasterController.items.rowCount == 0}"/>
+                <h:outputText escape="false" value="モンスターは登録されていません。" 
+                              rendered="#{monsterMasterController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{monsterMasterController.items.rowCount > 0}">
-                    <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}..#{monsterMasterController.pagination.pageLastItem + 1}/#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{monsterMasterController.previous}" value="#{bundle.Previous} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{monsterMasterController.next}" value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
+                    <h:outputText value="#{monsterMasterController.pagination.pageFirstItem + 1}
+                                  ..#{monsterMasterController.pagination.pageLastItem + 1}
+                                  /#{monsterMasterController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{monsterMasterController.previous}" 
+                                   value="#{bundle.Previous} #{monsterMasterController.pagination.pageSize}" 
+                                   rendered="#{monsterMasterController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{monsterMasterController.next}" 
+                                   value="#{bundle.Next} #{monsterMasterController.pagination.pageSize}" 
+                                   rendered="#{monsterMasterController.pagination.hasNextPage}"/>&nbsp;
                     <h:panelGrid styleClass="tableGrid" style="width: 400px">
 
-                        <h:dataTable value="#{monsterMasterController.items}" styleClass="w" style="text-align: left" var="item" rules="all" >
+                        <h:dataTable value="#{monsterMasterController.items}" styleClass="w" 
+                                     style="text-align: left" var="item" rules="all" >
                             <h:column >
                                 <f:facet name="header">
                                     <h:outputText value="モンスター名"/>
                                 </f:facet>
-                                <h:commandLink action="#{monsterMasterController.prepareEdit}" value="#{item.name}"/>
+                                <h:commandLink action="#{monsterMasterController.prepareEdit}" 
+                                               value="#{item.name}"/>
                             </h:column>
                         </h:dataTable>
                     </h:panelGrid>                    
@@ -36,5 +44,4 @@
             </h:form>
         </ui:define>
     </ui:composition>
-
 </html>

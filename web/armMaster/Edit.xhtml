@@ -64,19 +64,19 @@
           <h:outputLabel value="武器タイプ1" for="armType1" />
           <h:selectOneMenu id="armType1" value="#{armMasterController.selected.armType1}">
             <f:selectItem itemValue="" itemLabel="未選択"/>
-            <f:selectItems value="#{armType1MasterController.itemsAvailableSelectOne}"/>
+            <f:selectItems value="#{applicationController.armType1List}"/>
           </h:selectOneMenu>
 
           <h:outputLabel value="武器タイプ2" for="armType2" />
           <h:selectOneMenu id="armType2" value="#{armMasterController.selected.armType2}" >
             <f:selectItem itemValue="" itemLabel="未選択"/>
-            <f:selectItems value="#{armType2MasterController.itemsAvailableSelectOne}"/>
+            <f:selectItems value="#{applicationController.armType2List}"/>
           </h:selectOneMenu>                    
 
           <h:outputLabel value="武器タイプ3" for="armType3" />
           <h:selectOneMenu id="armType3" value="#{armMasterController.selected.armType3}" >
             <f:selectItem itemValue="" itemLabel="未選択"/>
-            <f:selectItems value="#{armType3MasterController.itemsAvailableSelectOne}"/>
+            <f:selectItems value="#{applicationController.armType3List}"/>
           </h:selectOneMenu>
           <h:outputLabel value="サイズ" for="size" />
           <h:selectOneMenu id="size" value="#{armMasterController.selected.size}" >

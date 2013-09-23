@@ -5,136 +5,151 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:composition template="/template.xhtml">
+  <ui:composition template="/template.xhtml">
 
-        <ui:define name="body">
-            <h:form>
+    <ui:define name="body">
+      <h:form>
 
-                <ui:insert name="controlTop">Default Control</ui:insert>
-                <br/>
+        <ui:insert name="controlTop">Default Control</ui:insert>
+        <br/>
 
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="名前" for="name" />
-                    <h:inputText id="name" value="#{monsterMasterController.selected.name}" title="#{bundle.CreateMonsterMasterTitle_name}" />
-                </h:panelGrid>      
+        <h:panelGrid columns="2">
+          <h:outputLabel value="名前" for="name" />
+          <h:inputText id="name" value="#{monsterMasterController.selected.name}" />
+        </h:panelGrid>      
 
-                <h:panelGrid columns="6">                    
-                    <h:outputLabel value="サイズ" for="sizeId" />
-                    <h:selectOneMenu id="sizeId" value="#{monsterMasterController.selected.sizeId}" title="#{bundle.CreateMonsterMasterTitle_sizeId}" >                        
-                        <f:selectItems value="#{sizeMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu> 
-                    <h:outputLabel value="種別" for="type" />                    
-                    <h:selectOneMenu id="type" value="#{monsterMasterController.selected.type}" title="#{bundle.CreateMonsterMasterTitle_type}" >
-                        <f:selectItems value="#{typeMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>      
-                </h:panelGrid>
-                <h:panelGrid columns="4">                    
-                    <h:outputLabel value="ヒットダイス数" for="hitDiceNum" />
-                    <h:inputText id="hitDiceNum" styleClass="smallTextField" value="#{monsterMasterController.selected.hitDiceNum}" title="#{bundle.CreateMonsterMasterTitle_hitDiceNum}" />
-                    <h:outputLabel value="ヒットダイス種" for="hitDiceType" />
-                    <h:selectOneMenu id="hitDiceType" value="#{monsterMasterController.selected.hitDiceType}" title="#{bundle.CreateMonsterMasterTitle_hitDiceType}" >                                       
-                        <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu> 
-                </h:panelGrid>
+        <h:panelGrid columns="6">                    
+          <h:outputLabel value="サイズ" for="sizeId" />
+          <h:selectOneMenu id="sizeId" value="#{monsterMasterController.selected.sizeId}">                        
+            <f:selectItems value="#{sizeMasterController.itemsAvailableSelectOne}"/>
+          </h:selectOneMenu> 
+          <h:outputLabel value="種別" for="type" />                    
+          <h:selectOneMenu id="type" value="#{monsterMasterController.selected.type}">
+            <f:selectItem itemValue="" itemLabel="未選択"/>
+            <f:selectItems value="#{applicationController.typeList}"/>
+          </h:selectOneMenu>      
+        </h:panelGrid>
+        <h:panelGrid columns="4">                    
+          <h:outputLabel value="ヒットダイス数" for="hitDiceNum" />
+          <h:inputText id="hitDiceNum" styleClass="smallTextField" 
+                       value="#{monsterMasterController.selected.hitDiceNum}"  />
+          <h:outputLabel value="ヒットダイス種" for="hitDiceType" />
+          <h:selectOneMenu id="hitDiceType" value="#{monsterMasterController.selected.hitDiceType}">                                       
+            <f:selectItems value="#{diceMasterController.itemsAvailableSelectOne}"/>
+          </h:selectOneMenu> 
+        </h:panelGrid>
 
-                <h:panelGrid columns="4">                        
-                    <h:outputLabel value="イニシアチブ" for="initiative" />
-                    <h:inputText id="initiative" styleClass="smallTextField" value="#{monsterMasterController.selected.initiative}" title="#{bundle.CreateMonsterMasterTitle_initiative}" />
-                    <h:outputLabel value="移動速度" for="speed" />
-                    <h:inputText id="speed" styleClass="smallTextField" value="#{monsterMasterController.selected.speed}" title="#{bundle.CreateMonsterMasterTitle_speed}" />
-                </h:panelGrid>
+        <h:panelGrid columns="4">                        
+          <h:outputLabel value="イニシアチブ" for="initiative" />
+          <h:inputText id="initiative" styleClass="smallTextField" 
+                       value="#{monsterMasterController.selected.initiative}" />
+          <h:outputLabel value="移動速度" for="speed" />
+          <h:inputText id="speed" styleClass="smallTextField" 
+                       value="#{monsterMasterController.selected.speed}" />
+        </h:panelGrid>
 
-                <h:panelGrid columns="6">
-                    <h:outputLabel value="AC" for="ac" />
-                    <h:inputText id="ac" styleClass="smallTextField" value="#{monsterMasterController.selected.ac}" title="#{bundle.CreateMonsterMasterTitle_ac}" />
-                    <h:outputLabel value="接触"  for="acTouch" />
-                    <h:inputText id="acTouch" styleClass="smallTextField" value="#{monsterMasterController.selected.acTouch}" title="#{bundle.CreateMonsterMasterTitle_acTouch}" />
-                    <h:outputLabel value="立ちすくみ" for="acFlatFooted" />
-                    <h:inputText id="acFlatFooted" styleClass="smallTextField" value="#{monsterMasterController.selected.acFlatFooted}" title="#{bundle.CreateMonsterMasterTitle_acFlatFooted}" />
-                </h:panelGrid>
+        <h:panelGrid columns="6">
+          <h:outputLabel value="AC" for="ac" />
+          <h:inputText id="ac" styleClass="smallTextField" value="#{monsterMasterController.selected.ac}" />
+          <h:outputLabel value="接触"  for="acTouch" />
+          <h:inputText id="acTouch" styleClass="smallTextField" 
+                       value="#{monsterMasterController.selected.acTouch}" />
+          <h:outputLabel value="立ちすくみ" for="acFlatFooted" />
+          <h:inputText id="acFlatFooted" styleClass="smallTextField" 
+                       value="#{monsterMasterController.selected.acFlatFooted}" />
+        </h:panelGrid>
 
-                <h:panelGrid columns="4">
-                    <h:outputLabel value="基本攻撃" for="baseAttack" />
-                    <h:inputText id="baseAttack" styleClass="smallTextField" value="#{monsterMasterController.selected.baseAttack}" title="#{bundle.CreateMonsterMasterTitle_baseAttack}" />
-                    <h:outputLabel value="組み付き" for="grapple" />
-                    <h:inputText id="grapple" styleClass="smallTextField" value="#{monsterMasterController.selected.grapple}" title="#{bundle.CreateMonsterMasterTitle_grapple}" />
-                </h:panelGrid>
+        <h:panelGrid columns="4">
+          <h:outputLabel value="基本攻撃" for="baseAttack" />
+          <h:inputText id="baseAttack" styleClass="smallTextField" 
+                       value="#{monsterMasterController.selected.baseAttack}" />
+          <h:outputLabel value="組み付き" for="grapple" />
+          <h:inputText id="grapple" styleClass="smallTextField"
+                       value="#{monsterMasterController.selected.grapple}" />
+        </h:panelGrid>
 
-                <h:panelGrid columns="1">
-                    <h:outputLabel value="攻撃" for="attack" />
-                    <h:inputTextarea styleClass="smallTextArea" id="attack" value="#{monsterMasterController.selected.attack}" title="#{bundle.CreateMonsterMasterTitle_attack}" />
-                </h:panelGrid>          
+        <h:panelGrid columns="1">
+          <h:outputLabel value="攻撃" for="attack" />
+          <h:inputTextarea styleClass="smallTextArea" id="attack"
+                           value="#{monsterMasterController.selected.attack}" />
+        </h:panelGrid>          
 
 
-                <h:panelGrid columns="1">
-                    <h:outputLabel value="全力攻撃" for="attack" />
-                    <h:inputTextarea styleClass="smallTextArea" id="fullattack" value="#{monsterMasterController.selected.fullAttack}"  />
-                </h:panelGrid>    
+        <h:panelGrid columns="1">
+          <h:outputLabel value="全力攻撃" for="attack" />
+          <h:inputTextarea styleClass="smallTextArea" id="fullattack" 
+                           value="#{monsterMasterController.selected.fullAttack}"  />
+        </h:panelGrid>    
 
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="間合い" for="reach" />
-                    <h:inputText id="reach" styleClass="smallTextField" value="#{monsterMasterController.selected.reach}" title="#{bundle.CreateMonsterMasterTitle_reach}" />
-                </h:panelGrid>
+        <h:panelGrid columns="2">
+          <h:outputLabel value="間合い" for="reach" />
+          <h:inputText id="reach" styleClass="smallTextField"
+                       value="#{monsterMasterController.selected.reach}"/>
+        </h:panelGrid>
 
-                <h:panelGrid columns="1">
-                    <h:outputLabel value="特殊攻撃" for="specialAttacks" />
-                    <h:inputTextarea id="specialAttacks" styleClass="smallTextArea" value="#{monsterMasterController.selected.specialAttacks}" title="#{bundle.CreateMonsterMasterTitle_specialAttacks}" />
-                </h:panelGrid>
+        <h:panelGrid columns="1">
+          <h:outputLabel value="特殊攻撃" for="specialAttacks" />
+          <h:inputTextarea id="specialAttacks" styleClass="smallTextArea" 
+                           value="#{monsterMasterController.selected.specialAttacks}" />
+        </h:panelGrid>
 
-                <h:panelGrid columns="1">
-                    <h:outputLabel value="その他特殊能力" for="specialQualities" />
-                    <h:inputTextarea id="specialQualities" styleClass="smallTextArea" value="#{monsterMasterController.selected.specialQualities}" title="#{bundle.CreateMonsterMasterTitle_specialQualities}" />
-                </h:panelGrid>
+        <h:panelGrid columns="1">
+          <h:outputLabel value="その他特殊能力" for="specialQualities" />
+          <h:inputTextarea id="specialQualities" styleClass="smallTextArea" 
+                           value="#{monsterMasterController.selected.specialQualities}" />
+        </h:panelGrid>
 
-                <h:panelGrid columns="6">
-                    <h:outputLabel value="セーブ: 頑健" />
-                    <h:inputText value="#{monsterMasterController.fortSave}" styleClass="smallTextField"/>
+        <h:panelGrid columns="6">
+          <h:outputLabel value="セーブ: 頑健" />
+          <h:inputText value="#{monsterMasterController.fortSave}" styleClass="smallTextField"/>
 
-                    <h:outputLabel value="反応" />
-                    <h:inputText value="#{monsterMasterController.refSave}" styleClass="smallTextField"/>
+          <h:outputLabel value="反応" />
+          <h:inputText value="#{monsterMasterController.refSave}" styleClass="smallTextField"/>
 
-                    <h:outputLabel value="意思" />
-                    <h:inputText value="#{monsterMasterController.willSave}" styleClass="smallTextField"/>
-                </h:panelGrid>                    
+          <h:outputLabel value="意思" />
+          <h:inputText value="#{monsterMasterController.willSave}" styleClass="smallTextField"/>
+        </h:panelGrid>                    
 
-                <h:panelGrid columns="12">
-                    <h:outputLabel value="【筋力】" />
-                    <h:inputText value="#{monsterMasterController.strAbility}" styleClass="smallTextField"/>
-                    <h:outputLabel value="【敏捷力】" />
-                    <h:inputText value="#{monsterMasterController.dexAbility}" styleClass="smallTextField"/>
-                    <h:outputLabel value="【耐久力】" />
-                    <h:inputText value="#{monsterMasterController.conAbility}" styleClass="smallTextField"/>
-                    <h:outputLabel value="【知力】" />
-                    <h:inputText value="#{monsterMasterController.intAbility}" styleClass="smallTextField"/>
-                    <h:outputLabel value="【判断力】" />
-                    <h:inputText value="#{monsterMasterController.wisAbility}" styleClass="smallTextField"/>
-                    <h:outputLabel value="【魅力】" />
-                    <h:inputText value="#{monsterMasterController.chaAbility}" styleClass="smallTextField"/>
-                </h:panelGrid>
+        <h:panelGrid columns="12">
+          <h:outputLabel value="【筋力】" />
+          <h:inputText value="#{monsterMasterController.strAbility}" styleClass="smallTextField"/>
+          <h:outputLabel value="【敏捷力】" />
+          <h:inputText value="#{monsterMasterController.dexAbility}" styleClass="smallTextField"/>
+          <h:outputLabel value="【耐久力】" />
+          <h:inputText value="#{monsterMasterController.conAbility}" styleClass="smallTextField"/>
+          <h:outputLabel value="【知力】" />
+          <h:inputText value="#{monsterMasterController.intAbility}" styleClass="smallTextField"/>
+          <h:outputLabel value="【判断力】" />
+          <h:inputText value="#{monsterMasterController.wisAbility}" styleClass="smallTextField"/>
+          <h:outputLabel value="【魅力】" />
+          <h:inputText value="#{monsterMasterController.chaAbility}" styleClass="smallTextField"/>
+        </h:panelGrid>
 
-                <h:panelGrid columns="6">
-                    <h:outputLabel value="出現環境" for="environment" />
-                    <h:inputText id="environment" value="#{monsterMasterController.selected.environment}" title="#{bundle.CreateMonsterMasterTitle_environment}" />
-                    <h:outputLabel value="編成" for="organization" />
-                    <h:inputText id="organization" value="#{monsterMasterController.selected.organization}" title="#{bundle.CreateMonsterMasterTitle_organization}" />
-                    <h:outputLabel value="脅威度" for="challengeRating" />
-                    <h:inputText id="challengeRating" styleClass="smallTextField" value="#{monsterMasterController.selected.challengeRating}" title="#{bundle.CreateMonsterMasterTitle_challengeRating}" />
-                    <h:outputLabel value="宝" for="treasure" />
-                    <h:inputText id="treasure" value="#{monsterMasterController.selected.treasure}" title="#{bundle.CreateMonsterMasterTitle_treasure}" />
-                    <h:outputLabel value="強大化" for="advancement" />
-                    <h:inputText id="advancement" value="#{monsterMasterController.selected.advancement}" title="#{bundle.CreateMonsterMasterTitle_advancement}" />
-                    <h:outputLabel value="属性" for="alignment" />
-                    <h:selectOneMenu id="alignment" value="#{monsterMasterController.selected.alignment}" title="#{bundle.CreateMonsterMasterTitle_alignment}" >
-                        <f:selectItems value="#{alignmentMasterController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>  
-                    <h:outputLabel value="レベル調整値" for="alignment" />
-                    <h:inputText id="levelAdjustment" styleClass="smallTextField"  value="#{monsterMasterController.selected.levelAdjustment}"  />               
-                </h:panelGrid>         
+        <h:panelGrid columns="6">
+          <h:outputLabel value="出現環境" for="environment" />
+          <h:inputText id="environment" value="#{monsterMasterController.selected.environment}" />
+          <h:outputLabel value="編成" for="organization" />
+          <h:inputText id="organization" value="#{monsterMasterController.selected.organization}"/>
+          <h:outputLabel value="脅威度" for="challengeRating" />
+          <h:inputText id="challengeRating" styleClass="smallTextField" 
+                       value="#{monsterMasterController.selected.challengeRating}"/>
+          <h:outputLabel value="宝" for="treasure" />
+          <h:inputText id="treasure" value="#{monsterMasterController.selected.treasure}" />
+          <h:outputLabel value="強大化" for="advancement" />
+          <h:inputText id="advancement" value="#{monsterMasterController.selected.advancement}"/>
+          <h:outputLabel value="属性" for="alignment" />
+          <h:selectOneMenu id="alignment" value="#{monsterMasterController.selected.alignment}" >
+            <f:selectItems value="#{alignmentMasterController.itemsAvailableSelectOne}"/>
+          </h:selectOneMenu>  
+          <h:outputLabel value="レベル調整値" for="alignment" />
+          <h:inputText id="levelAdjustment" styleClass="smallTextField"  
+                       value="#{monsterMasterController.selected.levelAdjustment}"  />               
+        </h:panelGrid>         
 
-                <ui:insert name="controlBottom"></ui:insert>
+        <ui:insert name="controlBottom"></ui:insert>
 
-            </h:form>
-        </ui:define>
-    </ui:composition>
+      </h:form>
+    </ui:define>
+  </ui:composition>
 
 </html>

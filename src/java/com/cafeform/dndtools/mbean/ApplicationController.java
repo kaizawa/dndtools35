@@ -26,20 +26,29 @@ import com.cafeform.dndtools.ejb.AlignmentMasterFacade;
 import com.cafeform.dndtools.ejb.BonusRankMasterFacade;
 import com.cafeform.dndtools.ejb.AbilityMasterFacade;
 import com.cafeform.dndtools.ejb.ArmMasterFacade;
+import com.cafeform.dndtools.ejb.ArmType1MasterFacade;
+import com.cafeform.dndtools.ejb.ArmType2MasterFacade;
+import com.cafeform.dndtools.ejb.ArmType3MasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
 import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
+import com.cafeform.dndtools.ejb.MonsterMasterFacade;
 import com.cafeform.dndtools.ejb.ReligionMasterFacade;
 import com.cafeform.dndtools.ejb.SaveMasterFacade;
+import com.cafeform.dndtools.ejb.TypeMasterFacade;
 import com.cafeform.dndtools.entity.ArmMaster;
+import com.cafeform.dndtools.entity.ArmType1Master;
+import com.cafeform.dndtools.entity.ArmType2Master;
+import com.cafeform.dndtools.entity.ArmType3Master;
 import com.cafeform.dndtools.entity.DamageTypeMaster;
+import com.cafeform.dndtools.entity.MonsterMaster;
+import com.cafeform.dndtools.entity.TypeMaster;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.model.SelectItem;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -57,20 +66,25 @@ import javax.inject.Named;
 @ApplicationScoped
 public class ApplicationController {
 
-    @Inject private SizeMasterFacade sizeMasterFacade;
-    @Inject private CampaignMasterFacade campaignMasterFacade;
-    @Inject private ClassMasterFacade classMasterFacade;
-    @Inject private ReligionMasterFacade religionMasterFacade;
-    @Inject private AlignmentMasterFacade alignmentMasterFacade;
-    @Inject private GenderMasterFacade genderMasterFacade;
-    @Inject private RaceMasterFacade raceMasterFacade;
-    @Inject private DiceMasterFacade diceMasterFacade;
-    @Inject private BonusRankMasterFacade bonusRankMasterFacade;
-    @Inject private SaveMasterFacade saveMasterFacade;
-    @Inject private SkillMasterFacade skillMasterFacade;
-    @Inject private AbilityMasterFacade abilityMasterFacade;
-    @Inject private DamageTypeMasterFacade damageTypeMasterFacade;
+    @EJB private SizeMasterFacade sizeMasterFacade;
+    @EJB private CampaignMasterFacade campaignMasterFacade;
+    @EJB private ClassMasterFacade classMasterFacade;
+    @EJB private ReligionMasterFacade religionMasterFacade;
+    @EJB private AlignmentMasterFacade alignmentMasterFacade;
+    @EJB private GenderMasterFacade genderMasterFacade;
+    @EJB private RaceMasterFacade raceMasterFacade;
+    @EJB private DiceMasterFacade diceMasterFacade;
+    @EJB private BonusRankMasterFacade bonusRankMasterFacade;
+    @EJB private SaveMasterFacade saveMasterFacade;
+    @EJB private SkillMasterFacade skillMasterFacade;
+    @EJB private AbilityMasterFacade abilityMasterFacade;
+    @EJB private DamageTypeMasterFacade damageTypeMasterFacade;
     @EJB private ArmMasterFacade armMasterFacade;
+    @EJB private MonsterMasterFacade monsterMasterFacade;
+    @EJB private TypeMasterFacade typeMasterFacade;
+    @EJB private ArmType1MasterFacade armType1MasterFacade;
+    @EJB private ArmType2MasterFacade armType2MasterFacade;
+    @EJB private ArmType3MasterFacade armType3MasterFacade; 
     
     /**
      * <p>Construct a new application data bean instance.</p>
@@ -317,7 +331,16 @@ public class ApplicationController {
         /* Size list */
         sizeList = sizeMasterFacade.findAll();
         /* Race List */
-       raceList = raceMasterFacade.findAll();
+        raceList = raceMasterFacade.findAll();
+        /* Moster List */
+        monsterList = monsterMasterFacade.findAll();
+        /* Moster Type List */
+        typeList = typeMasterFacade.findAll();
+        /* Arm Types */
+        armType1List = armType1MasterFacade.findAll();
+        armType2List = armType2MasterFacade.findAll();
+        armType3List = armType3MasterFacade.findAll();        
+        
     }
     
     /* Size List */
@@ -582,4 +605,53 @@ public class ApplicationController {
         this.raceList = raceList;
     }
     
+    private List<MonsterMaster> monsterList;
+
+    public List<MonsterMaster> getMonsterList() {
+        return monsterList;
+    }
+
+    public void setMonsterList(List<MonsterMaster> monsterList) {
+        this.monsterList = monsterList;
+    }
+    
+    private List<TypeMaster> typeList;
+
+    public List<TypeMaster> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<TypeMaster> typeList) {
+        this.typeList = typeList;
+    }
+    
+    private List<ArmType1Master> armType1List;
+
+    public List<ArmType1Master> getArmType1List() {
+        return armType1List;
+    }
+
+    public void setArmType1List(List<ArmType1Master> armType1List) {
+        this.armType1List = armType1List;
+    }
+
+    private List<ArmType2Master> armType2List;
+    
+    public List<ArmType2Master> getArmType2List() {
+        return armType2List;
+    }
+
+    public void setArmType2List(List<ArmType2Master> armType2List) {
+        this.armType2List = armType2List;
+    }
+
+    private List<ArmType3Master> armType3List;    
+    
+    public List<ArmType3Master> getArmType3List() {
+        return armType3List;
+    }
+
+    public void setArmType3List(List<ArmType3Master> armType3List) {
+        this.armType3List = armType3List;
+    }
 }
