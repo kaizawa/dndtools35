@@ -86,6 +86,41 @@ public class ApplicationController {
     @EJB private ArmType2MasterFacade armType2MasterFacade;
     @EJB private ArmType3MasterFacade armType3MasterFacade; 
     
+    private SelectItem[] armType1MasterOptions;
+    private SelectItem[] armType2MasterOptions;
+    private SelectItem[] armType3MasterOptions;
+    private SelectItem[] damageTypeMasterOptions;
+    private SelectItem[] sizeMasterOptions;  
+    private SelectItem[] campaignMasterOptions;
+
+    public SelectItem[] getCampaignMasterOptions() {
+        return campaignMasterOptions;
+    }
+
+    public void setCampaignMasterOptions(SelectItem[] campaignMasterOptions) {
+        this.campaignMasterOptions = campaignMasterOptions;
+    }
+    
+    public SelectItem[] getDamageTypeMasterOptions() {
+        return damageTypeMasterOptions;
+    }
+    
+    public SelectItem[] getArmType1MasterOptions() {
+        return armType1MasterOptions;
+    }
+
+    public SelectItem[] getArmType2MasterOptions() {
+        return armType2MasterOptions;
+    }
+
+    public SelectItem[] getArmType3MasterOptions() {
+        return armType3MasterOptions;
+    }
+    
+    public SelectItem[] getSizeMasterOpItems() {
+        return sizeMasterOptions;
+    }
+    
     /**
      * <p>Construct a new application data bean instance.</p>
      */
@@ -342,6 +377,13 @@ public class ApplicationController {
         armType3List = armType3MasterFacade.findAll(); 
         /* alignment list */
         alignmentList = alignmentMasterFacade.findAll();
+        
+        armType1MasterOptions = createFilterOptions(armType1MasterFacade.findAll().toArray(new ArmType1Master[0]));
+        armType2MasterOptions = createFilterOptions(armType2MasterFacade.findAll().toArray(new ArmType2Master[0]));
+        armType3MasterOptions = createFilterOptions(armType3MasterFacade.findAll().toArray(new ArmType3Master[0]));
+        damageTypeMasterOptions = createFilterOptions(damageTypeMasterFacade.findAll().toArray(new DamageTypeMaster[0]));
+        sizeMasterOptions = createFilterOptions(sizeMasterFacade.findAll().toArray(new SizeMaster[0]));
+        campaignMasterOptions = createFilterOptions(campaignMasterFacade.findAll().toArray(new CampaignMaster[0]));
         
     }
     
@@ -667,4 +709,14 @@ public class ApplicationController {
         this.alignmentList = alignmentList;
     }
     
+    private SelectItem[] createFilterOptions(Object[] data) {
+        SelectItem[] options = new SelectItem[data.length + 1];
+
+        options[0] = new SelectItem("", "選択");
+        for (int i = 0; i < data.length; i++) {
+            options[i + 1] = new SelectItem(data[i], data[i].toString());
+        }
+
+        return options;
+    }
 }

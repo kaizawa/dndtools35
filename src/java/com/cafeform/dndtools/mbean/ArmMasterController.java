@@ -35,23 +35,18 @@ import javax.inject.Named;
 @SessionScoped
 public class ArmMasterController implements Serializable {
 
-    @Inject protected ArmType1MasterFacade armType1MasterFacade;
-    @Inject protected ArmType2MasterFacade armType2MasterFacade;
-    @Inject protected ArmType3MasterFacade armType3MasterFacade;    
-    @Inject protected DamageTypeMasterFacade damageTypeMasterFacade;
-    @Inject protected ArmMasterFacade armMasterFacade;
-    @Inject protected SessionController sessionController;
-    @Inject protected CharacterRecordFacade characterRecordFacade;
-    @Inject protected CharacterArmRecordFacade characterArmRecordFacade;
+    @EJB protected ArmType1MasterFacade armType1MasterFacade;
+    @EJB protected ArmType2MasterFacade armType2MasterFacade;
+    @EJB protected ArmType3MasterFacade armType3MasterFacade;    
+    @EJB protected DamageTypeMasterFacade damageTypeMasterFacade;
+    @EJB protected ArmMasterFacade armMasterFacade;
+    @EJB protected CharacterRecordFacade characterRecordFacade;
+    @EJB protected CharacterArmRecordFacade characterArmRecordFacade;
     @EJB protected SizeMasterFacade sizeMasterFacade;    
     @Inject protected ApplicationController applicationController;    
-
+    @Inject protected SessionController sessionController;
     
-    private SelectItem[] armType1MasterOptions;
-    private SelectItem[] armType2MasterOptions;
-    private SelectItem[] armType3MasterOptions;
-    private SelectItem[] damageTypeMasterOptions;
-    private SelectItem[] sizeMasterOptions;    
+  
     private List<ArmMaster> filteredArms;
     private ArmMaster selectedArm;
 
@@ -264,35 +259,6 @@ public class ArmMasterController implements Serializable {
         return (selectedArm == null || selectedArm.getId() == null);
     }
 
-    @PostConstruct
-    public void init() {
-        armType1MasterOptions = createFilterOptions(armType1MasterFacade.findAll().toArray(new ArmType1Master[0]));
-        armType2MasterOptions = createFilterOptions(armType2MasterFacade.findAll().toArray(new ArmType2Master[0]));
-        armType3MasterOptions = createFilterOptions(armType3MasterFacade.findAll().toArray(new ArmType3Master[0]));
-        damageTypeMasterOptions = createFilterOptions(damageTypeMasterFacade.findAll().toArray(new DamageTypeMaster[0]));
-        sizeMasterOptions = createFilterOptions(sizeMasterFacade.findAll().toArray(new SizeMaster[0]));
-    }
-
-    public SelectItem[] getDamageTypeMasterOptions() {
-        return damageTypeMasterOptions;
-    }
-    
-    public SelectItem[] getArmType1MasterOptions() {
-        return armType1MasterOptions;
-    }
-
-    public SelectItem[] getArmType2MasterOptions() {
-        return armType2MasterOptions;
-    }
-
-    public SelectItem[] getArmType3MasterOptions() {
-        return armType3MasterOptions;
-    }
-    
-    public SelectItem[] getSizeMasterOpItems() {
-        return sizeMasterOptions;
-    }
-
     public String addCharacterArmRecord() {
         CharacterRecord characterRecord = getSessionController().getCharacterData().getCharacterRecord();
         List<CharacterArmRecord> armRecordList = characterRecord.getCharacterArmRecordList();
@@ -325,16 +291,5 @@ public class ArmMasterController implements Serializable {
 
     public void setFilteredArms(List<ArmMaster> filteredArms) {
         this.filteredArms = filteredArms;
-    }
-
-    private SelectItem[] createFilterOptions(Object[] data) {
-        SelectItem[] options = new SelectItem[data.length + 1];
-
-        options[0] = new SelectItem("", "選択");
-        for (int i = 0; i < data.length; i++) {
-            options[i + 1] = new SelectItem(data[i], data[i].toString());
-        }
-
-        return options;
     }
 }

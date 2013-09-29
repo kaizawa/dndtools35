@@ -51,6 +51,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -59,22 +60,22 @@ import javax.inject.Named;
 @SessionScoped
 public class CharacterSheetController implements Serializable {
 
-    @Inject private CharacterRecordFacade characterRecordFacade;
-    @Inject private ReligionMasterFacade religionMasterFacade;
-    @Inject private GenderMasterFacade genderMasterFacade;
-    @Inject private AlignmentMasterFacade alignmentMasterFacade;
-    @Inject private RaceMasterFacade raceMasterFacade;
-    @Inject private CampaignMasterFacade campaignMasterFacade;
-    @Inject private CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
-    @Inject private CharacterGrowthRecordFacade characterGrowthRecordFacade;
-    @Inject private CharacterEquipmentFacade characterEquipmentFacade;
-    @Inject private CharacterSaveRecordFacade characterSaveRecordFacade;
-    @Inject private CharacterAbilityRecordFacade characterAbilityRecordFacade;
-    @Inject private CharacterSkillRecordFacade characterSkillRecordFacade;
-    @Inject protected ClassMasterFacade classMasterFacade;
-    @Inject private SessionController sessionController;
-    @Inject private ApplicationController applicationController;
-    @Inject private CharacterArmRecordFacade characterArmRecordFacade;
+    @EJB private CharacterRecordFacade characterRecordFacade;
+    @EJB private ReligionMasterFacade religionMasterFacade;
+    @EJB private GenderMasterFacade genderMasterFacade;
+    @EJB private AlignmentMasterFacade alignmentMasterFacade;
+    @EJB private RaceMasterFacade raceMasterFacade;
+    @EJB private CampaignMasterFacade campaignMasterFacade;
+    @EJB private CharacterSkillGrowthRecordFacade characterSkillGrowthRecordFacade;
+    @EJB private CharacterGrowthRecordFacade characterGrowthRecordFacade;
+    @EJB private CharacterEquipmentFacade characterEquipmentFacade;
+    @EJB private CharacterSaveRecordFacade characterSaveRecordFacade;
+    @EJB private CharacterAbilityRecordFacade characterAbilityRecordFacade;
+    @EJB private CharacterSkillRecordFacade characterSkillRecordFacade;
+    @EJB protected ClassMasterFacade classMasterFacade;
+    @EJB private CharacterArmRecordFacade characterArmRecordFacade;
+    @Inject private ApplicationController applicationController;    
+    @Inject private SessionController sessionController;    
 
     public SessionController getSessionController() {
         return sessionController;
@@ -133,30 +134,6 @@ public class CharacterSheetController implements Serializable {
      */
     public CampaignMaster getSelectedCampaign() {
         return getSessionController().getSelectedCampaign();
-    }
-
-    public void setSelectedCampaign(CampaignMaster selectedCampaign) {
-        if (getSessionController().getSelectedCampaign() != null
-                && getSessionController().getSelectedCampaign().getId() != selectedCampaign.getId()) {
-            releaseAllButton_action();
-            recreatePagination();
-            recreateModel();
-        }
-        getSessionController().setSelectedScenarioRecord(null);
-        getSessionController().setSelectedCampaign(selectedCampaign);
-    }
-
-    /*
-     * キャラクターデータのリスト
-     */
-    public List<CharacterData> getCharacterDataList() {        
-        items = getPagination().createPageDataModel();
-
-        List<CharacterData> charaDataList = new ArrayList<CharacterData>();
-        for (Object obj : getItems()) {
-            charaDataList.add(new CharacterData((CharacterRecord) obj));
-        }
-        return charaDataList;
     }
 
     public CharacterData getCharacterData() {
@@ -311,19 +288,6 @@ public class CharacterSheetController implements Serializable {
         this.levelArray = levelArray;
     }
 
-    /*
-     * この valueChangeListener は CharacterListPage の PostConstract の init
-     * の「後」に呼ばれるようだ。なので init では 値の変更に気がついていない。。。 
-     * 呼ばれるタイミングが不明? だれよりも最初に呼ばれてほしいものだが?
-     */
-    public void campaign_processValueChange(ValueChangeEvent vce) {
-        items = null;        
-        CampaignMaster campaign = (CampaignMaster) vce.getNewValue();
-        releaseAllButton_action();
-        recreatePagination();
-        recreateModel();
-        setSelectedCampaign(campaign);
-    }
     private HtmlDataTable characterListDataTable = new HtmlDataTable();
 
     public HtmlDataTable getCharacterListDataTable() {
@@ -339,9 +303,6 @@ public class CharacterSheetController implements Serializable {
     }
 
     public String charaEditLink_action() {
-        //管理Beanへ反映
-        setCharacterData((CharacterData) characterListDataTable.getRowData());
-
         return "EditCharacterRecordPage";
     }
 
@@ -518,51 +479,14 @@ public class CharacterSheetController implements Serializable {
     /*
      * チェックボックスで選択されたキャラクターのセット
      */
-    public Map getCheckedCharacterMap() {
-        return getSessionController().getCheckedCharacterMap();
+    public List<CharacterData> getCheckedCharacterList() {
+        return getSessionController().getCheckedCharacterList();
     }
 
-    public void setCheckedCharacterMap(Map checkedCharas) {
-        getSessionController().setCheckedCharacterMap(checkedCharas);
+    public void setCheckedCharacterList(List checkedCharas) {
+        getSessionController().setCheckedCharacterList(checkedCharas);
     }
 
-    /**
-     * チェックボックが選択されているか?
-     */
-    public boolean isCharacterChecked() {
-
-        CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
-
-        return getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId());
-    }
-
-    public void setCharacterChecked(boolean charaChecked) {
-
-        CharacterData charaData = (CharacterData) characterListDataTable.getRowData();
-        if (charaData != null) {
-            if (charaChecked && !getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId())) {
-                getCheckedCharacterMap().put(charaData.getCharacterRecord().getId().intValue(), charaData);
-            } else if (!charaChecked && getCheckedCharacterMap().containsKey(charaData.getCharacterRecord().getId())) {
-                getCheckedCharacterMap().remove(charaData.getCharacterRecord().getId());
-            }
-        }
-    }
-
-    public String selectAllButton_action() {
-        Map<Integer, CharacterData> charaMap = getCheckedCharacterMap();
-        //Clear first, just in case.
-        charaMap.clear();
-        for (CharacterData charaData : getCharacterDataList()) {
-            charaMap.put(charaData.getCharacterRecord().getId().intValue(), charaData);
-        }
-        return null;
-    }
-
-    public String releaseAllButton_action() {
-        Map charaMap = getCheckedCharacterMap();
-        charaMap.clear();
-        return null;
-    }
     protected HtmlDataTable abilityTable = new HtmlDataTable();
 
     public HtmlDataTable getAbilityTable() {
@@ -630,7 +554,8 @@ public class CharacterSheetController implements Serializable {
         /*
          * セーブ時には 順番を変えるためにキャラクターリストの一覧を再生性する
          */
-        releaseAllButton_action();
+        sessionController.clearCharacterDataList();
+
         recreatePagination();
         recreateModel();
 
@@ -679,7 +604,7 @@ public class CharacterSheetController implements Serializable {
             JsfUtil.addSuccessMessage("削除に失敗しました");
             return null;
         }
-        releaseAllButton_action();
+        sessionController.clearCharacterDataList();
         recreatePagination();
         recreateModel();
         return "CharacterListPage";
@@ -1168,7 +1093,7 @@ public class CharacterSheetController implements Serializable {
     }
 
     public void recreateList() {
-        releaseAllButton_action();
+        sessionController.clearCharacterDataList();
         recreatePagination();
         recreateModel();
     }
@@ -1202,4 +1127,5 @@ public class CharacterSheetController implements Serializable {
         }
         return null;
     }
+
 }

@@ -21,11 +21,13 @@ import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.ReligionMasterFacade;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
 import com.cafeform.dndtools.entity.CharacterArmRecord;
+import com.cafeform.dndtools.entity.CharacterRecord;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,22 +35,14 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class SessionController  implements Serializable {
-    @Inject
-    private CharacterRecordFacade characterRecordFacade;
-    @Inject
-    private BonusRankMasterFacade bonusRankMasterFacade;
-    @Inject
-    private ReligionMasterFacade religionMasterFacade;
-    @Inject
-    private GenderMasterFacade genderMasterFacade;
-    @Inject
-    private AlignmentMasterFacade alignmentMasterFacade;
-    @Inject
-    private AbilityMasterFacade abilityMasterFacade;
-    @Inject
-    private RaceMasterFacade raceMasterFacade;
-    @Inject
-    private CampaignMasterFacade campaignMasterFacade; 
+    @EJB private CharacterRecordFacade characterRecordFacade;
+    @EJB private BonusRankMasterFacade bonusRankMasterFacade;
+    @EJB private ReligionMasterFacade religionMasterFacade;
+    @EJB private GenderMasterFacade genderMasterFacade;
+    @EJB private AlignmentMasterFacade alignmentMasterFacade;
+    @EJB private AbilityMasterFacade abilityMasterFacade;
+    @EJB private RaceMasterFacade raceMasterFacade;
+    @EJB private CampaignMasterFacade campaignMasterFacade; 
     
     /** NOTE */
     /*
@@ -58,8 +52,7 @@ public class SessionController  implements Serializable {
                     @Inject can is also be replaced by @Inject
                     * */
     
-    @Inject
-    private ApplicationController applicationController;
+    @Inject  private ApplicationController applicationController;
 
     public ApplicationController getApplicationController() {
         return applicationController;
@@ -71,7 +64,8 @@ public class SessionController  implements Serializable {
     
     @PostConstruct
     public void init() {
-        setCheckedCharacterMap(new HashMap());   
+        checkedCharacterList = Collections.<CharacterData>emptyList();
+        characterDataList = null;
         setLoggedIn(false);
     }    
 
@@ -121,15 +115,15 @@ public class SessionController  implements Serializable {
     /*
      * チェックボックスで選択されたキャラクターのセット
      */
-    private Map checkedCharacterMap;
+    private List<CharacterData> checkedCharacterList;
 
 
-    public Map getCheckedCharacterMap() {
-        return checkedCharacterMap;
+    public List<CharacterData> getCheckedCharacterList() {
+        return checkedCharacterList;
     }
 
-    public void setCheckedCharacterMap(Map selectedCharas) {
-        this.checkedCharacterMap = selectedCharas;
+    public void setCheckedCharacterList(List<CharacterData> selectedCharas) {
+        this.checkedCharacterList = selectedCharas;
     }
 
     /*
@@ -236,5 +230,40 @@ public class SessionController  implements Serializable {
 
     void setCharacterArmRecord(List<CharacterArmRecord> characterArmRecordList) {
         this.characterArmRecordList = characterArmRecordList;
+    }
+    
+    private List<CharacterData> characterDataList;
+
+    public List<CharacterData> getCharacterDataList() {
+        if (null == characterDataList){
+            characterDataList = new ArrayList<CharacterData>();
+            List<CharacterRecord> charaRecordList = characterRecordFacade.findAll();
+            for (CharacterRecord charaRecord : charaRecordList) {
+                characterDataList.add(new CharacterData(charaRecord));
+            }
+            return characterDataList;
+        }
+        return characterDataList;
+    }
+
+    public void setCharacterDataList(List<CharacterData> characterDataList) {
+        this.characterDataList = characterDataList;
+    }
+    
+    private List<CharacterData> filteredCharacterData;
+
+    public List<CharacterData> getFilteredCharacterData() {
+        return filteredCharacterData;
+    }
+
+    public void setFilteredCharacterData(List<CharacterData> filteredCharacterData) {
+        this.filteredCharacterData = filteredCharacterData;
+    }
+    
+    public void clearCharacterDataList()
+    {
+        setCharacterDataList(null);
+        setFilteredCharacterData(null);
+        setCheckedCharacterList(null);
     }
 }    
