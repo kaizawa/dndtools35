@@ -203,8 +203,7 @@ public class SessionController  implements Serializable {
             return "/login/LoginPage";
         }
         return pageName;
-    }
-    
+    }    
     
     /*
      * 選択されたキャンペーン

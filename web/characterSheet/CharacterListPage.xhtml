@@ -20,26 +20,33 @@
                              style="font-size: 12px" value="新キャラクター作成"/>
             </h:panelGrid>
           </h:panelGrid>
-          <p:dataTable id="charaTable" 
+          <!--
+          <p:dataTable var="chara" 
                        value="#{sessionController.characterDataList}" 
-                       var="chara" 
                        widgetVar="charaTable" 
                        sortBy="#{chara.lastChange}"
                        resizableColumns="true"
                        draggableColumns="true"
                        emptyMessage="指定された条件に合うキャラクターは見つかりませんでした" 
-                       filteredValue="#{sessionController.filteredCharacterData}"
-                       >                       
-                       <!--                       
                        rowKey="#{chara.id}"
-                       
                        paginator="true" 
+                       selection="#{sessionController.checkedCharacterList}"           
+                       filteredValue="#{sessionController.filteredCharacterData}"                       
                        rows="10">
-            selection="#{sessionController.checkedCharacterList}">                       
-            <p:column selectionMode="multiple" style="width:2%" />                         
-                       -->
-
-
+          -->
+          <p:dataTable id="dataTable" 
+                       var="chara" 
+                       value="#{sessionController.characterDataList}" 
+                       widgetVar="charsTable" 
+                       sortBy="#{chara.characterName}"
+                       emptyMessage="条件に合うキャラクターは見つかりませんでした" 
+                       filteredValue="#{sessionController.filteredCharacterData}"
+                       paginator="true" 
+                       rows="10"
+                       selection="#{sessionController.checkedCharacterList}"           
+                       rowKey="#{chara.id}"
+                       style="width:100%" >
+            <p:column selectionMode="multiple"/>
             <p:column filterBy="#{chara.characterName}" headerText="キャラクター名" 
                       filterMatchMode="contains">
               <h:commandLink action="#{characterSheetController.charaEditLink_action}"
