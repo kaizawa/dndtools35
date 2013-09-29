@@ -4,13 +4,10 @@
  */
 package com.cafeform.dndtools.mbean;
 
-import javax.enterprise.context.RequestScoped;
-
 /**
  *
  * @author ka78231
  */
-@RequestScoped
 public class DnDUtil {
     
     /*
