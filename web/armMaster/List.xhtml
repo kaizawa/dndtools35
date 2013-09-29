@@ -36,35 +36,35 @@
               <p:column id="armType1MasterColumn" 
                         headerText="単・軍・特" footerText="単・軍・特"
                         filterBy="#{arm.armType1}"                             
-                        filterOptions="#{armMasterController.armType1MasterOptions}"
+                        filterOptions="#{applicationController.armType1MasterOptions}"
                         filterMatchMode="exact" >
                 <h:outputText value="#{arm.armType1.name}" />
               </p:column>
               <p:column id="armType2MasterColumn" 
                         headerText="片・両・投" footerText="片・両・投"
                         filterBy="#{arm.armType2}"                             
-                        filterOptions="#{armMasterController.armType2MasterOptions}"
+                        filterOptions="#{applicationController.armType2MasterOptions}"
                         filterMatchMode="exact" >
                 <h:outputText value="#{arm.armType2.name}" />
               </p:column>
               <p:column id="armType3MasterColumn" 
                         headerText="近・遠" footerText="近・遠"
                         filterBy="#{arm.armType3}"                             
-                        filterOptions="#{armMasterController.armType3MasterOptions}"
+                        filterOptions="#{applicationController.armType3MasterOptions}"
                         filterMatchMode="exact" >
                 <h:outputText value="#{arm.armType3.name}" />
               </p:column>
               <p:column id="sizeColumn" 
                         headerText="サイズ" footerText="サイズ"
                         filterBy="#{arm.size}"                             
-                        filterOptions="#{armMasterController.sizeMasterOpItems}"
+                        filterOptions="#{applicationController.sizeMasterOpItems}"
                         filterMatchMode="exact" >
                 <h:outputText value="#{arm.size.sizeName}" />
               </p:column>
               <p:column id="damageTypeMasterColumn"
                         headerText="斬・殴・刺" footerText="斬・殴・刺"
                         filterBy="#{arm.damageType}"                             
-                        filterOptions="#{armMasterController.damageTypeMasterOptions}"
+                        filterOptions="#{applicationController.damageTypeMasterOptions}"
                         filterMatchMode="exact" >
                 <h:outputText value="#{arm.damageType.name}" />                  
               </p:column>
