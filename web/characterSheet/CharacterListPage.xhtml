@@ -46,7 +46,7 @@
                        selection="#{sessionController.checkedCharacterList}"           
                        rowKey="#{chara.id}"
                        style="width:100%" >
-            <p:column selectionMode="multiple"/>
+            <p:column selectionMode="multiple" style="width: 2%"/>
             <p:column filterBy="#{chara.characterName}" headerText="キャラクター名" 
                       filterMatchMode="contains">
               <h:commandLink action="#{characterSheetController.charaEditLink_action}"
@@ -57,13 +57,13 @@
             </p:column> 
             <p:column headerText="プレイヤー" filterBy="#{chara.playerName}"
                       filterMatchMode="contains">
-              <h:outputText style="font-size: 14px; " value="#{chara.playerName}"/>
+              <h:outputText value="#{chara.playerName}"/>
             </p:column>
             <p:column headerText="Lv">
-              <h:outputText style="font-size: 14px" value="#{chara.level}"/>
+              <h:outputText value="#{chara.level}"/>
             </p:column>
-            <p:column headerText="クラスリスト">
-              <h:outputText value="#{chara.classList}"/>
+            <p:column headerText="クラスリスト" style="max-width: 300px;">
+              <h:outputText value="#{chara.classList}" style="display:block;overflow: auto;"/>
             </p:column>
             <p:column headerText="キャンペーン" filterBy="#{chara.campaignId}" sortBy="#{chara.campaignId}"
                       filterOptions="#{applicationController.campaignMasterOptions}"

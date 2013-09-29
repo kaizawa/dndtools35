@@ -6,7 +6,7 @@
     </context-param>
     <context-param>
       <param-name>primefaces.THEME</param-name>
-      <param-value>rocket</param-value>
+      <param-value>home</param-value>
     </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
