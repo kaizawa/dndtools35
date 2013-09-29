@@ -954,7 +954,8 @@ public class CharacterSheetController implements Serializable {
      */
     public String editSkillNomalButton_action() {
         // キャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする。Lv は 1 固定
-        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(0));
+        getSessionController().setCharacterGrowthRecord(getCharacterData()
+            .getCharacterGrowthRecordList().get(0));
         return "EditCharacterPerLevelPage";
     }
 
@@ -1042,9 +1043,12 @@ public class CharacterSheetController implements Serializable {
                 @Override
                 public DataModel createPageDataModel() {
                     if (getSelectedCampaign() == null) {
-                        return new ListDataModel(characterRecordFacade.findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                        return new ListDataModel(characterRecordFacade.findRange(
+                            new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                     } else {
-                        return new ListDataModel(characterRecordFacade.findRangeByCampaign(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}, getSelectedCampaign()));
+                        return new ListDataModel(characterRecordFacade.findRangeByCampaign(
+                            new int[]{getPageFirstItem(), getPageFirstItem() 
+                            + getPageSize()}, getSelectedCampaign()));
                     }
                 }
             };

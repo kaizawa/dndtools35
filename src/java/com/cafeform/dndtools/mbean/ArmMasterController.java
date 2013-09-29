@@ -10,17 +10,11 @@ import com.cafeform.dndtools.ejb.CharacterArmRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterRecordFacade;
 import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
 import com.cafeform.dndtools.ejb.SizeMasterFacade;
-import com.cafeform.dndtools.entity.ArmType1Master;
-import com.cafeform.dndtools.entity.ArmType2Master;
-import com.cafeform.dndtools.entity.ArmType3Master;
 import com.cafeform.dndtools.entity.CharacterArmRecord;
 import com.cafeform.dndtools.entity.CharacterRecord;
-import com.cafeform.dndtools.entity.DamageTypeMaster;
-import com.cafeform.dndtools.entity.SizeMaster;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -46,8 +40,6 @@ public class ArmMasterController implements Serializable {
     @Inject protected ApplicationController applicationController;    
     @Inject protected SessionController sessionController;
     
-  
-    private List<ArmMaster> filteredArms;
     private ArmMaster selectedArm;
 
     public ApplicationController getApplicationController() {
@@ -285,6 +277,8 @@ public class ArmMasterController implements Serializable {
         return "EditCharacterRecordPage";
     }
 
+    private List<ArmMaster> filteredArms;
+    
     public List<ArmMaster> getFilteredArms() {
         return filteredArms;
     }
