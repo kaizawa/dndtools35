@@ -154,7 +154,9 @@ public class PrintableCharacterSummaryListController extends CharacterSheetContr
         {
             armListStr.append("▼").append(armRecord.getArmId().getName()).append("\n");
             armListStr.append(characterData.getAttackModifiers(armRecord)).append("\n");
-            armListStr.append(armRecord.getDescription()).append("\n");
+            if (null != armRecord.getDescription()){
+                armListStr.append(armRecord.getDescription()).append("\n");
+            }
         }
         return textToHtml(armListStr.toString());
     }
