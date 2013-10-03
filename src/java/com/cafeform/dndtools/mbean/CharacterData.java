@@ -1903,10 +1903,14 @@ public class CharacterData implements CharacterSummary {
         /* Damange bonus & Critical area */ 
         modifiers.append("(")
             .append(arm.getDamageDiceNum())
-            .append(diceType)
-            .append("+")
-            .append(strengthDamageBonus + enhancementBonus + damageModifier)
-            .append(" ")
+            .append(diceType);
+        int totalDamageModifier = strengthDamageBonus + enhancementBonus + damageModifier;
+        /* Doesn't show modifier, if modifier is zero */
+        if(totalDamageModifier > 0 ){
+            modifiers.append("+")
+                .append(strengthDamageBonus + enhancementBonus + damageModifier);
+        }
+        modifiers.append(" ")
             .append(threatRangStr).append("/x")
             .append(arm.getCriticalMultiplier())
             .append(")");
