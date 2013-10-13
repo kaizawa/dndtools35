@@ -82,7 +82,8 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
         List<CharacterSkillGrowthRecord> growthlist = getCharacterData().getCharacterSkillGrowthRecordList();
         for (CharacterSkillGrowthRecord skillGrowth : growthlist) {
             // 経験値から見たキャラクタレベル以上は考慮しない
-            if(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() >  getCharacterData().getCharacterLevel()) break;
+            if(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel()
+                >  getCharacterData().getCharacterLevel()) break;
             if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill &&
                     skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() == lv) {
                 point = skillGrowth.getSkillPoint().intValue();
@@ -99,16 +100,19 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     }
 
     public void setSkillPointById(Integer point, int skill) {
-        List<CharacterSkillGrowthRecord> skillGrowthlist = getCharacterData().getCharacterSkillGrowthRecordList();
+        List<CharacterSkillGrowthRecord> skillGrowthlist 
+            = getCharacterData().getCharacterSkillGrowthRecordList();
 
         if (point == null) {
             point = new Integer(0);
         }
         for (CharacterSkillGrowthRecord skillGrowth : skillGrowthlist) {
             // 経験値から見たキャラクタレベル以上は考慮しない
-            if(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() >  getCharacterData().getCharacterLevel()) break;
+            if(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel()
+                >  getCharacterData().getCharacterLevel()) break;
             if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill &&
-                    skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() ==  getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel()) {
+                    skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() 
+                ==  getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel()) {
                 skillGrowth.setSkillPoint(point);
                 break;
             }
@@ -131,7 +135,8 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
 
     public void doSave() {
         // 全レベルのスキルレコードと、成長レコードも保存する
-        List<CharacterSkillGrowthRecord> skillGrowthList = getCharacterData().getCharacterSkillGrowthRecordList();
+        List<CharacterSkillGrowthRecord> skillGrowthList 
+            = getCharacterData().getCharacterSkillGrowthRecordList();
         List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
         // 更新時刻記録用にキャラクターレコードも保存する。
         // ここで保存するのは、本当は好ましくは無いが。
@@ -193,7 +198,8 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
     protected boolean nextButtonDisabled;
 
     public boolean isNextButtonDisabled() {
-        return ( getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() >=  getCharacterData().getCharacterLevel());
+        return (getCharacterGrowthRecord().getCharacterGrowthRecordPK().getCharacterLevel() 
+            >=  getCharacterData().getCharacterLevel());
     }
     // ボタンを非表示にするかどうかを決める
     protected boolean nextPreviousDisabled;
@@ -440,6 +446,18 @@ public class CharacterSheetPerLevelController extends CharacterSheetController {
 
     public void setCharacterGrowthRecord(CharacterGrowthRecord characterGrowthRecord) {
         getSessionController().setCharacterGrowthRecord(characterGrowthRecord);
+    }
+    
+    /**
+     * Checi if character can assign a skill point to the skill 
+     * in response to class that the character has.
+     */
+    public Boolean isLearnableSkill() {
+        int skillId = skillTable.getRowIndex() + 1;
+        SkillMaster skill = applicationController.getSkillBySkillId(skillId);
+        return getCharacterData().isSkillAcceptNoRankBySkillId(skill.getId()) ||
+            getCharacterData().isClassSkillByLevelAndSkill(getCharacterGrowthRecord(), skill);
+        
     }
 }
 
