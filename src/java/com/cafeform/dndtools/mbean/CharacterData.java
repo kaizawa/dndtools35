@@ -489,7 +489,7 @@ public class CharacterData implements CharacterSummary {
      */
     protected boolean skillAcceptNoRankBySkillId;
 
-    public boolean isSkillAcceptoRankBySkillId(int skillId) {
+    public boolean isSkillAcceptNoRankBySkillId(int skillId) {
         SkillMaster skill = skillList.get(skillId-1);
 
         if (skill == null) {
@@ -513,7 +513,8 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * あるスキルがこのキャラにとってクラス技能かどうかをチェックする。 習得しているクラスの中でひとつでも該当技能がクラス技能であればクラス技能になる
+     * あるスキルがこのキャラにとってクラス技能かどうかをチェックする。 
+     * 習得しているクラスの中でひとつでも該当技能がクラス技能であればクラス技能になる
      *
      * @param skill
      * @return boolean
@@ -522,7 +523,8 @@ public class CharacterData implements CharacterSummary {
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
         for (CharacterGrowthRecord growth : growthList) {
             // チェックしようとしているレベル以下のクラスしか確認しない
-            if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > growthLevel.getCharacterGrowthRecordPK().getCharacterLevel()) {
+            if (growth.getCharacterGrowthRecordPK().getCharacterLevel() 
+                > growthLevel.getCharacterGrowthRecordPK().getCharacterLevel()) {
                 break;
             }
             ClassMaster klass = growth.getClassId();

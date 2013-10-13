@@ -543,12 +543,12 @@ public class CharacterSheetController implements Serializable {
     public String saveButton_action() {
 
         CharacterData charaData = getCharacterData();
-        CharacterEquipment equip = getCharacterData().getCharacterEquipment();
-        List<CharacterSkillRecord> skillRecordList = getCharacterData().getCharacterSkillRecordList();
-        List<CharacterSkillGrowthRecord> skillGrowthList = getCharacterData().getCharacterSkillGrowthRecordList();
-        List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
-        List<CharacterAbilityRecord> abilityList = getCharacterData().getCharacterAbilityRecordList();
-        List<CharacterSaveRecord> saveList = getCharacterData().getCharacterSaveRecordList();
+        CharacterEquipment equip = charaData.getCharacterEquipment();
+        List<CharacterSkillRecord> skillRecordList = charaData.getCharacterSkillRecordList();
+        List<CharacterSkillGrowthRecord> skillGrowthList = charaData.getCharacterSkillGrowthRecordList();
+        List<CharacterGrowthRecord> growthList = charaData.getCharacterGrowthRecordList();
+        List<CharacterAbilityRecord> abilityList = charaData.getCharacterAbilityRecordList();
+        List<CharacterSaveRecord> saveList = charaData.getCharacterSaveRecordList();
         List<CharacterArmRecord> armRecordList = charaData.getCharacterRecord().getCharacterArmRecordList();
 
         /*
@@ -592,7 +592,7 @@ public class CharacterSheetController implements Serializable {
             JsfUtil.addSuccessMessage("キャラクターの保存に失敗しました");
             return null;
         }
-
+        setCharacterData(charaData);
         return null;
     }
 
@@ -773,7 +773,7 @@ public class CharacterSheetController implements Serializable {
 
     public String getSkillCheckAcceptNoRank() {
         int skill = skillTable.getRowIndex() + 1;
-        if (getCharacterData().isSkillAcceptoRankBySkillId(skill)) {
+        if (getCharacterData().isSkillAcceptNoRankBySkillId(skill)) {
             return "■";
         } else {
             return "□";
@@ -993,9 +993,14 @@ public class CharacterSheetController implements Serializable {
      * ArmMaster arm2 = getCharacterData().getCharacterEquipment().getArm2();
      * if(arm2 != null) { return arm2.getName(); } return "未装備"; }
      */
+    
+    /**
+     * Check if the character has skill rank and triable.
+     * @return 
+     */
     public Boolean isTriableSkill() {
         SkillMaster skill = (SkillMaster) skillTable.getRowData();
-        return getCharacterData().isSkillAcceptoRankBySkillId(skill.getId())
+        return getCharacterData().isSkillAcceptNoRankBySkillId(skill.getId())
                 || getCharacterData().hasSkillRankBySkill(skill);
     }
 
