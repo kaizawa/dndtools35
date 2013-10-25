@@ -77,6 +77,7 @@
               <h:commandLink action="#{characterSheetController.charaViewButton_action}" 
                              style="font-size: 12px;" target="_blank">
                 <h:outputText  value="印刷用"/>
+                <f:setPropertyActionListener value="#{chara}" target="#{sessionController.characterData}"/>  
               </h:commandLink>
             </p:column>        
           </p:dataTable>
