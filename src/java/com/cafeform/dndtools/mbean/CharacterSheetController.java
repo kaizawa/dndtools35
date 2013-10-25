@@ -307,9 +307,6 @@ public class CharacterSheetController implements Serializable {
     }
 
     public String charaViewButton_action() {
-        //管理Beanへ反映
-        setCharacterData((CharacterData) characterListDataTable.getRowData());
-
         return "PrintableCharacterRecordPage";
     }
 
