@@ -35,6 +35,7 @@ import com.cafeform.dndtools.ejb.DamageTypeMasterFacade;
 import com.cafeform.dndtools.ejb.MonsterMasterFacade;
 import com.cafeform.dndtools.ejb.ReligionMasterFacade;
 import com.cafeform.dndtools.ejb.SaveMasterFacade;
+import com.cafeform.dndtools.ejb.SpellMasterFlatFacade;
 import com.cafeform.dndtools.ejb.TypeMasterFacade;
 import com.cafeform.dndtools.entity.ArmMaster;
 import com.cafeform.dndtools.entity.ArmType1Master;
@@ -42,8 +43,10 @@ import com.cafeform.dndtools.entity.ArmType2Master;
 import com.cafeform.dndtools.entity.ArmType3Master;
 import com.cafeform.dndtools.entity.DamageTypeMaster;
 import com.cafeform.dndtools.entity.MonsterMaster;
+import com.cafeform.dndtools.entity.SpellMasterFlat;
 import com.cafeform.dndtools.entity.TypeMaster;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -85,6 +88,7 @@ public class ApplicationController {
     @EJB private ArmType1MasterFacade armType1MasterFacade;
     @EJB private ArmType2MasterFacade armType2MasterFacade;
     @EJB private ArmType3MasterFacade armType3MasterFacade; 
+    @EJB private  SpellMasterFlatFacade spellMasterFlatFacade;
     
     private SelectItem[] armType1MasterOptions;
     private SelectItem[] armType2MasterOptions;
@@ -718,5 +722,16 @@ public class ApplicationController {
         }
 
         return options;
+    }
+    
+    private List<SpellMasterFlat> spellMasterFlatList = null;
+    
+    public List<SpellMasterFlat> getSpellMasterFlat()
+    {
+        if(null == spellMasterFlatList)
+        {
+            spellMasterFlatList = spellMasterFlatFacade.findAll();            
+        }
+        return spellMasterFlatList;
     }
 }
