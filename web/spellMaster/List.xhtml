@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
   <ui:composition template="/template.xhtml">
@@ -20,7 +19,7 @@
                        widgetVar="spellsTable" 
                        emptyMessage="条件に合う呪文は見つかりませんでした" 
                        paginator="true" 
-                       rows="600"
+                       rows="800"
                        rowKey="#{spell.id}"
                        style="width:100%" >
               <p:column filterBy="#{spell.name}" headerText="呪文" 
