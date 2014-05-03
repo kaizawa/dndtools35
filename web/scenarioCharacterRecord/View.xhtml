@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="シナリオ向けキャラクターレコード"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <h:commandButton action="/encounterRecord/Battle" value="戻る"/>
+
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="name" for="name" />
+                    <h:outputText id="name" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.name}" title="name" />
+                    <h:outputLabel value="klass" for="klass" />
+                    <h:outputText id="klass" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.klass}" title="klass" />
+                    <h:outputLabel value="sizeAndType" for="sizeAndType" />
+                    <h:outputText id="sizeAndType" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.sizeAndType}" title="sizeAndType" />
+                    <h:outputLabel value="hitDice" for="hitDice" />
+                    <h:outputText id="hitDice" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.hitDice}" title="hitDice" />
+                    <h:outputLabel value="hitPoint" for="hitPoint" />
+                    <h:outputText id="hitPoint" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.hitPoint}" title="hitPoint" />
+                    <h:outputLabel value="initiative" for="initiative" />
+                    <h:outputText id="initiative" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.initiative}" title="initiative" />
+                    <h:outputLabel value="baseAttackGrapple" for="baseAttackGrapple" />
+                    <h:outputText id="baseAttackGrapple" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.baseAttackGrapple}" title="baseAttackGrapple" />
+                    <h:outputLabel value="attack" for="attack" />
+                    <h:outputText id="attack" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.attack}" title="attack" />
+                    <h:outputLabel value="fullAttack" for="fullAttack" />
+                    <h:outputText id="fullAttack" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.fullAttack}" title="fullAttack" />
+                    <h:outputLabel value="spaceAndReach" for="spaceAndReach" />
+                    <h:outputText id="spaceAndReach" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.spaceAndReach}" title="spaceAndReach" />
+                    <h:outputLabel value="specialAttacks" for="specialAttacks" />
+                    <h:outputText id="specialAttacks" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.specialAttacks}" title="specialAttacks" />
+                    <h:outputLabel value="specialQualities" for="specialQualities" />
+                    <h:outputText id="specialQualities" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.specialQualities}" title="specialQualities" />
+                    <h:outputLabel value="save" for="save" />
+                    <h:outputText id="save" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.save}" title="save" />
+                    <h:outputLabel value="abilities" for="abilities" />
+                    <h:outputText id="abilities" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.abilities}" title="abilities" />
+                    <h:outputLabel value="skills" for="skills" />
+                    <h:outputText id="skills" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.skills}" title="skills" />
+                    <h:outputLabel value="feats" for="feats" />
+                    <h:outputText id="feats" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.feats}" title="feats" />
+                    <h:outputLabel value="environment" for="environment" />
+                    <h:outputText id="environment" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.environment}" title="environment" />
+                    <h:outputLabel value="organization" for="organization" />
+                    <h:outputText id="organization" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.organization}" title="organization" />
+                    <h:outputLabel value="challengeRating" for="challengeRating" />
+                    <h:outputText id="challengeRating" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.challengeRating}" title="challengeRating" />
+                    <h:outputLabel value="treasure" for="treasure" />
+                    <h:outputText id="treasure" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.treasure}" title="treasure" />
+                    <h:outputLabel value="alignment" for="alignment" />
+                    <h:outputText id="alignment" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.alignment}" title="alignment" />
+                    <h:outputLabel value="advancement" for="advancement" />
+                    <h:outputText id="advancement" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.advancement}" title="advancement" />
+                    <h:outputLabel value="levelAdjustment" for="levelAdjustment" />
+                    <h:outputText id="levelAdjustment" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.levelAdjustment}" title="levelAdjustment" />
+                    <h:outputLabel value="isPlayerCharacter" for="isPlayerCharacter" />
+                    <h:outputText id="isPlayerCharacter" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.isPlayerCharacter}" title="isPlayerCharacter" />
+                    <h:outputLabel value="comments" for="comments" />
+                    <h:outputText id="comments" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.comments}" title="comments" />
+                    <h:outputLabel value="armorClass" for="armorClass" />
+                    <h:outputText id="armorClass" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.armorClass}" title="armorClass" />
+                    <h:outputLabel value="speed" for="speed" />
+                    <h:outputText id="speed" value="#{scenarioCharacterRecordController.scenarioCharacterRecord.speed}" title="speed" />
+
+                </h:panelGrid>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
