@@ -4,48 +4,49 @@
  */
 package com.cafeform.dndtools.mbean;
 
-import com.cafeform.dndtools.entity.ClassSkillMaster;
-import com.cafeform.dndtools.entity.SkillSynergyMaster;
-import com.cafeform.dndtools.entity.CharacterGrowthRecord;
-import com.cafeform.dndtools.entity.CampaignMaster;
-import com.cafeform.dndtools.entity.CharacterEquipment;
-import com.cafeform.dndtools.entity.BonusRankMaster;
-import com.cafeform.dndtools.entity.RaceAbilityMaster;
-import com.cafeform.dndtools.entity.SkillMaster;
-import com.cafeform.dndtools.entity.CharacterRecord;
-import com.cafeform.dndtools.entity.RaceSaveMaster;
-import com.cafeform.dndtools.entity.ClassMaster;
-import com.cafeform.dndtools.entity.AbilityMaster;
-import com.cafeform.dndtools.entity.CharacterSaveRecord;
-import com.cafeform.dndtools.entity.GenderMaster;
-import com.cafeform.dndtools.entity.CharacterSkillRecord;
-import com.cafeform.dndtools.entity.CharacterSkillGrowthRecord;
-import com.cafeform.dndtools.entity.ReligionMaster;
-import com.cafeform.dndtools.entity.AlignmentMaster;
-import com.cafeform.dndtools.entity.SaveMaster;
-import com.cafeform.dndtools.entity.RaceMaster;
-import com.cafeform.dndtools.entity.CharacterAbilityRecord;
-import com.cafeform.dndtools.ejb.SkillMasterFacade;
-import com.cafeform.dndtools.ejb.ClassSaveMasterFacade;
-import com.cafeform.dndtools.ejb.RaceAbilityMasterFacade;
-import com.cafeform.dndtools.ejb.GenderMasterFacade;
+import com.cafeform.dndtools.ejb.AbilityMasterFacade;
 import com.cafeform.dndtools.ejb.AlignmentMasterFacade;
+import com.cafeform.dndtools.ejb.CharacterAbilityRecordFacade;
+import com.cafeform.dndtools.ejb.CharacterEquipmentFacade;
 import com.cafeform.dndtools.ejb.CharacterGrowthRecordFacade;
-import com.cafeform.dndtools.ejb.ReligionMasterFacade;
-import com.cafeform.dndtools.ejb.SaveMasterFacade;
+import com.cafeform.dndtools.ejb.CharacterRecordFacade;
+import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
+import com.cafeform.dndtools.ejb.CharacterSkillGrowthRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterSkillRecordFacade;
 import com.cafeform.dndtools.ejb.ClassMasterFacade;
+import com.cafeform.dndtools.ejb.ClassSaveMasterFacade;
 import com.cafeform.dndtools.ejb.ClassSkillMasterFacade;
-import com.cafeform.dndtools.ejb.CharacterSkillGrowthRecordFacade;
-import com.cafeform.dndtools.ejb.CharacterEquipmentFacade;
-import com.cafeform.dndtools.ejb.CharacterRecordFacade;
-import com.cafeform.dndtools.ejb.CharacterAbilityRecordFacade;
-import com.cafeform.dndtools.ejb.AbilityMasterFacade;
-import com.cafeform.dndtools.ejb.SkillSynergyMasterFacade;
+import com.cafeform.dndtools.ejb.GenderMasterFacade;
+import com.cafeform.dndtools.ejb.RaceAbilityMasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
-import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
+import com.cafeform.dndtools.ejb.ReligionMasterFacade;
+import com.cafeform.dndtools.ejb.SaveMasterFacade;
+import com.cafeform.dndtools.ejb.SkillMasterFacade;
+import com.cafeform.dndtools.ejb.SkillSynergyMasterFacade;
+import com.cafeform.dndtools.entity.AbilityMaster;
+import com.cafeform.dndtools.entity.AlignmentMaster;
 import com.cafeform.dndtools.entity.ArmMaster;
+import com.cafeform.dndtools.entity.BonusRankMaster;
+import com.cafeform.dndtools.entity.CampaignMaster;
+import com.cafeform.dndtools.entity.CharacterAbilityRecord;
 import com.cafeform.dndtools.entity.CharacterArmRecord;
+import com.cafeform.dndtools.entity.CharacterEquipment;
+import com.cafeform.dndtools.entity.CharacterGrowthRecord;
+import com.cafeform.dndtools.entity.CharacterRecord;
+import com.cafeform.dndtools.entity.CharacterSaveRecord;
+import com.cafeform.dndtools.entity.CharacterSkillGrowthRecord;
+import com.cafeform.dndtools.entity.CharacterSkillRecord;
+import com.cafeform.dndtools.entity.ClassMaster;
+import com.cafeform.dndtools.entity.ClassSkillMaster;
+import com.cafeform.dndtools.entity.GenderMaster;
+import com.cafeform.dndtools.entity.PlayerMaster;
+import com.cafeform.dndtools.entity.RaceAbilityMaster;
+import com.cafeform.dndtools.entity.RaceMaster;
+import com.cafeform.dndtools.entity.RaceSaveMaster;
+import com.cafeform.dndtools.entity.ReligionMaster;
+import com.cafeform.dndtools.entity.SaveMaster;
+import com.cafeform.dndtools.entity.SkillMaster;
+import com.cafeform.dndtools.entity.SkillSynergyMaster;
 import java.text.SimpleDateFormat;
 import java.text.StringCharacterIterator;
 import java.util.*;
@@ -1437,9 +1438,11 @@ public class CharacterData implements CharacterSummary {
     }
 
     public String getPlayerName() {
-        // Need to get player name via PlayerId class.
-        // This method exists just for compatibility.
-        return "";
+        if (characterRecord.getPlayerId() == null)
+        {
+            return "";
+        }
+        return characterRecord.getPlayerId().getPlayerName();
     }
 
     public String getSkinColor() {
@@ -1908,8 +1911,6 @@ public class CharacterData implements CharacterSummary {
         
         String diceType = null != arm.getDamageDiceType() ? arm.getDamageDiceType().getName() : "";
         
- 
-
         /* Damange bonus & Critical area */ 
         modifiers.append("(")
             .append(arm.getDamageDiceNum())
@@ -1926,5 +1927,25 @@ public class CharacterData implements CharacterSummary {
             .append(")");
 
         return modifiers.toString();
+    }
+    
+    public void setPlayerId (PlayerMaster player)
+    {
+        characterRecord.setPlayerId(player);
+    }
+    
+    public PlayerMaster getPlayerId ()
+    {
+        return characterRecord.getPlayerId();
+    }
+    
+    public void setSecret (boolean secret)
+    {
+        characterRecord.setSecret(secret);
+    }
+    
+    public boolean isSecret ()
+    {
+        return characterRecord.isSecret();
     }
 }

@@ -83,7 +83,7 @@ public class CharacterRecord implements Serializable {
     @ManyToOne    
     private PlayerMaster playerId;
     @Column(name = "SECRET")
-    private Integer secret;
+    private boolean secret;
     @Column(name = "EXPERIENCE")
     private Integer experience;
     @Column(name = "AGE")
@@ -172,12 +172,12 @@ public class CharacterRecord implements Serializable {
 
     public boolean isSecret ()
     {
-        return secret != 0;
+        return secret;
     }
 
     public void setSecret (boolean secret)
     {
-        this.secret = secret ? 1 : 0;
+        this.secret = secret;
     }
     
     public List<CharacterAbilityRecord> getCharacterAbilityRecordList() {

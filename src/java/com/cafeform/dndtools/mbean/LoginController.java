@@ -65,6 +65,8 @@ public class LoginController {
 
     public void logout_action() {
         setPlayerMaster(null);
+        // Reset character list
+        getSessionController().clearCharacterDataList();
         setLoggedIn(false);
     }
 
@@ -84,9 +86,10 @@ public class LoginController {
             return null;
         }
         setPlayerMaster(player);
-
         setLoggedIn(true);
-
+        // Reset character list
+        getSessionController().clearCharacterDataList();        
+        
         JsfUtil.addSuccessMessage("ログインが成功しました.");
 
         return getSessionController().getTargetPage();
@@ -118,7 +121,7 @@ public class LoginController {
         return getSessionController().getPlayerMaster();
     }
 
-    private String getDigest(String data) throws Exception {
+    public String getDigest(String data) throws Exception {
 
         StringBuilder s = new StringBuilder();
         MessageDigest md = MessageDigest.getInstance("SHA-1");

@@ -37,12 +37,14 @@ import com.cafeform.dndtools.ejb.ReligionMasterFacade;
 import com.cafeform.dndtools.ejb.SaveMasterFacade;
 import com.cafeform.dndtools.ejb.SpellMasterFlatFacade;
 import com.cafeform.dndtools.ejb.TypeMasterFacade;
+import com.cafeform.dndtools.ejb.PlayerMasterFacade;
 import com.cafeform.dndtools.entity.ArmMaster;
 import com.cafeform.dndtools.entity.ArmType1Master;
 import com.cafeform.dndtools.entity.ArmType2Master;
 import com.cafeform.dndtools.entity.ArmType3Master;
 import com.cafeform.dndtools.entity.DamageTypeMaster;
 import com.cafeform.dndtools.entity.MonsterMaster;
+import com.cafeform.dndtools.entity.PlayerMaster;
 import com.cafeform.dndtools.entity.SpellMasterFlat;
 import com.cafeform.dndtools.entity.TypeMaster;
 import java.util.ArrayList;
@@ -88,7 +90,8 @@ public class ApplicationController {
     @EJB private ArmType1MasterFacade armType1MasterFacade;
     @EJB private ArmType2MasterFacade armType2MasterFacade;
     @EJB private ArmType3MasterFacade armType3MasterFacade; 
-    @EJB private  SpellMasterFlatFacade spellMasterFlatFacade;
+    @EJB private SpellMasterFlatFacade spellMasterFlatFacade;
+    @EJB private PlayerMasterFacade playerMasterFacade;
     
     private SelectItem[] armType1MasterOptions;
     private SelectItem[] armType2MasterOptions;
@@ -363,6 +366,23 @@ public class ApplicationController {
         //セッションBeanへのセット
         setSizeArray(tempSizeArray);
         
+        /////////////////////////
+        //  Array of Player
+        /////////////////////////
+        List<SelectItem> playerSelectItemList = new ArrayList<SelectItem>();
+        //未選択状態
+        playerSelectItemList.add(new SelectItem(null, "未選択"));
+
+        for (PlayerMaster player : playerMasterFacade.findAll()) {
+            SelectItem selectItem = new SelectItem();
+            selectItem.setValue(player.getId());
+            selectItem.setLabel(player.getPlayerName());
+
+            playerSelectItemList.add(selectItem);
+        }
+        //リストから配列への変換
+        playerArray = playerSelectItemList.toArray(new SelectItem[0]);
+        
         /* Damage TYpe */
         damageTypeList = damageTypeMasterFacade.findAll();
         /* Arm master */
@@ -389,6 +409,16 @@ public class ApplicationController {
         sizeMasterOptions = createFilterOptions(sizeMasterFacade.findAll().toArray(new SizeMaster[0]));
         campaignMasterOptions = createFilterOptions(campaignMasterFacade.findAll().toArray(new CampaignMaster[0]));
         
+    }
+    
+    private SelectItem[] playerArray;
+    public SelectItem[] getPlayerArray () 
+    {
+        return playerArray;
+    }
+    public void setPlayerArray (SelectItem[] playerArray) 
+    {
+        this.playerArray = playerArray;
     }
     
     /* Size List */
@@ -499,6 +529,7 @@ public class ApplicationController {
     public void setDiceList(List<DiceMaster> diceList) {
         this.diceList = diceList;
     }
+    
     //----------------- ダイスの選択用配列 -------------------------
     protected SelectItem[] diceArray;
 
@@ -509,6 +540,7 @@ public class ApplicationController {
     public void setDiceArray(SelectItem[] diceArray) {
         this.diceArray = diceArray;
     }
+    
     //----------------- 種族の配列 --------------------------
     // このプロパティは マネージドBeanでよいかも    
     private SelectItem[] raceArray;
@@ -520,6 +552,7 @@ public class ApplicationController {
     public void setRaceArray(SelectItem[] raceArray) {
         this.raceArray = raceArray;
     }
+    
     //----------------- 種族のリスト --------------------------
     private List<RaceMaster> raceMasterList;
 

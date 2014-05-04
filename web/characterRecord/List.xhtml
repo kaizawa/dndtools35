@@ -236,19 +236,24 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{characterRecordController.prepareView}" value="#{bundle.ListCharacterRecordViewLink}"/>
+                            <h:commandLink action="#{characterRecordController.prepareView}"
+                                           value="#{bundle.ListCharacterRecordViewLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{characterRecordController.prepareEdit}" value="#{bundle.ListCharacterRecordEditLink}"/>
+                            <h:commandLink action="#{characterRecordController.prepareEdit}" 
+                                           value="#{bundle.ListCharacterRecordEditLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{characterRecordController.destroy}" value="#{bundle.ListCharacterRecordDestroyLink}"/>
+                            <h:commandLink action="#{characterRecordController.destroy}" 
+                                           value="#{bundle.ListCharacterRecordDestroyLink}"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{characterRecordController.prepareCreate}" value="#{bundle.ListCharacterRecordCreateLink}"/>
+                <h:commandLink action="#{characterRecordController.prepareCreate}" 
+                               value="#{bundle.ListCharacterRecordCreateLink}"/>
                 <br />
                 <br />
-                <h:commandLink value="#{bundle.ListCharacterRecordIndexLink}" action="/index" immediate="true" />
+                <h:commandLink value="#{bundle.ListCharacterRecordIndexLink}" 
+                               action="/index" immediate="true" />
             </h:form>
         </ui:define>
     </ui:composition>
