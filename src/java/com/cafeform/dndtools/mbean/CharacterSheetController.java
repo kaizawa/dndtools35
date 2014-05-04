@@ -539,7 +539,6 @@ public class CharacterSheetController implements Serializable {
     public String saveButton_action() {
         CharacterData charaData = getCharacterData();
 
-
         try {
             validateCharaData(charaData);
         } catch (Exception ex) 

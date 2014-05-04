@@ -373,7 +373,7 @@ public class CharacterData implements CharacterSummary {
 
         return getAbilityModifierById(skillMasterFacade.find(skill).getAbilityId().getId());
     }
-    
+
     /*
      * 技能 対応能力値名
      */
@@ -390,7 +390,7 @@ public class CharacterData implements CharacterSummary {
         name = skillList.get(skill-1).getAbilityId().getAbilityName();
         return name.substring(0, 1);
     }
-    
+
     /*
      * 技能 ポイント
      */
@@ -996,6 +996,9 @@ public class CharacterData implements CharacterSummary {
 =======
      * 攻撃ボーナス 遠隔攻撃ボーナス
      * @return 
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
      */
     public Integer getRangeAttackBonus() {
@@ -1076,6 +1079,9 @@ public class CharacterData implements CharacterSummary {
 =======
      * 最終更新日
      * @return 
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
      */
     public String getLastChange() {
@@ -1095,6 +1101,9 @@ public class CharacterData implements CharacterSummary {
      * 改行を<br>に変換
      * @param str
      * @return 
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
      */
     public static String newLineToBr(String str) {
@@ -1385,6 +1394,10 @@ public class CharacterData implements CharacterSummary {
      * This method only return a list of CharacterGrowthRecode whose level
      * is less than or equal to current level 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+     * @return 
+>>>>>>> develop
 =======
      * @return 
 >>>>>>> develop
