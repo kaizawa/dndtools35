@@ -4,48 +4,49 @@
  */
 package com.cafeform.dndtools.mbean;
 
-import com.cafeform.dndtools.entity.ClassSkillMaster;
-import com.cafeform.dndtools.entity.SkillSynergyMaster;
-import com.cafeform.dndtools.entity.CharacterGrowthRecord;
-import com.cafeform.dndtools.entity.CampaignMaster;
-import com.cafeform.dndtools.entity.CharacterEquipment;
-import com.cafeform.dndtools.entity.BonusRankMaster;
-import com.cafeform.dndtools.entity.RaceAbilityMaster;
-import com.cafeform.dndtools.entity.SkillMaster;
-import com.cafeform.dndtools.entity.CharacterRecord;
-import com.cafeform.dndtools.entity.RaceSaveMaster;
-import com.cafeform.dndtools.entity.ClassMaster;
-import com.cafeform.dndtools.entity.AbilityMaster;
-import com.cafeform.dndtools.entity.CharacterSaveRecord;
-import com.cafeform.dndtools.entity.GenderMaster;
-import com.cafeform.dndtools.entity.CharacterSkillRecord;
-import com.cafeform.dndtools.entity.CharacterSkillGrowthRecord;
-import com.cafeform.dndtools.entity.ReligionMaster;
-import com.cafeform.dndtools.entity.AlignmentMaster;
-import com.cafeform.dndtools.entity.SaveMaster;
-import com.cafeform.dndtools.entity.RaceMaster;
-import com.cafeform.dndtools.entity.CharacterAbilityRecord;
-import com.cafeform.dndtools.ejb.SkillMasterFacade;
-import com.cafeform.dndtools.ejb.ClassSaveMasterFacade;
-import com.cafeform.dndtools.ejb.RaceAbilityMasterFacade;
-import com.cafeform.dndtools.ejb.GenderMasterFacade;
+import com.cafeform.dndtools.ejb.AbilityMasterFacade;
 import com.cafeform.dndtools.ejb.AlignmentMasterFacade;
+import com.cafeform.dndtools.ejb.CharacterAbilityRecordFacade;
+import com.cafeform.dndtools.ejb.CharacterEquipmentFacade;
 import com.cafeform.dndtools.ejb.CharacterGrowthRecordFacade;
-import com.cafeform.dndtools.ejb.ReligionMasterFacade;
-import com.cafeform.dndtools.ejb.SaveMasterFacade;
+import com.cafeform.dndtools.ejb.CharacterRecordFacade;
+import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
+import com.cafeform.dndtools.ejb.CharacterSkillGrowthRecordFacade;
 import com.cafeform.dndtools.ejb.CharacterSkillRecordFacade;
 import com.cafeform.dndtools.ejb.ClassMasterFacade;
+import com.cafeform.dndtools.ejb.ClassSaveMasterFacade;
 import com.cafeform.dndtools.ejb.ClassSkillMasterFacade;
-import com.cafeform.dndtools.ejb.CharacterSkillGrowthRecordFacade;
-import com.cafeform.dndtools.ejb.CharacterEquipmentFacade;
-import com.cafeform.dndtools.ejb.CharacterRecordFacade;
-import com.cafeform.dndtools.ejb.CharacterAbilityRecordFacade;
-import com.cafeform.dndtools.ejb.AbilityMasterFacade;
-import com.cafeform.dndtools.ejb.SkillSynergyMasterFacade;
+import com.cafeform.dndtools.ejb.GenderMasterFacade;
+import com.cafeform.dndtools.ejb.RaceAbilityMasterFacade;
 import com.cafeform.dndtools.ejb.RaceMasterFacade;
-import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
+import com.cafeform.dndtools.ejb.ReligionMasterFacade;
+import com.cafeform.dndtools.ejb.SaveMasterFacade;
+import com.cafeform.dndtools.ejb.SkillMasterFacade;
+import com.cafeform.dndtools.ejb.SkillSynergyMasterFacade;
+import com.cafeform.dndtools.entity.AbilityMaster;
+import com.cafeform.dndtools.entity.AlignmentMaster;
 import com.cafeform.dndtools.entity.ArmMaster;
+import com.cafeform.dndtools.entity.BonusRankMaster;
+import com.cafeform.dndtools.entity.CampaignMaster;
+import com.cafeform.dndtools.entity.CharacterAbilityRecord;
 import com.cafeform.dndtools.entity.CharacterArmRecord;
+import com.cafeform.dndtools.entity.CharacterEquipment;
+import com.cafeform.dndtools.entity.CharacterGrowthRecord;
+import com.cafeform.dndtools.entity.CharacterRecord;
+import com.cafeform.dndtools.entity.CharacterSaveRecord;
+import com.cafeform.dndtools.entity.CharacterSkillGrowthRecord;
+import com.cafeform.dndtools.entity.CharacterSkillRecord;
+import com.cafeform.dndtools.entity.ClassMaster;
+import com.cafeform.dndtools.entity.ClassSkillMaster;
+import com.cafeform.dndtools.entity.GenderMaster;
+import com.cafeform.dndtools.entity.PlayerMaster;
+import com.cafeform.dndtools.entity.RaceAbilityMaster;
+import com.cafeform.dndtools.entity.RaceMaster;
+import com.cafeform.dndtools.entity.RaceSaveMaster;
+import com.cafeform.dndtools.entity.ReligionMaster;
+import com.cafeform.dndtools.entity.SaveMaster;
+import com.cafeform.dndtools.entity.SkillMaster;
+import com.cafeform.dndtools.entity.SkillSynergyMaster;
 import java.text.SimpleDateFormat;
 import java.text.StringCharacterIterator;
 import java.util.*;
@@ -80,7 +81,7 @@ public class CharacterData implements CharacterSummary {
     protected RaceMasterFacade raceMasterFacade;
     protected CharacterGrowthRecordFacade characterGrowthRecordFacade;
     protected CharacterRecordFacade characterRecordFacade;
-    private CharacterRecord characterRecord;  
+    private CharacterRecord characterRecord;
     protected List<SkillMaster> skillList;
     protected List<AbilityMaster> abilityList;
     protected List<SaveMaster> saveList;
@@ -160,7 +161,7 @@ public class CharacterData implements CharacterSummary {
             }
             //???????????? .
             CharacterGrowthRecord newRecord =
-                    new CharacterGrowthRecord(characterRecord.getId().intValue(), i);
+                    new CharacterGrowthRecord(characterRecord.getId(), i);
             try {
                 characterGrowthRecordFacade.create(newRecord);
             } catch (Exception e) {
@@ -186,23 +187,22 @@ public class CharacterData implements CharacterSummary {
             for (SkillMaster skill : skillList) {
                 for (CharacterSkillGrowthRecord skillgrowth : searchedCharaSkillGrowthList) {
                     if (skillgrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() == i && 
-                        skillgrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId().intValue()) {
-                        //??????????
+                        skillgrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId()) {
+                        //作成したリストに追加
                         characterSkillGrowthList.add(skillgrowth);
                         continue OUTER;
                     }
                 }
                 //???????????? .
                 CharacterSkillGrowthRecord newRecord =
-                        new CharacterSkillGrowthRecord(characterRecord.getId().intValue(), i, skill.getId().intValue());
+                        new CharacterSkillGrowthRecord(characterRecord.getId(), i, skill.getId());
 
                 //????????0????
                 newRecord.setSkillPoint(0);
                 try {
                     characterSkillGrowthRecordFacade.create(newRecord);
                 } catch (Exception e) {
-                    context.addMessage("contents:contentGrid:label1", 
-                        new FacesMessage(("?????????????????????????")));
+                    context.addMessage("contents:contentGrid:label1", new FacesMessage(("キャラクターの技能成長レコードの作製に失敗しました")));
                     return;
                 }
 
@@ -340,7 +340,7 @@ public class CharacterData implements CharacterSummary {
             if (enhancedAb == null) {
                 continue;
             }
-            if (id == enhancedAb.intValue()) {
+            if (id == enhancedAb) {
                 modifier++;
             }
         }
@@ -365,24 +365,24 @@ public class CharacterData implements CharacterSummary {
 
         return (getAbilityTotalById(ability) / 2) - 5;
     }
-
-    /**
-     * ?? ???????
+    /*
+     * 技能 対応能力修正値
      */
+
     public Integer getSkillAbilityModifierById(int skill) {
 
-        return getAbilityModifierById(skillList.get(skill-1).getAbilityId().getId());
+        return getAbilityModifierById(skillMasterFacade.find(skill).getAbilityId().getId());
     }
     
-    /**
-     * ?? ??????
+    /*
+     * 技能 対応能力値名
      */
     public String getSkillAbilityNameById(int skill) {
 
         return skillList.get(skill-1).getAbilityId().getAbilityName();
     }
-    /**
-     * ?? ?????? ???
+    /*
+     * 技能 対応能力値名 省略名
      */
     public String getSkillAbilityShortNameById(int skill) {
 
@@ -391,9 +391,10 @@ public class CharacterData implements CharacterSummary {
         return name.substring(0, 1);
     }
     
-    /**
-     * ?? ????
+    /*
+     * 技能 ポイント
      */
+
     public Integer getSkillTotalPointById(int skill) {
         int point = 0;
 
@@ -404,7 +405,7 @@ public class CharacterData implements CharacterSummary {
                 break;
             }
             if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill) {
-                point += skillGrowth.getSkillPoint().intValue();
+                point += skillGrowth.getSkillPoint();
             }
         }
         return point;
@@ -447,9 +448,9 @@ public class CharacterData implements CharacterSummary {
             if (level > getCharacterLevel()) {
                 break;
             }
-            if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId().intValue()
+            if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId()
                     && level == growth.getCharacterGrowthRecordPK().getCharacterLevel()) {
-                point = skillGrowth.getSkillPoint().intValue();
+                point = skillGrowth.getSkillPoint();
                 break;
             }
         }
@@ -462,8 +463,8 @@ public class CharacterData implements CharacterSummary {
             //?????
             rank = point;
         } else {
-            //??????
-            rank = (new Float(point)) / 2f;
+            //クラス外技能
+            rank = ((float) point) / 2f;
         }
         return rank;
     }
@@ -472,8 +473,8 @@ public class CharacterData implements CharacterSummary {
         Float totalRank = 0f;
 
         SkillMaster skill = skillList.get(skillId-1);
-        // ????????
         List<CharacterGrowthRecord> growthlist = characterRecord.getCharacterGrowthRecordList();
+        // レベル毎のループ        
         for (CharacterGrowthRecord growth : growthlist) {
             // ???????????????????????
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
@@ -496,7 +497,7 @@ public class CharacterData implements CharacterSummary {
             return false;
         }
 
-        return (skill.getAcceptNoRank().intValue() == 1);
+        return (skill.getAcceptNoRank() == 1);
     }
 
     /**
@@ -505,7 +506,7 @@ public class CharacterData implements CharacterSummary {
     public boolean isClassSkillByClassAndSkill(ClassMaster klass, SkillMaster skill) {
         List<ClassSkillMaster> classSkillList = classSkillMasterFacade.findByClass(klass);
         for (ClassSkillMaster classSkill : classSkillList) {
-            if (classSkill.getClassSkillMasterPK().getSkillId() == skill.getId().intValue()) {
+            if (classSkill.getClassSkillMasterPK().getSkillId() == skill.getId()) {
                 return true;
             }
         }
@@ -522,7 +523,7 @@ public class CharacterData implements CharacterSummary {
     public boolean isClassSkillByLevelAndSkill(CharacterGrowthRecord growthLevel, SkillMaster skill) {
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
         for (CharacterGrowthRecord growth : growthList) {
-            // ????????????????????????????
+            // チェックしようとしているレベル以下のクラスしか確認しない
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() 
                 > growthLevel.getCharacterGrowthRecordPK().getCharacterLevel()) {
                 break;
@@ -533,7 +534,7 @@ public class CharacterData implements CharacterSummary {
             }
             List<ClassSkillMaster> classSkillList = classSkillMasterFacade.findByClass(klass);
             for (ClassSkillMaster classSkill : classSkillList) {
-                if (classSkill.getClassSkillMasterPK().getSkillId() == skill.getId().intValue()) {
+                if (classSkill.getClassSkillMasterPK().getSkillId() == skill.getId()) {
                     return true;
                 }
             }
@@ -552,9 +553,9 @@ public class CharacterData implements CharacterSummary {
             if (skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
                 break;
             }
-            if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId().intValue()
+            if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() == skill.getId()
                     && skillGrowth.getSkillPoint() != null
-                    && skillGrowth.getSkillPoint().intValue() > 0) {
+                    && skillGrowth.getSkillPoint() > 0) {
                 return true;
             }
         }
@@ -635,7 +636,6 @@ public class CharacterData implements CharacterSummary {
             Integer classId = growth.getClassId().getId();
             if (classMap.get(classId) == null) {
                 classMap.put(classId, 1);
-                continue;
             } else {
                 classMap.put(classId, classMap.get(classId) + 1);
             }
@@ -651,7 +651,7 @@ public class CharacterData implements CharacterSummary {
                 //????????????????????????????
                 return 0;
             }
-            switch (rank.getId().intValue()) {
+            switch (rank.getId()) {
                 case 1:
                     bonus += lv / 2 + 2;
                     break;
@@ -716,7 +716,7 @@ public class CharacterData implements CharacterSummary {
     public Integer getInitiativeMiscModifier() {
         Integer mod = characterRecord.getInitiativeMiscModifier();
         if (mod == null) {
-            return new Integer(0);
+            return 0;
         }
         return mod;
     }
@@ -732,7 +732,7 @@ public class CharacterData implements CharacterSummary {
     public Integer getInitiativeFeatModifier() {
         Integer mod = characterRecord.getInitiativeFeatModifier();
         if (mod == null) {
-            return new Integer(0);
+            return 0;
         }
         return mod;
     }
@@ -786,8 +786,8 @@ public class CharacterData implements CharacterSummary {
     public Integer getSpeedRaceBasse() {
         RaceMaster race = characterRecord.getRaceId();
         if (race == null) {
-            //???????????? ?????
-            return new Integer(0);
+            //まだ種族が決まってない。 デフォルト
+            return 0;
         }
         return race.getSpeed();
     }
@@ -799,7 +799,7 @@ public class CharacterData implements CharacterSummary {
     public Integer getSpeedFeatModifier() {
         Integer mod = characterRecord.getSpeedFeatModifier();
         if (mod == null) {
-            return new Integer(0);
+            return 0;
         }
         return mod;
     }
@@ -815,7 +815,7 @@ public class CharacterData implements CharacterSummary {
     public Integer getSpeedMiscModifier() {
         Integer mod = characterRecord.getSpeedMiscModifier();
         if (mod == null) {
-            return new Integer(0);
+            return 0;
         }
         return mod;
     }
@@ -869,12 +869,12 @@ public class CharacterData implements CharacterSummary {
         // ???? ID ? 2. ??????????????????????????????
         int bonus;
         CharacterEquipment equip = characterRecord.getCharacterEquipment();
-        bonus = getAbilityModifierById(DEX).intValue();
+        bonus = getAbilityModifierById(DEX);
         if (equip.getDexAcArmorLimit() != null && equip.getDexAcArmorLimit() < bonus) {
-            bonus = equip.getDexAcArmorLimit().intValue();
+            bonus = equip.getDexAcArmorLimit();
         }
         if (equip.getDexAcShieldLimit() != null && equip.getDexAcShieldLimit() < bonus) {
-            bonus = equip.getDexAcShieldLimit().intValue();
+            bonus = equip.getDexAcShieldLimit();
         }
         return bonus;
     }
@@ -955,7 +955,7 @@ public class CharacterData implements CharacterSummary {
             if (classMap.get(klass) == null) {
                 newVal = 1;
             } else {
-                newVal = classMap.get(klass).intValue() + 1;
+                newVal = classMap.get(klass) + 1;
             }
             classMap.put(klass, newVal);
         }
@@ -991,7 +991,12 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
+<<<<<<< HEAD
      * ?????? ????????
+=======
+     * 攻撃ボーナス 遠隔攻撃ボーナス
+     * @return 
+>>>>>>> develop
      */
     public Integer getRangeAttackBonus() {
         return getBaseAttackTotal() + getAbilityModifierById(DEX);
@@ -1002,7 +1007,7 @@ public class CharacterData implements CharacterSummary {
      */
     public Integer getMeleeAttackBonus() {
         return getBaseAttackTotal() + getAbilityModifierById(STR);
-    }    
+    }
     /*
      * ?????? ????????
      */
@@ -1045,14 +1050,14 @@ public class CharacterData implements CharacterSummary {
     public static final int WILL = 3;
 
     public Integer getLevel() {
-        Integer exp = characterRecord.getExperience().intValue();
+        Integer exp = characterRecord.getExperience();
         int lv = 0;
         int val = 0;
         do {
             lv++;
             val += lv * 1000;
-        } while (exp.intValue() >= val);
-        return (new Integer(lv));
+        } while (exp >= val);
+        return (lv);
     }
 
     public Integer getExpForNextLevel() {
@@ -1061,12 +1066,17 @@ public class CharacterData implements CharacterSummary {
         do {
             lv++;
             val += lv * 1000;
-        } while (characterRecord.getExperience().intValue() >= val);
-        return (new Integer(val));
+        } while (characterRecord.getExperience() >= val);
+        return (val);
     }
 
     /**
+<<<<<<< HEAD
      * ?????
+=======
+     * 最終更新日
+     * @return 
+>>>>>>> develop
      */
     public String getLastChange() {
         Date date = characterRecord.getSaveTime();
@@ -1079,7 +1089,13 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
+<<<<<<< HEAD
      * ???<br>???
+=======
+     * 改行を<br>に変換
+     * @param str
+     * @return 
+>>>>>>> develop
      */
     public static String newLineToBr(String str) {
         if (str == null) {
@@ -1103,8 +1119,8 @@ public class CharacterData implements CharacterSummary {
         do {
             lv++;
             val += lv * 1000;
-        } while (characterRecord.getExperience().intValue() >= val);
-        return new Integer(lv);
+        } while (characterRecord.getExperience() >= val);
+        return lv;
     }
 
     public String getClassList() {
@@ -1117,7 +1133,7 @@ public class CharacterData implements CharacterSummary {
                 break;
             }
             CharacterGrowthRecord growth = (CharacterGrowthRecord) it.next();
-            if (i > getCharacterLevel().intValue()) {
+            if (i > getCharacterLevel()) {
                 break;
             }
             int newVal;
@@ -1125,16 +1141,20 @@ public class CharacterData implements CharacterSummary {
             if (classMap.get(klass) == null) {
                 newVal = 1;
             } else {
-                newVal = ((Integer) classMap.get(klass)).intValue() + 1;
+                newVal = ((Integer) classMap.get(klass)) + 1;
             }
-            classMap.put(klass, Integer.valueOf(newVal));
+            classMap.put(klass, newVal);
             i++;
         } while (true);
         String classList = "";
         for (Iterator iter = classMap.entrySet().iterator(); iter.hasNext();) {
             java.util.Map.Entry mapEntry = (java.util.Map.Entry) iter.next();
             ClassMaster klass = (ClassMaster) mapEntry.getKey();
-            String line = (new StringBuilder()).append(klass != null ? klass.getClassName() : "\u672A\u8A2D\u5B9A").append(mapEntry.getValue()).append(" Lv").append(", ").toString();
+            String line = new StringBuilder()
+                    .append(klass != null ? klass.getClassName() : "\u672A\u8A2D\u5B9A")
+                    .append(mapEntry.getValue())
+                    .append(" Lv")
+                    .append(", ").toString();
             classList = (new StringBuilder()).append(classList).append(line).toString();
         }
 
@@ -1147,8 +1167,8 @@ public class CharacterData implements CharacterSummary {
 
     @Override
     public Integer getInitiative() {
-        return Integer.valueOf(getInitiativeAbilityModifier().intValue() + characterRecord.getInitiativeFeatModifier().intValue()
-                + characterRecord.getInitiativeMiscModifier().intValue());
+        return getInitiativeAbilityModifier() + characterRecord.getInitiativeFeatModifier()
+                + characterRecord.getInitiativeMiscModifier();
     }
 
     public SaveMaster getSaveMasterById(int saveId) {
@@ -1159,7 +1179,7 @@ public class CharacterData implements CharacterSummary {
                 break;
             }
             CharacterSaveRecord saveRecord = (CharacterSaveRecord) it.next();
-            if (saveRecord.getSaveMaster().getId().intValue() == saveId) {
+            if (saveRecord.getSaveMaster().getId() == saveId) {
                 save = saveRecord.getSaveMaster();
             }
         } while (true);
@@ -1170,21 +1190,21 @@ public class CharacterData implements CharacterSummary {
     public Integer getHitPoint() {
         List growthList = characterRecord.getCharacterGrowthRecordList();
         int total = 0;
-        int bonus = getAbilityModifierById(3).intValue();
+        int bonus = getAbilityModifierById(3);
         Iterator it = growthList.iterator();
         do {
             if (!it.hasNext()) {
                 break;
             }
             CharacterGrowthRecord growth = (CharacterGrowthRecord) it.next();
-            if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getCharacterLevel().intValue()) {
+            if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
                 break;
             }
             if (growth.getHitPoint() != null) {
-                total += growth.getHitPoint().intValue() + bonus;
+                total += growth.getHitPoint() + bonus;
             }
         } while (true);
-        return Integer.valueOf(total);
+        return total;
     }
 
     public SkillMaster getSkillMasterById(int id) {
@@ -1192,7 +1212,7 @@ public class CharacterData implements CharacterSummary {
         for (Iterator it = charaSkillGrowthList.iterator(); it.hasNext();) {
             CharacterSkillGrowthRecord skillGrowthRecord = (CharacterSkillGrowthRecord) it.next();
             SkillMaster skill = skillGrowthRecord.getSkillMaster();
-            if (skill.getId() != null && skill.getId().intValue() == id) {
+            if (skill.getId() != null && skill.getId() == id) {
                 return skillGrowthRecord.getSkillMaster();
             }
         }
@@ -1212,14 +1232,14 @@ public class CharacterData implements CharacterSummary {
     }
 
     public Integer getSkillTotalCheckModifierById(int id) {
-        return Integer.valueOf(getSkillAbilityModifierById(id).intValue() + getSkillTotalRankById(id).intValue() + getskillMiscModifierById(id).intValue() + getskillArmorModifierById(id).intValue() + getskillSynergyModifierById(id).intValue());
+        return getSkillAbilityModifierById(id) + getSkillTotalRankById(id) + getskillMiscModifierById(id) + getskillArmorModifierById(id) + getskillSynergyModifierById(id);
     }
 
     public Integer getskillMiscModifierById(int id) {
         List skillRecordList = characterRecord.getCharacterSkillRecordList();
         Integer result = ((CharacterSkillRecord) skillRecordList.get(id - 1)).getMiscModifier();
         if (result == null) {
-            return Integer.valueOf(0);
+            return 0;
         } else {
             return result;
         }
@@ -1236,44 +1256,44 @@ public class CharacterData implements CharacterSummary {
                 break;
             }
             CharacterSkillGrowthRecord skillGrowth = (CharacterSkillGrowthRecord) it.next();
-            Integer level = Integer.valueOf(skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel());
-            if (level.intValue() > getCharacterLevel().intValue()) {
+            Integer level = skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel();
+            if (level > getCharacterLevel()) {
                 break;
             }
-            if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() != skill.getId().intValue() || level.intValue() != growth.getCharacterGrowthRecordPK().getCharacterLevel()) {
+            if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() != skill.getId() || level != growth.getCharacterGrowthRecordPK().getCharacterLevel()) {
                 continue;
             }
-            point = skillGrowth.getSkillPoint().intValue();
+            point = skillGrowth.getSkillPoint();
             break;
         } while (true);
         if (point == 0) {
-            return Float.valueOf(0.0F);
+            return 0.0F;
         }
         if (isClassSkillByLevelAndSkill(growth, skill)) {
             rank = point;
         } else {
-            rank = (new Float(point)).floatValue() / 2.0F;
+            rank = ((float) point) / 2.0F;
         }
-        return Float.valueOf(rank);
+        return rank;
     }
 
     public Integer getskillArmorModifierById(int skillId) {
         SkillMaster skill = getSkillMasterById(skillId);
         int result = 0;
         if (skill.getArmorCheck() == 0) {
-            return Integer.valueOf(0);
+            return 0;
         }
         CharacterEquipment equip = characterRecord.getCharacterEquipment();
         if (equip.getSkillArmorMod() != null) {
-            result += equip.getSkillArmorMod().intValue();
+            result += equip.getSkillArmorMod();
         }
         if (equip.getSkillShieldMod() != null) {
-            result += equip.getSkillShieldMod().intValue();
+            result += equip.getSkillShieldMod();
         }
         if (skillId == 22) {
             result *= 2;
         }
-        return Integer.valueOf(result);
+        return result;
     }
 
     public Integer getskillSynergyModifierById(int skillId) {
@@ -1287,12 +1307,12 @@ public class CharacterData implements CharacterSummary {
             }
             SkillSynergyMaster synergy = (SkillSynergyMaster) it.next();
             int affectedSkillId = synergy.getSkillSynergyMasterPK().getAffectedBy();
-            int affectedSkillRank = getSkillTotalRankById(affectedSkillId).intValue();
+            int affectedSkillRank = getSkillTotalRankById(affectedSkillId);
             if (affectedSkillRank > 0) {
                 result += (affectedSkillRank / 5) * 2;
             }
         } while (true);
-        return Integer.valueOf(result);
+        return result;
     }
     private String attackDescriptionWithBR;
 
@@ -1360,10 +1380,14 @@ public class CharacterData implements CharacterSummary {
     public List<CharacterGrowthRecord> getCharacterGrowthRecordList() {
         return characterRecord.getCharacterGrowthRecordList();
     }
-    
+
     /**
      * This method only return a list of CharacterGrowthRecode whose level
      * is less than or equal to current level 
+<<<<<<< HEAD
+=======
+     * @return 
+>>>>>>> develop
      */
     public List<CharacterGrowthRecord> getCurrentCharacterGrowthRecordList() {
         List<CharacterGrowthRecord> totalList = characterRecord.getCharacterGrowthRecordList();
@@ -1399,7 +1423,7 @@ public class CharacterData implements CharacterSummary {
         } 
         else 
         {    
-            return characterRecord.getCharacterName();
+        return characterRecord.getCharacterName();
         }
     }
 
@@ -1432,7 +1456,11 @@ public class CharacterData implements CharacterSummary {
     }
 
     public String getPlayerName() {
-        return characterRecord.getPlayerName();
+        if (characterRecord.getPlayerId() == null)
+        {
+            return "";
+        }
+        return characterRecord.getPlayerId().getPlayerName();
     }
 
     public String getSkinColor() {
@@ -1556,7 +1584,8 @@ public class CharacterData implements CharacterSummary {
     }
 
     public void setPlayerName(String playerName) {
-        characterRecord.setPlayerName(playerName);
+        // Do nothing. PlayerName can't be set as string.
+        // Need to select from player list.
     }
 
     public void setRaceId(RaceMaster raceId) {
@@ -1825,7 +1854,7 @@ public class CharacterData implements CharacterSummary {
         StringBuilder modifiers = new StringBuilder();
         modifiers.append(type3Name).append(" "); // ?????
         int baseAttack = getBaseAttackTotal();
-        int attackBonus = 0;
+        int attackBonus;
         int numAttacks = ((baseAttack - 1) / 5) + 1;
         int enhancementBonus = null != arm.getEnhancementBonus() ? arm.getEnhancementBonus() : 0;
         int attackModifier = null != armRecord.getAttackModifier() ? armRecord.getAttackModifier() : 0;
@@ -1900,8 +1929,6 @@ public class CharacterData implements CharacterSummary {
         
         String diceType = null != arm.getDamageDiceType() ? arm.getDamageDiceType().getName() : "";
         
- 
-
         /* Damange bonus & Critical area */ 
         modifiers.append("(")
             .append(arm.getDamageDiceNum())
@@ -1918,5 +1945,25 @@ public class CharacterData implements CharacterSummary {
             .append(")");
 
         return modifiers.toString();
+    }
+    
+    public void setPlayerId (PlayerMaster player)
+    {
+        characterRecord.setPlayerId(player);
+    }
+    
+    public PlayerMaster getPlayerId ()
+    {
+        return characterRecord.getPlayerId();
+    }
+    
+    public void setSecret (boolean secret)
+    {
+        characterRecord.setSecret(secret);
+    }
+    
+    public boolean isSecret ()
+    {
+        return characterRecord.isSecret();
     }
 }

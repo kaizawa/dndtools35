@@ -89,7 +89,11 @@ public class CharacterRecordFacade extends AbstractFacade<CharacterRecord> {
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();
-    }   
+    }  
+    
+    public CharacterRecord findById(Integer id) {
+        return em.find(CharacterRecord.class, id);
+    } 
     
     public List<CharacterRecord> findByCampaign(CampaignMaster campaign) {
         String jpqr = "select b from CharacterRecord b "

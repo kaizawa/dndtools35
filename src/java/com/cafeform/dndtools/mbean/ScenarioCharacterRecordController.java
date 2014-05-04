@@ -22,7 +22,7 @@ import javax.inject.Named;
 @SessionScoped
 public class ScenarioCharacterRecordController implements Serializable {
     
-    @ManagedProperty (value="#{sessionController}")
+    @Inject
     private SessionController sessionController;
 
     public SessionController getSessionController() {

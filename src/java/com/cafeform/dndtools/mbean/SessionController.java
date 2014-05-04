@@ -210,11 +210,11 @@ public class SessionController  implements Serializable {
      */        
     private CampaignMaster selectedCampaign;
 
-    CampaignMaster getSelectedCampaign() {
+    public CampaignMaster getSelectedCampaign() {
         return selectedCampaign;
     }
 
-    void setSelectedCampaign(CampaignMaster selectedCampaign) {
+    public void setSelectedCampaign(CampaignMaster selectedCampaign) {
         this.selectedCampaign = selectedCampaign;
     }
     
@@ -238,9 +238,11 @@ public class SessionController  implements Serializable {
             characterDataList = new ArrayList<CharacterData>();
             List<CharacterRecord> charaRecordList = characterRecordFacade.findAll();
             for (CharacterRecord charaRecord : charaRecordList) {
-                characterDataList.add(new CharacterData(charaRecord));
+                if (isVisible(charaRecord)) 
+                {
+                    characterDataList.add(new CharacterData(charaRecord));
+                }
             }
-            return characterDataList;
         }
         return characterDataList;
     }
@@ -264,5 +266,14 @@ public class SessionController  implements Serializable {
         setCharacterDataList(null);
         setFilteredCharacterData(null);
         setCheckedCharacterList(null);
+    }
+
+    private boolean isVisible (CharacterRecord charaRecord)
+    {
+        boolean isLoginPlayer = 
+                charaRecord.getPlayerId() != null &&
+                isLoggedIn() && 
+                getPlayerMaster().getId().equals(charaRecord.getPlayerId().getId());
+        return !charaRecord.isSecret() || isLoginPlayer;
     }
 }    

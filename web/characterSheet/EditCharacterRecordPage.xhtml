@@ -40,21 +40,24 @@
           <h:panelGrid columns="2" id="charaGridPanel1" style="height: 100%; width: 100%">
             <h:panelGrid id="characterNameGridPane1" rowClasses="tableTitleBlackMiddle" 
                          styleClass="tableGrid">
-              <h:panelGrid columns="3" id="gridPanel5" 
+              <h:panelGrid columns="4" id="gridPanel5" 
                            style="text-align: center; vertical-align: middle; width: 100%">
-                <h:outputText id="outputText2" value="キャラクター名"/>
-                <h:outputText id="outputText3" value="プレイヤー名"/>
-                <h:outputText id="outputText4" value="キャンペーン"/>
-
+                <h:outputText value="キャラクター名"/>
+                <h:outputText value="プレイヤー名"/>
+                <h:outputText value="非公開"/>                
+                <h:outputText value="キャンペーン"/>
               </h:panelGrid>
               <h:panelGrid columns="4" id="gridPanel6" style="text-align: center; width: 100%" 
                            styleClass="g">
                 <h:inputText id="textField1" onchange="" 
                              requiredMessage="キャラクター名を入力して下さい" style="width: 180px" 
                              value="#{characterSheetController.characterData.characterName}"/>
-                <h:inputText id="textField2" onchange="" 
-                             requiredMessage="プレイヤー名を入力して下さい" style="width: 181px" 
-                             value="#{characterSheetController.characterData.playerName}"/>
+                <h:selectOneMenu requiredMessage="プレイヤーを選択して下さい" 
+                                 value="#{characterSheetController.selectedPlayer}">
+                  <f:selectItems value="#{applicationController.playerArray}"/>
+                </h:selectOneMenu>
+                <h:selectBooleanCheckbox
+                    id="secret" value="#{characterSheetController.characterData.secret}" />
                 <h:selectOneMenu id="dropdown1" onchange="" 
                                  requiredMessage="キャンペーンを選択して下さい" 
                                  value="#{characterSheetController.characterData.campaignId}">

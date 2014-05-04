@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCharacterRecordTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListCharacterRecordEmpty}" rendered="#{characterRecordController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{characterRecordController.items.rowCount > 0}">
+                    <h:outputText value="#{characterRecordController.pagination.pageFirstItem + 1}..#{characterRecordController.pagination.pageLastItem + 1}/#{characterRecordController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{characterRecordController.previous}" value="#{bundle.Previous} #{characterRecordController.pagination.pageSize}" rendered="#{characterRecordController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{characterRecordController.next}" value="#{bundle.Next} #{characterRecordController.pagination.pageSize}" rendered="#{characterRecordController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{characterRecordController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_characterEquipment}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.characterEquipment}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_updateDescription}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.updateDescription}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_saveTime}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.saveTime}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_sheetId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sheetId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_characterName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.characterName}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_playerName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.playerName}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_experience}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.experience}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_age}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.age}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_height}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.height}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_weight}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.weight}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_initiativeMiscModifier}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.initiativeMiscModifier}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_initiativeFeatModifier}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.initiativeFeatModifier}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_speedMiscModifier}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.speedMiscModifier}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_speedFeatModifier}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.speedFeatModifier}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_hairColor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hairColor}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_skinColor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.skinColor}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_eyeColor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.eyeColor}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_damageReduction}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.damageReduction}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_spellResistance}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.spellResistance}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_language}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.language}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_featDescription}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.featDescription}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_attackDescription}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.attackDescription}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_spellDescription}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.spellDescription}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_itemDescription}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.itemDescription}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_acArmor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.acArmor}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_acShield}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.acShield}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_acMiscMod}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.acMiscMod}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_alignmentId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.alignmentId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_campaignId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.campaignId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_genderId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.genderId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_raceId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.raceId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_religionId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.religionId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCharacterRecordTitle_defenceDescription}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.defenceDescription}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{characterRecordController.prepareView}"
+                                           value="#{bundle.ListCharacterRecordViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{characterRecordController.prepareEdit}" 
+                                           value="#{bundle.ListCharacterRecordEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{characterRecordController.destroy}" 
+                                           value="#{bundle.ListCharacterRecordDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{characterRecordController.prepareCreate}" 
+                               value="#{bundle.ListCharacterRecordCreateLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundle.ListCharacterRecordIndexLink}" 
+                               action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

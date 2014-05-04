@@ -35,6 +35,7 @@ import com.cafeform.dndtools.ejb.RaceMasterFacade;
 import com.cafeform.dndtools.ejb.CharacterSaveRecordFacade;
 import com.cafeform.dndtools.ejb.CampaignMasterFacade;
 import com.cafeform.dndtools.ejb.CharacterArmRecordFacade;
+import com.cafeform.dndtools.ejb.PlayerMasterFacade;
 import com.cafeform.dndtools.entity.CharacterArmRecord;
 import java.io.Serializable;
 import java.text.StringCharacterIterator;
@@ -73,6 +74,7 @@ public class CharacterSheetController implements Serializable {
     @EJB private CharacterAbilityRecordFacade characterAbilityRecordFacade;
     @EJB private CharacterSkillRecordFacade characterSkillRecordFacade;
     @EJB protected ClassMasterFacade classMasterFacade;
+    @EJB protected PlayerMasterFacade PlayerMasterFacade;
     @EJB private CharacterArmRecordFacade characterArmRecordFacade;
     @Inject private ApplicationController applicationController;    
     @Inject private SessionController sessionController;    
@@ -164,9 +166,6 @@ public class CharacterSheetController implements Serializable {
     public void setCampaignSelectRequired(boolean campaignSelectRequired) {
         this.campaignSelectRequired = campaignSelectRequired;
     }
-    //キャンペーンの選択  
-    // このプロパティはページ間でやり取りされるので、セッションBeanでよい
-    Integer selectedCampaign;
 
     public Integer getCampaign() {
         if (getCharacterData().getCampaignId() == null) {
@@ -538,8 +537,17 @@ public class CharacterSheetController implements Serializable {
     }
 
     public String saveButton_action() {
-
         CharacterData charaData = getCharacterData();
+
+
+        try {
+            validateCharaData(charaData);
+        } catch (Exception ex) 
+        {
+            JsfUtil.addSuccessMessage(ex.getMessage());
+            return null;                    
+        }
+        
         CharacterEquipment equip = charaData.getCharacterEquipment();
         List<CharacterSkillRecord> skillRecordList = charaData.getCharacterSkillRecordList();
         List<CharacterSkillGrowthRecord> skillGrowthList = charaData.getCharacterSkillGrowthRecordList();
@@ -1133,5 +1141,40 @@ public class CharacterSheetController implements Serializable {
         }
         return null;
     }
+    
+    public Integer getSelectedPlayer() {
+        if (getCharacterData().getPlayerId() == null) {
+            return null;
+        }
+        return getCharacterData().getPlayerId().getId();
+    }
 
+    public void setSelectedPlayer(Integer selectedPlyer) {
+        if (selectedPlyer == null) {
+            getCharacterData().setReligionId(null);
+            return;
+        }
+        PlayerMaster player = PlayerMasterFacade.find(selectedPlyer);
+        getCharacterData().setPlayerId(player);
+    }
+
+    private void validateCharaData (CharacterData charaData) throws Exception
+    {
+        CharacterRecord oldData = 
+                characterRecordFacade.findById(charaData.getId());
+        CharacterRecord newData = charaData.getCharacterRecord();
+        
+        // Check if Login user is owner of this character data.
+        if (oldData.isSecret() != newData.isSecret())
+        {
+            if (getSessionController().isNotLoggedIn())
+            {
+                throw new IllegalArgumentException("非公開の設定を変更するためにはログインしてください。");            
+            }
+            else if (newData.getPlayerId().getId() != getSessionController().getPlayerMaster().getId() )            
+            {
+                throw new IllegalArgumentException("このキャラクターのプレイヤー以外は非公開の設定変更ができません。");       
+            }
+        }
+    }
 }
