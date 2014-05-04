@@ -127,7 +127,7 @@ public class CharacterData implements CharacterSummary {
     public Integer getSkillMiscModifierById(int index) {
         Integer result;
         List<CharacterSkillRecord> skillRecordList = characterRecord.getCharacterSkillRecordList();
-        // skillTable ? RowIndex ? List ? index ??????????????
+        // skillTable の RowIndex と List の index は同一の特技をさしているはず
         result = skillRecordList.get(index).getMiscModifier();
         if (result == null) {
             return 0;
@@ -137,51 +137,51 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * TODO: ????????????????????????????????????????? ?????????????????????
+     * TODO: 経験値が変わったときにこのメソッドを読んで成長記録を追加しなければならないのだが。 どうやって、どういうタイミングで呼ぼうか?
      *
      */
     public void updateGrowthRecord() {
 
         /*
-         * ???????????????????
+         * キャラクター成長レコードのリストの作成
          */
-        // ????????????
+        // まずは現在のリストを入手
         List<CharacterGrowthRecord> searchedCharaGrowthList =
                 characterGrowthRecordFacade.findByCharacter(characterRecord);
         List<CharacterGrowthRecord> characterGrowthList = new ArrayList<CharacterGrowthRecord>();
-        // ????????????????????????????????????????????
+        // 足りないレベルのレコードをす。もし無ければ作成。リストは必ずレベルごとにソートされている
         OUTER:
         for (int i = 1; i < getLevel() + 1; i++) {
             for (CharacterGrowthRecord growth : searchedCharaGrowthList) {
                 if (growth.getCharacterGrowthRecordPK().getCharacterLevel() == i) {
-                    //??????????
+                    //作成したリストに追加
                     characterGrowthList.add(growth);
                     continue OUTER;
                 }
             }
-            //???????????? .
+            //無かったようだ。作成する .
             CharacterGrowthRecord newRecord =
                     new CharacterGrowthRecord(characterRecord.getId(), i);
             try {
                 characterGrowthRecordFacade.create(newRecord);
             } catch (Exception e) {
-                context.addMessage("contents:contentGrid:label1", new FacesMessage(("???????????????????????")));
+                context.addMessage("contents:contentGrid:label1", new FacesMessage(("キャラクターの成長レコードの作成に失敗しました")));
                 return;
             }
-            // ???????????????
+            // 作成したリストにあらためて追加
             characterGrowthList.add(newRecord);
         }
-        //??????????????
+        //キャラクターレコードにセット
         characterRecord.setCharacterGrowthRecordList(characterGrowthList);
 
         /*
-         * ????????????????
+         * スキル成長レコードのリストの作成
          */
-        // ????????????
+        // まずは現在のリストを入手
         List<CharacterSkillGrowthRecord> searchedCharaSkillGrowthList =
                 characterSkillGrowthRecordFacade.findByCharacter(characterRecord);
         List<CharacterSkillGrowthRecord> characterSkillGrowthList = new ArrayList<CharacterSkillGrowthRecord>();
-        // ????????????????????????
+        // 足りないレベルのレコードを探す。もし無ければ作成
         for (int i = 1; i < getLevel() + 1; i++) {
             OUTER:
             for (SkillMaster skill : skillList) {
@@ -193,11 +193,11 @@ public class CharacterData implements CharacterSummary {
                         continue OUTER;
                     }
                 }
-                //???????????? .
+                //無かったようだ。作成する .
                 CharacterSkillGrowthRecord newRecord =
                         new CharacterSkillGrowthRecord(characterRecord.getId(), i, skill.getId());
 
-                //????????0????
+                //スキルポイントを0に初期化
                 newRecord.setSkillPoint(0);
                 try {
                     characterSkillGrowthRecordFacade.create(newRecord);
@@ -206,17 +206,17 @@ public class CharacterData implements CharacterSummary {
                     return;
                 }
 
-                //???????????????
+                //作成したリストにあらためて追加
                 characterSkillGrowthList.add(newRecord);
             }
         }
-        //??????????????
+        //キャラクターレコードにセット
         characterRecord.setCharacterSkillGrowthRecordList(characterSkillGrowthList);
 
     }
 
     /**
-     * ?? HP ???
+     * 合計 HP を計算
      */
     public Integer geHitPoint() {
         int totalHP = 0;
@@ -224,7 +224,7 @@ public class CharacterData implements CharacterSummary {
 
         int bonus = getAbilityModifierById(CON);
         for (CharacterGrowthRecord growth : growthList) {
-            // ???????????????????????
+            // 経験値から見たキャラクタレベル以上は考慮しない
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getLevel()) {
                 break;
             }
@@ -237,15 +237,15 @@ public class CharacterData implements CharacterSummary {
 
     public void setSkillMiscModifierById(int index, Integer skillMiscModifier) {
         List<CharacterSkillRecord> skillRecord = characterRecord.getCharacterSkillRecordList();
-        // skillTable ? RowIndex ? List ? index ??????????????
+        // skillTable の RowIndex と List の index は同一の特技をさしているはず
         skillRecord.get(index).setMiscModifier(skillMiscModifier);
     }
 
     /**
-     * ????ID(1?6??????????????
+     * 能力値のID(1～6）を指定してから能力値を得る
      */
     public Integer getAbilityBaseById(int id) {
-        // ??? ID ? 1-6 ???List ? ID ? 0 ????????? -1 ??
+        // 能力値 ID は 1-6 だが、List の ID は 0 から並んでいるので -1 する
         Integer result;
         List<CharacterAbilityRecord> charAbilityList = characterRecord.getCharacterAbilityRecordList();
         CharacterAbilityRecord ability = charAbilityList.get(id - 1);
@@ -262,10 +262,10 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * ????ID(1?6??????????????
+     * 能力値のID(1～6）を指定してから能力値を得る
      */
     public Integer getAbilityMiscModifierById(int id) {
-        // ??? ID ? 1-6 ???List ? ID ? 0 ????????? -1 ??
+        // 能力値 ID は 1-6 だが、List の ID は 0 から並んでいるので -1 する
         Integer result;
         result = characterRecord.getCharacterAbilityRecordList().get(id - 1).getMiscModifier();
         if (result == null) {
@@ -280,10 +280,10 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * ????ID(1?6??????????????
+     * 能力値のID(1～6）を指定してから能力値を得る
      */
     public Integer getAbilityFeatModifierById(int id) {
-        // ??? ID ? 1-6 ???List ? ID ? 0 ????????? -1 ??
+        // 能力値 ID は 1-6 だが、List の ID は 0 から並んでいるので -1 する
         Integer result;
         result = characterRecord.getCharacterAbilityRecordList().get(id - 1).getFeatModifier();
         if (result == null) {
@@ -298,15 +298,15 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * ??? ?? ???
+     * 能力値 種族 修正値
      */
     public Integer getAbilityRaceModifierById(int id) {
         AbilityMaster ability = abilityMasterFacade.find(id);
         if (ability == null) {
-            // abilityTable ? RowIndex ????
+            // abilityTable の RowIndex が不正？
             return 0;
         }
-        //?????????????? 0 ????
+        //まだ種族が選択されてなければ 0 を返す。
         if (characterRecord.getRaceId() == null) {
             return 0;
         }
@@ -322,7 +322,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * ??? ?????? (????
+     * 能力値 レベル修正値 (計算値）
      */
     public Integer getAbilityLevelModifierById(int id) {
         int modifier = 0;
@@ -331,12 +331,12 @@ public class CharacterData implements CharacterSummary {
                 characterGrowthRecordFacade.findByCharacter(characterRecord);
 
         for (CharacterGrowthRecord growth : growthList) {
-            // ???????????????????????
+            // 経験値から見たキャラクタレベル以上は考慮しない
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
                 break;
             }
             Integer enhancedAb = growth.getAbilityEnhancement();
-            //????????????????
+            //セットされていないレベルは飛ばす
             if (enhancedAb == null) {
                 continue;
             }
@@ -347,7 +347,7 @@ public class CharacterData implements CharacterSummary {
         return modifier;
     }
     /*
-     * ??? ??
+     * 能力値 合計
      */
 
     public Integer getAbilityTotalById(int id) {
@@ -358,7 +358,7 @@ public class CharacterData implements CharacterSummary {
                 + getAbilityLevelModifierById(id);
     }
     /*
-     * ??? ???
+     * 能力値 修正値
      */
 
     public Integer getAbilityModifierById(int ability) {
@@ -373,7 +373,6 @@ public class CharacterData implements CharacterSummary {
 
         return getAbilityModifierById(skillMasterFacade.find(skill).getAbilityId().getId());
     }
-
     /*
      * 技能 対応能力値名
      */
@@ -390,7 +389,6 @@ public class CharacterData implements CharacterSummary {
         name = skillList.get(skill-1).getAbilityId().getAbilityName();
         return name.substring(0, 1);
     }
-
     /*
      * 技能 ポイント
      */
@@ -400,7 +398,7 @@ public class CharacterData implements CharacterSummary {
 
         List<CharacterSkillGrowthRecord> skillGrowthlist = characterRecord.getCharacterSkillGrowthRecordList();
         for (CharacterSkillGrowthRecord skillGrowth : skillGrowthlist) {
-            // ???????????????????????
+            // 経験値から見たキャラクタレベル以上は考慮しない
             if (skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
                 break;
             }
@@ -411,7 +409,7 @@ public class CharacterData implements CharacterSummary {
         return point;
     }
     /*
-     * ?? ???
+     * 技能 判定値
      */
 
     public Integer getSkillTotalCheckModifierById(Integer index) {
@@ -423,28 +421,28 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * ?? ???????) ??????????????
+     * 技能 ランク（計算値) ポイントとクラスから計算する
      */
     protected Integer skillRank;
     protected Integer skillRankByLevelAndSkill;
 
     /**
-     * ?????? <p>????????? 1/2 ???? float ?????????????????????</p>
+     * 技能ランク。 <p>クラス外技能の場合 1/2 になるの float を返す。受け取り側で切り捨てする必要がある</p>
      *
-     * @param growth ???????????
-     * @param skill ???????
-     * @return ??????
+     * @param growth キャラクタ成長レコード
+     * @param skill スキルマスター
+     * @return スキルランク
      */
     public Float getSkillRankByLevelAndSkill(CharacterGrowthRecord growth, SkillMaster skill) {
         int point = 0;
         float rank;
         ClassMaster klass = growth.getClassId();
 
-        //??????????????????????????????
+        //まずは技能成長レコードからこのレベルでのスキルポイントを得る
         List<CharacterSkillGrowthRecord> skillgrowthlist = characterRecord.getCharacterSkillGrowthRecordList();
         for (CharacterSkillGrowthRecord skillGrowth : skillgrowthlist) {
             Integer level = skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel();
-            // ???????????????????????
+            // 経験値から見たキャラクタレベル以上は考慮しない
             if (level > getCharacterLevel()) {
                 break;
             }
@@ -455,12 +453,12 @@ public class CharacterData implements CharacterSummary {
             }
         }
         if (point == 0) {
-            //?????0????????????????????
+            //ポイントが0ならクラス技能かどうか確認する必要はない
             return 0f;
         }
-        // ?????????????????
+        // つづいてクラス技能かどうか確認する
         if (isClassSkillByLevelAndSkill(growth, skill)) {
-            //?????
+            //クラス技能
             rank = point;
         } else {
             //クラス外技能
@@ -476,7 +474,7 @@ public class CharacterData implements CharacterSummary {
         List<CharacterGrowthRecord> growthlist = characterRecord.getCharacterGrowthRecordList();
         // レベル毎のループ        
         for (CharacterGrowthRecord growth : growthlist) {
-            // ???????????????????????
+            // 経験値から見たキャラクタレベル以上は考慮しない
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
                 break;
             }
@@ -486,7 +484,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * ???????????????
+     * 技能がランク無しでも実施可能か
      */
     protected boolean skillAcceptNoRankBySkillId;
 
@@ -501,7 +499,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * ?????????
+     * クラス技能かどうか
      */
     public boolean isClassSkillByClassAndSkill(ClassMaster klass, SkillMaster skill) {
         List<ClassSkillMaster> classSkillList = classSkillMasterFacade.findByClass(klass);
@@ -514,8 +512,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * ???????????????????????????????? 
-     * ???????????????????????????????????????
+     * あるスキルがこのキャラにとってクラス技能かどうかをチェックする。 習得しているクラスの中でひとつでも該当技能がクラス技能であればクラス技能になる
      *
      * @param skill
      * @return boolean
@@ -542,14 +539,14 @@ public class CharacterData implements CharacterSummary {
         return false;
     }
     /*
-     * ???????????????
+     * 技能ランクを持っているかどうか
      */
 
     public boolean hasSkillRankBySkill(SkillMaster skill) {
         List<CharacterSkillGrowthRecord> skillGrowthList = characterRecord.getCharacterSkillGrowthRecordList();
 
         for (CharacterSkillGrowthRecord skillGrowth : skillGrowthList) {
-            // ???????????????????????
+            // 経験値から見たキャラクタレベル以上は考慮しない
             if (skillGrowth.getCharacterSkillGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
                 break;
             }
@@ -563,14 +560,14 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * ?? ????????
+     * 技能 鎧、盾ペナルティ
      */
     public Integer getSkillArmorModifierById(int skillId) {
         int result = 0;
         SkillMaster skill = skillList.get(skillId-1);
 
         if (skill.getArmorCheck() == 0) {
-            //???????????????
+            //この技能に防具ペナルティはない
             return 0;
         }
 
@@ -582,14 +579,14 @@ public class CharacterData implements CharacterSummary {
             result += equip.getSkillShieldMod();
         }
         if (skillId == 22) {
-            // ???2???
+            // 水泳は2倍！！
             result *= 2;
         }
         return result;
     }
 
     /**
-     * ?? ????
+     * 技能 相乗効果
      */
     public Integer getSkillSynergyModifierById(int skillId) {
         int result = 0;
@@ -600,7 +597,7 @@ public class CharacterData implements CharacterSummary {
             int affectedSkillId = synergy.getSkillSynergyMasterPK().getAffectedBy();
             int affectedSkillRank = getSkillTotalRankById(affectedSkillId);
             if (affectedSkillRank > 0) {
-                //??? 5 ?????? + 2
+                //ランク 5 で対象技能が + 2
                 result += (affectedSkillRank / 5) * 2;
             }
         }
@@ -612,7 +609,7 @@ public class CharacterData implements CharacterSummary {
         return getAbilityModifierById(saveMasterFacade.find(saveId).getAbilityId().getId());
     }
     /*
-     * ??????? ?????
+     * セーヴボーナス クラス合計
      */
 
     public Integer getSaveClassBonusById(int saveId) {
@@ -622,15 +619,15 @@ public class CharacterData implements CharacterSummary {
 
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
 
-        //?????????????????????
+        //習得しているクラスごとに最大レベルを求める
         Map<Integer, Integer> classMap = new HashMap<Integer, Integer>();
         for (CharacterGrowthRecord growth : growthList) {
-            // ???????????????????????
+            // 経験値から見たキャラクタレベル以上は考慮しない
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
                 break;
             }
             if (growth.getClassId() == null) {
-                //?????????????????
+                //まだクラスが設定されていないもよう
                 continue;
             }
             Integer classId = growth.getClassId().getId();
@@ -641,14 +638,14 @@ public class CharacterData implements CharacterSummary {
             }
         }
 
-        //???????????????????????
+        //クラスごとに最大レベルからクラスボーナスを得る
         for (Map.Entry<Integer, Integer> classEntry : classMap.entrySet()) {
             Integer classId = classEntry.getKey();
             Integer lv = classEntry.getValue();
 
             BonusRankMaster rank = classSaveMasterFacade.findByClassAndSave(classMasterFacade.find(classId), save).getRankId();
             if (rank == null) {
-                //????????????????????????????
+                //まだクラスのセーブボーナスランクが設定されていないもよう
                 return 0;
             }
             switch (rank.getId()) {
@@ -668,7 +665,7 @@ public class CharacterData implements CharacterSummary {
         return bonus;
     }
     /*
-     * ??? ??????
+     * セーヴ その他修正値
      */
 
     public Integer getSaveMiscModifierById(int saveId) {
@@ -683,7 +680,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * ??? ?????
+     * セーヴ 種族修正値
      */
     public Integer getSaveRaceModifierById(int saveId) {
         if (characterRecord.getRaceId() != null) {
@@ -700,7 +697,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * ??????? ?????
+     * セーヴボーナス トータル計
      */
     public Integer getSaveTotalById(int saveId) {
         return getSaveAbilityModifierById(saveId)
@@ -709,7 +706,7 @@ public class CharacterData implements CharacterSummary {
                 + getSaveRaceModifierById(saveId);
     }
     /*
-     * ?????? ????
+     * イニシアチブ その修正
      */
     protected Integer initiativeMiscModifier;
 
@@ -725,7 +722,7 @@ public class CharacterData implements CharacterSummary {
         characterRecord.setInitiativeMiscModifier(modifier);
     }
     /*
-     * ?????? ????
+     * イニシアチブ 技能修正
      */
     protected Integer initiativeFeatModifier;
 
@@ -742,14 +739,14 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * ?????? ?????
+     * イニシアチブ 能力値修正
      */
     public Integer getInitiativeAbilityModifier() {
-        // ???? ID ? 2
+        // 敏捷力の ID は 2
         return getAbilityModifierById(DEX);
     }
     /*
-     * ?????? ?? ????)
+     * イニシアチブ 合計 （計算値)
      */
     protected Integer initiativeTotal;
 
@@ -757,7 +754,7 @@ public class CharacterData implements CharacterSummary {
         return getInitiativeAbilityModifier() + getInitiativeFeatModifier() + getInitiativeMiscModifier();
     }
     /*
-     * ???? ?? ????)
+     * 移動速度 合計 （計算値)
      */
     protected Integer speed;
 
@@ -769,9 +766,9 @@ public class CharacterData implements CharacterSummary {
     public String getSpeed() {
         StringBuilder str = new StringBuilder();
         str.append(getSpeedTotal());
-        str.append("????(");
+        str.append("フィート(");
         str.append((int) getSpeedTotal() / 5);
-        str.append("??)");
+        str.append("マス)");
         return str.toString();
     }
 
@@ -779,7 +776,7 @@ public class CharacterData implements CharacterSummary {
         this.speed = speed;
     }
     /*
-     * ???? ??????
+     * 移動速度 種族基本速度
      */
     protected Integer speedRaceBasse;
 
@@ -792,7 +789,7 @@ public class CharacterData implements CharacterSummary {
         return race.getSpeed();
     }
     /*
-     * ???? ?????
+     * 移動速度 特技修正値
      */
     protected Integer speedFeatModifier;
 
@@ -808,7 +805,7 @@ public class CharacterData implements CharacterSummary {
         characterRecord.setSpeedFeatModifier(speedFeatModifier);
     }
     /*
-     * ?? ??????
+     * 移動 その他修正値
      */
     protected Integer speedMiscModifier;
 
@@ -828,7 +825,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * AC ???????(???)
+     * AC アーマークラス(計算値)
      */
     public Integer getAcNormal() {
         CharacterRecord chara = characterRecord;
@@ -841,7 +838,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * ??AC<p> ?????????????????????????????????<p> ????????????????????????????
+     * 接触AC<p> 種族ボーナスとその他ボーナス。本当はボーナスの種類で決めるべきか。<p> 例えば､反発ボーナスは組み込めるが盾ボーナスはだめとか。
      *
      * @return
      */
@@ -863,10 +860,10 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * AC ?????
+     * AC 能力値修正
      */
     public Integer getAcAbilityModifier() {
-        // ???? ID ? 2. ??????????????????????????????
+        // 敏捷力の ID は 2. 防具によって、敏捷力ボーナスがどれだけ適用できるかがきまる。
         int bonus;
         CharacterEquipment equip = characterRecord.getCharacterEquipment();
         bonus = getAbilityModifierById(DEX);
@@ -879,7 +876,7 @@ public class CharacterData implements CharacterSummary {
         return bonus;
     }
     /*
-     * AC ?????
+     * AC 盾ボーナス
      */
     protected Integer acShield;
 
@@ -893,7 +890,7 @@ public class CharacterData implements CharacterSummary {
     }
 
     /*
-     * AC ?????
+     * AC 鎧ボーナス
      */
     protected Integer acArmor;
 
@@ -906,13 +903,13 @@ public class CharacterData implements CharacterSummary {
         return characterRecord.getAcArmor();
     }
     /*
-     * AC ????
+     * AC 種族修正
      */
     protected Integer acRace;
 
     public Integer getAcRaceModifier() {
         RaceMaster race = characterRecord.getRaceId();
-        // ?????
+        // 種族未設定
         if (race == null) {
             return 0;
         }
@@ -920,7 +917,7 @@ public class CharacterData implements CharacterSummary {
         return race.getSizeId().getAcModifier();
     }
     /**
-     * AC ???
+     * AC その他
      */
     protected Integer acMiscMod;
 
@@ -929,23 +926,23 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-     * ?????????????
+     * ヒットポイント用能力値修正
      */
     public Integer getHitPointAbilityModifier() {
-        // ???? ID ? 2
+        // 敏捷力の ID は 2
         return getAbilityModifierById(CON);
     }
 
     /**
-     * ?????? ????????
+     * 攻撃ボーナス 基本攻撃ボーナス
      */
     public Integer getBaseAttackTotal() {
         int baseAttack = 0;
-        //?????????????????????????
+        //クラスのリストをつくり、各クラスのレベルを計算する
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
         Map<ClassMaster, Integer> classMap = new HashMap<ClassMaster, Integer>();
         for (CharacterGrowthRecord growth : growthList) {
-            // ???????????????????????
+            // 現在のキャラクタレベル分だけしか見ないでよい。
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() > getCharacterLevel()) {
                 break;
             }
@@ -972,75 +969,68 @@ public class CharacterData implements CharacterSummary {
         }
         Integer rank = klass.getBaseAttackRankId().getId();
         if (rank == null) {
-            //????BAB????????????
+            //クラスにBABが未設定の時は劣悪と判断
             return (1 / 2) * lv;
         }
-        Float result; // ????????
+        Float result; // 端数の計算のため
         switch (rank) {
-            case 1: // ??
+            case 1: // 良好
                 return lv;
-            case 2: //??
+            case 2: //平均
                 result = lv * (3F / 4F);
                 return result.intValue();
-            case 3: // ??
+            case 3: // 劣悪
                 result = lv * (1F / 2F);
                 return result.intValue();
-            default: // ???
+            default: // 無し？
                 return 0;
         }
     }
 
     /**
-<<<<<<< HEAD
-     * ?????? ????????
-=======
      * 攻撃ボーナス 遠隔攻撃ボーナス
      * @return 
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> develop
      */
     public Integer getRangeAttackBonus() {
         return getBaseAttackTotal() + getAbilityModifierById(DEX);
     }
 
     /**
-     * ?????? ????????
+     * 攻撃ボーナス 近接攻撃ボーナス
      */
     public Integer getMeleeAttackBonus() {
         return getBaseAttackTotal() + getAbilityModifierById(STR);
     }
     /*
-     * ?????? ????????
+     * 攻撃ボーナス 組み付きボーナス
      */
 
     public Integer getGrappleBonus() {
         return getMeleeAttackBonus();
     }
     /*
-     * ?????? ????????
+     * 攻撃ボーナス 近接筋力ボーナス
      */
 
     public Integer getAttackBonusStrengthBonus() {
         return getAbilityModifierById(STR);
     }
     /*
-     * ?????? ????????
+     * 攻撃ボーナス 遠隔筋力ボーナス
      */
 
     public Integer getAttackBonusDexBonus() {
         return getAbilityModifierById(DEX);
     }
     /**
-     * ???? ?? TODO: ???
+     * アイテム 武器 TODO: 未実装
      */
     /*
      * public String getArm1 (){ ArmMaster arm1 =
      * characterRecord.getCharacterEquipment().getArm1(); if(arm1 != null) {
-     * return arm1.getName(); } return "???"; } public String getArm2 (){
+     * return arm1.getName(); } return "未装備"; } public String getArm2 (){
      * ArmMaster arm2 = characterRecord.getCharacterEquipment().getArm2();
-     * if(arm2 != null) { return arm2.getName(); } return "???"; }
+     * if(arm2 != null) { return arm2.getName(); } return "未装備"; }
      */
     public static final int STR = 1;
     public static final int DEX = 2;
@@ -1074,37 +1064,23 @@ public class CharacterData implements CharacterSummary {
     }
 
     /**
-<<<<<<< HEAD
-     * ?????
-=======
      * 最終更新日
      * @return 
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> develop
      */
     public String getLastChange() {
         Date date = characterRecord.getSaveTime();
 
         if (date == null) {
-            return "--???--";
+            return "--未保存--";
         }
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
         return fmt.format(date);
     }
 
     /**
-<<<<<<< HEAD
-     * ???<br>???
-=======
      * 改行を<br>に変換
      * @param str
      * @return 
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> develop
      */
     public static String newLineToBr(String str) {
         if (str == null) {
@@ -1393,14 +1369,7 @@ public class CharacterData implements CharacterSummary {
     /**
      * This method only return a list of CharacterGrowthRecode whose level
      * is less than or equal to current level 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
      * @return 
->>>>>>> develop
-=======
-     * @return 
->>>>>>> develop
      */
     public List<CharacterGrowthRecord> getCurrentCharacterGrowthRecordList() {
         List<CharacterGrowthRecord> totalList = characterRecord.getCharacterGrowthRecordList();
@@ -1649,11 +1618,11 @@ public class CharacterData implements CharacterSummary {
         List<CharacterAbilityRecord> charAbilityList = characterRecord.getCharacterAbilityRecordList();
         List<CharacterSaveRecord> charSaveList = characterRecord.getCharacterSaveRecordList();
 
-        //???????
+        //更新時間を記録
         Date date = new Date();
         characterRecord.setSaveTime(date);
 
-        //??
+        //更新
         characterRecordFacade.edit(characterRecord);
         characterEquipmentFacade.edit(equip);
         for (CharacterGrowthRecord growth : growthList) {
@@ -1730,10 +1699,10 @@ public class CharacterData implements CharacterSummary {
 
         int bonus = getAbilityModifierById(CON);
         for (CharacterGrowthRecord growth : growthList) {
-            // ???????????????????????
+            // 経験値から見たキャラクタレベルだけで判断する。
             if (growth.getCharacterGrowthRecordPK().getCharacterLevel() == getLevel()) {
                 if (growth.getClassId() == null) {
-                    return ("???");
+                    return ("未設定");
                 }
                 str.append(getLevel());
                 str.append(growth.getClassId().getHitDiceType().getName());
@@ -1771,13 +1740,13 @@ public class CharacterData implements CharacterSummary {
 
     @Override
     public String getSkills() {
-        return "???: " + getSkillTotalCheckModifierById(4) + "<br>"
-                + "???: " + getSkillTotalCheckModifierById(7) + "<br>"
-                + "??: " + getSkillTotalCheckModifierById(13) + "<br>"
-                + "??: " + getSkillTotalCheckModifierById(14) + "<br>"
-                + "???: " + getSkillTotalCheckModifierById(15) + "<br>"
-                + "????: " + getSkillTotalCheckModifierById(21) + "<br>"
-                + "??: " + getSkillTotalCheckModifierById(28);
+        return "隠れ身: " + getSkillTotalCheckModifierById(4) + "<br>"
+                + "聞き耳: " + getSkillTotalCheckModifierById(7) + "<br>"
+                + "交渉: " + getSkillTotalCheckModifierById(13) + "<br>"
+                + "視認: " + getSkillTotalCheckModifierById(14) + "<br>"
+                + "忍び足: " + getSkillTotalCheckModifierById(15) + "<br>"
+                + "真意看破: " + getSkillTotalCheckModifierById(21) + "<br>"
+                + "捜索: " + getSkillTotalCheckModifierById(28);
     }
 
     @Override
@@ -1808,15 +1777,15 @@ public class CharacterData implements CharacterSummary {
     @Override
     public String getSpaceAndReach() {
         return characterRecord.getRaceId().getSizeId().getContactSpace()
-                + "????/"
+                + "フィート/"
                 + characterRecord.getRaceId().getSizeId().getReach()
-                + "????";
+                + "フィート";
 
     }
 
     @Override
     public String getSizeAndType() {
-        return getSize() + "????" + getType();
+        return getSize() + "サイズの" + getType();
     }
 
     @Override
