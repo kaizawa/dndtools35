@@ -79,6 +79,11 @@ public class CharacterRecord implements Serializable {
     private String characterName;
     @Column(name = "PLAYER_NAME")
     private String playerName;
+    @JoinColumn(name = "PLAYER_ID", referencedColumnName = "ID")
+    @ManyToOne    
+    private PlayerMaster playerId;
+    @Column(name = "SECRET")
+    private Integer secret;
     @Column(name = "EXPERIENCE")
     private Integer experience;
     @Column(name = "AGE")
@@ -155,6 +160,26 @@ public class CharacterRecord implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "characterRecord")
     private List<CharacterSkillRecord> characterSkillRecordList;
 
+    public PlayerMaster getPlayerId ()
+    {
+        return playerId;
+    }
+
+    public void setPlayerId (PlayerMaster playerId)
+    {
+        this.playerId = playerId;
+    }
+
+    public boolean isSecret ()
+    {
+        return secret != 0;
+    }
+
+    public void setSecret (boolean secret)
+    {
+        this.secret = secret ? 1 : 0;
+    }
+    
     public List<CharacterAbilityRecord> getCharacterAbilityRecordList() {
         return characterAbilityRecordList;
     }
