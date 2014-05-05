@@ -516,8 +516,17 @@
                              text-align: center; vertical-align: middle; width: 100%">
                   <h:outputText id="outputText190"
                                 style="background-color: rgb(51,51,51); color: rgb(255, 255, 255); font-size: 14px" 
-                                value="攻撃方法"/>
+                                value="攻撃方法"/> 
                   <h:panelGrid columns="3" id="attackGridPanel1" style="height: 100%; width: 100%">
+                      
+                    <h:outputText style=" height: 100%; width: 70px" 
+                                  styleClass="tableTitleBlackMiddle" value="基本攻撃ボーナス修正値"/>
+                    <h:outputText value=""/>
+                    <h:panelGrid columns="1" style="height: 100%; width: 260px" styleClass="w">
+                        <h:inputText style="text-align: right"
+                                     value="#{characterSheetController.characterData.baseAttackModifier}"/>
+                    </h:panelGrid>
+                    
                     <h:panelGrid id="gridPanel64" style=" height: 100%; width: 70px" styleClass="tableTitleBlackMiddle">
                       <h:outputText id="outputText191" value="近接攻撃"/>
                     </h:panelGrid>
@@ -532,7 +541,7 @@
                       <h:outputText id="outputText196" 
                                     value="#{characterSheetController.characterData.attackBonusStrengthBonus}"/>
                       <h:outputText id="outputText197" style="font-size: 10px" value="筋力"/>
-                    </h:panelGrid>
+                    </h:panelGrid>                                            
                     <h:panelGrid id="gridPanel67" style="height: 100%; width: 70px" 
                                  styleClass="tableTitleBlackMiddle">
                       <h:outputText id="outputText198" value="遠隔攻撃"/>

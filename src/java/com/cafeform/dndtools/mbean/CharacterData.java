@@ -938,6 +938,11 @@ public class CharacterData implements CharacterSummary {
      */
     public Integer getBaseAttackTotal() {
         int baseAttack = 0;
+        if(characterRecord.getBaseAtachModifier() != null)
+        {
+            // BAB modifier specific for this chara
+            baseAttack += characterRecord.getBaseAtachModifier();
+        }
         //クラスのリストをつくり、各クラスのレベルを計算する
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
         Map<ClassMaster, Integer> classMap = new HashMap<ClassMaster, Integer>();
@@ -1947,5 +1952,15 @@ public class CharacterData implements CharacterSummary {
     public boolean isSecret ()
     {
         return characterRecord.isSecret();
+    }
+    
+    public void setBaseAttackModifier(int modifier)
+    {
+        characterRecord.setBaseAtachModifier(modifier);
+    }
+    
+    public int getBaseAttackModifier()
+    {
+        return characterRecord.getBaseAtachModifier();
     }
 }

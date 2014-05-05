@@ -324,11 +324,13 @@ public class CharacterSheetController implements Serializable {
         //  CharacterRecord の作成
         ////////////////////////////////
         CharacterRecord characterRecord = new CharacterRecord();
-        //経験値を0にセット
+        // Set default values
         characterRecord.setExperience(0);
         characterRecord.setAcArmor(0);
         characterRecord.setAcMiscMod(0);
         characterRecord.setAcShield(0);
+        characterRecord.setSecret(false);
+        characterRecord.setBaseAtachModifier(0);
         // もし選択されていれば現在選択しているキャンペーンをデフォルト値としてセット
         if (getSelectedCampaign() != null) {
             campaign = getSelectedCampaign();
