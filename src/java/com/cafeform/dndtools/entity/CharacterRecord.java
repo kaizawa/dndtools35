@@ -159,6 +159,18 @@ public class CharacterRecord implements Serializable {
     private List<CharacterSkillGrowthRecord> characterSkillGrowthRecordList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "characterRecord")
     private List<CharacterSkillRecord> characterSkillRecordList;
+    @Column(name = "BASE_ATTACK_MODIFIER")
+    private Integer baseAtachModifier;
+
+    public Integer getBaseAtachModifier ()
+    {
+        return baseAtachModifier;
+    }
+
+    public void setBaseAtachModifier (Integer baseAtachModifier)
+    {
+        this.baseAtachModifier = baseAtachModifier;
+    }
 
     public PlayerMaster getPlayerId ()
     {

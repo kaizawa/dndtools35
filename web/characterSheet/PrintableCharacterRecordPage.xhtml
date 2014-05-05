@@ -371,6 +371,14 @@
               <h:panelGrid id="attackgridPanel" style="font-size: 12px; text-align: center; vertical-align: middle; width: 100%">
                 <h:outputText id="outputText89" style="font-size: 14px" value="攻撃方法"/>
                 <h:panelGrid columns="3" id="meleeGridPanel" style="height: 100%; width: 100%">
+                                    
+                <h:outputText style=" height: 100%; width: 70px" 
+                              styleClass="tableTitleBlackMiddlePrint" value="基本攻撃ボーナス修正値"/>
+                <h:outputText value=""/>
+                <h:panelGrid columns="1" style="height: 100%; width: 260px" styleClass="gPrint">
+                    <h:inputText style="text-align: right"
+                                 value="#{characterSheetController.characterData.baseAttackModifier}"/>
+                </h:panelGrid>
                   <h:panelGrid id="gridPanel54" style=" height: 100%; width: 70px" styleClass="tableTitleBlackMiddlePrint">
                     <h:outputText id="outputText148" value="近接攻撃"/>
                   </h:panelGrid>
