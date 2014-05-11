@@ -23,6 +23,7 @@
           <h:selectOneMenu id="sizeId" value="#{monsterMasterController.selected.sizeId}">   
             <f:selectItem itemValue="" itemLabel="未選択"/>
             <f:selectItems value="#{applicationController.sizeList}"/>
+            <f:converter converterId="sizeMasterConverter" />
           </h:selectOneMenu> 
           <h:outputLabel value="種別" for="type" />                    
           <h:selectOneMenu id="type" value="#{monsterMasterController.selected.type}">
@@ -138,9 +139,10 @@
           <h:inputText id="treasure" value="#{monsterMasterController.selected.treasure}" />
           <h:outputLabel value="強大化" for="advancement" />
           <h:inputText id="advancement" value="#{monsterMasterController.selected.advancement}"/>
-          <h:outputLabel value="属性" for="alignment" />
+          <h:outputLabel value="属性" for="alignment" />          
           <h:selectOneMenu id="alignment" value="#{monsterMasterController.selected.alignment}" >
             <f:selectItem itemValue="" itemLabel="未選択"/>
+            <f:converter converterId="alignmentMasterConverter" />
             <f:selectItems value="#{applicationController.alignmentList}"/>
           </h:selectOneMenu>  
           <h:outputLabel value="レベル調整値" for="alignment" />

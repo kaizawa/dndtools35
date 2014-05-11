@@ -28,20 +28,20 @@ public class EncounterToolController extends CharacterSheetController {
         this.characterSummaryTable = hdt;
     }
     
-    private NumberConverter numberConverter1 = new NumberConverter();
+    private NumberConverter numberConverter = new NumberConverter();
 
-    public NumberConverter getNumberConverter1() {
-        return numberConverter1;
+    public NumberConverter getNumberConverter() {
+        return numberConverter;
     }
 
-    public void setNumberConverter1(NumberConverter nc) {
-        this.numberConverter1 = nc;
+    public void setNumberConverter(NumberConverter nc) {
+        this.numberConverter = nc;
     }
 
     protected void _init() throws Exception {
-        numberConverter1.setMinIntegerDigits(1);
-        numberConverter1.setMaxIntegerDigits(40);
-        numberConverter1.setMaxFractionDigits(3);
+        numberConverter.setMinIntegerDigits(1);
+        numberConverter.setMaxIntegerDigits(40);
+        numberConverter.setMaxFractionDigits(3);
     }
 
     public String charalist_action() {

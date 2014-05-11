@@ -17,7 +17,7 @@ public abstract class ConverterImpl<T> implements Converter {
         return key;
     }
 
-    String getStringKey(java.lang.Integer value) {
+    String getStringKey(Integer value) {
         StringBuilder sb = new StringBuilder();
         sb.append(value);
         return sb.toString();

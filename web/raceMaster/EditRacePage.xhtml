@@ -24,14 +24,18 @@
                         <h:panelGrid columns="2" id="gridPanel8" style="height: 100%; width: 100%">
                             <h:panelGrid id="leftGridPanel1" style=" width: 100%">
                                 <h:panelGrid columns="2" id="nameGrid" styleClass="tableGrid">
-                                    <h:outputText id="outputText2" style="color: rgb(255, 255, 255); font-size: 18px" value="種族名"/>
+                                    <h:outputText id="outputText2" style="color: rgb(255, 255, 255); font-size: 18px" 
+                                                  value="種族名"/>
                                     <h:inputText id="textField1" required="true" requiredMessage="クラス名を入力して下さい"
-                                                 style="font-size: 18px; width: 600px" value="#{raceMasterController.raceMaster.raceName}"/>
+                                                 style="font-size: 18px; width: 600px" 
+                                                 value="#{raceMasterController.raceMaster.raceName}"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="4" headerClass="tableTitleBlackMiddle" id="sizeAndSpeedGrid"
-                                             rowClasses="tableTitleBlackMiddle" style="height: 100%; width: 100%" styleClass="tableGrid">
+                                             rowClasses="tableTitleBlackMiddle" style="height: 100%; width: 100%" 
+                                             styleClass="tableGrid">
                                     <h:outputText id="outputText15" value="サイズ"/>
-                                    <h:selectOneMenu id="dropdown1" required="true" requiredMessage="サイズを指定してください。" value="#{raceMasterController.selectedSize}">
+                                    <h:selectOneMenu id="dropdown1" required="true" requiredMessage="サイズを指定してください。" 
+                                                     value="#{raceMasterController.selectedSize}">
                                         <f:selectItems id="dropdown1SelectItems" value="#{applicationController.sizeArray}"/>
                                     </h:selectOneMenu>
                                     <h:outputText id="outputText16" value="移動速度"/>

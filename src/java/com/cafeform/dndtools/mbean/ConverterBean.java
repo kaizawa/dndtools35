@@ -19,6 +19,7 @@ import com.cafeform.dndtools.ejb.SaveMasterFacade;
 import com.cafeform.dndtools.ejb.SizeMasterFacade;
 import com.cafeform.dndtools.ejb.SkillMasterFacade;
 import com.cafeform.dndtools.ejb.TypeMasterFacade;
+import com.cafeform.dndtools.entity.AlignmentMaster;
 import com.cafeform.dndtools.entity.ArmType1Master;
 import com.cafeform.dndtools.entity.ArmType2Master;
 import com.cafeform.dndtools.entity.ArmType3Master;
@@ -249,8 +250,12 @@ public class ConverterBean implements Serializable {
         }
     }
     
+    public AlignmentMaster getAlignmentMaster (Integer id) 
+    {
+        return alignmentMasterFacade.find(id);
+    }
     
-    public SizeMaster getSizeMaster(java.lang.Integer id) {
+    public SizeMaster getSizeMaster(Integer id) {
         return sizeMasterFacade.find(id);
     }
 
