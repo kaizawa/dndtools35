@@ -20,20 +20,6 @@
                              style="font-size: 12px" value="新キャラクター作成"/>
             </h:panelGrid>
           </h:panelGrid>
-          <!--
-          <p:dataTable var="chara" 
-                       value="#{sessionController.characterDataList}" 
-                       widgetVar="charaTable" 
-                       sortBy="#{chara.lastChange}"
-                       resizableColumns="true"
-                       draggableColumns="true"
-                       emptyMessage="指定された条件に合うキャラクターは見つかりませんでした" 
-                       rowKey="#{chara.id}"
-                       paginator="true" 
-                       selection="#{sessionController.checkedCharacterList}"           
-                       filteredValue="#{sessionController.filteredCharacterData}"                       
-                       rows="10">
-          -->
           <p:dataTable id="dataTable" 
                        var="chara" 
                        value="#{sessionController.characterDataList}" 
@@ -52,7 +38,7 @@
               <h:commandLink action="#{characterSheetController.charaEditLink_action}"
                              style="font-weight: bold;" >
                 <h:outputText value="#{chara.characterName}"/>
-                <f:setPropertyActionListener value="#{chara}" target="#{sessionController.characterData}"/>  
+                <f:setPropertyActionListener value="#{chara}" target="#{sessionController.creatureData}"/>  
               </h:commandLink>
             </p:column> 
             <p:column headerText="プレイヤー" filterBy="#{chara.playerName}"

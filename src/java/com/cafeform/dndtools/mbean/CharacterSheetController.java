@@ -137,18 +137,26 @@ public class CharacterSheetController implements Serializable {
     public CampaignMaster getSelectedCampaign() {
         return getSessionController().getSelectedCampaign();
     }
+    
+    public CreatureData getCreatureData() {
+        return sessionController.getCreatureData();
+    }
 
-    public CharacterData getCharacterData() {
+    public void setCreatureData(CreatureData creatureData) {
+        sessionController.setCreatureData(creatureData);
+    }
+
+    public CharacterData getCharacterData_DO_NOT_USE() {
         return sessionController.getCharacterData();
     }
 
-    public void setCharacterData(CharacterData characterData) {
+    public void setCharacterData_DO_NOT_USE(CharacterData characterData) {
         sessionController.setCharacterData(characterData);
     }
     // キャラクタの削除ボタンを有効比するかどうかの判定。使ってないか？
 
     public boolean isDeleteButtonDisabled() {
-        if (getCharacterData().getId() == null) {
+        if (getCreatureData().getId() == null) {
             return true;
         } else {
             return false;
@@ -168,19 +176,19 @@ public class CharacterSheetController implements Serializable {
     }
 
     public Integer getCampaign() {
-        if (getCharacterData().getCampaignId() == null) {
+        if (getCreatureData().getCampaignId() == null) {
             return null;
         }
-        return getCharacterData().getCampaignId().getId();
+        return getCreatureData().getCampaignId().getId();
     }
 
     public void setCampaign(Integer campaignId) {
         if (campaignId == null) {
-            getCharacterData().setCampaignId(null);
+            getCreatureData().setCampaignId(null);
             return;
         }
         CampaignMaster campaign = campaignMasterFacade.find(campaignId);
-        getCharacterData().setCampaignId(campaign);
+        getCreatureData().setCampaignId(campaign);
     }
     /*
      * 選択された属性
@@ -188,19 +196,19 @@ public class CharacterSheetController implements Serializable {
     Integer selectedAlignment;
 
     public Integer getSelectedAlignment() {
-        if (getCharacterData().getAlignmentId() == null) {
+        if (getCreatureData().getAlignmentId() == null) {
             return null;
         }
-        return getCharacterData().getAlignmentId().getId();
+        return getCreatureData().getAlignmentId().getId();
     }
 
     public void setSelectedAlignment(Integer selectedAlignment) {
         if (selectedAlignment == null) {
-            getCharacterData().setAlignmentId(null);
+            getCreatureData().setAlignmentId(null);
             return;
         }
         AlignmentMaster alignment = alignmentMasterFacade.find(selectedAlignment);
-        getCharacterData().setAlignmentId(alignment);
+        getCreatureData().setAlignmentId(alignment);
     }
     /*
      * 選択された種族
@@ -208,19 +216,19 @@ public class CharacterSheetController implements Serializable {
     Integer selectedRace;
 
     public Integer getSelectedRace() {
-        if (getCharacterData().getRaceId() == null) {
+        if (getCreatureData().getRaceId() == null) {
             return null;
         }
-        return getCharacterData().getRaceId().getId();
+        return getCreatureData().getRaceId().getId();
     }
 
     public void setSelectedRace(Integer selectedRace) {
         if (selectedRace == null) {
-            getCharacterData().setRaceId(null);
+            getCreatureData().setRaceId(null);
             return;
         }
         RaceMaster race = raceMasterFacade.find(selectedRace);
-        getCharacterData().setRaceId(race);
+        getCreatureData().setRaceId(race);
     }
 
     /*
@@ -229,19 +237,19 @@ public class CharacterSheetController implements Serializable {
     Integer selectedGender;
 
     public Integer getSelectedGender() {
-        if (getCharacterData().getGenderId() == null) {
+        if (getCreatureData().getGenderId() == null) {
             return null;
         }
-        return getCharacterData().getGenderId().getId();
+        return getCreatureData().getGenderId().getId();
     }
 
     public void setSelectedGender(Integer selectedGender) {
         if (selectedGender == null) {
-            getCharacterData().setGenderId(null);
+            getCreatureData().setGenderId(null);
             return;
         }
         GenderMaster gender = genderMasterFacade.find(selectedGender);
-        getCharacterData().setGenderId(gender);
+        getCreatureData().setGenderId(gender);
     }
     /*
      * 選択された神格
@@ -249,19 +257,19 @@ public class CharacterSheetController implements Serializable {
     Integer selectedReligion;
 
     public Integer getSelectedReligion() {
-        if (getCharacterData().getReligionId() == null) {
+        if (getCreatureData().getReligionId() == null) {
             return null;
         }
-        return getCharacterData().getReligionId().getId();
+        return getCreatureData().getReligionId().getId();
     }
 
     public void setSelectedReligion(Integer selectedReligion) {
         if (selectedReligion == null) {
-            getCharacterData().setReligionId(null);
+            getCreatureData().setReligionId(null);
             return;
         }
         ReligionMaster religion = religionMasterFacade.find(selectedReligion);
-        getCharacterData().setReligionId(religion);
+        getCreatureData().setReligionId(religion);
     }
     // キャラクタ編集画面で選択されたレベル値
     private Integer editCharacterPageSelectedLevel;
@@ -461,7 +469,7 @@ public class CharacterSheetController implements Serializable {
         characterRecordFacade.edit(characterRecord);
 
         //セッションBeanにキャラクターレコードをセット
-        setCharacterData(new CharacterData(characterRecord));
+        setCreatureData(new CharacterData(characterRecord));
         return "EditCharacterRecordPage";
     }
 
@@ -539,23 +547,23 @@ public class CharacterSheetController implements Serializable {
     }
 
     public String saveButton_action() {
-        CharacterData charaData = getCharacterData();
+        CreatureData creatureData = getCreatureData();
 
         try {
-            validateCharaData(charaData);
+            validateCreatureData(creatureData);
         } catch (Exception ex) 
         {
             JsfUtil.addSuccessMessage(ex.getMessage());
             return null;                    
         }
         
-        CharacterEquipment equip = charaData.getCharacterEquipment();
-        List<CharacterSkillRecord> skillRecordList = charaData.getCharacterSkillRecordList();
-        List<CharacterSkillGrowthRecord> skillGrowthList = charaData.getCharacterSkillGrowthRecordList();
-        List<CharacterGrowthRecord> growthList = charaData.getCharacterGrowthRecordList();
-        List<CharacterAbilityRecord> abilityList = charaData.getCharacterAbilityRecordList();
-        List<CharacterSaveRecord> saveList = charaData.getCharacterSaveRecordList();
-        List<CharacterArmRecord> armRecordList = charaData.getCharacterRecord().getCharacterArmRecordList();
+        CharacterEquipment equip = creatureData.getCharacterEquipment();
+        List<CharacterSkillRecord> skillRecordList = creatureData.getCharacterSkillRecordList();
+        List<CharacterSkillGrowthRecord> skillGrowthList = creatureData.getCharacterSkillGrowthRecordList();
+        List<CharacterGrowthRecord> growthList = creatureData.getCharacterGrowthRecordList();
+        List<CharacterAbilityRecord> abilityList = creatureData.getCharacterAbilityRecordList();
+        List<CharacterSaveRecord> saveList = creatureData.getCharacterSaveRecordList();
+        List<CharacterArmRecord> armRecordList = creatureData.getCharacterRecord().getCharacterArmRecordList();
 
         /*
          * セーブ時には 順番を変えるためにキャラクターリストの一覧を再生性する
@@ -567,12 +575,12 @@ public class CharacterSheetController implements Serializable {
 
         //更新時間を記録
         Date date = new Date();
-        charaData.setSaveTime(date);
+        creatureData.setSaveTime(date);
 
         try {
-            charaData.updateGrowthRecord();            
+            creatureData.updateGrowthRecord();            
             // CharacterRecord(CHARACTER_RECORD)の更新            
-            characterRecordFacade.edit(charaData.getCharacterRecord());
+            characterRecordFacade.edit(creatureData.getCharacterRecord());
             characterEquipmentFacade.edit(equip);
             for (CharacterGrowthRecord growth : growthList) {
                 characterGrowthRecordFacade.edit(growth);
@@ -598,14 +606,14 @@ public class CharacterSheetController implements Serializable {
             JsfUtil.addSuccessMessage("キャラクターの保存に失敗しました");
             return null;
         }
-        setCharacterData(charaData);
+        setCreatureData(creatureData);
         return null;
     }
 
     public String editCharaDeleteButton_action() {
 
         try {
-            characterRecordFacade.remove(getCharacterData().getCharacterRecord());
+            characterRecordFacade.remove(getCreatureData().getCharacterRecord());
         } catch (Exception ex) {
             JsfUtil.addSuccessMessage("削除に失敗しました");
             return null;
@@ -621,12 +629,12 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getAbilityBase() {
         int abid = abilityTable.getRowIndex() + 1;
-        return getCharacterData().getAbilityBaseById(abid);
+        return getCreatureData().getAbilityBaseById(abid);
     }
 
     public void setAbilityBase(Integer newVal) {
         int ability = abilityTable.getRowIndex() + 1;
-        getCharacterData().setAbilityBaseById(ability, newVal);
+        getCreatureData().setAbilityBaseById(ability, newVal);
     }
 
     /**
@@ -634,16 +642,16 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getAbilityMiscModifier() {
         int abid = abilityTable.getRowIndex() + 1;
-        return getCharacterData().getAbilityMiscModifierById(abid);
+        return getCreatureData().getAbilityMiscModifierById(abid);
     }
 
     public void setAbilityMiscModifier(Integer newVal) {
         int ability = abilityTable.getRowIndex() + 1;
-        getCharacterData().setAbilityMiscModifierById(ability, newVal);
+        getCreatureData().setAbilityMiscModifierById(ability, newVal);
     }
 
     public void setAbilityMiscModifierById(int id, Integer newVal) {
-        getCharacterData().getCharacterAbilityRecordList().get(id - 1).setMiscModifier(newVal);
+        getCreatureData().getCharacterAbilityRecordList().get(id - 1).setMiscModifier(newVal);
     }
 
     /*
@@ -651,12 +659,12 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getAbilityFeatModifier() {
         int abid = abilityTable.getRowIndex() + 1;
-        return getCharacterData().getAbilityFeatModifierById(abid);
+        return getCreatureData().getAbilityFeatModifierById(abid);
     }
 
     public void setAbilityFeatModifier(Integer newVal) {
         int ability = abilityTable.getRowIndex() + 1;
-        getCharacterData().setAbilityFeatModifierById(ability, newVal);
+        getCreatureData().setAbilityFeatModifierById(ability, newVal);
     }
 
     /*
@@ -665,7 +673,7 @@ public class CharacterSheetController implements Serializable {
     public Integer getAbilityRaceModifier() {
         int abid = abilityTable.getRowIndex() + 1;
 
-        return getCharacterData().getAbilityRaceModifierById(abid);
+        return getCreatureData().getAbilityRaceModifierById(abid);
     }
 
     /*
@@ -673,7 +681,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getAbilityLevelModifier() {
         int abid = abilityTable.getRowIndex() + 1;
-        return getCharacterData().getAbilityLevelModifierById(abid);
+        return getCreatureData().getAbilityLevelModifierById(abid);
     }
 
     /*
@@ -681,7 +689,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getAbilityTotal() {
         int abid = abilityTable.getRowIndex() + 1;
-        return getCharacterData().getAbilityTotalById(abid);
+        return getCreatureData().getAbilityTotalById(abid);
     }
 
     /*
@@ -689,7 +697,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getAbilityModifier() {
         int ability = abilityTable.getRowIndex() + 1;
-        return getCharacterData().getAbilityModifierById(ability);
+        return getCreatureData().getAbilityModifierById(ability);
     }
 
     /*
@@ -697,7 +705,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getSkillAbilityModifier() {
         int skill = skillTable.getRowIndex() + 1;
-        return getCharacterData().getSkillAbilityModifierById(skill);
+        return getCreatureData().getSkillAbilityModifierById(skill);
     }
 
     /*
@@ -705,7 +713,7 @@ public class CharacterSheetController implements Serializable {
      */
     public String getSkillAbilityName() {
         int skill = skillTable.getRowIndex() + 1;
-        return getCharacterData().getSkillAbilityNameById(skill);
+        return getCreatureData().getSkillAbilityNameById(skill);
     }
 
     /*
@@ -713,7 +721,7 @@ public class CharacterSheetController implements Serializable {
      */
     public String getSkillAbilityShortName() {
         int skill = skillTable.getRowIndex() + 1;
-        return getCharacterData().getSkillAbilityShortNameById(skill);
+        return getCreatureData().getSkillAbilityShortNameById(skill);
     }
 
     /*
@@ -721,7 +729,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getSkillTotalPoint() {
         int skill = skillTable.getRowIndex() + 1;
-        return getCharacterData().getSkillTotalPointById(skill);
+        return getCreatureData().getSkillTotalPointById(skill);
     }
 
     /*
@@ -741,7 +749,7 @@ public class CharacterSheetController implements Serializable {
     public Integer getSkillMiscModifier() {
         Integer result;
         int index = skillTable.getRowIndex();
-        List<CharacterSkillRecord> skillRecordList = getCharacterData().getCharacterSkillRecordList();
+        List<CharacterSkillRecord> skillRecordList = getCreatureData().getCharacterSkillRecordList();
         // skillTable の RowIndex と List の index は同一の特技をさしているはず
         result = skillRecordList.get(index).getMiscModifier();
         if (result == null) {
@@ -753,7 +761,7 @@ public class CharacterSheetController implements Serializable {
 
     public void setSkillMiscModifier(Integer skillMiscModifier) {
         int index = skillTable.getRowIndex();
-        List<CharacterSkillRecord> skillRecord = getCharacterData().getCharacterSkillRecordList();
+        List<CharacterSkillRecord> skillRecord = getCreatureData().getCharacterSkillRecordList();
         // skillTable の RowIndex と List の index は同一の特技をさしているはず
         skillRecord.get(index).setMiscModifier(skillMiscModifier);
     }
@@ -767,7 +775,7 @@ public class CharacterSheetController implements Serializable {
         int result;
         int skillId = skillTable.getRowIndex() + 1;
 
-        result = getCharacterData().getSkillTotalRankById(skillId);
+        result = getCreatureData().getSkillTotalRankById(skillId);
         return result;
     }
 
@@ -779,7 +787,7 @@ public class CharacterSheetController implements Serializable {
 
     public String getSkillCheckAcceptNoRank() {
         int skill = skillTable.getRowIndex() + 1;
-        if (getCharacterData().isSkillAcceptNoRankBySkillId(skill)) {
+        if (getCreatureData().isSkillAcceptNoRankBySkillId(skill)) {
             return "■";
         } else {
             return "□";
@@ -793,7 +801,7 @@ public class CharacterSheetController implements Serializable {
     public Integer getSkillArmorModifier() {
         Integer result;
         int skillId = skillTable.getRowIndex() + 1;
-        result = getCharacterData().getSkillArmorModifierById(skillId);
+        result = getCreatureData().getSkillArmorModifierById(skillId);
         return result;
     }
 
@@ -803,7 +811,7 @@ public class CharacterSheetController implements Serializable {
     public Integer getSkillSynergyModifier() {
         Integer result;
         int skillId = skillTable.getRowIndex() + 1;
-        result = getCharacterData().getSkillSynergyModifierById(skillId);
+        result = getCreatureData().getSkillSynergyModifierById(skillId);
         return result;
     }
 
@@ -815,9 +823,9 @@ public class CharacterSheetController implements Serializable {
         SkillMaster skill = applicationController.getSkillBySkillId(skillId);
         ClassMaster klass;
 
-        List<CharacterGrowthRecord> growthList = getCharacterData().getCharacterGrowthRecordList();
+        List<CharacterGrowthRecord> growthList = getCreatureData().getCharacterGrowthRecordList();
 
-        if (getCharacterData().hasSkillRankBySkill(skill)) {
+        if (getCreatureData().hasSkillRankBySkill(skill)) {
             return "■";
         }
         return "□";
@@ -828,7 +836,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getSelectedClassByRow() {
         int index = growthTable.getRowIndex();
-        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+        CharacterGrowthRecord growth = getCreatureData().getCharacterGrowthRecordList().get(index);
         if (growth.getClassId() == null) {
             return null;
         } else {
@@ -839,7 +847,7 @@ public class CharacterSheetController implements Serializable {
 
     public void setSelectedClassByRow(Integer classId) {
         int index = growthTable.getRowIndex();
-        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+        CharacterGrowthRecord growth = getCreatureData().getCharacterGrowthRecordList().get(index);
         ClassMaster klass;
 
         if (classId == null) {
@@ -856,7 +864,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getSelectedAbilityEnhancementByRow() {
         int index = growthTable.getRowIndex();
-        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+        CharacterGrowthRecord growth = getCreatureData().getCharacterGrowthRecordList().get(index);
         if (growth.getAbilityEnhancement() == null) {
             return null;
         } else {
@@ -866,7 +874,7 @@ public class CharacterSheetController implements Serializable {
 
     public void setSelectedAbilityEnhancementByRow(Integer abilityId) {
         int index = growthTable.getRowIndex();
-        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+        CharacterGrowthRecord growth = getCreatureData().getCharacterGrowthRecordList().get(index);
 
         if (abilityId == null) {
             growth.setAbilityEnhancement(null);
@@ -881,7 +889,7 @@ public class CharacterSheetController implements Serializable {
     public String editSkillButton_action() {
         int index = growthTable.getRowIndex();
         // Lv とキャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする
-        getSessionController().setCharacterGrowthRecord(getCharacterData().getCharacterGrowthRecordList().get(index));
+        getSessionController().setCharacterGrowthRecord(getCreatureData().getCharacterGrowthRecordList().get(index));
         return "EditCharacterPerLevelPage";
     }
 
@@ -890,7 +898,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getSaveAbilityModifier() {
         int saveId = saveTable.getRowIndex() + 1;
-        return getCharacterData().getSaveAbilityModifierById(saveId);
+        return getCreatureData().getSaveAbilityModifierById(saveId);
     }
 
     /*
@@ -900,7 +908,7 @@ public class CharacterSheetController implements Serializable {
 
     public Integer getSaveClassBonus() {
         int saveId = saveTable.getRowIndex() + 1;
-        return getCharacterData().getSaveClassBonusById(saveId);
+        return getCreatureData().getSaveClassBonusById(saveId);
     }
 
     /*
@@ -908,12 +916,12 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getSaveMiscModifier() {
         int saveId = saveTable.getRowIndex() + 1;
-        return getCharacterData().getSaveMiscModifierById(saveId);
+        return getCreatureData().getSaveMiscModifierById(saveId);
     }
 
     public void setSaveMiscModifier(Integer miscModifier) {
         int saveId = saveTable.getRowIndex() + 1;
-        CharacterSaveRecord saveRecord = getCharacterData().getCharacterSaveRecordList().get(saveId - 1);
+        CharacterSaveRecord saveRecord = getCreatureData().getCharacterSaveRecordList().get(saveId - 1);
         saveRecord.setMiscModifier(miscModifier);
     }
 
@@ -922,7 +930,7 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getSaveRaceModifier() {
         int saveId = saveTable.getRowIndex() + 1;
-        return getCharacterData().getSaveRaceModifierById(saveId);
+        return getCreatureData().getSaveRaceModifierById(saveId);
     }
 
     /*
@@ -930,14 +938,14 @@ public class CharacterSheetController implements Serializable {
      */
     public Integer getSaveTotal() {
         int saveId = saveTable.getRowIndex() + 1;
-        return getCharacterData().getSaveTotalById(saveId);
+        return getCreatureData().getSaveTotalById(saveId);
     }
 
     /*
      * イニシアチブ 技能修正
      */
     public Integer getInitiativeFeatModifier() {
-        Integer mod = getCharacterData().getInitiativeFeatModifier();
+        Integer mod = getCreatureData().getInitiativeFeatModifier();
         if (mod == null) {
             return new Integer(0);
         }
@@ -945,11 +953,11 @@ public class CharacterSheetController implements Serializable {
     }
 
     public void setInitiativeFeatModifier(Integer modifier) {
-        getCharacterData().setInitiativeFeatModifier(modifier);
+        getCreatureData().setInitiativeFeatModifier(modifier);
     }
 
     public void setSpeedFeatModifier(Integer speedFeatModifier) {
-        getCharacterData().setSpeedFeatModifier(speedFeatModifier);
+        getCreatureData().setSpeedFeatModifier(speedFeatModifier);
     }
 
     public void textField13_processValueChange(ValueChangeEvent vce) {
@@ -960,7 +968,7 @@ public class CharacterSheetController implements Serializable {
      */
     public String editSkillNomalButton_action() {
         // キャラクターレコードを元に、キャラクター成長レコードを得、セッションBeanにセットする。Lv は 1 固定
-        getSessionController().setCharacterGrowthRecord(getCharacterData()
+        getSessionController().setCharacterGrowthRecord(getCreatureData()
             .getCharacterGrowthRecordList().get(0));
         return "EditCharacterPerLevelPage";
     }
@@ -978,7 +986,7 @@ public class CharacterSheetController implements Serializable {
     }
 
     public String editCharaCancelButton_action() {
-        if (getCharacterData().getSaveTime() == null) {
+        if (getCreatureData().getSaveTime() == null) {
             return editCharaDeleteButton_action();
         } else {
             return "CharacterListPage";
@@ -994,9 +1002,9 @@ public class CharacterSheetController implements Serializable {
      */
     /*
      * public String getArm1 (){ ArmMaster arm1 =
-     * getCharacterData().getCharacterEquipment().getArm1(); if(arm1 != null) {
+     * getCreatureData().getCharacterEquipment().getArm1(); if(arm1 != null) {
      * return arm1.getName(); } return "未装備"; } public String getArm2 (){
-     * ArmMaster arm2 = getCharacterData().getCharacterEquipment().getArm2();
+     * ArmMaster arm2 = getCreatureData().getCharacterEquipment().getArm2();
      * if(arm2 != null) { return arm2.getName(); } return "未装備"; }
      */
     
@@ -1006,8 +1014,8 @@ public class CharacterSheetController implements Serializable {
      */
     public Boolean isTriableSkill() {
         SkillMaster skill = (SkillMaster) skillTable.getRowData();
-        return getCharacterData().isSkillAcceptNoRankBySkillId(skill.getId())
-                || getCharacterData().hasSkillRankBySkill(skill);
+        return getCreatureData().isSkillAcceptNoRankBySkillId(skill.getId())
+                || getCreatureData().hasSkillRankBySkill(skill);
     }
 
     /**
@@ -1115,7 +1123,7 @@ public class CharacterSheetController implements Serializable {
     
     public List<CharacterArmRecord> getCharacterArmRecordList ()
     {
-        return getCharacterData().getCharacterRecord().getCharacterArmRecordList();
+        return getCreatureData().getCharacterRecord().getCharacterArmRecordList();
     }
     
     /*
@@ -1128,7 +1136,7 @@ public class CharacterSheetController implements Serializable {
     
     public String deleteArmButton_action (CharacterArmRecord armRecord)
     {
-        List<CharacterArmRecord> armList = getCharacterData().getCharacterRecord().getCharacterArmRecordList();
+        List<CharacterArmRecord> armList = getCreatureData().getCharacterRecord().getCharacterArmRecordList();
         armList.remove(armRecord);
         
         try 
@@ -1144,22 +1152,22 @@ public class CharacterSheetController implements Serializable {
     }
     
     public Integer getSelectedPlayer() {
-        if (getCharacterData().getPlayerId() == null) {
-            return null;
+        if (getCreatureData().getPlayerId() == null) {
+            return 0;
         }
-        return getCharacterData().getPlayerId().getId();
+        return getCreatureData().getPlayerId().getId();
     }
 
     public void setSelectedPlayer(Integer selectedPlyer) {
         if (selectedPlyer == null) {
-            getCharacterData().setReligionId(null);
+            getCreatureData().setReligionId(null);
             return;
         }
         PlayerMaster player = PlayerMasterFacade.find(selectedPlyer);
-        getCharacterData().setPlayerId(player);
+        getCreatureData().setPlayerId(player);
     }
 
-    private void validateCharaData (CharacterData charaData) throws Exception
+    private void validateCreatureData (CreatureData charaData) throws Exception
     {
         CharacterRecord oldData = 
                 characterRecordFacade.findById(charaData.getId());

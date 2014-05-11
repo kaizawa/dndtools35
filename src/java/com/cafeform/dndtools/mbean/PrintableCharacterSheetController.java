@@ -18,7 +18,7 @@ public class PrintableCharacterSheetController extends CharacterSheetController 
      */
     public String getSelectedClassNameByRow() {
         int index = growthTable.getRowIndex();
-        CharacterGrowthRecord growth = getCharacterData().getCharacterGrowthRecordList().get(index);
+        CharacterGrowthRecord growth = getCreatureData().getCharacterGrowthRecordList().get(index);
         if (growth.getClassId() == null) {
             return null;
         } else {
@@ -30,48 +30,48 @@ public class PrintableCharacterSheetController extends CharacterSheetController 
      * キャラクタ記述
      */
     public String getCharacterDescription() {
-        return textToHtml(getCharacterData().getDescription());
+        return textToHtml(getCreatureData().getDescription());
     }
     /*
      * スペル記述
      */
 
     public String getSpellDescription() {
-        return textToHtml(getCharacterData().getSpellDescription());
+        return textToHtml(getCreatureData().getSpellDescription());
     }
     /*
      * 防御記述
      */
 
     public String getDefenceDescription() {
-        return textToHtml(getCharacterData().getDefenceDescription());
+        return textToHtml(getCreatureData().getDefenceDescription());
     }
     /*
      * 攻撃記述
      */
 
     public String getAttackDescription() {
-        return textToHtml(getCharacterData().getAttackDescription());
+        return textToHtml(getCreatureData().getAttackDescription());
     }
     /*
      * アイテム記述
      */
 
     public String getItemDescription() {
-        return textToHtml(getCharacterData().getItemDescription());
+        return textToHtml(getCreatureData().getItemDescription());
     }
     /*
      * 特技記述
      */
 
     public String getFeatDescription() {
-        return textToHtml(getCharacterData().getFeatDescription());
+        return textToHtml(getCreatureData().getFeatDescription());
     }
     /*
      * クラスリスト
      */
     public String getClassList() {
-        return getCharacterData().getClassList();
+        return getCreatureData().getClassList();
     }
     
     public String getArmDescription(CharacterArmRecord armRecord)

@@ -276,4 +276,16 @@ public class SessionController  implements Serializable {
                 getPlayerMaster().getId().equals(charaRecord.getPlayerId().getId());
         return !charaRecord.isSecret() || isLoginPlayer;
     }
+
+    private CreatureData creatureData;
+    
+    public CreatureData getCreatureData ()
+    {
+        return creatureData;
+    }
+
+    public void setCreatureData (CreatureData creatureData)
+    {
+        this.creatureData = creatureData;
+    }
 }    

@@ -10,27 +10,26 @@
   <ui:composition template="/template.xhtml">
     <ui:define name="title">
       <h:outputText 
-        value="キャラクター『#{characterSheetController.characterData.characterRecord.characterName}』の編集">
+        value="キャラクター『#{characterSheetController.creatureData.characterName}』の編集">
       </h:outputText>
     </ui:define>
     <ui:define name="body">
       <h:form>       
-
-
-
         <h:panelGrid columns="1" id="contentsGrid" style="width: 100%">
-          <h:panelGrid columns="4" id="charaIdGridPanel1" style="height: 100%; text-align: left; width: 100%">
+          <h:panelGrid columns="4" id="charaIdGridPanel1" 
+                       style="height: 100%; text-align: left; width: 100%">
             <h:panelGrid id="gridPanel14" style="width: 100%; height: 100%;">
               <h:commandButton action="#{characterSheetController.saveButton_action}" 
                                id="saveButton1" value="保存"/>
             </h:panelGrid>
             <h:panelGrid id="gridPanel15" style="width: 100%; height: 100%;">
               <h:commandLink action="#{characterSheetController.viewLink_action}" 
-                             style="font-size: 12px" id="viewLink" target="blank" value="印刷用画面へ"/>
+                             style="font-size: 12px" id="viewLink" target="blank" 
+                             value="印刷用画面へ"/>
             </h:panelGrid>
             <h:panelGrid id="gridPanel16" style="width: 100%; height: 100%;">
               <h:outputText id="characterId1" style="font-size: 8px; width: 10px" 
-                            value="#{characterSheetController.characterData.id}"/>
+                            value="#{characterSheetController.creatureData.id}"/>
             </h:panelGrid>
             <h:panelGrid id="gridPanel17" style="height: 100%; text-align: right; width: 100%">
               <h:commandButton action="#{characterSheetController.editCharaCancelButton_action}" 
@@ -51,16 +50,16 @@
                            styleClass="g">
                 <h:inputText id="textField1" onchange="" 
                              requiredMessage="キャラクター名を入力して下さい" style="width: 180px" 
-                             value="#{characterSheetController.characterData.characterName}"/>
+                             value="#{characterSheetController.creatureData.characterName}"/>
                 <h:selectOneMenu requiredMessage="プレイヤーを選択して下さい" 
                                  value="#{characterSheetController.selectedPlayer}">
                   <f:selectItems value="#{applicationController.playerArray}"/>
                 </h:selectOneMenu>
                 <h:selectBooleanCheckbox
-                    id="secret" value="#{characterSheetController.characterData.secret}" />
+                    id="secret" value="#{characterSheetController.creatureData.secret}" />
                 <h:selectOneMenu id="dropdown1" onchange="" 
                                  requiredMessage="キャンペーンを選択して下さい" 
-                                 value="#{characterSheetController.characterData.campaignId}">
+                                 value="#{characterSheetController.creatureData.campaignId}">
                   <f:selectItems id="dropdown1SelectItems1" 
                                  value="#{campaignMasterController.itemsAvailableSelectOne}"/>
                 </h:selectOneMenu>
@@ -78,15 +77,15 @@
                 <h:outputText id="outputText5"
                               style="font-size: 18px; font-weight: bold; left: 55px; 
                               position: relative; text-align: right; width: 100px"
-                              value="#{characterSheetController.characterData.characterLevel}"/>
+                              value="#{characterSheetController.creatureData.characterLevel}"/>
                 <h:inputText id="textField3" onchange="" 
                              style="left: 40px; position: relative; text-align: right; width: 100px" 
-                             value="#{characterSheetController.characterData.experience}"/>
+                             value="#{characterSheetController.creatureData.experience}"/>
                 <h:outputText id="outputText6" 
                               style="left: 10px; position: relative; text-align: right; width: 100px"
-                              value="#{characterSheetController.characterData.getExpForNextLevel()}"/>
+                              value="#{characterSheetController.creatureData.getExpForNextLevel()}"/>
                 <h:outputText id="outputText7" 
-                              value="#{characterSheetController.characterData.lastChange}"/>
+                              value="#{characterSheetController.creatureData.lastChange}"/>
               </h:panelGrid>
               <h:panelGrid columns="2" id="gridPanel9" style="height: 100%; text-align: center; 
                            width: 100%">
@@ -122,7 +121,7 @@
                 </h:selectOneMenu>
                 <h:inputText id="textField4" onchange="" 
                              style="left: 10px; position: relative; text-align: right; 
-                             width: 30px" value="#{characterSheetController.characterData.age}"/>
+                             width: 30px" value="#{characterSheetController.creatureData.age}"/>
                 <h:selectOneMenu id="dropdown5" onchange="" 
                                  value="#{characterSheetController.selectedGender}">
                   <f:selectItems id="dropdown5SelectItems1" 
@@ -130,11 +129,11 @@
                 </h:selectOneMenu>
                 <h:inputText id="textField5" onchange="" 
                              style="text-align: right; width: 40px" 
-                             value="#{characterSheetController.characterData.height}"/>
+                             value="#{characterSheetController.creatureData.height}"/>
                 <h:outputText id="outputText15" style="color: #000000; font-size: 10px; 
                               text-align: left" value="cm"/>
                 <h:inputText id="textField6" onchange="" style="width: 40px; text-align: 
-                             right;" value="#{characterSheetController.characterData.weight}"/>
+                             right;" value="#{characterSheetController.creatureData.weight}"/>
                 <h:outputText id="outputText16" style="color: #000000; font-size: 10px; 
                               text-align: left" value="kg"/>
               </h:panelGrid>
@@ -145,11 +144,11 @@
               </h:panelGrid>
               <h:panelGrid columns="3" id="colorgridPanel1" styleClass="g">
                 <h:inputText id="textField7" style="width: 100px" 
-                             value="#{characterSheetController.characterData.eyeColor}"/>
+                             value="#{characterSheetController.creatureData.eyeColor}"/>
                 <h:inputText id="textField8" style="width: 100px" 
-                             value="#{characterSheetController.characterData.skinColor}"/>
+                             value="#{characterSheetController.creatureData.skinColor}"/>
                 <h:inputText id="textField9" style="width: 100px" 
-                             value="#{characterSheetController.characterData.hairColor}"/>
+                             value="#{characterSheetController.creatureData.hairColor}"/>
               </h:panelGrid>
               <h:panelGrid id="descgridPanel1" style="height: 100%; width: 100%">
                 <h:outputText id="outputText20" value="キャラ設定"/>
@@ -157,7 +156,7 @@
               <h:panelGrid id="gridPanel12" styleClass="g">
                 <h:inputTextarea id="textArea1" styleClass="textArea" 
                                  style="height: 150px; width: 100%" 
-                                 value="#{characterSheetController.characterData.description}"/>
+                                 value="#{characterSheetController.creatureData.description}"/>
               </h:panelGrid>
             </h:panelGrid>
             <h:panelGrid id="gridPanel13" style="height: 431px; width: 100%" styleClass="middle"/>
@@ -238,7 +237,7 @@
                   <h:column >
                     <h:outputText 
                       style="font-size: 12px; font-weight: bold" 
-                      value="#{characterSheetController.characterData.getAttackModifiers(armRecord)}"/>
+                      value="#{characterSheetController.creatureData.getAttackModifiers(armRecord)}"/>
                     <f:facet name="header">
                       <h:outputText escape="false" style="" value="ダメージ"/>
                     </f:facet>
@@ -414,12 +413,12 @@
                   </h:panelGrid>
                   <h:panelGrid id="gridPanel25" style="width: 50px" styleClass="p">
                     <h:outputText id="outputText60" style="font-size: 18px; font-weight: bold;" 
-                                  value="#{characterSheetController.characterData.initiativeTotal}"/>
+                                  value="#{characterSheetController.creatureData.initiativeTotal}"/>
                   </h:panelGrid>
                   <h:panelGrid columns="10" id="gridPanel26" 
                                style="font-size: 10px; height: 100%; width: 100%" styleClass="w">
                     <h:outputText id="outputText80" style="text-align: right;" 
-                                  value="#{characterSheetController.characterData.initiativeAbilityModifier}"/>
+                                  value="#{characterSheetController.creatureData.initiativeAbilityModifier}"/>
                     <h:outputText id="outputText75" style="font-size: 10px" value="【敏】"/>
                     <h:outputText id="outputText79" style="font-size: 8px" value="+"/>
                     <h:inputText id="textField17" style="width: 30px; text-align: right;" 
@@ -427,7 +426,7 @@
                     <h:outputText id="outputText76" style="font-size: 10px" value="特技"/>
                     <h:outputText id="outputText77" style="font-size: 8px" value="+"/>
                     <h:inputText id="textField18" style="width: 30px; text-align: right;" 
-                                 value="#{characterSheetController.characterData.initiativeMiscModifier}"/>
+                                 value="#{characterSheetController.creatureData.initiativeMiscModifier}"/>
                     <h:outputText id="outputText78" style="font-size: 10px" value="その他"/>
                   </h:panelGrid>
                   <h:panelGrid id="gridPanel1" style="height: 100%; width: 50px" 
@@ -436,7 +435,7 @@
                   </h:panelGrid>
                   <h:panelGrid id="gridPanel2" style="width: 50px" styleClass="p">
                     <h:outputText id="outputText165" style="font-size: 18px; font-weight: bold;" 
-                                  value="#{characterSheetController.characterData.hitPoint}"/>
+                                  value="#{characterSheetController.creatureData.hitPoint}"/>
                   </h:panelGrid>
                   <h:panelGrid columns="10" id="gridPanel3" style="height: 100%;  width: 100%" styleClass="w">
                     <h:commandLink action="#{characterSheetController.editSkillNomalButton_action}"
@@ -447,18 +446,18 @@
                   </h:panelGrid>
                   <h:panelGrid id="gridPanel55" style="width: 50px" styleClass="p">
                     <h:outputText id="outputText167" style="font-size: 18px; font-weight: bold;" 
-                                  value="#{characterSheetController.characterData.speedTotal}"/>
+                                  value="#{characterSheetController.creatureData.speedTotal}"/>
                   </h:panelGrid>
                   <h:panelGrid columns="10" id="gridPanel56" style="height: 100%;  width: 100%" styleClass="w">
-                    <h:outputText id="outputText168" value="#{characterSheetController.characterData.speedRaceBasse}"/>
+                    <h:outputText id="outputText168" value="#{characterSheetController.creatureData.speedRaceBasse}"/>
                     <h:outputText id="outputText169" style="font-size: 10px" value="種族"/>
                     <h:outputText id="outputText170" style="font-size: 8px" value="+"/>
                     <h:inputText id="textField46" style="width: 30px; text-align: right;" 
-                                 value="#{characterSheetController.characterData.speedFeatModifier}"/>
+                                 value="#{characterSheetController.creatureData.speedFeatModifier}"/>
                     <h:outputText id="outputText171" style="font-size: 10px" value="特技"/>
                     <h:outputText id="outputText172" style="font-size: 8px" value="+"/>
                     <h:inputText id="textField47" style="width: 30px; text-align: right;" 
-                                 value="#{characterSheetController.characterData.speedMiscModifier}"/>
+                                 value="#{characterSheetController.creatureData.speedMiscModifier}"/>
                     <h:outputText id="outputText173" style="font-size: 10px" value="その他"/>
                   </h:panelGrid>
                   <h:panelGrid id="gridPanel57" style="height: 85px; width: 50px" styleClass="tableTitleBlackMiddle">
@@ -466,29 +465,29 @@
                   </h:panelGrid>
                   <h:panelGrid id="gridPanel58" style="height: 100px; width: 50px" styleClass="p">
                     <h:outputText id="outputText175" style="font-size: 18px; font-weight: bold; " 
-                                  value="#{characterSheetController.characterData.acNormal}"/>
+                                  value="#{characterSheetController.creatureData.acNormal}"/>
                   </h:panelGrid>
                   <h:panelGrid id="gridPanel59" 
                                style="border-width: 0px; border-style: solid; margin: 0px; height: 100%; width: 100%">
                     <h:panelGrid columns="14" id="gridPanel60" style="margin: 0px; height: 100%; width: 100%" styleClass="w">
                       <h:outputText id="outputText176" style="width: 30px" 
-                                    value="#{characterSheetController.characterData.acAbilityModifier}"/>
+                                    value="#{characterSheetController.creatureData.acAbilityModifier}"/>
                       <h:outputText id="outputText177" style="font-size: 10px" value="【敏】"/>
                       <h:outputText id="outputText178" value="+"/>
                       <h:outputText id="outputText179" style="width: 30px" 
-                                    value="#{characterSheetController.characterData.acArmor}"/>
+                                    value="#{characterSheetController.creatureData.acArmor}"/>
                       <h:outputText id="outputText180" style="font-size: 10px" value="鎧"/>
                       <h:outputText id="outputText181" value="+"/>
                       <h:outputText id="outputText182" style="width: 30px" 
-                                    value="#{characterSheetController.characterData.acShield}"/>
+                                    value="#{characterSheetController.creatureData.acShield}"/>
                       <h:outputText id="outputText183" style="font-size: 10px" value="盾"/>
                       <h:outputText id="outputText52" value="+"/>
                       <h:outputText id="outputText53" style="width: 30px" 
-                                    value="#{characterSheetController.characterData.acRaceModifier}"/>
+                                    value="#{characterSheetController.creatureData.acRaceModifier}"/>
                       <h:outputText id="outputText54" style="font-size: 10px" value="種"/>
                       <h:outputText id="outputText184" value="+"/>
                       <h:inputText id="textField48" style="text-align: right; width: 20px" 
-                                   value="#{characterSheetController.characterData.acMiscMod}"/>
+                                   value="#{characterSheetController.creatureData.acMiscMod}"/>
                       <h:outputText id="outputText185" style="font-size: 10px" value="他"/>
                     </h:panelGrid>
                     <h:panelGrid columns="2" id="gridPanel61" style="text-align: right">
@@ -499,9 +498,9 @@
                       </h:panelGrid>
                       <h:panelGrid id="gridPanel63" style="height: 100%; width: 50%" styleClass="p">
                         <h:outputText id="outputText188" style="font-size: 18px; font-weight: bold" 
-                                      value="#{characterSheetController.characterData.acTouch}"/>
+                                      value="#{characterSheetController.creatureData.acTouch}"/>
                         <h:outputText id="outputText189" style="font-size: 18px; font-weight: bold" 
-                                      value="#{characterSheetController.characterData.acFlatFooted}"/>
+                                      value="#{characterSheetController.creatureData.acFlatFooted}"/>
                       </h:panelGrid>
                     </h:panelGrid>
                   </h:panelGrid>
@@ -510,7 +509,7 @@
                              style="background-color: rgb(51,51,51); font-size: 12px; text-align: center; 
                              vertical-align: middle; width: 100%">
                   <h:inputTextarea id="textArea8" styleClass="textArea" style="height: 200px; width: 100%" 
-                                   value="#{characterSheetController.characterData.defenceDescription}"/>
+                                   value="#{characterSheetController.creatureData.defenceDescription}"/>
                 </h:panelGrid>
                 <h:panelGrid id="attackgridPanel2" style="background-color: #333333; font-size: 12px; 
                              text-align: center; vertical-align: middle; width: 100%">
@@ -524,7 +523,7 @@
                     <h:outputText value=""/>
                     <h:panelGrid columns="1" style="height: 100%; width: 260px" styleClass="w">
                         <h:inputText style="text-align: right"
-                                     value="#{characterSheetController.characterData.baseAttackModifier}"/>
+                                     value="#{characterSheetController.creatureData.baseAttackModifier}"/>
                     </h:panelGrid>
                     
                     <h:panelGrid id="gridPanel64" style=" height: 100%; width: 70px" styleClass="tableTitleBlackMiddle">
@@ -532,14 +531,14 @@
                     </h:panelGrid>
                     <h:panelGrid id="gridPanel65" style="width: 30px" styleClass="p">
                       <h:outputText id="outputText192" style="font-size: 18px; font-weight: bold" 
-                                    value="#{characterSheetController.characterData.meleeAttackBonus}"/>
+                                    value="#{characterSheetController.creatureData.meleeAttackBonus}"/>
                     </h:panelGrid>
                     <h:panelGrid columns="10" id="gridPanel66" style="height: 100%; width: 260px" styleClass="w">
-                      <h:outputText id="outputText193" value="#{characterSheetController.characterData.baseAttackTotal}"/>
+                      <h:outputText id="outputText193" value="#{characterSheetController.creatureData.baseAttackTotal}"/>
                       <h:outputText id="outputText194" style="font-size: 10px" value="基本"/>
                       <h:outputText id="outputText195" style="font-size: 8px" value="+"/>
                       <h:outputText id="outputText196" 
-                                    value="#{characterSheetController.characterData.attackBonusStrengthBonus}"/>
+                                    value="#{characterSheetController.creatureData.attackBonusStrengthBonus}"/>
                       <h:outputText id="outputText197" style="font-size: 10px" value="筋力"/>
                     </h:panelGrid>                                            
                     <h:panelGrid id="gridPanel67" style="height: 100%; width: 70px" 
@@ -548,13 +547,13 @@
                     </h:panelGrid>
                     <h:panelGrid id="gridPanel68" style="width: 30px" styleClass="p">
                       <h:outputText id="outputText199" style="font-size: 18px; font-weight: bold" 
-                                    value="#{characterSheetController.characterData.rangeAttackBonus}"/>
+                                    value="#{characterSheetController.creatureData.rangeAttackBonus}"/>
                     </h:panelGrid>
                     <h:panelGrid columns="10" id="gridPanel69" style="height: 100%; width: 260px" styleClass="w">
-                      <h:outputText id="outputText200" value="#{characterSheetController.characterData.baseAttackTotal}"/>
+                      <h:outputText id="outputText200" value="#{characterSheetController.creatureData.baseAttackTotal}"/>
                       <h:outputText id="outputText201" style="font-size: 10px" value="基本"/>
                       <h:outputText id="outputText202" style="font-size: 8px" value="+"/>
-                      <h:outputText id="outputText203" value="#{characterSheetController.characterData.attackBonusDexBonus}"/>
+                      <h:outputText id="outputText203" value="#{characterSheetController.creatureData.attackBonusDexBonus}"/>
                       <h:outputText id="outputText204" style="font-size: 10px" value="敏捷"/>
                     </h:panelGrid>
                     <h:panelGrid id="gridPanel70" style="height: 100%; width: 70px" styleClass="tableTitleBlackMiddle">
@@ -562,19 +561,19 @@
                     </h:panelGrid>
                     <h:panelGrid id="gridPanel71" style="width: 30px" styleClass="p">
                       <h:outputText id="outputText206" style="font-size: 18px; font-weight: bold" 
-                                    value="#{characterSheetController.characterData.getGrappleBonus()}"/>
+                                    value="#{characterSheetController.creatureData.getGrappleBonus()}"/>
                     </h:panelGrid>
                     <h:panelGrid columns="10" id="gridPanel72" style="height: 100%; width: 260px" styleClass="w">
-                      <h:outputText id="outputText207" value="#{characterSheetController.characterData.baseAttackTotal}"/>
+                      <h:outputText id="outputText207" value="#{characterSheetController.creatureData.baseAttackTotal}"/>
                       <h:outputText id="outputText208" style="font-size: 10px" value="基本"/>
                       <h:outputText id="outputText209" style="font-size: 8px" value="+"/>
                       <h:outputText id="outputText210" 
-                                    value="#{characterSheetController.characterData.attackBonusStrengthBonus}"/>
+                                    value="#{characterSheetController.creatureData.attackBonusStrengthBonus}"/>
                       <h:outputText id="outputText211" style="font-size: 10px" value="筋力"/>
                     </h:panelGrid>
                   </h:panelGrid>
                   <h:inputTextarea id="textArea9" styleClass="textArea" style="height: 200px; width: 100%" 
-                                   value="#{characterSheetController.characterData.attackDescription}"/>
+                                   value="#{characterSheetController.creatureData.attackDescription}"/>
                   <h:panelGrid columns="1" id="attackGridPanel2" rendered="false" style="height: 100%; width: 100%">
                     <h:panelGrid id="armGrid1" style="width: 100%">
                       <h:panelGrid id="gridPanel18" rowClasses="tableTitleBlackMiddle" style="width: 100%" 
@@ -622,9 +621,9 @@
                   </h:panelGrid>
                   <h:panelGrid columns="2" id="gridPanel75" style="width: 100%; height: 100%;" styleClass="p">
                     <h:inputText id="textField49" style="font-size: 10px; text-align: right; width: 30px" 
-                                 value="#{characterSheetController.characterData.damageReduction}"/>
+                                 value="#{characterSheetController.creatureData.damageReduction}"/>
                     <h:inputText id="textField50" style="font-size: 10px; text-align: right; width: 30px" 
-                                 value="#{characterSheetController.characterData.spellResistance}"/>
+                                 value="#{characterSheetController.creatureData.spellResistance}"/>
                   </h:panelGrid>
                 </h:panelGrid>
               </h:panelGrid>
@@ -648,7 +647,7 @@
                   <h:outputText id="outputText114" styleClass="tableTitleBlackMiddle" value="所持金"/>
                   <h:panelGrid columns="2" id="gridPanel42" style="text-align: left" styleClass="p">
                     <h:inputText id="textField22" style="text-align: right" 
-                                 value="#{characterSheetController.characterData.characterEquipment.pocket}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.pocket}"/>
                     <h:outputText id="outputText115" style="font-size: 10px; text-align: left" value="gp"/>
                   </h:panelGrid>
                 </h:panelGrid>
@@ -656,54 +655,54 @@
                   <h:panelGrid columns="2" id="gridPanel44" style="height: 100%; width: 100%">
                     <h:outputText id="outputText116" styleClass="tableTitleBlackMiddle" value="頭"/>
                     <h:inputText id="textField23" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.head}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.head}"/>
                     <h:outputText id="outputText117" styleClass="tableTitleBlackMiddle" value="マント"/>
                     <h:inputText id="textField24" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.cloak}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.cloak}"/>
                     <h:outputText id="outputText118" styleClass="tableTitleBlackMiddle" value="首輪"/>
                     <h:inputText id="textField25" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.necklace}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.necklace}"/>
                     <h:outputText id="outputText119" styleClass="tableTitleBlackMiddle" value="腕輪"/>
                     <h:inputText id="textField26" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.armRing}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.armRing}"/>
                     <h:outputText id="outputText120" styleClass="tableTitleBlackMiddle" value="指輪1"/>
                     <h:inputText id="textField27" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.ring1}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.ring1}"/>
                     <h:outputText id="outputText121" styleClass="tableTitleBlackMiddle" value="ベルト"/>
                     <h:inputText id="textField28" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.belt}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.belt}"/>
                     <h:outputText id="outputText122" styleClass="tableTitleBlackMiddle" value="鎧"/>
                     <h:inputText id="textField29" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.armor}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.armor}"/>
                     <h:outputText id="outputText123" styleClass="tableTitleBlackMiddle" value="武器1"/>
                     <h:inputText id="textField129" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.arm1}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.arm1}"/>
                   </h:panelGrid>
                   <h:panelGrid columns="2" id="gridPanel45" style="height: 100%; width: 100%">
                     <h:outputText id="outputText124" styleClass="tableTitleBlackMiddle" value="眼"/>
                     <h:inputText id="textField31" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.eye}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.eye}"/>
                     <h:outputText id="outputText125" styleClass="tableTitleBlackMiddle" value="ローブ"/>
                     <h:inputText id="textField32" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.robe}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.robe}"/>
                     <h:outputText id="outputText126" styleClass="tableTitleBlackMiddle" value="ベスト"/>
                     <h:inputText id="textField33" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.vest}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.vest}"/>
                     <h:outputText id="outputText127" styleClass="tableTitleBlackMiddle" value="手袋"/>
                     <h:inputText id="textField34" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.glove}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.glove}"/>
                     <h:outputText id="outputText128" styleClass="tableTitleBlackMiddle" value="指輪2"/>
                     <h:inputText id="textField35" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.ring2}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.ring2}"/>
                     <h:outputText id="outputText129" styleClass="tableTitleBlackMiddle" value="靴"/>
                     <h:inputText id="textField36" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.boots}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.boots}"/>
                     <h:outputText id="outputText130" styleClass="tableTitleBlackMiddle" value="盾"/>
                     <h:inputText id="textField37" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.shield}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.shield}"/>
                     <h:outputText id="outputText131" styleClass="tableTitleBlackMiddle" value="武器2"/>
                     <h:inputText id="textField130" style="width: 100px" 
-                                 value="#{characterSheetController.characterData.characterEquipment.arm2}"/>
+                                 value="#{characterSheetController.creatureData.characterEquipment.arm2}"/>
                   </h:panelGrid>
                 </h:panelGrid>
                 <h:panelGrid columns="3" id="armorgridPanel1" style="height: 100%; width: 100%">
@@ -734,25 +733,25 @@
                     <h:panelGrid columns="4" id="gridPanel52" style="font-size: 12px; height: 25px; width: 100%" 
                                  styleClass="p">
                       <h:inputText id="textField39" style="font-size: 12px; text-align: right; width: 30px" 
-                                   value="#{characterSheetController.characterData.acArmor}"/>
+                                   value="#{characterSheetController.creatureData.acArmor}"/>
                       <h:inputText id="textField40" style="font-size: 12px; text-align: right; width: 30px" 
-                                   value="#{characterSheetController.characterData.characterEquipment.skillArmorMod}"/>
+                                   value="#{characterSheetController.creatureData.characterEquipment.skillArmorMod}"/>
                       <h:inputText id="textField41" style="font-size: 12px; text-align: right; width: 30px" 
-                                   value="#{characterSheetController.characterData.characterEquipment.dexAcArmorLimit}"/>
+                                   value="#{characterSheetController.creatureData.characterEquipment.dexAcArmorLimit}"/>
                     </h:panelGrid>
                     <h:panelGrid columns="4" id="gridPanel53" style="font-size: 12px; height: 25px; width: 100%" 
                                  styleClass="p">
                       <h:inputText id="textField42" style="font-size: 12px; text-align: right; width: 30px" 
-                                   value="#{characterSheetController.characterData.acShield}"/>
+                                   value="#{characterSheetController.creatureData.acShield}"/>
                       <h:inputText id="textField43" style="font-size: 12px; text-align: right; width: 30px" 
-                                   value="#{characterSheetController.characterData.characterEquipment.skillShieldMod}"/>
+                                   value="#{characterSheetController.creatureData.characterEquipment.skillShieldMod}"/>
                       <h:inputText id="textField44" style="font-size: 12px; text-align: right; width: 30px" 
-                                   value="#{characterSheetController.characterData.characterEquipment.dexAcShieldLimit}"/>
+                                   value="#{characterSheetController.creatureData.characterEquipment.dexAcShieldLimit}"/>
                     </h:panelGrid>
                   </h:panelGrid>
                 </h:panelGrid>
                 <h:inputTextarea id="textArea5" styleClass="textArea" style="height: 200px; width: 100%" 
-                                 value="#{characterSheetController.characterData.itemDescription}"/>
+                                 value="#{characterSheetController.creatureData.itemDescription}"/>
                 <h:panelGrid columns="3" id="loadGridPanel1" style="height: 100%; width: 100%">
                   <h:outputText id="outputText138" styleClass="tableTitleBlackMiddle" value="軽荷重"/>
                   <h:outputText id="outputText139" styleClass="tableTitleBlackMiddle" value="中荷重"/>
@@ -857,7 +856,7 @@
             <h:panelGrid style="height: 100%; width: 100%" styleClass="tableGrid">
               <h:outputText  styleClass="tableTitleBlack" value="特技・特殊能力など"/>
               <h:inputTextarea styleClass="textArea" style="height: 300px; width: 100%" 
-                               value="#{characterSheetController.characterData.featDescription}"/>
+                               value="#{characterSheetController.creatureData.featDescription}"/>
             </h:panelGrid>                       
           </h:panelGrid>                          
 
@@ -868,7 +867,7 @@
             <h:panelGrid id="spellgridPanel1" style="height: 100%; width: 100%" styleClass="tableGrid">
               <h:outputText id="outputText162" styleClass="tableTitleBlack" value="呪文・メモなど"/>
               <h:inputTextarea id="textArea6" styleClass="textArea" style="height: 300px; width: 100%" 
-                               value="#{characterSheetController.characterData.spellDescription}"/>
+                               value="#{characterSheetController.creatureData.spellDescription}"/>
             </h:panelGrid>                                                        
           </h:panelGrid>   
 
@@ -880,7 +879,7 @@
             <h:panelGrid id="updateGridPanel2" style="height: 100%;; width: 100%" styleClass="tableGrid">
               <h:outputText id="outputText163" styleClass="tableTitleBlack" value="セッションログ／更新履歴"/>
               <h:inputTextarea id="textArea7" styleClass="textArea" style="height: 300px; width: 100%" 
-                               value="#{characterSheetController.characterData.updateDescription}"/>
+                               value="#{characterSheetController.creatureData.updateDescription}"/>
             </h:panelGrid>
           </h:panelGrid>
           <h:panelGrid id="deleteCharaGridPanel1" style="height: 100%; text-align: right; width: 100%">

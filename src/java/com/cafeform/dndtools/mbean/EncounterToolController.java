@@ -49,10 +49,10 @@ public class EncounterToolController extends CharacterSheetController {
     }
 
     public String editCharaLink_action() {
-        CharacterData characterData =  (CharacterData)characterSummaryTable.getRowData();
+        CreatureData creatureData =  (CreatureData)characterSummaryTable.getRowData();
         
         //管理Beanへ反映
-        setCharacterData(characterData);
+        setCreatureData(creatureData);
         return "EditCharacterDataPage";
     }
 

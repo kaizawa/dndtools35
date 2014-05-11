@@ -58,7 +58,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public class CharacterData implements CharacterSummary {
+public class CharacterData implements CharacterSummary, CreatureData {
 
     InitialContext ctx;
     FacesContext context = FacesContext.getCurrentInstance();
@@ -85,7 +85,8 @@ public class CharacterData implements CharacterSummary {
     protected List<SkillMaster> skillList;
     protected List<AbilityMaster> abilityList;
     protected List<SaveMaster> saveList;
-    
+
+    @Override    
     public CharacterRecord getCharacterRecord() {
         return characterRecord;
     }
@@ -123,7 +124,7 @@ public class CharacterData implements CharacterSummary {
         abilityList = abilityMasterFacade.findAll();
         saveList = saveMasterFacade.findAll();
     }
-
+    @Override
     public Integer getSkillMiscModifierById(int index) {
         Integer result;
         List<CharacterSkillRecord> skillRecordList = characterRecord.getCharacterSkillRecordList();
@@ -140,6 +141,7 @@ public class CharacterData implements CharacterSummary {
      * TODO: 経験値が変わったときにこのメソッドを読んで成長記録を追加しなければならないのだが。 どうやって、どういうタイミングで呼ぼうか?
      *
      */
+    @Override
     public void updateGrowthRecord() {
 
         /*
@@ -218,6 +220,7 @@ public class CharacterData implements CharacterSummary {
     /**
      * 合計 HP を計算
      */
+    @Override    
     public Integer geHitPoint() {
         int totalHP = 0;
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
@@ -234,7 +237,7 @@ public class CharacterData implements CharacterSummary {
         }
         return totalHP;
     }
-
+    @Override
     public void setSkillMiscModifierById(int index, Integer skillMiscModifier) {
         List<CharacterSkillRecord> skillRecord = characterRecord.getCharacterSkillRecordList();
         // skillTable の RowIndex と List の index は同一の特技をさしているはず
@@ -244,6 +247,7 @@ public class CharacterData implements CharacterSummary {
     /**
      * 能力値のID(1～6）を指定してから能力値を得る
      */
+    @Override    
     public Integer getAbilityBaseById(int id) {
         // 能力値 ID は 1-6 だが、List の ID は 0 から並んでいるので -1 する
         Integer result;
@@ -256,11 +260,11 @@ public class CharacterData implements CharacterSummary {
             return result;
         }
     }
-
+    @Override
     public void setAbilityBaseById(int id, Integer newVal) {
         characterRecord.getCharacterAbilityRecordList().get(id - 1).setBase(newVal);
     }
-
+    @Override
     /**
      * 能力値のID(1～6）を指定してから能力値を得る
      */
@@ -274,7 +278,7 @@ public class CharacterData implements CharacterSummary {
             return result;
         }
     }
-
+    @Override
     public void setAbilityMiscModifierById(int id, Integer newVal) {
         characterRecord.getCharacterAbilityRecordList().get(id - 1).setMiscModifier(newVal);
     }
@@ -282,6 +286,7 @@ public class CharacterData implements CharacterSummary {
     /**
      * 能力値のID(1～6）を指定してから能力値を得る
      */
+    @Override   
     public Integer getAbilityFeatModifierById(int id) {
         // 能力値 ID は 1-6 だが、List の ID は 0 から並んでいるので -1 する
         Integer result;
@@ -292,7 +297,7 @@ public class CharacterData implements CharacterSummary {
             return result;
         }
     }
-
+    @Override
     public void setAbilityFeatModifierById(int id, Integer newVal) {
         characterRecord.getCharacterAbilityRecordList().get(id - 1).setFeatModifier(newVal);
     }
@@ -300,6 +305,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 能力値 種族 修正値
      */
+    @Override    
     public Integer getAbilityRaceModifierById(int id) {
         AbilityMaster ability = abilityMasterFacade.find(id);
         if (ability == null) {
@@ -324,6 +330,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 能力値 レベル修正値 (計算値）
      */
+    @Override    
     public Integer getAbilityLevelModifierById(int id) {
         int modifier = 0;
 
@@ -349,7 +356,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 能力値 合計
      */
-
+    @Override
     public Integer getAbilityTotalById(int id) {
         return getAbilityBaseById(id)
                 + getAbilityRaceModifierById(id)
@@ -360,7 +367,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 能力値 修正値
      */
-
+    @Override
     public Integer getAbilityModifierById(int ability) {
 
         return (getAbilityTotalById(ability) / 2) - 5;
@@ -368,7 +375,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 技能 対応能力修正値
      */
-
+    @Override
     public Integer getSkillAbilityModifierById(int skill) {
 
         return getAbilityModifierById(skillMasterFacade.find(skill).getAbilityId().getId());
@@ -376,6 +383,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 技能 対応能力値名
      */
+    @Override    
     public String getSkillAbilityNameById(int skill) {
 
         return skillList.get(skill-1).getAbilityId().getAbilityName();
@@ -383,6 +391,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 技能 対応能力値名 省略名
      */
+    @Override    
     public String getSkillAbilityShortNameById(int skill) {
 
         String name;
@@ -392,7 +401,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 技能 ポイント
      */
-
+    @Override
     public Integer getSkillTotalPointById(int skill) {
         int point = 0;
 
@@ -411,7 +420,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 技能 判定値
      */
-
+    @Override
     public Integer getSkillTotalCheckModifierById(Integer index) {
         return getSkillAbilityModifierById(index)
                 + getSkillTotalRankById(index)
@@ -433,6 +442,7 @@ public class CharacterData implements CharacterSummary {
      * @param skill スキルマスター
      * @return スキルランク
      */
+    @Override    
     public Float getSkillRankByLevelAndSkill(CharacterGrowthRecord growth, SkillMaster skill) {
         int point = 0;
         float rank;
@@ -466,7 +476,7 @@ public class CharacterData implements CharacterSummary {
         }
         return rank;
     }
-
+    @Override
     public Integer getSkillTotalRankById(int skillId) {
         Float totalRank = 0f;
 
@@ -487,7 +497,7 @@ public class CharacterData implements CharacterSummary {
      * 技能がランク無しでも実施可能か
      */
     protected boolean skillAcceptNoRankBySkillId;
-
+    @Override
     public boolean isSkillAcceptNoRankBySkillId(int skillId) {
         SkillMaster skill = skillList.get(skillId-1);
 
@@ -517,6 +527,7 @@ public class CharacterData implements CharacterSummary {
      * @param skill
      * @return boolean
      */
+    @Override    
     public boolean isClassSkillByLevelAndSkill(CharacterGrowthRecord growthLevel, SkillMaster skill) {
         List<CharacterGrowthRecord> growthList = characterRecord.getCharacterGrowthRecordList();
         for (CharacterGrowthRecord growth : growthList) {
@@ -541,7 +552,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 技能ランクを持っているかどうか
      */
-
+    @Override
     public boolean hasSkillRankBySkill(SkillMaster skill) {
         List<CharacterSkillGrowthRecord> skillGrowthList = characterRecord.getCharacterSkillGrowthRecordList();
 
@@ -562,6 +573,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * 技能 鎧、盾ペナルティ
      */
+    @Override    
     public Integer getSkillArmorModifierById(int skillId) {
         int result = 0;
         SkillMaster skill = skillList.get(skillId-1);
@@ -588,6 +600,7 @@ public class CharacterData implements CharacterSummary {
     /**
      * 技能 相乗効果
      */
+    @Override
     public Integer getSkillSynergyModifierById(int skillId) {
         int result = 0;
         SkillMaster skill = skillList.get(skillId-1);
@@ -603,7 +616,7 @@ public class CharacterData implements CharacterSummary {
         }
         return result;
     }
-
+    @Override
     public Integer getSaveAbilityModifierById(int saveId) {
 
         return getAbilityModifierById(saveMasterFacade.find(saveId).getAbilityId().getId());
@@ -611,7 +624,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * セーヴボーナス クラス合計
      */
-
+    @Override
     public Integer getSaveClassBonusById(int saveId) {
         int bonus = 0;
 
@@ -667,7 +680,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * セーヴ その他修正値
      */
-
+    @Override
     public Integer getSaveMiscModifierById(int saveId) {
         Integer result;
         CharacterSaveRecord saveRecord = characterRecord.getCharacterSaveRecordList().get(saveId - 1);
@@ -682,6 +695,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * セーヴ 種族修正値
      */
+    @Override    
     public Integer getSaveRaceModifierById(int saveId) {
         if (characterRecord.getRaceId() != null) {
             List<RaceSaveMaster> raceSaveList = (List<RaceSaveMaster>) characterRecord.getRaceId().getRaceSaveMasterCollection();
@@ -699,6 +713,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * セーヴボーナス トータル計
      */
+    @Override    
     public Integer getSaveTotalById(int saveId) {
         return getSaveAbilityModifierById(saveId)
                 + getSaveClassBonusById(saveId)
@@ -710,6 +725,7 @@ public class CharacterData implements CharacterSummary {
      */
     protected Integer initiativeMiscModifier;
 
+    @Override    
     public Integer getInitiativeMiscModifier() {
         Integer mod = characterRecord.getInitiativeMiscModifier();
         if (mod == null) {
@@ -718,6 +734,7 @@ public class CharacterData implements CharacterSummary {
         return mod;
     }
 
+    @Override    
     public void setInitiativeMiscModifier(Integer modifier) {
         characterRecord.setInitiativeMiscModifier(modifier);
     }
@@ -726,6 +743,7 @@ public class CharacterData implements CharacterSummary {
      */
     protected Integer initiativeFeatModifier;
 
+    @Override    
     public Integer getInitiativeFeatModifier() {
         Integer mod = characterRecord.getInitiativeFeatModifier();
         if (mod == null) {
@@ -733,7 +751,7 @@ public class CharacterData implements CharacterSummary {
         }
         return mod;
     }
-
+    @Override
     public void setInitiativeFeatModifier(Integer modifier) {
         characterRecord.setInitiativeFeatModifier(modifier);
     }
@@ -741,6 +759,7 @@ public class CharacterData implements CharacterSummary {
     /*
      * イニシアチブ 能力値修正
      */
+    @Override    
     public Integer getInitiativeAbilityModifier() {
         // 敏捷力の ID は 2
         return getAbilityModifierById(DEX);
@@ -750,6 +769,7 @@ public class CharacterData implements CharacterSummary {
      */
     protected Integer initiativeTotal;
 
+    @Override    
     public Integer getInitiativeTotal() {
         return getInitiativeAbilityModifier() + getInitiativeFeatModifier() + getInitiativeMiscModifier();
     }
@@ -758,6 +778,7 @@ public class CharacterData implements CharacterSummary {
      */
     protected Integer speed;
 
+    @Override
     public Integer getSpeedTotal() {
         return getSpeedRaceBasse() + getSpeedFeatModifier() + getSpeedMiscModifier();
     }
@@ -771,7 +792,7 @@ public class CharacterData implements CharacterSummary {
         str.append("マス)");
         return str.toString();
     }
-
+    @Override
     public void setSpeed(Integer speed) {
         this.speed = speed;
     }
@@ -780,6 +801,7 @@ public class CharacterData implements CharacterSummary {
      */
     protected Integer speedRaceBasse;
 
+    @Override    
     public Integer getSpeedRaceBasse() {
         RaceMaster race = characterRecord.getRaceId();
         if (race == null) {
@@ -792,7 +814,7 @@ public class CharacterData implements CharacterSummary {
      * 移動速度 特技修正値
      */
     protected Integer speedFeatModifier;
-
+    @Override
     public Integer getSpeedFeatModifier() {
         Integer mod = characterRecord.getSpeedFeatModifier();
         if (mod == null) {
@@ -800,7 +822,7 @@ public class CharacterData implements CharacterSummary {
         }
         return mod;
     }
-
+    @Override
     public void setSpeedFeatModifier(Integer speedFeatModifier) {
         characterRecord.setSpeedFeatModifier(speedFeatModifier);
     }
@@ -808,7 +830,7 @@ public class CharacterData implements CharacterSummary {
      * 移動 その他修正値
      */
     protected Integer speedMiscModifier;
-
+    @Override
     public Integer getSpeedMiscModifier() {
         Integer mod = characterRecord.getSpeedMiscModifier();
         if (mod == null) {
@@ -816,17 +838,18 @@ public class CharacterData implements CharacterSummary {
         }
         return mod;
     }
-
+    @Override    
     public void setSpeedMiscModifier(Integer speedMiscModifier) {
         characterRecord.setSpeedMiscModifier(speedMiscModifier);
     }
-
+    @Override
     public void textField13_processValueChange(ValueChangeEvent vce) {
     }
 
     /**
      * AC アーマークラス(計算値)
      */
+    @Override    
     public Integer getAcNormal() {
         CharacterRecord chara = characterRecord;
         return 10
@@ -842,6 +865,7 @@ public class CharacterData implements CharacterSummary {
      *
      * @return
      */
+    @Override    
     public Integer getAcTouch() {
         CharacterRecord chara = characterRecord;
         return 10
@@ -849,7 +873,7 @@ public class CharacterData implements CharacterSummary {
                 + (getAcRaceModifier() == null ? 0 : getAcRaceModifier())
                 + (chara.getAcMiscMod() == null ? 0 : chara.getAcMiscMod());
     }
-
+    @Override
     public Integer getAcFlatFooted() {
         CharacterRecord chara = characterRecord;
         return 10
@@ -862,6 +886,7 @@ public class CharacterData implements CharacterSummary {
     /**
      * AC 能力値修正
      */
+    @Override    
     public Integer getAcAbilityModifier() {
         // 敏捷力の ID は 2. 防具によって、敏捷力ボーナスがどれだけ適用できるかがきまる。
         int bonus;
@@ -885,6 +910,7 @@ public class CharacterData implements CharacterSummary {
      *
      * @return the value of acShield
      */
+    @Override    
     public Integer getAcShield() {
         return characterRecord.getAcShield();
     }
@@ -899,6 +925,7 @@ public class CharacterData implements CharacterSummary {
      *
      * @return the value of acArmor
      */
+    @Override    
     public Integer getAcArmor() {
         return characterRecord.getAcArmor();
     }
@@ -906,7 +933,7 @@ public class CharacterData implements CharacterSummary {
      * AC 種族修正
      */
     protected Integer acRace;
-
+    @Override
     public Integer getAcRaceModifier() {
         RaceMaster race = characterRecord.getRaceId();
         // 種族未設定
@@ -920,7 +947,7 @@ public class CharacterData implements CharacterSummary {
      * AC その他
      */
     protected Integer acMiscMod;
-
+    @Override
     public Integer getAcMiscMod() {
         return characterRecord.getAcMiscMod();
     }
@@ -928,6 +955,7 @@ public class CharacterData implements CharacterSummary {
     /**
      * ヒットポイント用能力値修正
      */
+    @Override    
     public Integer getHitPointAbilityModifier() {
         // 敏捷力の ID は 2
         return getAbilityModifierById(CON);
@@ -936,6 +964,7 @@ public class CharacterData implements CharacterSummary {
     /**
      * 攻撃ボーナス 基本攻撃ボーナス
      */
+    @Override    
     public Integer getBaseAttackTotal() {
         int baseAttack = 0;
         if(characterRecord.getBaseAtachModifier() != null)
@@ -996,6 +1025,7 @@ public class CharacterData implements CharacterSummary {
      * 攻撃ボーナス 遠隔攻撃ボーナス
      * @return 
      */
+    @Override    
     public Integer getRangeAttackBonus() {
         return getBaseAttackTotal() + getAbilityModifierById(DEX);
     }
@@ -1003,27 +1033,28 @@ public class CharacterData implements CharacterSummary {
     /**
      * 攻撃ボーナス 近接攻撃ボーナス
      */
+    @Override    
     public Integer getMeleeAttackBonus() {
         return getBaseAttackTotal() + getAbilityModifierById(STR);
     }
     /*
      * 攻撃ボーナス 組み付きボーナス
      */
-
+    @Override
     public Integer getGrappleBonus() {
         return getMeleeAttackBonus();
     }
     /*
      * 攻撃ボーナス 近接筋力ボーナス
      */
-
+    @Override
     public Integer getAttackBonusStrengthBonus() {
         return getAbilityModifierById(STR);
     }
     /*
      * 攻撃ボーナス 遠隔筋力ボーナス
      */
-
+    @Override
     public Integer getAttackBonusDexBonus() {
         return getAbilityModifierById(DEX);
     }
@@ -1058,6 +1089,7 @@ public class CharacterData implements CharacterSummary {
         return (lv);
     }
 
+    @Override    
     public Integer getExpForNextLevel() {
         int lv = 0;
         int val = 0;
@@ -1072,6 +1104,7 @@ public class CharacterData implements CharacterSummary {
      * 最終更新日
      * @return 
      */
+    @Override    
     public String getLastChange() {
         Date date = characterRecord.getSaveTime();
 
@@ -1103,6 +1136,7 @@ public class CharacterData implements CharacterSummary {
         return sb.toString();
     }
 
+    @Override    
     public Integer getCharacterLevel() {
         int lv = 0;
         int val = 0;
@@ -1113,6 +1147,7 @@ public class CharacterData implements CharacterSummary {
         return lv;
     }
 
+    @Override
     public String getClassList() {
         List growthList = characterRecord.getCharacterGrowthRecordList();
         Map classMap = new HashMap();
@@ -1160,7 +1195,7 @@ public class CharacterData implements CharacterSummary {
         return getInitiativeAbilityModifier() + characterRecord.getInitiativeFeatModifier()
                 + characterRecord.getInitiativeMiscModifier();
     }
-
+    @Override
     public SaveMaster getSaveMasterById(int saveId) {
         SaveMaster save = null;
         Iterator it = characterRecord.getCharacterSaveRecordList().iterator();
@@ -1196,7 +1231,7 @@ public class CharacterData implements CharacterSummary {
         } while (true);
         return total;
     }
-
+    @Override
     public SkillMaster getSkillMasterById(int id) {
         List charaSkillGrowthList = characterRecord.getCharacterSkillGrowthRecordList();
         for (Iterator it = charaSkillGrowthList.iterator(); it.hasNext();) {
@@ -1210,21 +1245,22 @@ public class CharacterData implements CharacterSummary {
         return null;
     }
 
+    @Override
     public String getskillAbilityNameById(int id) {
         SkillMaster skill = getSkillMasterById(id);
         return skill.getAbilityId().getAbilityName();
     }
-
+    @Override
     public String getskillAbilityShortNameById(int id) {
         SkillMaster skill = getSkillMasterById(id);
         String name = skill.getAbilityId().getAbilityName();
         return name.substring(0, 1);
     }
-
+    @Override
     public Integer getSkillTotalCheckModifierById(int id) {
         return getSkillAbilityModifierById(id) + getSkillTotalRankById(id) + getskillMiscModifierById(id) + getskillArmorModifierById(id) + getskillSynergyModifierById(id);
     }
-
+    @Override
     public Integer getskillMiscModifierById(int id) {
         List skillRecordList = characterRecord.getCharacterSkillRecordList();
         Integer result = ((CharacterSkillRecord) skillRecordList.get(id - 1)).getMiscModifier();
@@ -1250,7 +1286,9 @@ public class CharacterData implements CharacterSummary {
             if (level > getCharacterLevel()) {
                 break;
             }
-            if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() != skill.getId() || level != growth.getCharacterGrowthRecordPK().getCharacterLevel()) {
+            if (skillGrowth.getCharacterSkillGrowthRecordPK().getSkillId() != 
+                    skill.getId() || 
+                    level != growth.getCharacterGrowthRecordPK().getCharacterLevel()) {
                 continue;
             }
             point = skillGrowth.getSkillPoint();
@@ -1266,7 +1304,7 @@ public class CharacterData implements CharacterSummary {
         }
         return rank;
     }
-
+    @Override
     public Integer getskillArmorModifierById(int skillId) {
         SkillMaster skill = getSkillMasterById(skillId);
         int result = 0;
@@ -1285,7 +1323,7 @@ public class CharacterData implements CharacterSummary {
         }
         return result;
     }
-
+    @Override
     public Integer getskillSynergyModifierById(int skillId) {
         SkillMaster skill = getSkillMasterById(skillId);
         int result = 0;
@@ -1318,55 +1356,55 @@ public class CharacterData implements CharacterSummary {
         String name = ability.getAbilityName();
         return (new StringBuilder()).append("\u3010").append(name.substring(0, 1)).append("\u3011").toString();
     }
-
+    @Override
     public AlignmentMaster getAlignmentId() {
         return characterRecord.getAlignmentId();
     }
-
+    @Override
     public CampaignMaster getCampaignId() {
         return characterRecord.getCampaignId();
     }
-
+    @Override
     public CharacterEquipment getCharacterEquipment() {
         return characterRecord.getCharacterEquipment();
     }
-
+    @Override
     public GenderMaster getGenderId() {
         return characterRecord.getGenderId();
     }
-
+    @Override
     public Integer getAge() {
         return characterRecord.getAge();
     }
-
+    @Override
     public Integer getDamageReduction() {
         return characterRecord.getDamageReduction();
     }
-
+    @Override
     public Integer getExperience() {
         return characterRecord.getExperience();
     }
-
+    @Override
     public Integer getHeight() {
         return characterRecord.getHeight();
     }
-
+    @Override
     public Integer getId() {
         return characterRecord.getId();
     }
-
+    @Override
     public Integer getSheetId() {
         return characterRecord.getSheetId();
     }
-
+    @Override
     public Integer getSpellResistance() {
         return characterRecord.getSpellResistance();
     }
-
+    @Override
     public Integer getWeight() {
         return characterRecord.getWeight();
     }
-
+    @Override
     public List<CharacterGrowthRecord> getCharacterGrowthRecordList() {
         return characterRecord.getCharacterGrowthRecordList();
     }
@@ -1389,19 +1427,20 @@ public class CharacterData implements CharacterSummary {
         }
         return currentList;
     }
-
+    @Override
     public RaceMaster getRaceId() {
         return characterRecord.getRaceId();
     }
-
+    @Override
     public ReligionMaster getReligionId() {
         return characterRecord.getReligionId();
     }
-
+    @Override
     public String getAttackDescription() {
         return characterRecord.getAttackDescription();
     }
 
+    @Override
     public String getCharacterName() {
         if (null == characterRecord.getCharacterName() ||
                 "".equals(characterRecord.getCharacterName())) 
@@ -1414,30 +1453,36 @@ public class CharacterData implements CharacterSummary {
         }
     }
 
+    @Override
     public String getDefenceDescription() {
         return characterRecord.getDefenceDescription();
     }
 
+    @Override
     public String getDescription() {
         return characterRecord.getDescription();
     }
 
+    @Override
     public String getEyeColor() {
         return characterRecord.getEyeColor();
     }
 
+    @Override
     public String getFeatDescription() {
         return characterRecord.getFeatDescription();
     }
 
+    @Override
     public String getHairColor() {
         return characterRecord.getHairColor();
     }
 
+    @Override
     public String getItemDescription() {
         return characterRecord.getItemDescription();
     }
-
+    @Override
     public String getLanguage() {
         return characterRecord.getLanguage();
     }
@@ -1450,50 +1495,51 @@ public class CharacterData implements CharacterSummary {
         return characterRecord.getPlayerId().getPlayerName();
     }
 
+    @Override
     public String getSkinColor() {
         return characterRecord.getSkinColor();
     }
-
+    @Override
     public String getSpellDescription() {
         return characterRecord.getSpellDescription();
     }
-
+    @Override
     public String getUpdateDescription() {
         return characterRecord.getUpdateDescription();
     }
-
+    @Override
     public void setAcArmor(Integer acArmor) {
         characterRecord.setAcArmor(acArmor);
     }
-
+    @Override
     public void setAcMiscMod(Integer acMiscMod) {
         characterRecord.setAcMiscMod(acMiscMod);
     }
-
+    @Override
     public void setAcShield(Integer acShield) {
         characterRecord.setAcShield(acShield);
     }
-
+    @Override
     public void setAge(Integer age) {
         characterRecord.setAge(age);
     }
-
+    @Override
     public void setAlignmentId(AlignmentMaster alignmentId) {
         characterRecord.setAlignmentId(alignmentId);
     }
-
+    @Override
     public void setAttackDescription(String attackDescription) {
         characterRecord.setAttackDescription(attackDescription);
     }
-
+    @Override
     public void setCampaignId(CampaignMaster campaignId) {
         characterRecord.setCampaignId(campaignId);
     }
-
+    
     public void setCharacterAbilityRecordList(List<CharacterAbilityRecord> characterAbilityRecordCollection) {
         characterRecord.setCharacterAbilityRecordList(characterAbilityRecordCollection);
     }
-
+    @Override
     public void setCharacterEquipment(CharacterEquipment characterEquipment) {
         characterRecord.setCharacterEquipment(characterEquipment);
     }
@@ -1501,7 +1547,7 @@ public class CharacterData implements CharacterSummary {
     public void setCharacterGrowthRecordList(List<CharacterGrowthRecord> characterGrowthRecordList) {
         characterRecord.setCharacterGrowthRecordList(characterGrowthRecordList);
     }
-
+    @Override
     public void setCharacterName(String characterName) {
         characterRecord.setCharacterName(characterName);
     }
@@ -1513,7 +1559,7 @@ public class CharacterData implements CharacterSummary {
     public void setCharacterSkillGrowthRecordList(List<CharacterSkillGrowthRecord> characterSkillGrowthRecordList) {
         characterRecord.setCharacterSkillGrowthRecordList(characterSkillGrowthRecordList);
     }
-
+    @Override
     public List<CharacterSkillGrowthRecord> getCharacterSkillGrowthRecordList() {
         return characterRecord.getCharacterSkillGrowthRecordList();
     }
@@ -1522,50 +1568,60 @@ public class CharacterData implements CharacterSummary {
         characterRecord.setCharacterSkillRecordList(characterSkillRecordList);
     }
 
+    @Override
     public void setDamageReduction(Integer damageReduction) {
         characterRecord.setDamageReduction(damageReduction);
     }
 
+    @Override
     public void setDefenceDescription(String defenceDescription) {
         characterRecord.setDefenceDescription(defenceDescription);
     }
 
+    @Override
     public void setDescription(String description) {
         characterRecord.setDescription(description);
     }
 
+    @Override
     public void setExperience(Integer experience) {
         characterRecord.setExperience(experience);
     }
 
+    @Override
     public void setEyeColor(String eyeColor) {
         characterRecord.setEyeColor(eyeColor);
     }
 
+    @Override
     public void setFeatDescription(String featDescription) {
         characterRecord.setFeatDescription(featDescription);
     }
-
+    @Override
     public void setGenderId(GenderMaster genderId) {
         characterRecord.setGenderId(genderId);
     }
 
+    @Override
     public void setHairColor(String hairColor) {
         characterRecord.setHairColor(hairColor);
     }
 
+    @Override    
     public void setHeight(Integer height) {
         characterRecord.setHeight(height);
     }
 
+    @Override    
     public void setId(Integer id) {
         characterRecord.setId(id);
     }
 
+    @Override
     public void setItemDescription(String itemDescription) {
         characterRecord.setItemDescription(itemDescription);
     }
-
+    @Override
     public void setLanguage(String language) {
         characterRecord.setLanguage(language);
     }
@@ -1574,43 +1630,48 @@ public class CharacterData implements CharacterSummary {
         // Do nothing. PlayerName can't be set as string.
         // Need to select from player list.
     }
-
+    @Override
     public void setRaceId(RaceMaster raceId) {
         characterRecord.setRaceId(raceId);
     }
-
+    @Override
     public void setReligionId(ReligionMaster religionId) {
         characterRecord.setReligionId(religionId);
     }
-
+    @Override
     public void setSaveTime(Date saveTime) {
         characterRecord.setSaveTime(saveTime);
     }
-
+    @Override
     public void setSheetId(Integer sheetId) {
         characterRecord.setSheetId(sheetId);
     }
-
+    
+    @Override
     public void setSkinColor(String skinColor) {
         characterRecord.setSkinColor(skinColor);
     }
 
+    @Override
     public void setSpellDescription(String spellDescription) {
         characterRecord.setSpellDescription(spellDescription);
     }
 
+    @Override
     public void setSpellResistance(Integer spellResistance) {
         characterRecord.setSpellResistance(spellResistance);
     }
 
+    @Override    
     public void setUpdateDescription(String updateDescription) {
         characterRecord.setUpdateDescription(updateDescription);
     }
 
+    @Override    
     public void setWeight(Integer weight) {
         characterRecord.setWeight(weight);
     }
-
+    @Override
     public List<CharacterSaveRecord> getCharacterSaveRecordList() {
         return characterRecord.getCharacterSaveRecordList();
     }
@@ -1812,15 +1873,15 @@ public class CharacterData implements CharacterSummary {
     public Integer getLevelAdjustment() {
         return 0;
     }
-
+    @Override
     public List<CharacterSkillRecord> getCharacterSkillRecordList() {
         return characterRecord.getCharacterSkillRecordList();
     }
-    
+    @Override    
     public List<CharacterAbilityRecord> getCharacterAbilityRecordList(){
         return characterRecord.getCharacterAbilityRecordList();
     }
-    
+    @Override    
     public Date getSaveTime() {
         return characterRecord.getSaveTime();
     }
@@ -1834,6 +1895,7 @@ public class CharacterData implements CharacterSummary {
      * @param armRecord
      * @return modifiers
      */
+    @Override    
     public String getAttackModifiers (CharacterArmRecord armRecord)
     {
         ArmMaster arm = armRecord.getArmId();
@@ -1933,32 +1995,35 @@ public class CharacterData implements CharacterSummary {
 
         return modifiers.toString();
     }
-    
+    @Override    
     public void setPlayerId (PlayerMaster player)
     {
         characterRecord.setPlayerId(player);
     }
-    
+    @Override    
     public PlayerMaster getPlayerId ()
     {
         return characterRecord.getPlayerId();
     }
-    
+
+    @Override    
     public void setSecret (boolean secret)
     {
         characterRecord.setSecret(secret);
     }
-    
+    @Override    
     public boolean isSecret ()
     {
         return characterRecord.isSecret();
     }
-    
+
+    @Override    
     public void setBaseAttackModifier(int modifier)
     {
         characterRecord.setBaseAtachModifier(modifier);
     }
-    
+
+    @Override   
     public int getBaseAttackModifier()
     {
         return characterRecord.getBaseAtachModifier();
