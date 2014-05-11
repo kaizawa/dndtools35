@@ -13,7 +13,7 @@
 
     <ui:define name="body">
       <h:form>
-        <h:panelGrid columns="2" id="gridPanel1" style="height: 100%; width: 100%">
+        <h:panelGrid id="gridPanel1" style="height: 100%; width: 100%">
           <h:panelGrid id="gridPanel2" style="height: 100%; text-align: right; width: 100%">
             <h:commandLink action="#{classMasterController.newClassButton_action}" id="newClassButton" 
                            value="新規クラス作成"/>
@@ -22,7 +22,7 @@
         <h:panelGrid id="tableGrid" style="width: 400px; height: 100%;" styleClass="tableGrid">
           <h:dataTable binding="#{classMasterController.classTable}" id="classTable" styleClass="w"
                        value="#{classMasterController.classMasterList}" var="currentRow">
-            <h:column id="column1">
+            <h:column>
               <h:commandLink action="#{classMasterController.editClassLink_action()}" id="editClassLink" 
                              style="width: 40px" value="#{currentRow.className}" />
               <f:facet name="header">

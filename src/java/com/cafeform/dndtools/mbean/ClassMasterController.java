@@ -186,7 +186,8 @@ public class ClassMasterController implements Serializable {
 
 
         try {
-            if (klass.getId() == null) {
+            if (klass.getId() == null) 
+            {
                 //新規 クラス・マスターを作成
                 classMasterFacade.create(klass);
                 //クラスのセーヴマスター作成
@@ -206,30 +207,29 @@ public class ClassMasterController implements Serializable {
                     classSkillMasterFacade.create(classSkill);
                 }
                 JsfUtil.addSuccessMessage("作成しました");
-            } else {
-                if (getClassSaveFortitute() != null) {
+            }
+            else 
+            {
+                if (getClassSaveFortitute() != null) 
+                {
+                    getClassSaveFortitute().setRankId(bonusRankMasterFacade.find(getClassEditSelectedFortituteRank()));
                     classSaveMasterFacade.edit(getClassSaveFortitute());
                 }
-                if (getClassSaveReflex() != null) {
-                    classSaveMasterFacade.edit(classSaveReflex);
+                if (getClassSaveReflex() != null) 
+                {
+                    getClassSaveReflex().setRankId(bonusRankMasterFacade.find(getClassEditSelectedReflexRank()));                 
+                    classSaveMasterFacade.edit(getClassSaveReflex());
                 }
-                if (getClassSaveReflex() != null) {
-                    classSaveMasterFacade.edit(classSaveWill);
+                if (getClassSaveWill() != null) {
+                    getClassSaveWill().setRankId(bonusRankMasterFacade.find(getClassEditSelectedWillRank()));                                     classSaveMasterFacade.edit(getClassSaveWill());
                 }
-                for(ClassSkillMaster classSkillOld : classSkillMasterFacade.findByClass(klass)){
-                    for (ClassSkillMaster classSkillNew : getClassSkillList()) {
-                        if(classSkillNew.getClassSkillMasterPK().getSkillId() == classSkillOld.getClassSkillMasterPK().getSkillId()){
-                            continue;
-                        }
-                    }
+                
+                for(ClassSkillMaster classSkillOld : classSkillMasterFacade.findByClass(klass))
+                {
                     classSkillMasterFacade.remove(classSkillOld);
                 }
-                for(ClassSkillMaster classSkillNew : getClassSkillList()){
-                    for(ClassSkillMaster classSkillOld : classSkillMasterFacade.findByClass(klass)){
-                        if(classSkillNew.getClassSkillMasterPK().getSkillId() == classSkillOld.getClassSkillMasterPK().getSkillId()){
-                            continue;
-                        }                        
-                    } 
+                for(ClassSkillMaster classSkillNew : getClassSkillList())
+                {
                     classSkillMasterFacade.create(classSkillNew);
                 }
                 //更新
@@ -262,6 +262,7 @@ public class ClassMasterController implements Serializable {
         //セッションBEANへのセット
         getApplicationController().setClassArray(tempClassArray);
         return null;
+
     }
     /*
      * 基本攻撃ボーナス
