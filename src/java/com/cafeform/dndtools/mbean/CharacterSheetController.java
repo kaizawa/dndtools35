@@ -1019,7 +1019,7 @@ public class CharacterSheetController implements Serializable {
     }
 
     /**
-     * 改行を<br>に変換し、半角スペースを &nbsp に変換
+     * convert new line to <br>. and convert space to nbsp
      */
     public static String textToHtml(String str) {
         if (str == null) {
