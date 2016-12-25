@@ -17,7 +17,7 @@ import javax.naming.NamingException;
  *
  * @author kaizawa
  */
-public class MonsterData implements CharacterSummary {
+public class MonsterData implements CreatureSummary {
 
     InitialContext ctx;
     protected MonsterAbilityRecordFacade monsterAbilityRecordFacade;

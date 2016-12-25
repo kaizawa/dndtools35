@@ -4,7 +4,7 @@ package com.cafeform.dndtools.mbean;
  *
  * @author kaizawa
  */
-public interface CharacterSummary {
+public interface CreatureSummary {
 
     public String  getName();    
     public String  getKlass();    

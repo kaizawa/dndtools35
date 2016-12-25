@@ -58,7 +58,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public class CharacterData implements CharacterSummary, CreatureData {
+public class CharacterData implements CreatureSummary, CreatureData {
 
     InitialContext ctx;
     FacesContext context = FacesContext.getCurrentInstance();

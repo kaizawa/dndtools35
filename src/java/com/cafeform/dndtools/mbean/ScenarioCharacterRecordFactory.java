@@ -12,7 +12,7 @@ import com.cafeform.dndtools.entity.ScenarioCharacterRecord;
  */
 public class ScenarioCharacterRecordFactory {
 
-    public static ScenarioCharacterRecord getInstance(CharacterSummary base) {
+    public static ScenarioCharacterRecord getInstance(CreatureSummary base) {
         ScenarioCharacterRecord chara = new ScenarioCharacterRecord();
 
         chara.setName(base.getName());
