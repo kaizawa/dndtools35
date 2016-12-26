@@ -32,7 +32,7 @@
                        selection="#{sessionController.checkedCharacterList}"           
                        rowKey="#{chara.id}"
                        style="width:100%" >
-            <p:column selectionMode="multiple" style="width: 2%"/>
+            <p:column selectionMode="multiple" style="width: 15px"/>
             <p:column filterBy="#{chara.characterName}" headerText="キャラクター名" 
                       filterMatchMode="contains">
               <h:commandLink action="#{characterSheetController.charaEditLink_action}"
