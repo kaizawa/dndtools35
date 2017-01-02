@@ -53,12 +53,13 @@ import javax.faces.model.SelectItem;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 import com.cafeform.dndtools.mbean.util.PaginationHelper;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class CharacterSheetController implements Serializable {
 
     @EJB private CharacterRecordFacade characterRecordFacade;
