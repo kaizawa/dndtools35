@@ -18,7 +18,7 @@ import com.cafeform.dndtools.ejb.CharacterSkillGrowthRecordFacade;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 
 
 
@@ -38,7 +38,7 @@ import javax.inject.Named;
  */
 
 @Named
-@SessionScoped
+@RequestScoped
 public class CharacterSheetPerLevelController extends CharacterSheetController { 
     
     @Inject

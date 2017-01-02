@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -22,7 +22,7 @@ import javax.inject.Named;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class RaceMasterController implements Serializable {
 
     @Inject

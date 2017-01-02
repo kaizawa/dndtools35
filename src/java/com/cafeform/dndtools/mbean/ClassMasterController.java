@@ -22,16 +22,12 @@ import com.cafeform.dndtools.ejb.SaveMasterFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-import javax.enterprise.context.SessionScoped;
-
-import javax.faces.bean.ManagedProperty;
-
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 /**
@@ -45,7 +41,7 @@ import javax.inject.Named;
  */
 
 @Named
-@SessionScoped
+@RequestScoped
 public class ClassMasterController implements Serializable {
    
     

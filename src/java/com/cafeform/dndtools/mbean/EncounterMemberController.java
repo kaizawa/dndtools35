@@ -13,13 +13,13 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import com.cafeform.dndtools.mbean.util.JsfUtil;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class EncounterMemberController implements Serializable {
         
     @Inject
